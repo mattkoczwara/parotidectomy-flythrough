@@ -48,11 +48,6 @@ _Last updated: 2026-09-28_
 4. **Landmark registration of cryosections** around the parotid, for tracing and QC. **Needs download approval** for about 150 photographs (about 500 MB).
 5. Face fit (MPFB; **needs a download**), look development, labels, evidence drawer, static fallbacks.
 
-## After M0: M1 vertical slice (plan §12)
-- Timeline engine, director and plate DOM.
-- Pipeline authoring of the facial nerve, retromandibular vein (RMV), external carotid artery (ECA) and great auricular nerve (GAN) from specs, with topology assertions.
-- Face fit, look development, labels, evidence drawer, accessibility, static fallbacks.
-
 ## Open questions and known issues
 - **Clinical review is deferred until the app is fully implemented** (owner decision). Review packets and the QC log must stay current from M1 onward. Public launch is blocked until sign-off.
 - **npm 9.1.2 is on PATH** (`C:\Python\npm`) with Node 24.16. Astro 7 prints an engine warning (it wants npm ≥9.6.5); nothing is affected so far.
