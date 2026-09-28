@@ -1,0 +1,109 @@
+{
+  "method": "2D similarity from cryosection pixels (a_vmN.png, 2048x1216) to CT (R, A) mm at the paired CT slice: scale fixed at the documented 0.33 mm per pixel, rotation shared by all levels (one camera and block orientation), translation per level; least squares on landmarks read from gridded crops (pipeline/anatomy/cryo.py view/cryo). Landmarks are bony, muscular or surface point features only; the authored nerve, vessels and gland portion under test are never landmarks. CT slices are paired by matching the ramus, masseter and parotid region (the frozen body's posture differs, so the pairing is local). Orientation: photographs anterior down, patient right on the image left (mastoid pneumatisation asymmetry). Self-review picks, 2026-09-28.",
+  "levels": [
+    {
+      "cryo": 1160,
+      "ct_slice": 1156,
+      "crop": [
+        740,
+        470,
+        1000,
+        780
+      ],
+      "landmarks": [
+        {
+          "name": "ramus_posterior_tip",
+          "cryo_px": [
+            852,
+            622
+          ],
+          "ct_ra": [
+            48.5,
+            84.0
+          ]
+        }
+      ]
+    },
+    {
+      "cryo": 1175,
+      "ct_slice": 1171,
+      "crop": [
+        740,
+        470,
+        1000,
+        780
+      ],
+      "landmarks": [
+        {
+          "name": "ramus_posterior_tip",
+          "cryo_px": [
+            848,
+            624
+          ],
+          "ct_ra": [
+            49.5,
+            84.5
+          ]
+        },
+        {
+          "name": "scm_anterior_tip",
+          "cryo_px": [
+            838,
+            562
+          ],
+          "ct_ra": [
+            60.0,
+            63.0
+          ]
+        },
+        {
+          "name": "c2_dens_centre",
+          "cryo_px": [
+            993,
+            585
+          ],
+          "ct_ra": [
+            3.0,
+            68.0
+          ]
+        }
+      ]
+    },
+    {
+      "cryo": 1190,
+      "ct_slice": 1186,
+      "crop": [
+        740,
+        470,
+        1000,
+        780
+      ],
+      "landmarks": [
+        {
+          "name": "ramus_posterior_tip",
+          "cryo_px": [
+            851,
+            628
+          ],
+          "ct_ra": [
+            50.5,
+            85.0
+          ]
+        },
+        {
+          "name": "scm_anterior_tip",
+          "cryo_px": [
+            826,
+            575
+          ],
+          "ct_ra": [
+            59.0,
+            69.5
+          ]
+        }
+      ]
+    }
+  ],
+  "mm_per_px": 0.33,
+  "notes": "The ramus anterior end is not used: the frozen head was flexed relative to the CT, so the axial plane cuts the ramus more obliquely and its section is longer (about 35 mm vs 29 mm), which makes the anterior end unstable in-plane. The earlobe is not used either: it is soft and deforms with posture (7 mm disagreement). Level 1160 therefore rests on the ramus tip alone (translation only; no leave-one-out estimate); its overlay agreement of segmented bone and muscle is the check."
+}

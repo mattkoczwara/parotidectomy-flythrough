@@ -11,3 +11,5 @@
 7. `gltf-transform meshopt` writes `apps/site/public/assets/anatomy/slice.glb`, using meshopt compression and quantisation. The stage converts quantised attributes to float at load, because WebGPU has no 16-bit vec3 or scalar vertex formats.
 
 Checks and QC images go to `docs/qc/m1-anatomy/`. The asset's provenance record is `apps/site/src/content/assets/anatomy-slice-glb.json`; update its sha256 after every rebuild.
+
+Not part of the build: `pipeline/anatomy/cryo.py fit` redraws the cryosection registration QC (`docs/qc/m1-cryo/`) from `pipeline/specs/cryo_landmarks.json`. It needs the raw photographs, and it should be rerun after any change to the authored nerves, vessels or gland. `cryo.py view`/`cryo` write gridded crops for picking landmarks.

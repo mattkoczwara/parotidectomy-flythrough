@@ -98,3 +98,12 @@ Similarity scale is 1.10 and sides are consistent.
 - The HRA parotids still sit 12–15 mm from the segmented glands, so they remain unusable as registered geometry.
 - The decision is unchanged: the CT is canonical, and HRA is a morphology reference.
 - The cryosection findings are unaffected.
+
+## Amendment (2026-09-28, M1): cryosection levels and local registration
+
+Decision 4 was carried out at three levels around the parotid (`pipeline/anatomy/cryo.py`, QC log).
+- The photographs are anterior down with the patient's right on the image left (from mastoid pneumatisation asymmetry against the laterality-verified CT).
+- Near the parotid, photograph and CT slice numbers correspond to within about 5 mm (eyes, sinuses, teeth, ramus). The 30 mm figure above came from the failed automatic searches and does not hold locally. The frozen head is flexed relative to the CT, so oblique structures such as the ramus are cut differently.
+- The fit uses the documented 0.33 mm/px, one rotation shared by all levels, and a translation per level on point landmarks: rms 0.9–2.7 mm.
+- The authored RMV and ECA agree with the photographed vessels within that uncertainty. The facial nerve is not resolvable in the photographs.
+- The decision is unchanged.

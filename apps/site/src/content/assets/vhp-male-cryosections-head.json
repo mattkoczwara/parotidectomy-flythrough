@@ -15,6 +15,9 @@
     ]
   },
   "attribution": "Courtesy of the U.S. National Library of Medicine, Visible Human Project.",
-  "transformations": [],
+  "transformations": [
+    "Raw photographs are kept out of Git (pipeline/sources/raw/, manifests vhp-male-cryo-qc and vhp-male-cryo-parotid with sha256).",
+    "QC only, not shipped in the site: a_vm1160, a_vm1175 and a_vm1190 are cropped around the right parotid and overlaid with the CT-frame structure sections after local landmark registration (pipeline/anatomy/cryo.py; docs/qc/m1-cryo/), captioned with the NLM acknowledgement."
+  ],
   "specClaims": []
 }

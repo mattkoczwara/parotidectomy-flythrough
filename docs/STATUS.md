@@ -46,6 +46,12 @@ _Last updated: 2026-09-28_
   - J/K focuses the destination heading once it has settled.
 - **Validator:** step frontmatter is checked against the schema, along with references (chapter, structures, labels, frames, claims and inline `<Claim>` ids). It reports `to-verify` and pending-review counts.
 
+- **Cryosection registration and tracing QC** (`pipeline/anatomy/cryo.py`, `docs/qc/m1-cryo/`):
+  - photographs are anterior down with the patient's right on the image left, established from mastoid pneumatisation asymmetry;
+  - three levels registered locally with the documented 0.33 mm/px, a shared rotation and point landmarks: rms 0.9–2.7 mm, leave-one-out up to 7.6 mm;
+  - the authored RMV and ECA agree with photographed vessels to about 1–5 mm, and their relationships match. No geometry was changed;
+  - the facial nerve is not resolvable in the photographs, so it remains unverified against them.
+
 ### Determinism fixes (2026-09-28)
 - **Camera pan used a stale camera basis.** `placeCamera` read `matrixWorld` after `lookAt()`, which does not update it, so the frame then depended on the previous pose. This made the difference between arrivals 37–77%. It now uses the quaternion. All static figures were recaptured with the corrected framing.
 - **"Converged" fired during the dissolve fade-in.** The 160 ms blank was counted as stillness. The settle timer now restarts when a dissolve lands, and convergence waits for the fade.
@@ -58,7 +64,7 @@ _Last updated: 2026-09-28_
 
 ## Next (M1)
 1. **Composition review** of each plate on the recaptured figures. With the corrected text-column pan, the right margin label column now overlaps tissue on some plates (e.g. layers). Fix during look development.
-2. **Cryosection landmark registration and tracing** around the parotid (the photographs are downloaded). This is the QC of the authored nerve and vessels against source anatomy, which is still open.
+2. **More cryosection levels** (optional): extend the three registered levels toward the stylomastoid foramen and the lower pole if a nerve candidate can be confirmed; revisit the deep-portion medial bound against the posterior digastric at z 231.
 3. **Operative plates not yet built:** incision planned (marker-ink line) and flap raised (plan §12 plates 7–8). The current plates 7 and 8 (landmarks, peel) show the exposure as a cutaway and say so in the text.
 4. **Look development:** skin and gland material and colour, plus a field-colour A/B test and ADR (plan §5).
 5. **Performance** on the real slice (High/Mid; throttled) and **Firefox**; a portrait/mobile pass.
@@ -66,8 +72,9 @@ _Last updated: 2026-09-28_
 ## Open questions and known issues
 - **Clinical review is deferred until the app is fully implemented** (owner decision). Review packets and the QC log stay current. Public launch is blocked until sign-off.
 - **Unresolved registration limits:**
-  - The cryosections are not yet registered, because automatic methods failed (M0).
-  - The authored nerve, vessels and deep lobe are checked against CT landmarks, cited ranges and relationship rules, but not yet against cryosections.
+  - Cryosections are registered only locally at three levels (in-plane 2D; one level rests on a single landmark; out-of-plane tilt from the posture change is not corrected).
+  - The authored RMV and ECA agree with the photographs within that uncertainty (1–5 mm). **The facial nerve cannot be verified against the cryosections** (not resolvable at 0.33 mm/px); it rests on CT landmarks, cited ranges and relationship rules.
+  - The authored deep portion reaches a few millimetres into a muscle belly read as the posterior digastric at z 231 mm.
   - The superficial share is 58% vs the published 61–69% (reported, not tuned).
   - The gland is 26.4 mL, including the authored deep portion.
   - The stylomandibular-tunnel extension is not modelled.

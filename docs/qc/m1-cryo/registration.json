@@ -1,0 +1,54 @@
+{
+  "method": "2D similarity from cryosection pixels (a_vmN.png, 2048x1216) to CT (R, A) mm at the paired CT slice: scale fixed at the documented 0.33 mm per pixel, rotation shared by all levels (one camera and block orientation), translation per level; least squares on landmarks read from gridded crops (pipeline/anatomy/cryo.py view/cryo). Landmarks are bony, muscular or surface point features only; the authored nerve, vessels and gland portion under test are never landmarks. CT slices are paired by matching the ramus, masseter and parotid region (the frozen body's posture differs, so the pairing is local). Orientation: photographs anterior down, patient right on the image left (mastoid pneumatisation asymmetry). Self-review picks, 2026-09-28.",
+  "levels": {
+    "1160": {
+      "cryo": 1160,
+      "ct_slice": 1156,
+      "z_mm": 246.0,
+      "mm_per_px": 0.33,
+      "rotation_deg": 4.866925620612,
+      "residual_mm": {
+        "ramus_posterior_tip": 0.0
+      },
+      "rms_mm": 0.0,
+      "leave_one_out_mm": {},
+      "loo_max_mm": null
+    },
+    "1175": {
+      "cryo": 1175,
+      "ct_slice": 1171,
+      "z_mm": 231.0,
+      "mm_per_px": 0.33,
+      "rotation_deg": 4.866925620612,
+      "residual_mm": {
+        "ramus_posterior_tip": 1.88,
+        "scm_anterior_tip": 3.77,
+        "c2_dens_centre": 1.91
+      },
+      "rms_mm": 2.67,
+      "leave_one_out_mm": {
+        "ramus_posterior_tip": 3.4,
+        "scm_anterior_tip": 5.7,
+        "c2_dens_centre": 7.62
+      },
+      "loo_max_mm": 7.62
+    },
+    "1190": {
+      "cryo": 1190,
+      "ct_slice": 1186,
+      "z_mm": 216.0,
+      "mm_per_px": 0.33,
+      "rotation_deg": 4.866925620612,
+      "residual_mm": {
+        "ramus_posterior_tip": 0.86,
+        "scm_anterior_tip": 0.86
+      },
+      "rms_mm": 0.86,
+      "leave_one_out_mm": {
+        "ramus_posterior_tip": 1.73,
+        "scm_anterior_tip": 1.73
+      },
+      "loo_max_mm": 1.73
+    }
+  }
+}
