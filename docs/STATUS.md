@@ -8,11 +8,11 @@ _Last updated: 2026-09-28_
   - timeline engine (`@atlas/timeline`) and step/chapter schemas;
   - CT-frame landmarks and the spec-authored nerves, vessels, digastric and styloid (all 12 topology/relationship checks pass; `docs/qc/m1-anatomy/`);
   - 16 anatomy claims (`to-verify`).
-- **In progress (uncommitted-quality WIP, committed for safety): `pipeline/anatomy/surfaces.py`.** Segmented surfaces, tissue-layer shells, deep-lobe completion, nerve-plane lobe split, tumour and peel field.
-  - **Deep lobe:** growth is now constrained medial to the nerve plane and adds 2.9 mL.
-  - **Superficial fraction:** 72.7%. This passes the check's 55–75% band but sits above Pujol-Olmo's 61–69%. The plane position still needs visual review.
-  - **Tumour placement:** fails. Only 62% of the tumour now lies within the gland, so it needs repositioning.
-  - Next: visually QC the grown deep lobe on CT, then fix the tumour.
+  - scene surfaces (`pipeline/anatomy/surfaces.py`): segmented structures, skin/fat/SMAS/parotid-fascia shells from a solid CT body mask, an authored retromandibular deep portion, the nerve-plane lobe split, the pleomorphic adenoma and the peel field. All checks pass. **Limits** (recorded in the QC log):
+    - The deep portion is authored, not segmented, because the CT does not resolve it.
+    - The gland is 26.4 mL.
+    - The superficial share is 58% vs the published 61–69% (reported, not tuned).
+    - The stylomandibular-tunnel extension is not modelled.
 
 ## Completed
 - [x] Planning: `docs/plan.md` (approved 2026-09-28). The owner's refinements are folded in:

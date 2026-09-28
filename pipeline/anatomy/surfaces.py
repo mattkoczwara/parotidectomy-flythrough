@@ -16,6 +16,7 @@ import trimesh
 import yaml
 from scipy import ndimage
 from scipy.interpolate import RBFInterpolator
+from scipy.spatial import cKDTree
 from skimage import measure
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -88,7 +89,15 @@ def main() -> None:
         print("segmented", mid)
 
     # ── Tissue layers as closed depth bands under the skin ────────────────────────────────
-    head = load("craniofacial_structures/head")
+    # Solid body from the CT (TotalSegmentator's `head` class has internal boundaries, which made "depth below
+    # the skin" small deep inside the head): tissue threshold, largest component, cavities filled per slice.
+    ct = np.asarray(nib.load(str(WORK / "vhp_male_ct_head.nii.gz")).dataobj).astype(np.float32)
+    body = ct > -400
+    lab_b, n_b = ndimage.label(body)
+    body = lab_b == (np.argmax(ndimage.sum(body, lab_b, range(1, n_b + 1))) + 1)
+    for k in range(body.shape[2]):
+        body[:, :, k] = ndimage.binary_fill_holes(body[:, :, k])
+    head = ndimage.binary_closing(body, iterations=2)
     parotid = load("head_glands_cavities/parotid_gland_right")
     depth = ndimage.distance_transform_edt(head, sampling=zooms)  # mm below the skin
     ijk = np.indices(head.shape).reshape(3, -1).T
@@ -115,29 +124,35 @@ def main() -> None:
     pts = pts[keep]
     # Height field x = h(y, z): the nerve plane as a smooth sheet through the nerve inside the gland.
     rbf = RBFInterpolator(pts[:, 1:], pts[:, 0], kernel="thin_plate_spline", smoothing=40.0, degree=1)
-    # ── Deep-lobe completion ──────────────────────────────────────────────────────────────
-    # The segmented gland stops at the posterior border of the ramus: its retromandibular/deep portion is
-    # missing (QC: docs/qc/m1-anatomy/deep_lobe_search.png). Grow it with criteria fixed in advance (not tuned
-    # to any target proportion): CT number within the segmented gland's own 5th–95th percentile, connected to
-    # the gland, within `max_mm` of it, and excluding segmented bone, muscle and vessels.
-    g = spec["deep_lobe_growth"]
-    ct = np.asarray(nib.load(str(WORK / "vhp_male_ct_head.nii.gz")).dataobj).astype(np.float32)
-    lo_hu, hi_hu = np.percentile(ct[parotid], [5, 95])
+    # ── Deep-lobe completion (authored region; see anatomy.yaml `deep_lobe_completion`) ─────
+    g = spec["deep_lobe_completion"]
     blocked = np.zeros_like(parotid)
     for rel in g["exclude"]:
         blocked |= load(rel)
     blocked = ndimage.binary_dilation(blocked, iterations=1)
-    near = ndimage.distance_transform_edt(~parotid, sampling=zooms) <= g["max_mm"]
-    # Only where the missing tissue is: deep (medial) to the nerve plane and below the SMAS band.
-    vox_world = nib.affines.apply_affine(aff, np.argwhere(near))
-    medial = np.zeros_like(near)
-    medial[tuple(np.argwhere(near)[vox_world[:, 0] < rbf(vox_world[:, 1:])].T)] = True
-    candidate = near & medial & (depth > layers["smas_depth_mm"] + layers["smas_thickness_mm"]) & (ct >= lo_hu) & (ct <= hi_hu) & ~blocked & head
-    lab, _ = ndimage.label(candidate | parotid)
-    grown = np.isin(lab, np.unique(lab[parotid])) & (candidate | parotid)
-    grown = ndimage.binary_opening(grown, iterations=1) | parotid
+    near = ndimage.distance_transform_edt(~parotid, sampling=zooms) <= g["max_mm_from_segmented"]
+    cand_idx = np.argwhere(near & ~blocked & head & (depth > layers["smas_depth_mm"] + layers["smas_thickness_mm"]))
+    cw = nib.affines.apply_affine(aff, cand_idx)
+    # posterior border of the ramus per axial level (most posterior right-mandible voxel)
+    mand_w = nib.affines.apply_affine(aff, np.argwhere(load("craniofacial_structures/mandible")))
+    mand_w = mand_w[mand_w[:, 0] > 15]
+    zb = np.round(mand_w[:, 2]).astype(int)
+    border = {z: mand_w[zb == z, 1].min() for z in np.unique(zb)}
+    ramus_y = np.array([border.get(int(round(z)), np.inf) for z in cw[:, 2]])
+    ok = (cw[:, 0] < rbf(cw[:, 1:])) & (cw[:, 0] > g["medial_limit_x"]) & (cw[:, 1] < ramus_y - g["ramus_margin_mm"]) & (cw[:, 2] >= g["z_range"][0]) & (cw[:, 2] <= g["z_range"][1])
+    # keep clear of the authored digastric belly and styloid
+    for sid in g["exclude_authored"]:
+        tdat = np.load(OUT / f"{sid}.npz")
+        dist, j = cKDTree(tdat["centre"]).query(cw)
+        ok &= dist > tdat["radii"][j] + g["authored_margin_mm"]
+    region = np.zeros_like(parotid)
+    region[tuple(cand_idx[ok].T)] = True
+    lab, _ = ndimage.label(region | parotid)
+    grown = np.isin(lab, np.unique(lab[parotid])) & (region | parotid)
+    grown = ndimage.binary_closing(grown, iterations=2) & (grown | region) | parotid
     added_ml = float((grown & ~parotid).sum() * np.prod(zooms) / 1000)
-    checks["deep_lobe_growth"] = {"pass": True, "added_ml": round(added_ml, 2), "hu_window": [round(float(lo_hu)), round(float(hi_hu))], "summary": f"added {added_ml:.1f} mL to the {parotid.sum() * np.prod(zooms) / 1000:.1f} mL segmented gland (HU {lo_hu:.0f}..{hi_hu:.0f}, within {g['max_mm']} mm)"}
+    checks["deep_lobe_completion"] = {"pass": True, "method": "authored region (anatomical bounds; CT does not resolve the deep-lobe boundary)", "added_ml": round(added_ml, 2), "summary": f"authored retromandibular portion adds {added_ml:.1f} mL to the {parotid.sum() * np.prod(zooms) / 1000:.1f} mL segmented gland"}
+    original = parotid
     parotid = grown
     save("parotid_gland_r_complete", mesh_from_mask(parotid, aff, 20000, sigma=0.8, smooth_iter=6))
     fascia = ndimage.binary_dilation(parotid, iterations=1) & ~parotid
@@ -152,7 +167,14 @@ def main() -> None:
     deep = parotid & ~superficial
     frac = float(superficial.sum() / parotid.sum())
     rng = spec["checks"]["superficial_fraction"]["range"]
-    checks["superficial_fraction"] = {"pass": rng[0] <= frac <= rng[1], "value": round(frac, 3), "range": rng, "summary": f"{frac:.1%} of the segmented gland lies lateral to the nerve plane (Pujol-Olmo 2020: 61–69% by weight)"}
+    # Reported against the literature, not used to tune geometry: an individual gland may differ.
+    checks["superficial_fraction"] = {"pass": rng[0] <= frac <= rng[1], "value": round(frac, 3), "range": rng, "summary": f"{frac:.1%} of the completed gland lies lateral to the nerve plane (Pujol-Olmo 2020: 61–69% by weight in 19 specimens; reported, not tuned)"}
+    # The retromandibular vein runs within the gland, deep to the nerve (claim eca-rmv-in-gland).
+    rmv = np.load(OUT / "retromandibular_vein.npz")["centre"]
+    rmv_in = rmv[(rmv[:, 2] > g["z_range"][0] + 4) & (rmv[:, 2] < g["z_range"][1] - 4)]
+    ijk_r = np.round(nib.affines.apply_affine(np.linalg.inv(aff), rmv_in)).astype(int)
+    frac_in = float(ndimage.binary_dilation(parotid, iterations=1)[tuple(ijk_r.T)].mean())
+    checks["vessels_within_gland"] = {"pass": frac_in >= 0.8, "rmv_fraction_in_gland": round(frac_in, 2), "summary": f"{frac_in:.0%} of the retromandibular vein centreline within the gland between its entry and lower pole"}
 
     sup_mesh = mesh_from_mask(superficial, aff, 16000, sigma=0.8, smooth_iter=6)
     deep_mesh = mesh_from_mask(deep, aff, 12000, sigma=0.8, smooth_iter=6)
@@ -177,8 +199,6 @@ def main() -> None:
     nerve_r = np.concatenate([np.load(OUT / f"{i}.npz")["radii"] for i in ids])
     # Clearance: distance from nerve centrelines to the tumour surface minus nerve radius; the tumour is
     # star-shaped about its centre, so a nerve point is inside if it is nearer the centre than the surface there.
-    from scipy.spatial import cKDTree
-
     surf = tumour.sample(30000, seed=4)
     dist, k = cKDTree(surf).query(nerve_all)
     c0 = np.asarray(t["center"])
@@ -208,9 +228,55 @@ def main() -> None:
     (OUT / "peel.json").write_text(json.dumps({"y_min": float(y0), "y_max": float(y1), "hinge_x": hinge_x, "axis": "z (superior)"}, indent=2), encoding="utf-8")
 
     checks_path.write_text(json.dumps(checks, indent=2), encoding="utf-8")
-    for k in ("deep_lobe_growth", "superficial_fraction", "tumour_placement"):
+    render_split_qc(ct, aff, original, parotid, superficial, rbf, tumour)
+    for k in ("deep_lobe_completion", "superficial_fraction", "tumour_placement", "vessels_within_gland"):
         v = checks[k]
         print(f"{'PASS' if v['pass'] else 'FAIL'}  {k}: {v['summary']}")
+
+
+def render_split_qc(ct, aff, original, gland, superficial, rbf, tumour):
+    """Axial and coronal CT (narrow window, anterior up, lateral left) with the segmented gland, the grown deep
+    portion, the nerve-plane trace, the tumour outline and authored tube cross-sections."""
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    inv = np.linalg.inv(aff)
+    tubes = {n: np.load(OUT / f"{n}.npz") for n in ("facial_nerve_trunk", "facial_nerve_temporofacial", "facial_nerve_cervicofacial", "facial_nerve_buccal", "facial_nerve_marginal_mandibular", "facial_nerve_cervical", "facial_nerve_zygomatic", "retromandibular_vein", "external_carotid_artery", "digastric_posterior_belly", "styloid_process")}
+    col = lambda n: "#f3e7a8" if n.startswith("facial") else "#6c86c4" if "vein" in n else "#e0484d" if "artery" in n else "#c77dff" if "digastric" in n else "#ffffff"
+    x0, x1, y0, y1 = 30, 92, 50, 115
+    levels = [254, 248, 242, 236, 230, 224, 218, 210]
+    fig, axes = plt.subplots(2, 4, figsize=(24, 13), dpi=95)
+    grown_only = gland & ~original
+    deep_part = gland & ~superficial
+    for ax, z in zip(axes.ravel(), levels):
+        k = int(round(nib.affines.apply_affine(inv, [0, 0, z])[2]))
+        i0, i1 = int(nib.affines.apply_affine(inv, [x1, 0, 0])[0]), int(nib.affines.apply_affine(inv, [x0, 0, 0])[0])
+        j0, j1 = int(nib.affines.apply_affine(inv, [0, y1, 0])[1]), int(nib.affines.apply_affine(inv, [0, y0, 0])[1])
+        ax.imshow(ct[i0:i1, j0:j1, k].T, cmap="gray", vmin=-120, vmax=140, extent=[x1, x0, y0, y1], origin="upper")
+        to_xy = lambda c: (x1 - c[:, 0] * 0.75, y1 - c[:, 1] * 0.75)
+        for m, color, ls in ((original, "#ff9a3c", "-"), (grown_only, "#ffe14d", "-"), (deep_part, "#00d0ff", ":")):
+            for c in measure.find_contours(m[i0:i1, j0:j1, k].astype(float), 0.5):
+                ax.plot(*to_xy(c), color=color, lw=1.1, ls=ls)
+        ys = np.linspace(y0, y1, 80)
+        ax.plot(rbf(np.c_[ys, np.full_like(ys, z)]), ys, color="#00d0ff", lw=0.8, alpha=0.8)
+        sec = tumour.section(plane_origin=[0, 0, z], plane_normal=[0, 0, 1])
+        if sec is not None:
+            for poly in sec.discrete:
+                ax.plot(poly[:, 0], poly[:, 1], color="#ff4fd8", lw=1.3)
+        for n, tdat in tubes.items():
+            ce, rr = tdat["centre"], tdat["radii"]
+            for p, r in zip(ce[np.abs(ce[:, 2] - z) < 0.6], rr[np.abs(ce[:, 2] - z) < 0.6]):
+                ax.add_patch(plt.Circle((p[0], p[1]), r, color=col(n), fill=False, lw=1.0))
+        ax.set_xlim(x1, x0)
+        ax.set_ylim(y0, y1)
+        ax.set_title(f"axial z = {z} mm", fontsize=9)
+        ax.tick_params(labelsize=6)
+    fig.suptitle("Orange: segmented gland · yellow: grown deep portion · cyan line: nerve plane (dotted cyan: deep part) · magenta: tumour · ivory nerve, blue RMV, red ECA, violet digastric, white styloid. Anterior up, lateral (patient right) to the left.", fontsize=10)
+    fig.tight_layout()
+    fig.savefig(QC / "lobe_split_axial.png")
+    plt.close(fig)
 
 
 if __name__ == "__main__":

@@ -29,4 +29,5 @@ Private educational atlas of parotid tumours and parotidectomy, with pleomorphic
 ## Milestone gates
 
 - Follow the current phase and next step in `docs/STATUS.md`; use `docs/plan.md` for milestone acceptance criteria.
-- In M0, validate anatomical registration and the representative WebGPU/WebGL2 rendering requirements in `docs/plan
+- In M0, validate anatomical registration and the representative WebGPU/WebGL2 rendering requirements in `docs/plan.md` §0 before scene work depends on them (done: ADR-0001, ADR-0002).
+- Record unresolved registration and QC limits in `docs/qc/QC_LOG.md` and `docs/STATUS.md`.

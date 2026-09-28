@@ -114,20 +114,20 @@
   },
   "superficial_fraction": {
     "pass": true,
-    "value": 0.727,
+    "value": 0.58,
     "range": [
       0.55,
       0.75
     ],
-    "summary": "72.7% of the segmented gland lies lateral to the nerve plane (Pujol-Olmo 2020: 61\u201369% by weight)"
+    "summary": "58.0% of the completed gland lies lateral to the nerve plane (Pujol-Olmo 2020: 61\u201369% by weight in 19 specimens; reported, not tuned)"
   },
   "tumour_placement": {
-    "pass": false,
-    "nerve_clearance_mm": 3.19,
+    "pass": true,
+    "nerve_clearance_mm": 1.58,
     "fraction_lateral_to_nerve_plane": 1.0,
-    "fraction_within_gland": 0.62,
-    "max_diameter_mm": 21.9,
-    "summary": "22 mm, 100% superficial to the nerve plane, 62% within the gland, nerve clearance 3.2 mm"
+    "fraction_within_gland": 1.0,
+    "max_diameter_mm": 18.6,
+    "summary": "19 mm, 100% superficial to the nerve plane, 100% within the gland, nerve clearance 1.6 mm"
   },
   "deep_lobe_growth": {
     "pass": true,
@@ -137,5 +137,16 @@
       31
     ],
     "summary": "added 2.9 mL to the 18.2 mL segmented gland (HU -14..31, within 12 mm)"
+  },
+  "deep_lobe_completion": {
+    "pass": true,
+    "method": "authored region (anatomical bounds; CT does not resolve the deep-lobe boundary)",
+    "added_ml": 8.19,
+    "summary": "authored retromandibular portion adds 8.2 mL to the 18.2 mL segmented gland"
+  },
+  "vessels_within_gland": {
+    "pass": true,
+    "rmv_fraction_in_gland": 1.0,
+    "summary": "100% of the retromandibular vein centreline within the gland between its entry and lower pole"
   }
 }
