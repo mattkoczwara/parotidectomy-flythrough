@@ -50,15 +50,17 @@ export interface SceneState {
 }
 
 /** What a plate author writes: only the fields that change relative to the previous plate. */
+type Opt<T> = T | undefined;
+
 export interface PlateDelta {
-  camera?: Partial<Omit<CameraState, 'frames'>> & { frame?: readonly string[] };
-  structures?: Readonly<Record<string, Partial<StructureState>>>;
-  gauge?: number;
-  op?: Readonly<Record<string, number>>;
-  variants?: Readonly<Record<string, string>>;
+  camera?: Opt<{ azimuth?: Opt<number>; elevation?: Opt<number>; zoom?: Opt<number>; frame?: Opt<readonly string[]> }>;
+  structures?: Opt<Readonly<Record<string, { [K in keyof StructureState]?: Opt<StructureState[K]> }>>>;
+  gauge?: Opt<number>;
+  op?: Opt<Readonly<Record<string, number>>>;
+  variants?: Opt<Readonly<Record<string, string>>>;
   /** Replaces the label set; omitted = keep the previous plate's labels. */
-  labels?: ReadonlyArray<{ structureId: string; priority?: number }>;
-  light?: Partial<SceneState['light']>;
+  labels?: Opt<ReadonlyArray<{ structureId: string; priority?: Opt<number> }>>;
+  light?: Opt<{ preset?: Opt<LightPreset>; exposure?: Opt<number> }>;
 }
 
 /**
@@ -66,16 +68,16 @@ export interface PlateDelta {
  * reveals should not overlap ("camera first, then reveal").
  */
 export interface TransitionSpec {
-  camera?: readonly [number, number];
-  structures?: readonly [number, number];
-  op?: readonly [number, number];
-  labels?: readonly [number, number];
+  camera?: Opt<readonly [number, number]>;
+  structures?: Opt<readonly [number, number]>;
+  op?: Opt<readonly [number, number]>;
+  labels?: Opt<readonly [number, number]>;
 }
 
 export interface PlateSpec {
   id: string;
   delta: PlateDelta;
-  transition?: TransitionSpec;
+  transition?: Opt<TransitionSpec>;
 }
 
 export const defaultStructure: StructureState = { presence: 1, opacity: 1, mode: 'solid', emphasis: 'context' };

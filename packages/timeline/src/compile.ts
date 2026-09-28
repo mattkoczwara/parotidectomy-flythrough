@@ -5,15 +5,23 @@ export interface Track {
   /** Absolute state at each plate's plateau. */
   readonly plates: readonly SceneState[];
   /** transitions[i] shapes the move from plate i-1 into plate i (transitions[0] is unused). */
-  readonly transitions: readonly Required<TransitionSpec>[];
+  readonly transitions: readonly TransitionWindows[];
 }
 
-const defaultTransition: Required<TransitionSpec> = {
+/** Resolved transition windows (every group present). */
+export type TransitionWindows = { readonly [K in keyof TransitionSpec]-?: readonly [number, number] };
+
+const defaultTransition: TransitionWindows = {
   camera: [0, 1],
   structures: [0, 1],
   op: [0, 1],
   labels: [0.6, 1],
 };
+
+/** Drops keys whose value is undefined so they do not overwrite inherited values when spread. */
+function defined<T extends object>(o: T): { [K in keyof T]-?: Exclude<T[K], undefined> } {
+  return Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as { [K in keyof T]-?: Exclude<T[K], undefined> };
+}
 
 const emptyState: SceneState = {
   camera: { azimuth: 0, elevation: 0, zoom: 1, frames: [] },
@@ -40,13 +48,13 @@ export function compile(specs: readonly PlateSpec[], initial: SceneState = empty
   for (const { delta } of specs) {
     const structures: Record<string, StructureState> = { ...prev.structures };
     for (const [id, patch] of Object.entries(delta.structures ?? {})) {
-      structures[id] = { ...(structures[id] ?? defaultStructure), ...patch };
+      structures[id] = { ...(structures[id] ?? defaultStructure), ...defined(patch) };
     }
     const { frame, ...cameraRest } = delta.camera ?? {};
     const next: SceneState = {
       camera: {
         ...prev.camera,
-        ...cameraRest,
+        ...defined(cameraRest),
         frames: frame ? [{ ids: [...frame], weight: 1 }] : prev.camera.frames,
       },
       structures,
@@ -54,13 +62,13 @@ export function compile(specs: readonly PlateSpec[], initial: SceneState = empty
       op: { ...prev.op, ...delta.op },
       variants: { ...prev.variants, ...delta.variants },
       labels: delta.labels ? delta.labels.map((l, i) => ({ structureId: l.structureId, priority: l.priority ?? i, weight: 1 })) : prev.labels,
-      light: { ...prev.light, ...delta.light },
+      light: { ...prev.light, ...defined(delta.light ?? {}) },
     };
     plates.push(next);
     prev = next;
   }
 
-  const transitions = specs.map((s) => ({ ...defaultTransition, ...s.transition }));
+  const transitions: TransitionWindows[] = specs.map((s) => ({ ...defaultTransition, ...defined(s.transition ?? {}) }));
   for (const [i, tr] of transitions.entries()) {
     for (const [key, [a, b]] of Object.entries(tr)) {
       if (!(a >= 0 && b <= 1 && a < b)) throw new RangeError(`plate "${ids[i]}": transition window ${key} [${a}, ${b}] is invalid`);

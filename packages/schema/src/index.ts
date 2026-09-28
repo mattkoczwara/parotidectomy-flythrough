@@ -203,6 +203,65 @@ export const glossaryEntry = z.strictObject({
 });
 export type GlossaryEntry = z.infer<typeof glossaryEntry>;
 
+// ── Plates (step frontmatter) ──────────────────────────────────────────────────────────────
+// Mirrors PlateSpec in @atlas/timeline; a type test there keeps the two in step.
+
+const unit = z.number().min(0).max(1);
+const span = z.tuple([unit, unit]).refine(([a, b]) => a < b, 'window start must precede end');
+
+export const plateDelta = z.strictObject({
+  camera: z
+    .strictObject({
+      azimuth: z.number().optional(),
+      elevation: z.number().min(-89).max(89).optional(),
+      zoom: z.number().positive().optional(),
+      frame: z.array(id).min(1).optional(),
+    })
+    .optional(),
+  structures: z
+    .record(
+      id,
+      z.strictObject({
+        presence: unit.optional(),
+        opacity: unit.optional(),
+        mode: z.enum(['solid', 'ghost', 'hatch', 'illustrative']).optional(),
+        emphasis: z.enum(['focus', 'context', 'dim']).optional(),
+      }),
+    )
+    .optional(),
+  gauge: z.number().min(0).max(depthPlanes.length - 1).optional(),
+  op: z.record(nonEmpty, z.number()).optional(),
+  variants: z.record(nonEmpty, nonEmpty).optional(),
+  labels: z.array(z.strictObject({ structureId: id, priority: z.int().min(0).optional() })).max(10).optional(),
+  light: z.strictObject({ preset: z.enum(['studio', 'operative', 'specimen']).optional(), exposure: z.number().positive().optional() }).optional(),
+});
+
+export const step = z.strictObject({
+  /** Plate id; also the URL fragment (#id). */
+  id,
+  chapter: id,
+  order: z.int().min(0),
+  title: nonEmpty,
+  delta: plateDelta,
+  transition: z
+    .strictObject({ camera: span.optional(), structures: span.optional(), op: span.optional(), labels: span.optional() })
+    .optional(),
+  /** What is visible, cut, retracted or at risk — the assistive-technology and static-figure description. */
+  sceneDescription: nonEmpty,
+  /** Claims supporting the scene itself (e.g. anatomical relationships shown), beyond those cited in the text. */
+  claims: z.array(id).default([]),
+});
+export type Step = z.infer<typeof step>;
+
+export const chapter = z.strictObject({
+  id,
+  order: z.int().min(0),
+  title: nonEmpty,
+  /** Short label for the chapter rail. */
+  short: nonEmpty,
+});
+export type Chapter = z.infer<typeof chapter>;
+
 // ── Registry ───────────────────────────────────────────────────────────────────────────────
 
 /**
