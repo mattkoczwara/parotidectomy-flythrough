@@ -3,9 +3,8 @@
 _Last updated: 2026-09-28_
 
 ## Current phase
-**M0: foundations and de-risking.**
-- Done: schemas, validators, verified sources, and the renderer spike (stack locked).
-- Remaining: the registration spike, which needs download approval.
+**M0 complete (2026-09-28). M1 (vertical slice) in progress.**
+- Done in M1 so far: the timeline engine (`@atlas/timeline`) and the step/chapter schemas.
 
 ## Completed
 - [x] Planning: `docs/plan.md` (approved 2026-09-28). The owner's refinements are folded in:
@@ -33,12 +32,21 @@ _Last updated: 2026-09-28_
     - single-layer blended ghosting replaces alpha-hash plus TRAA, which left residual stipple;
     - the peel hinge sits on the lateral surface, because a deep-face hinge self-intersects.
 
-## Next step: M0 registration spike (**needs download approval**)
-- HRA vs TotalSegmentator mandible: mean surface distance under 2 mm.
-- Parotid overlaid on three cryosection levels.
-- Visual QC contact sheets for the segmentations.
+- [x] **M0 registration spike: done, criterion failed and resolved by design** (ADR-0002). Downloads approved 2026-09-28.
+  - **Canonical frame:** the Visible Human male normal CT.
+    - Resampled from five series.
+    - Laterality verified against anatomy: the aortic arch is on the patient's left.
+  - **TotalSegmentator (GPU):** the parotid, masseter, mandible, SCM, IJV and submandibular gland are plausible on source-CT overlays; the parotid is 18.2 mL. The digastric, styloid, zygomatic arch and ICA segment as fragments or not at all, so they will be authored.
+  - **HRA vs CT:** mandible 5.7 mm and parotid 12–13 mm, which fails the < 2 mm criterion. The HRA is kept as a morphology reference only.
+  - **Cryosections vs CT:** the posture differs non-rigidly and automatic registration failed three ways, so cryosections get landmark registration in M1.
+  - QC images are in `docs/qc/m0-registration/`, with log entries in `docs/qc/QC_LOG.md`.
 
-Required downloads: the Visible Human male head CT and cryosection subsets, the HRA reference-organ GLB, and the TotalSegmentator weights plus the PyTorch runtime.
+## Next step: M1 vertical slice (plan §12)
+1. **Plate DOM and accessibility skeleton** in `apps/site`: steps as MDX, the semantic path first, the director with passive scroll that never moves focus, and a settled-plate live region.
+2. **`@atlas/stage`:** port the spike's materials, ghosting, clipping and peel, then add framing-based cameras and `resolve(SceneState)`.
+3. **Anatomy pipeline:** TotalSegmentator meshes into glTF; specs and authoring for the facial nerve, RMV, ECA, GAN, digastric and styloid; topology assertions; the lobe split and baked fields.
+4. **Landmark registration of cryosections** around the parotid, for tracing and QC. **Needs download approval** for about 150 photographs (about 500 MB).
+5. Face fit (MPFB; **needs a download**), look development, labels, evidence drawer, static fallbacks.
 
 ## After M0: M1 vertical slice (plan §12)
 - Timeline engine, director and plate DOM.

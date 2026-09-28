@@ -271,9 +271,10 @@ The spike uses a crude but representative parotid-and-nerve proxy: a lobulated c
 
 | Layer | Source | Work |
 |---|---|---|
-| Skull, temporal bone, mastoid, styloid, zygomatic arch, mandible, auditory canal | TotalSegmentator on Visible Human CT; HRA mandible for cross-check | Remesh, refine the tympanomastoid suture and stylomastoid foramen by hand from cryosections |
-| Parotid, submandibular gland | HRA parotid (CC BY 4.0); cross-check with the TotalSegmentator parotid | Split into superficial and deep lobes along an authored **nerve-plane surface**; add the accessory lobe and Stensen's duct |
-| Masseter, SCM, digastric, stylohyoid, platysma, ICA, IJV | TotalSegmentator | Remesh; separate the posterior belly of the digastric |
+| Skull, temporal bone, mastoid, mandible, auditory canal | TotalSegmentator on Visible Human normal CT (**canonical frame, ADR-0002**) | Remesh; refine the tympanomastoid suture and stylomastoid foramen from specs and landmark-registered cryosections. The styloid and zygomatic arch segment only as fragments, so they are authored |
+| Parotid, submandibular gland | TotalSegmentator parotid and submandibular gland in the CT frame. The HRA parotid is a morphology reference only: it sits 12 mm from the CT frame (ADR-0002) | Split into superficial and deep lobes along an authored **nerve-plane surface**; add the accessory lobe and Stensen's duct |
+| Masseter, SCM, IJV | TotalSegmentator | Remesh |
+| Digastric (posterior belly), stylohyoid, ICA | **Authored** from specs. TotalSegmentator gives fragments or nothing on this non-contrast cadaver CT | Constrained by the mastoid, the segmented neighbours and cryosection tracing |
 | Facial nerve (trunk, pes, divisions, 5 branch groups, posterior auricular, digastric twig), GAN, auriculotemporal nerve | **Authored**: `specs/nerves.yaml`, landmark-driven splines traced against cryosections, swept to true calibre | Every dimension cites its claim IDs |
 | RMV, external jugular vein, ECA, superficial temporal, maxillary and transverse facial arteries | **Authored** from cryosection tracing plus the same spec approach | — |
 | Skin, fat, SMAS/fascia, tragal cartilage, intraparotid nodes | **Authored** shells fitted between segmented surfaces | Flap-region patches for each incision variant |
@@ -446,10 +447,10 @@ docs/adr/             decision records; CLAUDE.md for agent conventions
 
 ## 13. Principal risks and early tests
 
-1. **Registration across sources.**
-   - HRA and TotalSegmentator mandibles must agree to under 2 mm mean surface distance.
-   - Overlay the parotid on three cryosection levels.
-   - This is the first task in M0.
+1. **Registration across sources: resolved in M0 (ADR-0002).**
+   - The HRA-vs-CT mandible fit was 5.7 mm, failing the 2 mm criterion.
+   - The cryosections differ from the CT in posture, non-rigidly.
+   - Resolution: the CT is the canonical frame; the HRA is reference only; cryosections get local landmark registration in M1.
 2. **Authored nerve and vessel accuracy with no reviewer until the end.**
    - Every spec value carries its cited range. A validator checks model distances against those ranges.
    - **Topology and relationship checks, not only scalar distances** (`tools/validate` plus pipeline assertions). Examples:

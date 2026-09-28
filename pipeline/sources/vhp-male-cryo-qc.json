@@ -1,0 +1,70 @@
+{
+  "id": "vhp-male-cryo-qc",
+  "name": "Visible Human male head cryosections (PNG), parotid QC levels",
+  "licence": "NLM-VHP",
+  "licenceUrl": "https://www.nlm.nih.gov/databases/download/terms_and_conditions.html",
+  "attribution": "Courtesy of the U.S. National Library of Medicine, Visible Human Project. Use does not imply NLM endorsement.",
+  "landing": "https://www.nlm.nih.gov/research/visible/getting_data.html",
+  "files": [
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1090.png",
+      "path": "vhp/cryo/a_vm1090.png",
+      "sha256": "66c7c83c5225b5a215a4aa5ac6d1ba8638ead3ae3534fcc1bb9ea3662e5be9a0"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1100.png",
+      "path": "vhp/cryo/a_vm1100.png",
+      "sha256": "9e3542e691056ea225b8a20c3161f6a835ba670e28bf48cd44a444c6cdfd0448"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1110.png",
+      "path": "vhp/cryo/a_vm1110.png",
+      "sha256": "b1789e8ad6abf9059e7af7e232374d34208d50739f4371e318df18d125a1c71d"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1120.png",
+      "path": "vhp/cryo/a_vm1120.png",
+      "sha256": "bc9e6982ccb2d292ef4b4771572719162813c1aecfdb3fa0653e046af429afcb"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1130.png",
+      "path": "vhp/cryo/a_vm1130.png",
+      "sha256": "bd8bcec891acc7d8a23662e9558cf817e95a5f2abb24eb767b38e50f86f677f7"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1140.png",
+      "path": "vhp/cryo/a_vm1140.png",
+      "sha256": "00422a4ca304717a230c93d0256c056484f144fa22d2169b04b5cd245fe059d5"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1150.png",
+      "path": "vhp/cryo/a_vm1150.png",
+      "sha256": "97289a97b893b31492768c1ad7e33473cc8132dd9d317be91c43216313e138fe"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1160.png",
+      "path": "vhp/cryo/a_vm1160.png",
+      "sha256": "39dc50bb0240a46c3a9d98bc3ca368312473f41375186a92f74b6ff725017f8f"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1170.png",
+      "path": "vhp/cryo/a_vm1170.png",
+      "sha256": "950c1e4bb76f661bfd6c89bf3edb4b6a5f8df46b93b61d86718596947b98aa92"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1180.png",
+      "path": "vhp/cryo/a_vm1180.png",
+      "sha256": "b3be10fdf732846bb7908aa0fc614d0cacca42c7b832b88661b87a1d57b118fd"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1190.png",
+      "path": "vhp/cryo/a_vm1190.png",
+      "sha256": "d9df106e8afb52c2deb1f11b965bd37abe7b3619732da2d43f23f8c3dfccc4c6"
+    },
+    {
+      "url": "https://data.lhncbc.nlm.nih.gov/public/Visible-Human/Male-Images/PNG_format/head/a_vm1200.png",
+      "path": "vhp/cryo/a_vm1200.png",
+      "sha256": "75175ecebbfee6eb84be6cd9861b07ae87d8f163471dad3e1c043415989be626"
+    }
+  ]
+}

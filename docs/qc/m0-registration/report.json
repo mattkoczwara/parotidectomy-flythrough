@@ -1,0 +1,240 @@
+{
+  "structures": {
+    "mandible": {
+      "volume_ml": 38.90925,
+      "centroid_mm": [
+        1.8,
+        102.2,
+        222.7
+      ]
+    },
+    "skull": {
+      "volume_ml": 577.6475625,
+      "centroid_mm": [
+        -1.0,
+        59.9,
+        305.5
+      ]
+    },
+    "parotid_r": {
+      "volume_ml": 18.1648125,
+      "centroid_mm": [
+        68.3,
+        81.3,
+        232.1
+      ]
+    },
+    "parotid_l": {
+      "volume_ml": 21.5971875,
+      "centroid_mm": [
+        -65.6,
+        77.6,
+        225.1
+      ]
+    },
+    "submandibular_r": {
+      "volume_ml": 5.8528125,
+      "centroid_mm": [
+        42.3,
+        102.6,
+        179.5
+      ]
+    },
+    "auditory_canal_r": {
+      "volume_ml": 1.4743125,
+      "centroid_mm": [
+        60.1,
+        69.8,
+        265.4
+      ]
+    },
+    "masseter_r": {
+      "volume_ml": 34.5988125,
+      "centroid_mm": [
+        54.9,
+        107.5,
+        234.6
+      ]
+    },
+    "digastric_r": {
+      "volume_ml": 0.525375,
+      "centroid_mm": [
+        26.8,
+        120.7,
+        171.1
+      ]
+    },
+    "styloid_r": {
+      "volume_ml": 0.1355625,
+      "centroid_mm": [
+        41.7,
+        73.5,
+        246.0
+      ]
+    },
+    "zygomatic_arch_r": {
+      "volume_ml": 0.1344375,
+      "centroid_mm": [
+        57.1,
+        121.2,
+        264.9
+      ]
+    },
+    "ica_r": "empty",
+    "ijv_r": {
+      "volume_ml": 12.033,
+      "centroid_mm": [
+        44.3,
+        74.8,
+        154.4
+      ]
+    },
+    "scm_r": {
+      "volume_ml": 74.02275,
+      "centroid_mm": [
+        50.2,
+        79.8,
+        153.1
+      ]
+    }
+  },
+  "hra_nodes": [
+    "VH_M_buccal_mucosa",
+    "VH_M_circumvallate_papillae",
+    "VH_M_dorsal_tongue",
+    "VH_M_frenulum_of_lower_lip",
+    "VH_M_frenulum_of_upper_lip",
+    "VH_M_fungiform_papillae",
+    "VH_M_gingiva_of_lower_jaw",
+    "VH_M_ginviva_of_upper_jaw",
+    "VH_M_hard_palate",
+    "VH_M_mandible",
+    "VH_M_mouth_floor",
+    "VH_M_mucosa_of_soft_palate",
+    "VH_M_parotid_gland_L",
+    "VH_M_parotid_gland_R",
+    "VH_M_posterior_part_of_tongue",
+    "VH_M_set_of_lower_jaw_teeth",
+    "VH_M_set_of_upper_jaw_teeth",
+    "VH_M_sublingual_gland_L",
+    "VH_M_sublingual_gland_R",
+    "VH_M_submandibular_gland_L",
+    "VH_M_submandibular_gland_R",
+    "VH_M_ventral_tongue"
+  ],
+  "hra_to_ct": {
+    "transform": [
+      [
+        -0.99892,
+        0.0229,
+        -0.04031,
+        -14.15948
+      ],
+      [
+        -0.03652,
+        0.14723,
+        0.98843,
+        -61.20396
+      ],
+      [
+        0.02857,
+        0.98884,
+        -0.14623,
+        -487.44454
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "rotation_deg": 177.3930863289048,
+    "translation_mm": [
+      -14.16,
+      -61.2,
+      -487.44
+    ],
+    "similarity_scale": 1.051814897962743,
+    "mandible": {
+      "mean_mm": 5.685749760924955,
+      "median_mm": 5.097082042301258,
+      "p95_mm": 15.200464280519014,
+      "max_mm": 27.058352412135854
+    },
+    "parotid_right_vs_ts_right": {
+      "mean_mm": 11.97355350265994,
+      "median_mm": 12.28031239723337,
+      "p95_mm": 21.76561739004288,
+      "max_mm": 27.873704280474676
+    },
+    "parotid_right_vs_ts_left": {
+      "mean_mm": 103.86181621131753,
+      "median_mm": 104.32083513343416,
+      "p95_mm": 115.82971273226799,
+      "max_mm": 123.65108261500801
+    },
+    "parotid_left_vs_ts_left": {
+      "mean_mm": 12.840178197201045,
+      "median_mm": 13.691265641266071,
+      "p95_mm": 22.56907758630505,
+      "max_mm": 29.636303207334745
+    },
+    "sides_consistent": true,
+    "patient_right_is_negative_x": false,
+    "parotid_volume_ml": {
+      "hra_right": NaN,
+      "hra_left": NaN,
+      "ts_right": 18.1648125,
+      "ts_left": 21.5971875
+    }
+  },
+  "ct_qc": {
+    "axial_1148": [
+      "ijv_r",
+      "mandible",
+      "masseter_r",
+      "parotid_r",
+      "skull",
+      "styloid_r"
+    ],
+    "axial_1159": [
+      "ijv_r",
+      "mandible",
+      "masseter_r",
+      "parotid_r",
+      "scm_r",
+      "skull",
+      "styloid_r"
+    ],
+    "axial_1169": [
+      "ijv_r",
+      "mandible",
+      "masseter_r",
+      "parotid_r",
+      "scm_r",
+      "skull"
+    ],
+    "axial_1180": [
+      "ijv_r",
+      "mandible",
+      "masseter_r",
+      "parotid_r",
+      "scm_r"
+    ],
+    "axial_1190": [
+      "ijv_r",
+      "mandible",
+      "masseter_r",
+      "parotid_r",
+      "scm_r"
+    ],
+    "axial_1201": [
+      "ijv_r",
+      "mandible",
+      "masseter_r",
+      "parotid_r",
+      "scm_r"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "totalsegmentator-head-neck",
+  "kind": "model-weights",
+  "source": {
+    "name": "TotalSegmentator tasks craniofacial_structures, head_glands_cavities, head_muscles, headneck_bones_vessels, headneck_muscles",
+    "url": "https://github.com/wasserth/TotalSegmentator",
+    "retrieved": "2026-09-28"
+  },
+  "licence": {
+    "id": "Apache-2.0",
+    "url": "https://www.apache.org/licenses/LICENSE-2.0",
+    "obligations": [
+      "Cite Wasserthal et al. (TotalSegmentator) and the per-task papers listed in the TotalSegmentator README"
+    ]
+  },
+  "attribution": "Segmentations produced with TotalSegmentator (Wasserthal et al.); head and neck tasks as cited in the TotalSegmentator README.",
+  "transformations": [],
+  "specClaims": []
+}

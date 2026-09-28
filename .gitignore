@@ -31,3 +31,6 @@ Thumbs.db
 
 # spike output
 spikes/*/output/
+
+# python
+__pycache__/

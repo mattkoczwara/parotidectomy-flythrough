@@ -1,0 +1,10 @@
+# Visual QC log
+
+This log records every visual check of segmented or authored anatomy: what was checked, against what, by whom, when, and the outcome. The clinical reviewer signs off at the end of implementation (plan §10). Until then, entries are self-reviews and are marked as such.
+
+| Date | Item | Checked against | Reviewer | Outcome | Evidence |
+|---|---|---|---|---|---|
+| 2026-09-28 | CT laterality (GE header R/A/S → RAS) | Anatomy: aortic arch and calcification on patient's left; SVC on right | Claude (self-review) | Pass: R+ = patient right | `pipeline/segment/build_ct_volume.py`, ADR-0002 |
+| 2026-09-28 | TotalSegmentator: parotid R/L, masseter R, mandible, SCM R, IJV R, submandibular R | Source CT, 6 axial levels plus coronal and sagittal cuts through the right parotid | Claude (self-review) | Plausible position and extent. Parotid volume 18.2 / 21.6 mL (Pujol-Olmo 2020 mean 18.1 g). Needs attention: 3 mm slices below 1162 give coarser inferior borders | `docs/qc/m0-registration/ct_*.png` |
+| 2026-09-28 | TotalSegmentator: digastric R, styloid R, zygomatic arch R, ICA R | Source CT | Claude (self-review) | Fail for use as geometry: fragmentary or empty (ICA empty in non-contrast CT). To be authored from specs | `docs/qc/m0-registration/report.json` |
+| 2026-09-28 | HRA meshes vs CT frame | Rigid ICP on the mandible | Claude (self-review) | Fail for direct use: mandible mean distance 5.7 mm, parotid 12–13 mm. Kept as morphology reference only | ADR-0002 |

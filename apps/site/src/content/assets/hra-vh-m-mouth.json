@@ -1,0 +1,21 @@
+{
+  "id": "hra-vh-m-mouth",
+  "kind": "source-data",
+  "source": {
+    "name": "Human Reference Atlas reference organ: mouth (Visible Human male) v1.0",
+    "url": "https://purl.humanatlas.io/ref-organ/mouth-male/v1.0",
+    "version": "v1.0",
+    "retrieved": "2026-09-28"
+  },
+  "licence": {
+    "id": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/",
+    "obligations": [
+      "Attribute HuBMAP Human Reference Atlas and the Visible Human Project",
+      "Indicate changes"
+    ]
+  },
+  "attribution": "Human Reference Atlas (HuBMAP), reference organ mouth-male v1.0; Visible Human Project data courtesy of the U.S. National Library of Medicine.",
+  "transformations": [],
+  "specClaims": []
+}
