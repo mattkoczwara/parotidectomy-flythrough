@@ -4,7 +4,15 @@ _Last updated: 2026-09-28_
 
 ## Current phase
 **M0 complete (2026-09-28). M1 (vertical slice) in progress.**
-- Done in M1 so far: the timeline engine (`@atlas/timeline`) and the step/chapter schemas.
+- Done in M1 so far:
+  - timeline engine (`@atlas/timeline`) and step/chapter schemas;
+  - CT-frame landmarks and the spec-authored nerves, vessels, digastric and styloid (all 12 topology/relationship checks pass; `docs/qc/m1-anatomy/`);
+  - 16 anatomy claims (`to-verify`).
+- **In progress (uncommitted-quality WIP, committed for safety): `pipeline/anatomy/surfaces.py`.** Segmented surfaces, tissue-layer shells, deep-lobe completion, nerve-plane lobe split, tumour and peel field.
+  - **Deep lobe:** growth is now constrained medial to the nerve plane and adds 2.9 mL.
+  - **Superficial fraction:** 72.7%. This passes the check's 55–75% band but sits above Pujol-Olmo's 61–69%. The plane position still needs visual review.
+  - **Tumour placement:** fails. Only 62% of the tumour now lies within the gland, so it needs repositioning.
+  - Next: visually QC the grown deep lobe on CT, then fix the tumour.
 
 ## Completed
 - [x] Planning: `docs/plan.md` (approved 2026-09-28). The owner's refinements are folded in:

@@ -130,3 +130,33 @@ checks:
   superficial_fraction: { claim: parotid-lobes-surgical, range: [0.55, 0.75] }
   graph_connected_single_root: { root: smf }
   no_tube_contacts: { allow: [[facial_nerve_digastric_branch, digastric_posterior_belly]] }
+
+# Tissue layers: closed depth bands below the skin (mm), restricted to the right face and upper neck.
+# Representative thicknesses for the slice; to be refined against CT (fat/SMAS) in M2.
+layers:
+  skin_mm: 2.0
+  smas_depth_mm: 7.0
+  smas_thickness_mm: 1.3
+
+# Pleomorphic adenoma: a lobulated ~2 cm mass in the superficial lobe, lateral-inferior region (ESGS level II).
+# Size is representative (common presentation 2-3 cm); position is authored for teaching, not from imaging.
+tumour:
+  center: [74, 89, 222]
+  radii: [7.5, 10.0, 8.5]
+  seed: 23
+  min_nerve_clearance_mm: 1.5
+  # A superficial-lobe PA commonly bulges from the lateral surface (the palpable lump).
+  min_within_gland: 0.7
+
+# Completion of the deep lobe missing from the segmentation (surfaces.py; criteria fixed in advance).
+deep_lobe_growth:
+  max_mm: 12
+  exclude:
+    - craniofacial_structures/mandible
+    - craniofacial_structures/skull
+    - head_muscles/masseter_right
+    - head_muscles/medial_pterygoid_right
+    - head_muscles/lateral_pterygoid_right
+    - headneck_muscles/sternocleidomastoid_right
+    - headneck_bones_vessels/internal_jugular_vein_right
+    - head_glands_cavities/submandibular_gland_right
