@@ -1,0 +1,18 @@
+{
+  "id": "eyes",
+  "names": {
+    "plain": "Eyes",
+    "anatomical": "Eyeballs",
+    "latin": "Bulbus oculi"
+  },
+  "gloss": "Generic eyes of the fitted face model.",
+  "tissue": "skin",
+  "depth": "skin",
+  "anchors": [
+    "anchor__eyes"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

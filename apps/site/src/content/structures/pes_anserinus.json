@@ -1,0 +1,19 @@
+{
+  "id": "pes_anserinus",
+  "names": {
+    "plain": "Where the nerve divides",
+    "anatomical": "Pes anserinus (bifurcation)"
+  },
+  "gloss": "The point inside the gland where the facial nerve trunk divides.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__pes_anserinus"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-bifurcation"
+  ]
+}

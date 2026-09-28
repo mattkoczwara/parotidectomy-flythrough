@@ -1,0 +1,28 @@
+---
+id: layers
+chapter: layers
+order: 3
+title: The layers over the gland
+delta:
+  camera: { zoom: 1.35, azimuth: -14, elevation: 6 }
+  gauge: 2
+  structures:
+    skin: { mode: solid, opacity: 1, emphasis: context }
+    subcutaneous_fat: { presence: 1, emphasis: focus }
+    smas: { presence: 1, emphasis: focus }
+    parotid_fascia: { presence: 1, emphasis: focus }
+    parotid_superficial_lobe: { emphasis: context }
+    parotid_deep_lobe: { emphasis: context }
+  op: { cut_skin: 1, cut_fat: 1, cut_smas: 1, cut_fascia: 0 }
+  labels:
+    - { structureId: skin }
+    - { structureId: subcutaneous_fat }
+    - { structureId: smas }
+    - { structureId: parotid_fascia }
+transition: { structures: [0, 0.4], op: [0.3, 1] }
+sceneDescription: A stepped window is cut through the side of the face. From outside in, the rims show the skin, the yellow fat beneath it, a thin fibrous sheet (the SMAS), and the pale capsule covering the gland.
+claims: [flap-plane]
+---
+import Claim from '../../components/Claim.astro';
+
+A stepped window opens the layers one by one: skin, the fat beneath it, a thin supporting sheet (the SMAS), and the tough capsule around the gland. <Claim id="flap-plane">In surgery the skin is lifted in the layer just outside that capsule.</Claim>

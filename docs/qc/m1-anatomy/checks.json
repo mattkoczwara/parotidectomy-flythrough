@@ -10,8 +10,8 @@
   },
   "pes_inside_parotid": {
     "pass": true,
-    "sdf_mm": -2.71,
-    "summary": "signed distance -2.7 mm (negative = inside)"
+    "sdf_mm": -2.51,
+    "summary": "signed distance -2.5 mm (negative = inside)"
   },
   "nerve_lateral_to_rmv": {
     "pass": true,
@@ -37,22 +37,22 @@
   "branch_order_superior_to_inferior": {
     "pass": true,
     "z_at_plane": {
-      "facial_nerve_temporal": 277.44964920886906,
-      "facial_nerve_zygomatic": 258.3658242774321,
-      "facial_nerve_buccal": 249.26944697599902,
-      "facial_nerve_marginal_mandibular": 200.89424299953924
+      "facial_nerve_temporal": 277.43979253164986,
+      "facial_nerve_zygomatic": 257.8255542752418,
+      "facial_nerve_buccal": 250.2583415640719,
+      "facial_nerve_marginal_mandibular": 200.91733631262326
     },
-    "summary": "temporal=277 > zygomatic=258 > buccal=249 > marginal_mandibular=201"
+    "summary": "temporal=277 > zygomatic=258 > buccal=250 > marginal_mandibular=201"
   },
   "mm_near_mandible_border": {
     "pass": true,
-    "max_mm": 7.8,
-    "summary": "distal half within 7.8 mm of the mandible surface"
+    "max_mm": 7.0,
+    "summary": "distal half within 7.0 mm of the mandible surface"
   },
   "temporal_superficial_to_arch": {
     "pass": true,
-    "min_clearance_mm": 1.28,
-    "summary": "min clearance from skull 1.3 mm"
+    "min_clearance_mm": 1.42,
+    "summary": "min clearance from skull 1.4 mm"
   },
   "no_bone_intersection": {
     "pass": true,
@@ -112,41 +112,105 @@
     "orphans": [],
     "summary": "10 facial-nerve segments, all descend from the foramen"
   },
+  "deep_lobe_completion": {
+    "pass": true,
+    "method": "authored region (anatomical bounds; CT does not resolve the deep-lobe boundary)",
+    "added_ml": 8.06,
+    "summary": "authored retromandibular portion adds 8.1 mL to the 18.0 mL segmented gland"
+  },
   "superficial_fraction": {
     "pass": true,
-    "value": 0.58,
+    "value": 0.585,
     "range": [
       0.55,
       0.75
     ],
-    "summary": "58.0% of the completed gland lies lateral to the nerve plane (Pujol-Olmo 2020: 61\u201369% by weight in 19 specimens; reported, not tuned)"
-  },
-  "tumour_placement": {
-    "pass": true,
-    "nerve_clearance_mm": 1.58,
-    "fraction_lateral_to_nerve_plane": 1.0,
-    "fraction_within_gland": 1.0,
-    "max_diameter_mm": 18.6,
-    "summary": "19 mm, 100% superficial to the nerve plane, 100% within the gland, nerve clearance 1.6 mm"
-  },
-  "deep_lobe_growth": {
-    "pass": true,
-    "added_ml": 2.89,
-    "hu_window": [
-      -14,
-      31
-    ],
-    "summary": "added 2.9 mL to the 18.2 mL segmented gland (HU -14..31, within 12 mm)"
-  },
-  "deep_lobe_completion": {
-    "pass": true,
-    "method": "authored region (anatomical bounds; CT does not resolve the deep-lobe boundary)",
-    "added_ml": 8.19,
-    "summary": "authored retromandibular portion adds 8.2 mL to the 18.2 mL segmented gland"
+    "summary": "58.5% of the completed gland lies lateral to the nerve plane (Pujol-Olmo 2020: 61\u201369% by weight in 19 specimens; reported, not tuned)"
   },
   "vessels_within_gland": {
     "pass": true,
     "rmv_fraction_in_gland": 1.0,
     "summary": "100% of the retromandibular vein centreline within the gland between its entry and lower pole"
+  },
+  "tumour_placement": {
+    "pass": true,
+    "nerve_clearance_mm": 1.57,
+    "fraction_lateral_to_nerve_plane": 1.0,
+    "fraction_within_gland": 1.0,
+    "max_diameter_mm": 18.6,
+    "summary": "19 mm, 100% superficial to the nerve plane, 100% within the gland, nerve clearance 1.6 mm"
+  },
+  "face_fit": {
+    "pass": true,
+    "axis_scales_xyz": [
+      1.1247,
+      1.0863,
+      0.975
+    ],
+    "measurements_ct_mm": {
+      "pronasale": [
+        7.8,
+        181.2,
+        225.0
+      ],
+      "pogonion": [
+        5.5,
+        170.0,
+        184.0
+      ],
+      "length": 204.8,
+      "breadth": 166.5,
+      "lower_face": 41.0
+    },
+    "conform_region_residual_mm": {
+      "median": 0.66,
+      "p95": 2.05
+    },
+    "unconformed_face_residual_mm": {
+      "median": 3.29
+    },
+    "fraction_of_head_vertices_conformed": 0.141,
+    "high_residual_centroid": null,
+    "high_residual_count": 0,
+    "conformed_count": 704,
+    "min_depth_below_skin_mm": {
+      "digastric_posterior_belly": 25.6,
+      "external_carotid_artery": 16.05,
+      "external_jugular_vein": 4.07,
+      "facial_nerve_buccal": 11.51,
+      "facial_nerve_cervical": 11.18,
+      "facial_nerve_cervicofacial": 17.86,
+      "facial_nerve_digastric_branch": 28.03,
+      "facial_nerve_marginal_mandibular": 16.06,
+      "facial_nerve_posterior_auricular": 16.73,
+      "facial_nerve_temporal": 10.84,
+      "facial_nerve_temporofacial": 12.11,
+      "facial_nerve_trunk": 21.13,
+      "facial_nerve_zygomatic": 9.07,
+      "great_auricular_nerve": 4.05,
+      "great_auricular_nerve_anterior": 3.28,
+      "great_auricular_nerve_posterior": 4.51,
+      "internal_jugular_vein_r": 4.02,
+      "mandible": 11.46,
+      "masseter_r": 7.57,
+      "maxillary_artery": 27.31,
+      "parotid_deep_lobe": 11.67,
+      "parotid_fascia": 2.77,
+      "parotid_gland_r_complete": 3.37,
+      "parotid_superficial_lobe": 3.37,
+      "pleomorphic_adenoma": 2.98,
+      "retromandibular_vein": 17.04,
+      "retromandibular_vein_anterior": 17.66,
+      "retromandibular_vein_posterior": 4.37,
+      "skull": 1.76,
+      "sternocleidomastoid_r": 4.02,
+      "styloid_process": 34.8,
+      "submandibular_gland_r": 4.09,
+      "superficial_temporal_artery": 10.6,
+      "temporalis_r": 4.19
+    },
+    "min_depth_soft_tissue_mm": 2.77,
+    "min_depth_bone_mm": 1.76,
+    "summary": "conform-region residual median 0.66 mm (p95 2.05); shallowest soft tissue 2.77 mm and bone 1.76 mm below the skin; 14% of head vertices conformed"
   }
 }

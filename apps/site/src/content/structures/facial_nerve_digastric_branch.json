@@ -1,0 +1,20 @@
+{
+  "id": "facial_nerve_digastric_branch",
+  "names": {
+    "plain": "Branch to the digastric",
+    "anatomical": "Digastric branch",
+    "latin": "Ramus digastricus nervi facialis"
+  },
+  "gloss": "Supplies the posterior belly of the digastric muscle.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_digastric_branch"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-exits-stylomastoid-foramen"
+  ]
+}

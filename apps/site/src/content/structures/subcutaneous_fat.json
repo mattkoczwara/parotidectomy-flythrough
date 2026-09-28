@@ -1,0 +1,18 @@
+{
+  "id": "subcutaneous_fat",
+  "names": {
+    "plain": "Fat under the skin",
+    "anatomical": "Subcutaneous fat",
+    "latin": "Tela subcutanea"
+  },
+  "gloss": "The fatty layer between the skin and the SMAS.",
+  "tissue": "fat",
+  "depth": "subcutaneous",
+  "anchors": [
+    "anchor__subcutaneous_fat"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

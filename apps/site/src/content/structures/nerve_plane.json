@@ -1,0 +1,19 @@
+{
+  "id": "nerve_plane",
+  "names": {
+    "plain": "Plane of the facial nerve",
+    "anatomical": "Facial nerve plane"
+  },
+  "gloss": "The surface the nerve lies in, dividing superficial from deep gland (a surgical construct shown schematically).",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__nerve_plane"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "parotid-lobes-surgical"
+  ]
+}

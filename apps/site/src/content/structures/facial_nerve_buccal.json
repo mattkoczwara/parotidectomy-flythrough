@@ -1,0 +1,21 @@
+{
+  "id": "facial_nerve_buccal",
+  "names": {
+    "plain": "Cheek branch",
+    "anatomical": "Buccal branch",
+    "latin": "Rami buccales nervi facialis"
+  },
+  "gloss": "Moves the cheek and upper lip.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_buccal"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-five-branch-groups",
+    "buccal-branch-course"
+  ]
+}

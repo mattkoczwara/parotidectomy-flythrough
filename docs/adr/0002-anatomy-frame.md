@@ -72,3 +72,29 @@ QC output is in `docs/qc/m0-registration/`.
 - Visual QC for segmentations uses overlays on the CT they came from (`docs/qc/m0-registration/ct_*.png`). Cryosection QC of authored structures follows the M1 landmark registration.
 - The CT has 3 mm spacing below slice 1162, so the inferior parotid and the marginal mandibular region have coarser segmentation. Authored geometry there relies on the specs and literature.
 - Series-boundary banding is visible in the resampled CT. It does not affect the segmentations used, but it limits CT-derived detail at those levels.
+
+## Amendment (2026-09-28, M1): the M0 CT grid cropped the face
+
+The M0 CT volume used the *intersection* of the five series' fields of view. The 250 mm top-of-head series limited that, cutting off everything anterior to about y = 125 mm: the lower incisors, the mandibular body and chin, and the anterior face. The truncated mandible (38.9 mL) biased the HRA comparison.
+
+The volume is now built on the **union** of the fields of view, clipped to a head-and-neck box (R −130…130, A −120…200 mm). Uncovered pixels are air.
+
+TotalSegmentator was rerun on the new grid:
+- The parotid, masseter, SCM, ear canal and styloid are unchanged to within about 0.5 mm, so the world frame is consistent.
+- The mandible is now complete (66.9 mL).
+
+**HRA vs CT, rerun:**
+
+| Measure | Mean surface distance |
+|---|---|
+| Mandible | **1.8 mm (passes the < 2 mm criterion)** |
+| Parotid, right to right | 12.5 mm |
+| Parotid, left to left | 14.8 mm |
+
+Similarity scale is 1.10 and sides are consistent.
+
+**Revised finding:**
+- The HRA mandible *does* register to the CT frame.
+- The HRA parotids still sit 12–15 mm from the segmented glands, so they remain unusable as registered geometry.
+- The decision is unchanged: the CT is canonical, and HRA is a morphology reference.
+- The cryosection findings are unaffected.

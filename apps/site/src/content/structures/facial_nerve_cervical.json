@@ -1,0 +1,20 @@
+{
+  "id": "facial_nerve_cervical",
+  "names": {
+    "plain": "Neck branch",
+    "anatomical": "Cervical branch",
+    "latin": "Ramus colli nervi facialis"
+  },
+  "gloss": "Supplies the thin neck muscle (platysma).",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_cervical"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-five-branch-groups"
+  ]
+}

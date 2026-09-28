@@ -1,0 +1,20 @@
+{
+  "id": "facial_nerve_zygomatic",
+  "names": {
+    "plain": "Eyelid branch",
+    "anatomical": "Zygomatic branch",
+    "latin": "Rami zygomatici nervi facialis"
+  },
+  "gloss": "Closes the eye.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_zygomatic"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-five-branch-groups"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "submandibular_gland_r",
+  "names": {
+    "plain": "Gland under the jaw",
+    "anatomical": "Submandibular gland",
+    "latin": "Glandula submandibularis"
+  },
+  "gloss": "The second salivary gland, below the jaw.",
+  "tissue": "gland",
+  "depth": "deep-lobe",
+  "anchors": [
+    "anchor__submandibular_gland_r"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

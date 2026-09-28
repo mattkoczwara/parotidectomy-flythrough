@@ -1,0 +1,20 @@
+{
+  "id": "facial_nerve_temporal",
+  "names": {
+    "plain": "Forehead branch",
+    "anatomical": "Temporal (frontal) branch",
+    "latin": "Rami temporales nervi facialis"
+  },
+  "gloss": "Raises the eyebrow and wrinkles the forehead.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_temporal"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-five-branch-groups"
+  ]
+}

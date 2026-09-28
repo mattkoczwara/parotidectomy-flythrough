@@ -1,0 +1,18 @@
+{
+  "id": "internal_jugular_vein_r",
+  "names": {
+    "plain": "Main neck vein",
+    "anatomical": "Internal jugular vein",
+    "latin": "Vena jugularis interna"
+  },
+  "gloss": "Deep vein of the neck.",
+  "tissue": "vein",
+  "depth": "parapharyngeal",
+  "anchors": [
+    "anchor__internal_jugular_vein_r"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

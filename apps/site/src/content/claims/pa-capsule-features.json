@@ -1,0 +1,52 @@
+{
+  "id": "pa-capsule-features",
+  "statement": {
+    "essentials": "A pleomorphic adenoma's outer layer is often thin or incomplete, and small finger-like extensions can reach beyond it, which is why surgeons remove a cuff of normal gland around it.",
+    "anatomy": "Pleomorphic adenomas frequently have an incomplete capsule, capsular penetration, pseudopodia or satellite nodules; these features are associated with recurrence after enucleation or rupture."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "zbaren-stauffer-2007",
+      "support": "direct"
+    },
+    {
+      "sourceId": "dulguerov-2017",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Incomplete capsule",
+      "value": 33.0,
+      "unit": "%",
+      "n": "218 tumours",
+      "population": "Resected parotid pleomorphic adenomas",
+      "design": "Histopathological case series",
+      "sourceId": "zbaren-stauffer-2007"
+    },
+    {
+      "label": "Pseudopodia",
+      "value": 40.0,
+      "unit": "%",
+      "n": "218 tumours",
+      "population": "Resected parotid pleomorphic adenomas",
+      "design": "Histopathological case series",
+      "sourceId": "zbaren-stauffer-2007"
+    },
+    {
+      "label": "At least one capsular feature",
+      "value": 73.0,
+      "unit": "%",
+      "n": "218 tumours",
+      "population": "Resected parotid pleomorphic adenomas",
+      "design": "Histopathological case series",
+      "sourceId": "zbaren-stauffer-2007"
+    }
+  ],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

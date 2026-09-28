@@ -1,0 +1,25 @@
+---
+id: tumour
+chapter: tumour
+order: 4
+title: The tumour in the outer part of the gland
+delta:
+  camera: { zoom: 1.25, frame: [pleomorphic_adenoma, parotid_superficial_lobe] }
+  gauge: 3
+  op: { cut_fascia: 1 }
+  structures:
+    subcutaneous_fat: { emphasis: context }
+    smas: { emphasis: context }
+    parotid_fascia: { emphasis: context }
+    parotid_superficial_lobe: { mode: ghost, opacity: 0.55, emphasis: context }
+    pleomorphic_adenoma: { emphasis: focus }
+  labels:
+    - { structureId: pleomorphic_adenoma }
+    - { structureId: parotid_superficial_lobe }
+transition: { op: [0, 0.5], structures: [0.4, 1] }
+sceneDescription: The gland capsule is opened. Within the outer part of the gland, partly see-through, a pale lobulated mass about 2 cm across sits just under the gland surface.
+claims: [pa-capsule-features]
+---
+import Claim from '../../components/Claim.astro';
+
+The tumour shown is about 2 cm across, in the outer part of the gland. <Claim id="pa-capsule-features">Its covering is often thin or incomplete, and small extensions can reach beyond it — one reason surgeons remove a cuff of normal gland around the tumour rather than shelling it out.</Claim>

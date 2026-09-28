@@ -1,0 +1,18 @@
+{
+  "id": "skin",
+  "names": {
+    "plain": "Skin",
+    "anatomical": "Skin",
+    "latin": "Cutis"
+  },
+  "gloss": "The outer covering; here a generic (MakeHuman) face fitted over the anatomy.",
+  "tissue": "skin",
+  "depth": "skin",
+  "anchors": [
+    "anchor__skin"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

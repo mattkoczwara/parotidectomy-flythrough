@@ -1,0 +1,19 @@
+{
+  "id": "retromandibular_vein_posterior",
+  "names": {
+    "plain": "Vein behind the jaw, back division",
+    "anatomical": "Retromandibular vein, posterior division"
+  },
+  "gloss": "Joins the posterior auricular vein to form the external jugular vein.",
+  "tissue": "vein",
+  "depth": "deep-lobe",
+  "anchors": [
+    "anchor__retromandibular_vein_posterior"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "eca-rmv-in-gland"
+  ]
+}

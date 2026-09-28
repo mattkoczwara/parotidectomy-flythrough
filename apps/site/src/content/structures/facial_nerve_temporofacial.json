@@ -1,0 +1,20 @@
+{
+  "id": "facial_nerve_temporofacial",
+  "names": {
+    "plain": "Upper division of the facial nerve",
+    "anatomical": "Temporofacial division",
+    "latin": "Divisio temporofacialis"
+  },
+  "gloss": "Upper division of the nerve after it splits inside the gland.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_temporofacial"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-bifurcation"
+  ]
+}

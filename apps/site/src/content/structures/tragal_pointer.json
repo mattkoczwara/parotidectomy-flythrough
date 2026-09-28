@@ -1,0 +1,19 @@
+{
+  "id": "tragal_pointer",
+  "names": {
+    "plain": "Ear-canal cartilage pointer",
+    "anatomical": "Tragal pointer"
+  },
+  "gloss": "The inner tip of the ear-canal cartilage; a traditional but mobile guide to the nerve.",
+  "tissue": "cartilage",
+  "depth": "skeletal",
+  "anchors": [
+    "anchor__tragal_pointer"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "landmark-tragal-pointer"
+  ]
+}

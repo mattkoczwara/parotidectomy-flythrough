@@ -1,0 +1,17 @@
+{
+  "id": "smas",
+  "names": {
+    "plain": "Facial support layer (SMAS)",
+    "anatomical": "Superficial musculoaponeurotic system"
+  },
+  "gloss": "A thin fibrous-muscular sheet under the fat; face-lift plane and a reconstructive option after parotidectomy.",
+  "tissue": "fascia",
+  "depth": "smas-fascia",
+  "anchors": [
+    "anchor__smas"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

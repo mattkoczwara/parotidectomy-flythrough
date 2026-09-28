@@ -1,0 +1,20 @@
+{
+  "id": "external_jugular_vein",
+  "names": {
+    "plain": "Outer neck vein",
+    "anatomical": "External jugular vein",
+    "latin": "Vena jugularis externa"
+  },
+  "gloss": "Crosses the neck muscle below the ear.",
+  "tissue": "vein",
+  "depth": "subcutaneous",
+  "anchors": [
+    "anchor__external_jugular_vein"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "great-auricular-nerve-course"
+  ]
+}

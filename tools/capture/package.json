@@ -1,0 +1,17 @@
+{
+  "name": "@atlas/capture",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Playwright harness against the production build: static fallback figures, plate determinism, and accessibility behaviour (focus, announcements).",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "capture": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/pngjs": "^6.0.5",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "temporalis_r",
+  "names": {
+    "plain": "Temple muscle",
+    "anatomical": "Temporalis",
+    "latin": "Musculus temporalis"
+  },
+  "gloss": "Chewing muscle in the temple.",
+  "tissue": "muscle",
+  "depth": "skeletal",
+  "anchors": [
+    "anchor__temporalis_r"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

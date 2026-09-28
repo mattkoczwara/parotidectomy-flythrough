@@ -1,0 +1,18 @@
+{
+  "id": "mandible",
+  "names": {
+    "plain": "Jawbone",
+    "anatomical": "Mandible",
+    "latin": "Mandibula"
+  },
+  "gloss": "The gland wraps around its back edge.",
+  "tissue": "bone",
+  "depth": "skeletal",
+  "anchors": [
+    "anchor__mandible"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

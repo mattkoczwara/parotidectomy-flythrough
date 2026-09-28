@@ -1,17 +1,122 @@
 ---
-// Bootstrap placeholder. The atlas page (plates, scene island, evidence) is built from M1 onward.
+import { getCollection, render } from 'astro:content';
+import { Font } from 'astro:assets';
+import { depthPlanes } from '@atlas/schema';
+import { existsSync } from 'node:fs';
+import '../styles/atlas.css';
+
+// Static fallback figures are captured from the running scene (tools/capture); link only those that exist.
+const hasFigure = (id: string) => existsSync(new URL(`../../public/plates/${id}.png`, import.meta.url));
+
+const chapters = (await getCollection('chapters')).map((c) => c.data).sort((a, b) => a.order - b.order);
+const stepEntries = (await getCollection('steps')).sort((a, b) => a.data.order - b.data.order);
+const steps = await Promise.all(stepEntries.map(async (e) => ({ data: e.data, Content: (await render(e)).Content })));
+const structures = (await getCollection('structures')).map((s) => s.data);
+const claims = (await getCollection('claims')).map((c) => c.data);
+const sources = (await getCollection('sources')).map((s) => s.data);
+
+// Only what the client needs: plate deltas, structure names and tissue families, and the evidence.
+const clientData = {
+  plates: steps.map(({ data }) => ({ id: data.id, title: data.title, chapter: data.chapter, delta: data.delta, transition: data.transition, sceneDescription: data.sceneDescription })),
+  structures: structures.map(({ id, names, tissue, depth }) => ({ id, names, tissue, depth })),
+  claims: Object.fromEntries(claims.map((c) => [c.id, c])),
+  sources: Object.fromEntries(sources.map((s) => [s.id, s])),
+  planes: depthPlanes,
+};
+const planeLabel: Record<string, string> = {
+  skin: 'Skin',
+  subcutaneous: 'Fat',
+  'smas-fascia': 'SMAS · capsule',
+  'superficial-lobe': 'Outer gland',
+  'nerve-plane': 'Facial nerve',
+  'deep-lobe': 'Inner gland',
+  parapharyngeal: 'Deep space',
+  skeletal: 'Bone',
+};
 ---
 
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Parotid Atlas</title>
+    <meta name="description" content="An interactive anatomical atlas of parotid tumours and parotidectomy, following a pleomorphic adenoma from anatomy to operation." />
+    <Font cssVariable="--font-serif" preload />
+    <Font cssVariable="--font-sans" preload />
   </head>
-  <body>
-    <main>
-      <h1>Parotid Atlas</h1>
-      <p>Repository bootstrap. Nothing to see yet.</p>
+  <body data-depth="essentials">
+    <a class="skip" href="#plates">Skip to the text</a>
+
+    <header class="masthead">
+      <p class="wordmark">Parotid Atlas</p>
+      <div class="controls">
+        <fieldset class="depth">
+          <legend>Reading depth</legend>
+          <label><input type="radio" name="depth" value="essentials" checked /> Essentials</label>
+          <label><input type="radio" name="depth" value="anatomy" /> Anatomy</label>
+          <label><input type="radio" name="depth" value="clinical" /> Clinical</label>
+        </fieldset>
+        <label class="motion"><input type="checkbox" id="reduce-motion" /> Reduce motion</label>
+      </div>
+    </header>
+
+    <div class="stage" aria-hidden="false">
+      <canvas id="stage-canvas" role="img" aria-label="Three-dimensional model of the right parotid region"></canvas>
+      <svg class="leaders" aria-hidden="true"></svg>
+      <ol class="labels" aria-hidden="true"></ol>
+      <div class="gauge" aria-hidden="true">
+        <p class="gauge-title">Depth</p>
+        <ol>{depthPlanes.map((p) => <li data-plane={p}>{planeLabel[p]}</li>)}</ol>
+      </div>
+      <button type="button" class="reset-view" hidden>Return to the authored view</button>
+    </div>
+
+    <nav class="rail" aria-label="Chapters">
+      <ol>
+        {chapters.map((c) => {
+          const first = steps.find((s) => s.data.chapter === c.id);
+          return first ? <li><a href={`#${first.data.id}`} data-chapter={c.id}>{c.short}</a></li> : null;
+        })}
+      </ol>
+    </nav>
+
+    <main id="plates">
+      <h1 class="visually-hidden">Parotid Atlas: from the anatomy to the operation</h1>
+      {chapters.map((c) => (
+        <section class="chapter" aria-labelledby={`chapter-${c.id}`}>
+          <h2 id={`chapter-${c.id}`} class="chapter-title">{c.title}</h2>
+          {steps.filter((s) => s.data.chapter === c.id).map(({ data, Content }) => (
+            <article class="plate" id={data.id} data-plate>
+              <h3 tabindex="-1">{data.title}</h3>
+              <div class="plate-body"><Content /></div>
+              <figure class="plate-figure">
+                {hasFigure(data.id) && <img src={`/plates/${data.id}.png`} alt="" loading="lazy" width="1280" height="800" />}
+                <figcaption><span class="visually-hidden-when-3d">In the model: </span>{data.sceneDescription}</figcaption>
+              </figure>
+            </article>
+          ))}
+        </section>
+      ))}
+      <nav class="plate-nav" aria-label="Plates">
+        <button type="button" data-nav="prev">Previous plate</button>
+        <button type="button" data-nav="next">Next plate</button>
+      </nav>
     </main>
+
+    <div class="live visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+    <dialog class="evidence" aria-labelledby="evidence-title">
+      <form method="dialog"><button class="close" aria-label="Close evidence">×</button></form>
+      <h2 id="evidence-title">Evidence</h2>
+      <div class="evidence-body"></div>
+    </dialog>
+
+    <noscript><p class="noscript">The 3D model needs JavaScript; every plate's text and description remain readable above.</p></noscript>
+    <script type="application/json" id="atlas-data" set:html={JSON.stringify(clientData)} />
+    <script>
+      import { start } from '../scripts/director.ts';
+      start();
+    </script>
   </body>
 </html>

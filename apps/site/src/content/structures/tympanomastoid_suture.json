@@ -1,0 +1,20 @@
+{
+  "id": "tympanomastoid_suture",
+  "names": {
+    "plain": "Bony seam below the ear canal",
+    "anatomical": "Tympanomastoid suture",
+    "latin": "Fissura tympanomastoidea"
+  },
+  "gloss": "A seam between two parts of the temporal bone; the nerve trunk lies just deep to its inner end.",
+  "tissue": "bone",
+  "depth": "skeletal",
+  "anchors": [
+    "anchor__tympanomastoid_suture"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "landmark-tympanomastoid-suture"
+  ]
+}

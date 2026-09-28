@@ -1,0 +1,18 @@
+{
+  "id": "skull",
+  "names": {
+    "plain": "Skull",
+    "anatomical": "Skull",
+    "latin": "Cranium"
+  },
+  "gloss": "Includes the mastoid process and the ear canal.",
+  "tissue": "bone",
+  "depth": "skeletal",
+  "anchors": [
+    "anchor__skull"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

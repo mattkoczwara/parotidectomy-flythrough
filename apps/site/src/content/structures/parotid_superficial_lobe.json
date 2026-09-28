@@ -1,0 +1,21 @@
+{
+  "id": "parotid_superficial_lobe",
+  "names": {
+    "plain": "Outer part of the parotid",
+    "anatomical": "Superficial lobe of the parotid",
+    "latin": "Pars superficialis glandulae parotideae"
+  },
+  "gloss": "The part of the gland on the outer side of the facial nerve (a surgical, not anatomical, division).",
+  "tissue": "gland",
+  "depth": "superficial-lobe",
+  "anchors": [
+    "anchor__parotid_superficial_lobe"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "parotid-lobes-surgical",
+    "parotid-size"
+  ]
+}

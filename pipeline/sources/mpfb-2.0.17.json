@@ -1,0 +1,16 @@
+{
+  "id": "mpfb-2.0.17",
+  "name": "MPFB 2.0.17 Blender extension archive (only its CC0 assets are used: base mesh and targets)",
+  "licence": "CC0-1.0 (assets); GPL-3.0-or-later (code, not used or redistributed)",
+  "licenceUrl": "https://github.com/makehumancommunity/mpfb2/blob/master/LICENSE.md",
+  "attribution": "MakeHuman / MPFB base mesh and targets (CC0 1.0), makehumancommunity.org",
+  "landing": "https://extensions.blender.org/add-ons/mpfb/",
+  "notes": "Owner-authorised download 2026-09-28. LICENSE.md verified 2026-09-28: assets (base mesh, proxies, targets, textures) CC0; MakeHuman team claims no rights over output. The add-on is not installed; assets are extracted from the archive.",
+  "files": [
+    {
+      "url": "https://extensions.blender.org/download/sha256:4f0a879d64a39bf646fbf5f53601ac678855da329d650617dca5737548239a87/add-on-mpfb-v2.0.17.zip",
+      "path": "mpfb/add-on-mpfb-v2.0.17.zip",
+      "sha256": "4f0a879d64a39bf646fbf5f53601ac678855da329d650617dca5737548239a87"
+    }
+  ]
+}

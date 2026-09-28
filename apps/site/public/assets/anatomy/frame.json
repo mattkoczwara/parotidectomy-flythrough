@@ -1,0 +1,626 @@
+{
+  "description": "glTF = [-(x-ox), (z-oz), (y-oy)] * 0.001 from CT RAS mm (ADR-0002)",
+  "origin_ras_mm": [
+    68.5,
+    81.7,
+    232.5
+  ],
+  "peel": {
+    "hinge_x": -0.010082817671664274,
+    "front_z0": -0.01933910105649423,
+    "front_z1": 0.018186100169142478
+  },
+  "bounds": {
+    "skin": {
+      "min": [
+        -0.03634,
+        -0.08446,
+        -0.14084
+      ],
+      "max": [
+        0.16622,
+        0.1586,
+        0.10985
+      ]
+    },
+    "eyes": {
+      "min": [
+        0.01765,
+        0.01758,
+        0.04685
+      ],
+      "max": [
+        0.11795,
+        0.04452,
+        0.07871
+      ]
+    },
+    "subcutaneous_fat": {
+      "min": [
+        -0.0279,
+        -0.07203,
+        -0.05159
+      ],
+      "max": [
+        0.04839,
+        0.06702,
+        0.08794
+      ]
+    },
+    "smas": {
+      "min": [
+        -0.01058,
+        -0.07187,
+        -0.05142
+      ],
+      "max": [
+        0.04824,
+        0.0668,
+        0.08408
+      ]
+    },
+    "parotid_fascia": {
+      "min": [
+        -0.01164,
+        -0.0379,
+        -0.02333
+      ],
+      "max": [
+        0.02363,
+        0.02602,
+        0.01968
+      ]
+    },
+    "parotid_superficial_lobe": {
+      "min": [
+        -0.01014,
+        -0.0359,
+        -0.01934
+      ],
+      "max": [
+        0.01153,
+        0.02302,
+        0.01819
+      ]
+    },
+    "pleomorphic_adenoma": {
+      "min": [
+        -0.01128,
+        -0.01016,
+        -0.00714
+      ],
+      "max": [
+        0.00294,
+        0.00731,
+        0.01147
+      ]
+    },
+    "parotid_deep_lobe": {
+      "min": [
+        0.00122,
+        -0.02992,
+        -0.02181
+      ],
+      "max": [
+        0.02213,
+        0.02402,
+        0.01348
+      ]
+    },
+    "facial_nerve_trunk": {
+      "min": [
+        0.00883,
+        0.0113,
+        -0.019
+      ],
+      "max": [
+        0.02482,
+        0.02182,
+        -0.00954
+      ]
+    },
+    "facial_nerve_temporofacial": {
+      "min": [
+        0.00162,
+        0.01151,
+        -0.01168
+      ],
+      "max": [
+        0.01098,
+        0.02339,
+        -0.00082
+      ]
+    },
+    "facial_nerve_cervicofacial": {
+      "min": [
+        0.00333,
+        -0.00533,
+        -0.01164
+      ],
+      "max": [
+        0.01094,
+        0.01343,
+        -0.00188
+      ]
+    },
+    "facial_nerve_temporal": {
+      "min": [
+        0.00034,
+        0.02185,
+        -0.00234
+      ],
+      "max": [
+        0.01385,
+        0.05984,
+        0.03064
+      ]
+    },
+    "facial_nerve_zygomatic": {
+      "min": [
+        0.00072,
+        0.02186,
+        -0.00233
+      ],
+      "max": [
+        0.00463,
+        0.03585,
+        0.04119
+      ]
+    },
+    "facial_nerve_buccal": {
+      "min": [
+        -0.00053,
+        -0.00515,
+        -0.00335
+      ],
+      "max": [
+        0.01385,
+        0.01829,
+        0.03865
+      ]
+    },
+    "facial_nerve_marginal_mandibular": {
+      "min": [
+        0.00367,
+        -0.03379,
+        -0.00329
+      ],
+      "max": [
+        0.0208,
+        -0.00391,
+        0.0306
+      ]
+    },
+    "facial_nerve_cervical": {
+      "min": [
+        0.00192,
+        -0.05779,
+        -0.00519
+      ],
+      "max": [
+        0.0058,
+        -0.00391,
+        -0.0014
+      ]
+    },
+    "facial_nerve_posterior_auricular": {
+      "min": [
+        0.00212,
+        0.00912,
+        -0.02502
+      ],
+      "max": [
+        0.01794,
+        0.02149,
+        -0.01425
+      ]
+    },
+    "facial_nerve_digastric_branch": {
+      "min": [
+        0.01716,
+        0.01221,
+        -0.01999
+      ],
+      "max": [
+        0.01879,
+        0.01784,
+        -0.01437
+      ]
+    },
+    "great_auricular_nerve": {
+      "min": [
+        -0.00439,
+        -0.08425,
+        -0.02199
+      ],
+      "max": [
+        0.00274,
+        -0.02785,
+        -0.01476
+      ]
+    },
+    "great_auricular_nerve_anterior": {
+      "min": [
+        -0.01089,
+        -0.02922,
+        -0.01614
+      ],
+      "max": [
+        -0.00081,
+        -0.00611,
+        0.0027
+      ]
+    },
+    "great_auricular_nerve_posterior": {
+      "min": [
+        -0.00989,
+        -0.02923,
+        -0.01615
+      ],
+      "max": [
+        -0.0008,
+        0.01789,
+        -0.01495
+      ]
+    },
+    "retromandibular_vein": {
+      "min": [
+        0.00652,
+        -0.02947,
+        -0.00905
+      ],
+      "max": [
+        0.01639,
+        0.02683,
+        0.00229
+      ]
+    },
+    "retromandibular_vein_anterior": {
+      "min": [
+        0.00716,
+        -0.04267,
+        -0.00301
+      ],
+      "max": [
+        0.01865,
+        -0.02414,
+        0.01642
+      ]
+    },
+    "retromandibular_vein_posterior": {
+      "min": [
+        -0.00389,
+        -0.0538,
+        -0.01153
+      ],
+      "max": [
+        0.01261,
+        -0.02413,
+        0.00166
+      ]
+    },
+    "external_jugular_vein": {
+      "min": [
+        -0.00595,
+        -0.08672,
+        -0.01627
+      ],
+      "max": [
+        0.00168,
+        -0.04831,
+        -0.00273
+      ]
+    },
+    "external_carotid_artery": {
+      "min": [
+        0.01631,
+        -0.06745,
+        -0.00546
+      ],
+      "max": [
+        0.04945,
+        0.02168,
+        0.00149
+      ]
+    },
+    "maxillary_artery": {
+      "min": [
+        0.01691,
+        0.01791,
+        -0.0023
+      ],
+      "max": [
+        0.03777,
+        0.02378,
+        0.01358
+      ]
+    },
+    "superficial_temporal_artery": {
+      "min": [
+        -0.00199,
+        0.01801,
+        -0.00813
+      ],
+      "max": [
+        0.02,
+        0.06261,
+        0.00077
+      ]
+    },
+    "masseter_r": {
+      "min": [
+        0.00041,
+        -0.0351,
+        0.00271
+      ],
+      "max": [
+        0.02663,
+        0.04183,
+        0.0516
+      ]
+    },
+    "temporalis_r": {
+      "min": [
+        -0.00364,
+        0.00532,
+        -0.05445
+      ],
+      "max": [
+        0.03709,
+        0.13359,
+        0.05702
+      ]
+    },
+    "sternocleidomastoid_r": {
+      "min": [
+        -0.00188,
+        -0.0825,
+        -0.05245
+      ],
+      "max": [
+        0.03395,
+        0.01289,
+        0.0182
+      ]
+    },
+    "digastric_posterior_belly": {
+      "min": [
+        0.01368,
+        -0.0575,
+        -0.02965
+      ],
+      "max": [
+        0.04246,
+        0.01849,
+        0.00928
+      ]
+    },
+    "submandibular_gland_r": {
+      "min": [
+        0.01468,
+        -0.06601,
+        0.0109
+      ],
+      "max": [
+        0.0377,
+        -0.0371,
+        0.03093
+      ]
+    },
+    "internal_jugular_vein_r": {
+      "min": [
+        0.0159,
+        -0.0825,
+        -0.01681
+      ],
+      "max": [
+        0.03839,
+        0.02528,
+        -0.00165
+      ]
+    },
+    "mandible": {
+      "min": [
+        0.00572,
+        -0.06702,
+        -0.00658
+      ],
+      "max": [
+        0.12787,
+        0.03892,
+        0.07792
+      ]
+    },
+    "skull": {
+      "min": [
+        -0.00038,
+        -0.00869,
+        -0.10857
+      ],
+      "max": [
+        0.13914,
+        0.157,
+        0.09093
+      ]
+    },
+    "styloid_process": {
+      "min": [
+        0.0256,
+        -0.00118,
+        -0.01203
+      ],
+      "max": [
+        0.0304,
+        0.02283,
+        -0.00302
+      ]
+    },
+    "nerve_plane": {
+      "min": [
+        9e-05,
+        -0.0475,
+        -0.03095
+      ],
+      "max": [
+        0.03367,
+        0.0245,
+        0.0198
+      ]
+    }
+  },
+  "structures": {
+    "skin": {
+      "vertices": 34728,
+      "triangles": 69452
+    },
+    "eyes": {
+      "vertices": 144,
+      "triangles": 280
+    },
+    "subcutaneous_fat": {
+      "vertices": 19998,
+      "triangles": 40000
+    },
+    "smas": {
+      "vertices": 14942,
+      "triangles": 30000
+    },
+    "parotid_fascia": {
+      "vertices": 10002,
+      "triangles": 20000
+    },
+    "parotid_superficial_lobe": {
+      "vertices": 8002,
+      "triangles": 16000
+    },
+    "pleomorphic_adenoma": {
+      "vertices": 2562,
+      "triangles": 5120
+    },
+    "parotid_deep_lobe": {
+      "vertices": 6002,
+      "triangles": 12000
+    },
+    "facial_nerve_trunk": {
+      "vertices": 362,
+      "triangles": 720
+    },
+    "facial_nerve_temporofacial": {
+      "vertices": 338,
+      "triangles": 672
+    },
+    "facial_nerve_cervicofacial": {
+      "vertices": 398,
+      "triangles": 792
+    },
+    "facial_nerve_temporal": {
+      "vertices": 890,
+      "triangles": 1776
+    },
+    "facial_nerve_zygomatic": {
+      "vertices": 782,
+      "triangles": 1560
+    },
+    "facial_nerve_buccal": {
+      "vertices": 974,
+      "triangles": 1944
+    },
+    "facial_nerve_marginal_mandibular": {
+      "vertices": 890,
+      "triangles": 1776
+    },
+    "facial_nerve_cervical": {
+      "vertices": 902,
+      "triangles": 1800
+    },
+    "facial_nerve_posterior_auricular": {
+      "vertices": 518,
+      "triangles": 1032
+    },
+    "facial_nerve_digastric_branch": {
+      "vertices": 194,
+      "triangles": 384
+    },
+    "great_auricular_nerve": {
+      "vertices": 938,
+      "triangles": 1872
+    },
+    "great_auricular_nerve_anterior": {
+      "vertices": 542,
+      "triangles": 1080
+    },
+    "great_auricular_nerve_posterior": {
+      "vertices": 794,
+      "triangles": 1584
+    },
+    "retromandibular_vein": {
+      "vertices": 1170,
+      "triangles": 2336
+    },
+    "retromandibular_vein_anterior": {
+      "vertices": 562,
+      "triangles": 1120
+    },
+    "retromandibular_vein_posterior": {
+      "vertices": 754,
+      "triangles": 1504
+    },
+    "external_jugular_vein": {
+      "vertices": 802,
+      "triangles": 1600
+    },
+    "external_carotid_artery": {
+      "vertices": 1954,
+      "triangles": 3904
+    },
+    "maxillary_artery": {
+      "vertices": 578,
+      "triangles": 1152
+    },
+    "superficial_temporal_artery": {
+      "vertices": 1186,
+      "triangles": 2368
+    },
+    "masseter_r": {
+      "vertices": 6002,
+      "triangles": 12000
+    },
+    "temporalis_r": {
+      "vertices": 5002,
+      "triangles": 10000
+    },
+    "sternocleidomastoid_r": {
+      "vertices": 3162,
+      "triangles": 6320
+    },
+    "digastric_posterior_belly": {
+      "vertices": 2182,
+      "triangles": 4360
+    },
+    "submandibular_gland_r": {
+      "vertices": 3002,
+      "triangles": 6000
+    },
+    "internal_jugular_vein_r": {
+      "vertices": 1593,
+      "triangles": 3182
+    },
+    "mandible": {
+      "vertices": 19998,
+      "triangles": 40000
+    },
+    "skull": {
+      "vertices": 44844,
+      "triangles": 90000
+    },
+    "styloid_process": {
+      "vertices": 422,
+      "triangles": 840
+    },
+    "nerve_plane": {
+      "vertices": 2000,
+      "triangles": 3822
+    }
+  },
+  "triangles_total": 400352
+}

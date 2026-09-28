@@ -1,0 +1,46 @@
+{
+  "id": "pa-most-common",
+  "statement": {
+    "essentials": "Most lumps in the parotid are benign, and the most common is a pleomorphic adenoma.",
+    "anatomy": "Pleomorphic adenoma is the most common salivary gland neoplasm and arises most often in the parotid."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "statpearls-pleomorphic-adenoma",
+      "support": "direct"
+    },
+    {
+      "sourceId": "eveson-cawson-1985",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Share of all salivary gland tumours",
+      "value": 60.0,
+      "unit": "%",
+      "range": [
+        45.0,
+        75.0
+      ],
+      "population": "Salivary gland tumours in published series",
+      "design": "Narrative reference chapter (secondary)",
+      "sourceId": "statpearls-pleomorphic-adenoma"
+    },
+    {
+      "label": "Arising in the parotid",
+      "value": 84.0,
+      "unit": "%",
+      "population": "Pleomorphic adenomas in published series",
+      "design": "Narrative reference chapter (secondary)",
+      "sourceId": "statpearls-pleomorphic-adenoma"
+    }
+  ],
+  "limitations": "Secondary source; the share of Warthin tumour has risen in some regions (Franzen 2018), so proportions vary by era and place.",
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -3,11 +3,18 @@
   "private": true,
   "type": "module",
   "version": "0.0.0",
-  "description": "Rendering layer behind resolve(semantic) -> RenderState: renderer, materials, loader, director, labels, picking, tiers. three.js is added only after the M0 renderer spike.",
+  "description": "Rendering layer: resolves SceneState from @atlas/timeline onto the anatomy glTF with three.js r186 WebGPURenderer (WebGL2 fallback) \u2014 materials, cutaway, ghosting, peel, contour, framing cameras, label anchors, tiers.",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "three": "0.186.1",
+    "@atlas/timeline": "*"
+  },
+  "devDependencies": {
+    "@types/three": "0.186.0"
   }
 }

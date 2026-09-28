@@ -1,0 +1,20 @@
+{
+  "id": "styloid_process",
+  "names": {
+    "plain": "Styloid process",
+    "anatomical": "Styloid process",
+    "latin": "Processus styloideus"
+  },
+  "gloss": "A thin bone spur; the nerve trunk passes just outside it.",
+  "tissue": "bone",
+  "depth": "skeletal",
+  "anchors": [
+    "anchor__styloid_process"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "landmark-styloid"
+  ]
+}

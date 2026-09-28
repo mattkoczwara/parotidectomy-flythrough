@@ -1,0 +1,20 @@
+{
+  "id": "superficial_temporal_artery",
+  "names": {
+    "plain": "Temple artery",
+    "anatomical": "Superficial temporal artery",
+    "latin": "Arteria temporalis superficialis"
+  },
+  "gloss": "Terminal branch in front of the ear to the scalp.",
+  "tissue": "artery",
+  "depth": "subcutaneous",
+  "anchors": [
+    "anchor__superficial_temporal_artery"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "eca-rmv-in-gland"
+  ]
+}

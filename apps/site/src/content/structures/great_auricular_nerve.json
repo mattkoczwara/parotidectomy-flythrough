@@ -1,0 +1,20 @@
+{
+  "id": "great_auricular_nerve",
+  "names": {
+    "plain": "Earlobe skin nerve",
+    "anatomical": "Great auricular nerve",
+    "latin": "Nervus auricularis magnus"
+  },
+  "gloss": "Carries feeling from the earlobe and the skin over the gland.",
+  "tissue": "nerve",
+  "depth": "subcutaneous",
+  "anchors": [
+    "anchor__great_auricular_nerve"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "great-auricular-nerve-course"
+  ]
+}

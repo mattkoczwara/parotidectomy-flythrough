@@ -60,7 +60,9 @@ export function checkContent(content: Content): string[] {
     if (!allowed.includes(a.licence.id) && !a.licence.exceptionAdr) {
       errors.push(`assets/${a.id}: licence "${a.licence.id}" is outside the allow-list and has no ADR exception`);
     }
-    if (a.kind !== 'source-data' && a.kind !== 'model-weights' && !a.sha256) {
+    // Source data and weights are checksummed in pipeline/sources manifests; fonts are fetched, subset and
+    // content-hashed per file by the Astro Fonts API at build time.
+    if (a.kind !== 'source-data' && a.kind !== 'model-weights' && a.kind !== 'font' && !a.sha256) {
       errors.push(`assets/${a.id}: shipped asset needs a sha256`);
     }
     if (a.kind === 'derived-mesh' && a.derivedFrom.length === 0) {

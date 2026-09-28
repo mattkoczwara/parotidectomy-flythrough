@@ -1,0 +1,19 @@
+{
+  "id": "retromandibular_vein_anterior",
+  "names": {
+    "plain": "Vein behind the jaw, front division",
+    "anatomical": "Retromandibular vein, anterior division"
+  },
+  "gloss": "Joins the facial vein.",
+  "tissue": "vein",
+  "depth": "deep-lobe",
+  "anchors": [
+    "anchor__retromandibular_vein_anterior"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "eca-rmv-in-gland"
+  ]
+}

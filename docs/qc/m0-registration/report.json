@@ -1,100 +1,100 @@
 {
   "structures": {
     "mandible": {
-      "volume_ml": 38.90925,
+      "volume_ml": 66.848625,
       "centroid_mm": [
-        1.8,
-        102.2,
-        222.7
+        2.4,
+        117.4,
+        210.6
       ]
     },
     "skull": {
-      "volume_ml": 577.6475625,
+      "volume_ml": 717.777,
       "centroid_mm": [
         -1.0,
-        59.9,
-        305.5
+        84.6,
+        302.5
       ]
     },
     "parotid_r": {
-      "volume_ml": 18.1648125,
+      "volume_ml": 17.98875,
       "centroid_mm": [
-        68.3,
-        81.3,
-        232.1
+        68.2,
+        81.6,
+        231.4
       ]
     },
     "parotid_l": {
-      "volume_ml": 21.5971875,
+      "volume_ml": 22.051125,
       "centroid_mm": [
-        -65.6,
-        77.6,
-        225.1
+        -65.5,
+        77.7,
+        225.0
       ]
     },
     "submandibular_r": {
-      "volume_ml": 5.8528125,
+      "volume_ml": 6.0525,
       "centroid_mm": [
-        42.3,
-        102.6,
-        179.5
+        42.2,
+        102.7,
+        179.7
       ]
     },
     "auditory_canal_r": {
-      "volume_ml": 1.4743125,
+      "volume_ml": 1.452375,
       "centroid_mm": [
-        60.1,
+        60.2,
         69.8,
         265.4
       ]
     },
     "masseter_r": {
-      "volume_ml": 34.5988125,
+      "volume_ml": 36.284625,
       "centroid_mm": [
-        54.9,
-        107.5,
-        234.6
+        54.7,
+        108.6,
+        235.4
       ]
     },
     "digastric_r": {
-      "volume_ml": 0.525375,
+      "volume_ml": 1.5451875,
       "centroid_mm": [
-        26.8,
-        120.7,
-        171.1
+        23.2,
+        127.4,
+        168.9
       ]
     },
     "styloid_r": {
-      "volume_ml": 0.1355625,
+      "volume_ml": 0.1288125,
       "centroid_mm": [
         41.7,
         73.5,
-        246.0
+        245.9
       ]
     },
     "zygomatic_arch_r": {
-      "volume_ml": 0.1344375,
+      "volume_ml": 0.0973125,
       "centroid_mm": [
-        57.1,
-        121.2,
-        264.9
+        52.1,
+        128.1,
+        259.4
       ]
     },
     "ica_r": "empty",
     "ijv_r": {
-      "volume_ml": 12.033,
+      "volume_ml": 12.08925,
       "centroid_mm": [
         44.3,
-        74.8,
-        154.4
+        74.9,
+        154.6
       ]
     },
     "scm_r": {
-      "volume_ml": 74.02275,
+      "volume_ml": 74.050875,
       "centroid_mm": [
-        50.2,
-        79.8,
-        153.1
+        50.1,
+        80.0,
+        152.7
       ]
     }
   },
@@ -125,22 +125,22 @@
   "hra_to_ct": {
     "transform": [
       [
-        -0.99892,
-        0.0229,
-        -0.04031,
-        -14.15948
+        -0.99966,
+        0.02495,
+        -0.00761,
+        -16.42477
       ],
       [
-        -0.03652,
-        0.14723,
-        0.98843,
-        -61.20396
+        -0.00925,
+        -0.06601,
+        0.99778,
+        105.84614
       ],
       [
-        0.02857,
-        0.98884,
-        -0.14623,
-        -487.44454
+        0.02439,
+        0.99751,
+        0.06621,
+        -516.83835
       ],
       [
         0.0,
@@ -149,48 +149,48 @@
         1.0
       ]
     ],
-    "rotation_deg": 177.3930863289048,
+    "rotation_deg": 178.65823542851544,
     "translation_mm": [
-      -14.16,
-      -61.2,
-      -487.44
+      -16.42,
+      105.85,
+      -516.84
     ],
-    "similarity_scale": 1.051814897962743,
+    "similarity_scale": 1.0973306899257875,
     "mandible": {
-      "mean_mm": 5.685749760924955,
-      "median_mm": 5.097082042301258,
-      "p95_mm": 15.200464280519014,
-      "max_mm": 27.058352412135854
+      "mean_mm": 1.8237164667415484,
+      "median_mm": 1.4358271302931054,
+      "p95_mm": 5.228795461460264,
+      "max_mm": 11.589299290710875
     },
     "parotid_right_vs_ts_right": {
-      "mean_mm": 11.97355350265994,
-      "median_mm": 12.28031239723337,
-      "p95_mm": 21.76561739004288,
-      "max_mm": 27.873704280474676
+      "mean_mm": 12.547067943308855,
+      "median_mm": 12.25310059712676,
+      "p95_mm": 25.945157010176615,
+      "max_mm": 36.787205727035584
     },
     "parotid_right_vs_ts_left": {
-      "mean_mm": 103.86181621131753,
-      "median_mm": 104.32083513343416,
-      "p95_mm": 115.82971273226799,
-      "max_mm": 123.65108261500801
+      "mean_mm": 105.51382490394437,
+      "median_mm": 105.73750160970502,
+      "p95_mm": 116.90133357560632,
+      "max_mm": 123.03798348503588
     },
     "parotid_left_vs_ts_left": {
-      "mean_mm": 12.840178197201045,
-      "median_mm": 13.691265641266071,
-      "p95_mm": 22.56907758630505,
-      "max_mm": 29.636303207334745
+      "mean_mm": 14.750960752080468,
+      "median_mm": 14.855601731584308,
+      "p95_mm": 27.499735773437575,
+      "max_mm": 33.23400708082949
     },
     "sides_consistent": true,
     "patient_right_is_negative_x": false,
     "parotid_volume_ml": {
       "hra_right": NaN,
       "hra_left": NaN,
-      "ts_right": 18.1648125,
-      "ts_left": 21.5971875
+      "ts_right": 17.98875,
+      "ts_left": 22.051125
     }
   },
   "ct_qc": {
-    "axial_1148": [
+    "axial_1149": [
       "ijv_r",
       "mandible",
       "masseter_r",
@@ -198,7 +198,7 @@
       "skull",
       "styloid_r"
     ],
-    "axial_1159": [
+    "axial_1160": [
       "ijv_r",
       "mandible",
       "masseter_r",
@@ -207,7 +207,7 @@
       "skull",
       "styloid_r"
     ],
-    "axial_1169": [
+    "axial_1171": [
       "ijv_r",
       "mandible",
       "masseter_r",
@@ -215,21 +215,21 @@
       "scm_r",
       "skull"
     ],
-    "axial_1180": [
+    "axial_1181": [
       "ijv_r",
       "mandible",
       "masseter_r",
       "parotid_r",
       "scm_r"
     ],
-    "axial_1190": [
+    "axial_1192": [
       "ijv_r",
       "mandible",
       "masseter_r",
       "parotid_r",
       "scm_r"
     ],
-    "axial_1201": [
+    "axial_1203": [
       "ijv_r",
       "mandible",
       "masseter_r",

@@ -1,0 +1,25 @@
+{
+  "id": "antegrade-dissection",
+  "statement": {
+    "essentials": "Surgeons usually find the main trunk of the nerve first, then follow it forward, lifting the gland off the nerve branch by branch.",
+    "anatomy": "In antegrade dissection the trunk is identified using landmarks and stimulation, followed to the pes, and the tissue overlying each branch is tunnelled and divided; a retrograde approach from a peripheral branch is an alternative."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "support": "direct"
+    },
+    {
+      "sourceId": "statpearls-parotidectomy",
+      "support": "direct"
+    }
+  ],
+  "limitations": "Sequence and instruments vary; shown here as one representative approach.",
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

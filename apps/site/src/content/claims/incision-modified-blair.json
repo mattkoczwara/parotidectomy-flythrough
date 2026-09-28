@@ -1,0 +1,25 @@
+{
+  "id": "incision-modified-blair",
+  "statement": {
+    "essentials": "A common incision runs in the crease in front of the ear, curves around the earlobe, and continues into a natural neck crease below the jaw.",
+    "anatomy": "The modified Blair incision is a common approach; a facelift-type incision is an alternative in selected cases."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "support": "direct"
+    },
+    {
+      "sourceId": "statpearls-parotidectomy",
+      "support": "direct"
+    }
+  ],
+  "limitations": "Incision choice varies by surgeon and tumour.",
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

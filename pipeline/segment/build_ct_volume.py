@@ -24,6 +24,9 @@ OUT = ROOT / "pipeline/segment/work"
 HEADER = 3416
 SIZE = 512
 STEP = 0.75
+BOX_R = (-130.0, 130.0)  # mm, patient left..right
+BOX_A = (-120.0, 200.0)  # mm, posterior..anterior
+AIR_STORED = 0.0  # stored value of air before the -1024 offset
 # GE Genesis image-header offsets (found by inspection; FOV/512 equals pixel size, corners span the FOV).
 OFF_PIXEL, OFF_THICK = 2444, 2420
 OFF_TLHC, OFF_TRHC, OFF_BRHC = 2548, 2560, 2572
@@ -56,12 +59,13 @@ def main() -> None:
     if drift > 0.51:
         raise SystemExit(f"table position disagrees with slice numbers by {drift} mm")
 
-    # Common in-plane grid: the intersection-free union of all slice extents is dominated by the largest FOV;
-    # use the head-sized region common to every series instead (the smallest FOV bounds the head).
-    r_min = max(min(o[0], o[0] + c[0] * SIZE) for _, o, c, _ in slices.values())
-    r_max = min(max(o[0], o[0] + c[0] * SIZE) for _, o, c, _ in slices.values())
-    a_min = max(min(o[1], o[1] + r[1] * SIZE) for _, o, _, r in slices.values())
-    a_max = min(max(o[1], o[1] + r[1] * SIZE) for _, o, _, r in slices.values())
+    # In-plane grid: the union of the series' fields of view, clipped to a head-and-neck box. (An earlier build
+    # used their intersection, which the 250 mm top-of-head series limited so that the face anterior to the
+    # lower incisors was cut off; see QC log.) Pixels a slice does not cover are filled with air.
+    r_min = max(min(min(o[0], o[0] + c[0] * SIZE) for _, o, c, _ in slices.values()), BOX_R[0])
+    r_max = min(max(max(o[0], o[0] + c[0] * SIZE) for _, o, c, _ in slices.values()), BOX_R[1])
+    a_min = max(min(min(o[1], o[1] + r[1] * SIZE) for _, o, _, r in slices.values()), BOX_A[0])
+    a_max = min(max(max(o[1], o[1] + r[1] * SIZE) for _, o, _, r in slices.values()), BOX_A[1])
     grid_r = np.arange(r_max, r_min, -STEP)  # array axis 0: from patient right to left (x decreasing)
     grid_a = np.arange(a_max, a_min, -STEP)  # array axis 1: anterior to posterior
     gr, ga = np.meshgrid(grid_r, grid_a, indexing="ij")
@@ -71,7 +75,7 @@ def main() -> None:
         # Solve world (R, A) -> (row i, column j); corners give an axis-aligned mapping per slice.
         j = (gr - origin[0]) / col[0]
         i = (ga - origin[1]) / row[1]
-        return ndimage.map_coordinates(img, [i, j], order=1, mode="constant", cval=float(img.min()))
+        return ndimage.map_coordinates(img, [i, j], order=1, mode="constant", cval=AIR_STORED)
 
     z_numbers = np.arange(numbers[0], numbers[-1] + 1)
     vol = np.empty((len(grid_r), len(grid_a), len(z_numbers)), dtype=np.float32)

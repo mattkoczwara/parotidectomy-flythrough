@@ -1,0 +1,20 @@
+{
+  "id": "maxillary_artery",
+  "names": {
+    "plain": "Jaw artery",
+    "anatomical": "Maxillary artery",
+    "latin": "Arteria maxillaris"
+  },
+  "gloss": "Terminal branch to the deep face.",
+  "tissue": "artery",
+  "depth": "parapharyngeal",
+  "anchors": [
+    "anchor__maxillary_artery"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "eca-rmv-in-gland"
+  ]
+}

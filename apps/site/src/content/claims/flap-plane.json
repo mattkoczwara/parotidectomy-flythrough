@@ -1,0 +1,24 @@
+{
+  "id": "flap-plane",
+  "statement": {
+    "essentials": "The skin is lifted forward in the layer just outside the gland’s capsule.",
+    "anatomy": "The skin flap is raised in the plane immediately superficial to the parotid fascia (a facelift-like plane)."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "support": "direct"
+    },
+    {
+      "sourceId": "statpearls-parotidectomy",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

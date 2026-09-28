@@ -1,0 +1,17 @@
+{
+  "id": "pleomorphic_adenoma",
+  "names": {
+    "plain": "The tumour",
+    "anatomical": "Pleomorphic adenoma"
+  },
+  "gloss": "The most common benign salivary tumour; shown here as a representative 2 cm tumour in the superficial lobe.",
+  "tissue": "tumour",
+  "depth": "superficial-lobe",
+  "anchors": [
+    "anchor__pleomorphic_adenoma"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

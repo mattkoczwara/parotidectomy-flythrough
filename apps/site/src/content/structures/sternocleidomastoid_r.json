@@ -1,0 +1,18 @@
+{
+  "id": "sternocleidomastoid_r",
+  "names": {
+    "plain": "Side neck muscle",
+    "anatomical": "Sternocleidomastoid",
+    "latin": "Musculus sternocleidomastoideus"
+  },
+  "gloss": "The gland is freed from its front edge during surgery.",
+  "tissue": "muscle",
+  "depth": "deep-lobe",
+  "anchors": [
+    "anchor__sternocleidomastoid_r"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

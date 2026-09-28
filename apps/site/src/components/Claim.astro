@@ -1,0 +1,18 @@
+---
+/**
+ * Inline claim: wraps the sentence it supports. The evidence class decides how visible the mark is (plan §10):
+ * interpretation-changing classes are always marked; the rest show a mark at Clinical depth only.
+ */
+import { getEntry } from 'astro:content';
+
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+const claim = await getEntry('claims', id);
+if (!claim) throw new Error(`Unknown claim "${id}"`);
+const cls = claim.data.evidenceClass;
+const marked = cls === 'varies-by-surgeon' || cls === 'uncertain' || cls === 'representative-technique';
+---
+
+<span class="claim" data-claim={id} data-class={cls} data-marked={marked ? '' : undefined}><slot /><button type="button" class="claim-ref" data-claim={id} aria-label={`Evidence for this statement (${cls.replaceAll('-', ' ')})`}><span aria-hidden="true">·</span></button></span>

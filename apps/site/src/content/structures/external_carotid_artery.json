@@ -1,0 +1,20 @@
+{
+  "id": "external_carotid_artery",
+  "names": {
+    "plain": "Outer carotid artery",
+    "anatomical": "External carotid artery",
+    "latin": "Arteria carotis externa"
+  },
+  "gloss": "Supplies the face; passes deep within the gland.",
+  "tissue": "artery",
+  "depth": "deep-lobe",
+  "anchors": [
+    "anchor__external_carotid_artery"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "eca-rmv-in-gland"
+  ]
+}

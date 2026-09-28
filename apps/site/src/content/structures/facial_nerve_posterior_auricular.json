@@ -1,0 +1,20 @@
+{
+  "id": "facial_nerve_posterior_auricular",
+  "names": {
+    "plain": "Branch behind the ear",
+    "anatomical": "Posterior auricular branch",
+    "latin": "Nervus auricularis posterior"
+  },
+  "gloss": "Supplies small muscles behind the ear.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_posterior_auricular"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-exits-stylomastoid-foramen"
+  ]
+}

@@ -8,6 +8,7 @@
     "typecheck": "tsc --noEmit -p ."
   },
   "dependencies": {
-    "@atlas/schema": "*"
+    "@atlas/schema": "*",
+    "yaml": "^2.8.0"
   }
 }

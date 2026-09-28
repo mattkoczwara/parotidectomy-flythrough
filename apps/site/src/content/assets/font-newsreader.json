@@ -1,0 +1,20 @@
+{
+  "id": "font-newsreader",
+  "kind": "font",
+  "source": {
+    "name": "Newsreader (Production Type) via Google Fonts, self-hosted by the Astro Fonts API",
+    "url": "https://github.com/productiontype/Newsreader"
+  },
+  "licence": {
+    "id": "OFL-1.1",
+    "url": "https://openfontlicense.org",
+    "obligations": [
+      "Keep the licence with redistributed font files"
+    ]
+  },
+  "attribution": "Newsreader by Production Type (SIL Open Font License 1.1)",
+  "transformations": [
+    "subset: latin"
+  ],
+  "specClaims": []
+}

@@ -1,0 +1,25 @@
+{
+  "id": "model-provenance",
+  "statement": {
+    "essentials": "The model is built from one donated body (the Visible Human Project), with some structures drawn by hand where scans cannot show them, and a generic face.",
+    "anatomy": "Bones, glands and muscles are segmented from the Visible Human male CT; the facial nerve, small vessels, the gland's deep portion and the face surface are authored to cited anatomy; the tumour is illustrative."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "triantafyllou-2024",
+      "support": "indirect"
+    },
+    {
+      "sourceId": "pujol-olmo-2020",
+      "support": "indirect"
+    }
+  ],
+  "limitations": "One individual; authored parts follow published ranges but are not measured from this body. See the QC log.",
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

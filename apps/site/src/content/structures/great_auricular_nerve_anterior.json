@@ -1,0 +1,19 @@
+{
+  "id": "great_auricular_nerve_anterior",
+  "names": {
+    "plain": "Earlobe nerve, front branch",
+    "anatomical": "Great auricular nerve, anterior branch"
+  },
+  "gloss": "Front branch over the gland; often cannot be preserved.",
+  "tissue": "nerve",
+  "depth": "subcutaneous",
+  "anchors": [
+    "anchor__great_auricular_nerve_anterior"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "great-auricular-nerve-course"
+  ]
+}

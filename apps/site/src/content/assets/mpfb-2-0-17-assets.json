@@ -1,0 +1,19 @@
+{
+  "id": "mpfb-2-0-17-assets",
+  "kind": "source-data",
+  "source": {
+    "name": "MPFB 2.0.17 base mesh (data/3dobjs/base.obj) and eye helpers",
+    "url": "https://extensions.blender.org/add-ons/mpfb/",
+    "version": "2.0.17",
+    "retrieved": "2026-09-28"
+  },
+  "licence": {
+    "id": "CC0-1.0",
+    "url": "https://github.com/makehumancommunity/mpfb2/blob/master/LICENSE.md",
+    "obligations": []
+  },
+  "attribution": "MakeHuman / MPFB base mesh (CC0 1.0), makehumancommunity.org",
+  "sha256": "4f0a879d64a39bf646fbf5f53601ac678855da329d650617dca5737548239a87",
+  "transformations": [],
+  "specClaims": []
+}

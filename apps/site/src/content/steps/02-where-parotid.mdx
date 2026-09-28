@@ -1,0 +1,27 @@
+---
+id: where-parotid
+chapter: orientation
+order: 2
+title: Where the gland lies
+delta:
+  camera: { zoom: 1.45, frame: [parotid_superficial_lobe, parotid_deep_lobe] }
+  structures:
+    skin: { mode: ghost, opacity: 0.16, emphasis: context }
+    eyes: { presence: 0 }
+    parotid_superficial_lobe: { emphasis: focus }
+    parotid_deep_lobe: { emphasis: focus }
+    subcutaneous_fat: { presence: 0 }
+    smas: { presence: 0 }
+    parotid_fascia: { presence: 0 }
+  labels:
+    - { structureId: parotid_superficial_lobe }
+    - { structureId: masseter_r }
+    - { structureId: mandible }
+    - { structureId: sternocleidomastoid_r }
+transition: { camera: [0, 0.55], structures: [0.45, 1] }
+sceneDescription: The skin is faded to a faint outline. The parotid gland is shown in front of and below the ear canal, lying over the back of the jaw and the chewing muscle (masseter), with the neck muscle (sternocleidomastoid) behind and below it.
+claims: [parotid-location, parotid-size]
+---
+import Claim from '../../components/Claim.astro';
+
+With the skin faded, the gland appears. <Claim id="parotid-size">It is the largest salivary gland, weighing about 18 g.</Claim> <Claim id="parotid-location">It lies over the back of the chewing muscle (masseter) and wraps behind the jawbone, in front of the long muscle of the neck.</Claim>

@@ -1,0 +1,22 @@
+{
+  "id": "facial_nerve_trunk",
+  "names": {
+    "plain": "Facial nerve (main trunk)",
+    "anatomical": "Facial nerve trunk",
+    "latin": "Truncus nervi facialis"
+  },
+  "gloss": "The nerve that moves the face, just after it leaves the skull.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_trunk"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-exits-stylomastoid-foramen",
+    "fn-trunk-length",
+    "fn-trunk-diameter"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "digastric_posterior_belly",
+  "names": {
+    "plain": "Digastric muscle (back part)",
+    "anatomical": "Posterior belly of digastric",
+    "latin": "Venter posterior musculi digastrici"
+  },
+  "gloss": "A landmark: the nerve trunk lies just above its upper edge.",
+  "tissue": "muscle",
+  "depth": "parapharyngeal",
+  "anchors": [
+    "anchor__digastric_posterior_belly"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "landmark-posterior-belly-digastric"
+  ]
+}

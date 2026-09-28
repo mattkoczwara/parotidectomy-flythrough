@@ -11,8 +11,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.3.5",
-    "@atlas/schema": "*"
+    "@astrojs/mdx": "^8.0.2",
+    "@atlas/schema": "*",
+    "@atlas/stage": "*",
+    "@atlas/timeline": "*",
+    "astro": "^7.3.5"
   },
   "allowScripts": {
     "esbuild": true

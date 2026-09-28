@@ -1,0 +1,18 @@
+{
+  "id": "parotid_fascia",
+  "names": {
+    "plain": "Gland capsule",
+    "anatomical": "Parotid fascia",
+    "latin": "Fascia parotidea"
+  },
+  "gloss": "The fibrous covering of the parotid; the skin flap is raised just outside it.",
+  "tissue": "fascia",
+  "depth": "smas-fascia",
+  "anchors": [
+    "anchor__parotid_fascia"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

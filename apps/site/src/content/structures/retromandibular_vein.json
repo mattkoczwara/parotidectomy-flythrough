@@ -1,0 +1,21 @@
+{
+  "id": "retromandibular_vein",
+  "names": {
+    "plain": "Vein behind the jaw",
+    "anatomical": "Retromandibular vein",
+    "latin": "Vena retromandibularis"
+  },
+  "gloss": "Runs down through the gland deep to the facial nerve.",
+  "tissue": "vein",
+  "depth": "deep-lobe",
+  "anchors": [
+    "anchor__retromandibular_vein"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-lateral-to-retromandibular-vein",
+    "eca-rmv-in-gland"
+  ]
+}

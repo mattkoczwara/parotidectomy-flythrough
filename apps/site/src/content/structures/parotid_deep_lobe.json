@@ -1,0 +1,20 @@
+{
+  "id": "parotid_deep_lobe",
+  "names": {
+    "plain": "Inner part of the parotid",
+    "anatomical": "Deep lobe of the parotid",
+    "latin": "Pars profunda glandulae parotideae"
+  },
+  "gloss": "The part of the gland on the inner side of the facial nerve, around the vein and artery behind the jaw.",
+  "tissue": "gland",
+  "depth": "deep-lobe",
+  "anchors": [
+    "anchor__parotid_deep_lobe"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "parotid-lobes-surgical"
+  ]
+}

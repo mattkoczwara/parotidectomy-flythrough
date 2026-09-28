@@ -32,7 +32,8 @@ def fetch(manifest_id: str) -> None:
         if not target.exists():
             target.parent.mkdir(parents=True, exist_ok=True)
             tmp = target.with_suffix(target.suffix + ".part")
-            with urllib.request.urlopen(entry["url"], timeout=120) as r, tmp.open("wb") as f:
+            req = urllib.request.Request(entry["url"], headers={"User-Agent": "parotid-atlas-pipeline/0.1 (research fetch)"})
+            with urllib.request.urlopen(req, timeout=120) as r, tmp.open("wb") as f:
                 while chunk := r.read(1 << 20):
                     f.write(chunk)
             tmp.replace(target)

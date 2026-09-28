@@ -1,0 +1,20 @@
+{
+  "id": "facial_nerve_cervicofacial",
+  "names": {
+    "plain": "Lower division of the facial nerve",
+    "anatomical": "Cervicofacial division",
+    "latin": "Divisio cervicofacialis"
+  },
+  "gloss": "Lower division of the nerve after it splits inside the gland.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_cervicofacial"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-bifurcation"
+  ]
+}

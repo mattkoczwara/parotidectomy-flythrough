@@ -1,0 +1,20 @@
+{
+  "id": "facial_nerve_marginal_mandibular",
+  "names": {
+    "plain": "Lower-lip branch",
+    "anatomical": "Marginal mandibular branch",
+    "latin": "Ramus marginalis mandibularis nervi facialis"
+  },
+  "gloss": "Moves the lower lip; runs near the lower border of the jaw.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__facial_nerve_marginal_mandibular"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-five-branch-groups"
+  ]
+}

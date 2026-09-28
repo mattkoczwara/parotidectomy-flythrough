@@ -19,6 +19,8 @@ from scipy.interpolate import RBFInterpolator
 from scipy.spatial import cKDTree
 from skimage import measure
 
+from common import body_mask, load_ct
+
 ROOT = Path(__file__).resolve().parents[2]
 WORK = ROOT / "pipeline/segment/work"
 SEG = WORK / "seg"
@@ -49,7 +51,13 @@ def mesh_from_mask(mask: np.ndarray, affine: np.ndarray, budget: int, sigma: flo
     return m
 
 
+SCENE_CUT_Z = 150.0  # mm; shared with face.py (anatomy.yaml face.scene_cut_z)
+
+
 def save(mid: str, m: trimesh.Trimesh, **attrs):
+    if m.vertices[:, 2].min() < SCENE_CUT_Z and not attrs:
+        # crop at the scene's neck cut, capping the section so it reads as a cut surface
+        m = m.slice_plane([0, 0, SCENE_CUT_Z], [0, 0, 1], cap=True)
     np.savez_compressed(
         OUT / f"{mid}.npz",
         positions=m.vertices.astype(np.float32),
@@ -88,32 +96,12 @@ def main() -> None:
         save(mid, mesh_from_mask(load(rel), aff, budget))
         print("segmented", mid)
 
-    # ── Tissue layers as closed depth bands under the skin ────────────────────────────────
-    # Solid body from the CT (TotalSegmentator's `head` class has internal boundaries, which made "depth below
-    # the skin" small deep inside the head): tissue threshold, largest component, cavities filled per slice.
-    ct = np.asarray(nib.load(str(WORK / "vhp_male_ct_head.nii.gz")).dataobj).astype(np.float32)
-    body = ct > -400
-    lab_b, n_b = ndimage.label(body)
-    body = lab_b == (np.argmax(ndimage.sum(body, lab_b, range(1, n_b + 1))) + 1)
-    for k in range(body.shape[2]):
-        body[:, :, k] = ndimage.binary_fill_holes(body[:, :, k])
-    head = ndimage.binary_closing(body, iterations=2)
+    # ── Solid body and depth below the CT skin (layer shells are built by layers.py from the final skin) ────────────────────────────────
+    ct, _, _ = load_ct()
+    head = body_mask(ct)  # solid body; see common.body_mask
     parotid = load("head_glands_cavities/parotid_gland_right")
     depth = ndimage.distance_transform_edt(head, sampling=zooms)  # mm below the skin
-    ijk = np.indices(head.shape).reshape(3, -1).T
-    # Region of interest for the deeper layers: the right face and upper neck (skin covers the rest).
-    world = nib.affines.apply_affine(aff, np.argwhere(np.ones(head.shape, bool))).reshape(*head.shape, 3)
-    roi = (world[..., 0] > 20) & (world[..., 1] > 30) & (world[..., 1] < 150) & (world[..., 2] > 170) & (world[..., 2] < 300)
-    del ijk
-    gland_zone = ndimage.binary_dilation(parotid, iterations=2)
     layers = spec["layers"]
-    skin = head & (depth < layers["skin_mm"])
-    fat = roi & head & (depth >= layers["skin_mm"]) & (depth < layers["smas_depth_mm"]) & ~gland_zone
-    smas = roi & head & (depth >= layers["smas_depth_mm"]) & (depth < layers["smas_depth_mm"] + layers["smas_thickness_mm"]) & ~gland_zone
-    save("skin", mesh_from_mask(skin, aff, 110000, sigma=0.8, smooth_iter=6))
-    save("subcutaneous_fat", mesh_from_mask(fat, aff, 40000, sigma=0.8, smooth_iter=6))
-    save("smas", mesh_from_mask(smas, aff, 30000, sigma=0.7, smooth_iter=6))
-    print("layers")
 
     # ── Nerve plane and lobe split ────────────────────────────────────────────────────────
     ids = ["facial_nerve_trunk", "facial_nerve_temporofacial", "facial_nerve_cervicofacial", "facial_nerve_temporal", "facial_nerve_zygomatic", "facial_nerve_buccal", "facial_nerve_marginal_mandibular", "facial_nerve_cervical"]
@@ -155,8 +143,10 @@ def main() -> None:
     original = parotid
     parotid = grown
     save("parotid_gland_r_complete", mesh_from_mask(parotid, aff, 20000, sigma=0.8, smooth_iter=6))
-    fascia = ndimage.binary_dilation(parotid, iterations=1) & ~parotid
-    save("parotid_fascia", mesh_from_mask(fascia, aff, 20000, sigma=0.6, smooth_iter=6))
+    # The capsule as a closed surface about 1.5 mm outside the gland (a one-voxel shell's inner and outer
+    # surfaces crossed after smoothing and rendered as stripes). The cutaway window reveals the gland inside it.
+    fascia = ndimage.binary_dilation(parotid, iterations=2)
+    save("parotid_fascia", mesh_from_mask(fascia, aff, 20000, sigma=0.8, smooth_iter=6))
 
     superficial = parotid.copy()
     coords = nib.affines.apply_affine(aff, np.argwhere(parotid))
@@ -225,6 +215,7 @@ def main() -> None:
     save("parotid_superficial_lobe", sup_mesh, peel_order=peel(sup_mesh.vertices))
     save("parotid_deep_lobe", deep_mesh)
     save("pleomorphic_adenoma", tumour, peel_order=peel(tumour.vertices))
+    (ROOT / "pipeline/specs/tumour.resolved.json").write_text(json.dumps({"center": [float(v) for v in tumour.vertices.mean(0)], "max_diameter_mm": float(np.ptp(tumour.vertices, axis=0).max())}, indent=2) + chr(10), encoding="utf-8")
     (OUT / "peel.json").write_text(json.dumps({"y_min": float(y0), "y_max": float(y1), "hinge_x": hinge_x, "axis": "z (superior)"}, indent=2), encoding="utf-8")
 
     checks_path.write_text(json.dumps(checks, indent=2), encoding="utf-8")

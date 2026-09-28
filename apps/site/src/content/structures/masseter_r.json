@@ -1,0 +1,18 @@
+{
+  "id": "masseter_r",
+  "names": {
+    "plain": "Chewing muscle",
+    "anatomical": "Masseter",
+    "latin": "Musculus masseter"
+  },
+  "gloss": "The gland lies on its back part; the nerve branches cross it.",
+  "tissue": "muscle",
+  "depth": "deep-lobe",
+  "anchors": [
+    "anchor__masseter_r"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

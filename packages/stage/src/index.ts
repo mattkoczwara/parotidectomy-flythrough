@@ -1,7 +1,6 @@
 /**
- * Rendering layer (three.js r186 WebGPURenderer with WebGL2 fallback; locked in
- * docs/adr/0001-web-stack.md after the M0 renderer spike). The spike in spikes/renderer
- * is the reference implementation for materials, ghosting, clipping and the peel until
- * this package supersedes it in M1.
+ * Rendering layer (three.js r186 WebGPURenderer with WebGL2 fallback; ADR-0001). Resolves SceneState from
+ * @atlas/timeline onto the anatomy glTF produced by pipeline/build (ADR-0002 frame).
  */
-export {};
+export { Stage, type AnchorProjection, type StageOptions, type StructureInfo, type Tier } from './stage.ts';
+export type { TissueFamily } from './materials.ts';

@@ -1,0 +1,29 @@
+---
+id: nerve-plane
+chapter: nerve
+order: 6
+title: Outer and inner parts of the gland
+delta:
+  camera: { azimuth: -32, elevation: 12, zoom: 1.35, frame: [parotid_superficial_lobe, parotid_deep_lobe] }
+  gauge: 4
+  structures:
+    nerve_plane: { presence: 1, mode: ghost, opacity: 0.3, emphasis: context }
+    parotid_superficial_lobe: { opacity: 0.35 }
+    parotid_deep_lobe: { emphasis: focus }
+    pleomorphic_adenoma: { opacity: 0.8, emphasis: focus }
+    retromandibular_vein: { emphasis: focus }
+  labels:
+    - { structureId: parotid_superficial_lobe }
+    - { structureId: parotid_deep_lobe }
+    - { structureId: nerve_plane }
+    - { structureId: pleomorphic_adenoma }
+    - { structureId: retromandibular_vein }
+transition: { camera: [0, 0.5], structures: [0.4, 1] }
+sceneDescription: Seen from behind and above, a translucent sheet marks the plane the nerve lies in. Gland tissue on the outer side of the sheet is the superficial lobe and contains the tumour; tissue on the inner side, around the large vein behind the jaw, is the deep lobe.
+claims: [parotid-lobes-surgical, fn-lateral-to-retromandibular-vein]
+---
+import Claim from '../../components/Claim.astro';
+
+<Claim id="parotid-lobes-surgical">The gland has no true lobes: surgeons call the tissue on the outer side of the nerve "superficial" and the rest "deep". By weight, about two-thirds lies on the outer side.</Claim> <Claim id="fn-lateral-to-retromandibular-vein">A large vein runs down through the deep part, just inside the nerve — scans use it to estimate where the nerve lies.</Claim>
+
+The tumour here is entirely on the outer side of the nerve, which shapes the choice of operation.
