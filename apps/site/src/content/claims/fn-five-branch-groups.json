@@ -1,0 +1,24 @@
+{
+  "id": "fn-five-branch-groups",
+  "statement": {
+    "essentials": "The nerve fans out into five groups of branches that move the forehead, eyelids, cheek, lower lip and neck.",
+    "anatomy": "Five terminal branch groups: temporal (frontal), zygomatic, buccal, marginal mandibular and cervical."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "statpearls-parotidectomy",
+      "support": "direct"
+    },
+    {
+      "sourceId": "kochhar-2016",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "eca-rmv-in-gland",
+  "statement": {
+    "essentials": "An artery and a vein also run through the gland, deeper than the nerve.",
+    "anatomy": "The external carotid artery passes deep to the posterior belly of the digastric and enters the gland, lying deep to the retromandibular vein; it divides behind the mandibular neck into the maxillary and superficial temporal arteries."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "kochhar-2016",
+      "support": "direct"
+    }
+  ],
+  "limitations": "Source read at citation level only; confirm wording against the review before display.",
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

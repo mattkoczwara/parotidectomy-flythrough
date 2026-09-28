@@ -1,0 +1,56 @@
+{
+  "id": "landmark-tragal-pointer",
+  "statement": {
+    "essentials": "The cartilage of the ear canal also points toward the nerve, but it moves and is a less exact guide.",
+    "anatomy": "The tragal pointer is often taught as '1 cm deep and inferior' to the trunk; measured distances disagree and the pointer is mobile."
+  },
+  "evidenceClass": "uncertain",
+  "sources": [
+    {
+      "sourceId": "rea-2010",
+      "support": "direct"
+    },
+    {
+      "sourceId": "pather-osman-2006",
+      "support": "direct"
+    },
+    {
+      "sourceId": "cannon-2004",
+      "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Tragal pointer to trunk",
+      "value": 6.9,
+      "unit": "mm",
+      "population": "Cadavers",
+      "design": "Cadaveric study (mean ± SD 1.8 mm)",
+      "sourceId": "rea-2010",
+      "n": "26 cadavers"
+    },
+    {
+      "label": "Tragal pointer to trunk",
+      "value": 34.0,
+      "unit": "mm",
+      "population": "Adult cadavers",
+      "design": "Cadaveric dissection study",
+      "sourceId": "pather-osman-2006",
+      "n": "40 cadavers",
+      "range": [
+        24.3,
+        49.2
+      ]
+    }
+  ],
+  "disagreement": "Rea (6.9 mm) and Pather (34 mm) differ five-fold; Cannon 2004 found the distance smaller than the textbook 1 cm. The '1 cm' rule is a rule of thumb.",
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

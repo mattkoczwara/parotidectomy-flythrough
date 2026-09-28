@@ -1,0 +1,132 @@
+# Authored anatomy for the right side, in the canonical CT frame (ADR-0002): RAS, millimetres,
+# +x = patient right (lateral on this side), +y = anterior, +z = superior.
+#
+# Nodes are either landmark references (pipeline/specs/landmarks.vhp-male.json) or explicit points with a
+# rationale. Optional `snap` moves a node onto a segmented surface (nearest surface point, then offset along
+# the outward normal). Segments are swept to tapered tubes along centripetal Catmull-Rom splines through their
+# nodes. Every segment lists the claims it relies on; tools/validate checks the ids exist, and
+# pipeline/anatomy/checks.py asserts the relationships in `checks` against the built geometry.
+#
+# The default facial-nerve pattern has no interconnections (a simplification: Davis type I is only ~15% of
+# nerves, claim fn-branching-variation). Variant patterns are M2 work.
+
+frame: vhp-male-normal-ct
+side: right
+
+nodes:
+  smf: { landmark: stylomastoid_foramen }
+  trunk_mid: { xyz: [51, 67, 250], why: "trunk runs anterolaterally and slightly inferiorly from the foramen, lateral to the styloid base" }
+  pes: { xyz: [58.5, 71, 245], why: "trunk enters the posteromedial surface of the gland behind the ramus; bifurcation (pes) just inside it" }
+
+  tf_1: { xyz: [64.5, 77, 249], why: "temporofacial division ascends anteriorly over the ramus/condylar neck" }
+  tf_end: { xyz: [66, 80, 255], why: "temporofacial division fans into temporal and zygomatic branches within the upper gland" }
+  temporal_1: { xyz: [67, 86, 263], why: "temporal branch ascends within the upper gland toward the zygomatic arch" }
+  temporal_2: { xyz: [63, 98, 274], why: "crosses the zygomatic arch superficially, midway between tragus and lateral orbit", snap: { surface: zygomatic_region, offset_mm: 3 } }
+  temporal_3: { xyz: [55, 112, 292], why: "continues toward the frontalis above the lateral brow" }
+  zygomatic_1: { xyz: [67, 90, 257], why: "zygomatic branch runs forward just below the arch" }
+  zygomatic_2: { xyz: [62, 108, 259], why: "over the masseter origin toward the lateral canthus", snap: { surface: masseter_r, offset_mm: 3 } }
+  zygomatic_3: { xyz: [60, 122, 268], why: "over the body of the zygoma toward orbicularis oculi", snap: { surface: zygomatic_region, offset_mm: 4 } }
+
+  cf_1: { xyz: [64, 76, 236], why: "cervicofacial division descends within the gland posterior to the ramus" }
+  cf_end: { xyz: [64, 79, 228], why: "cervicofacial division gives buccal, marginal mandibular and cervical branches" }
+  buccal_1: { xyz: [65, 88, 247], why: "buccal branch runs forward about 1 cm below the arch" }
+  buccal_2: { xyz: [63, 102, 249], why: "over the masseter, roughly parallel to the arch", snap: { surface: masseter_r, offset_mm: 3 } }
+  buccal_3: { xyz: [55, 120, 247], why: "toward buccinator and upper lip muscles" }
+  mm_1: { xyz: [64, 83, 216], why: "marginal mandibular branch descends toward the mandibular angle" }
+  mm_2: { xyz: [58, 93, 205], why: "runs along the lower border of the mandible near the angle", snap: { surface: masseter_r, offset_mm: 2.5 } }
+  mm_3: { xyz: [48, 112, 199], why: "forward along the lower border toward the lower-lip depressors" }
+  cervical_1: { xyz: [65.5, 78, 214], why: "cervical branch exits the lower pole of the gland" }
+  cervical_2: { xyz: [66, 77, 195], why: "descends into the neck deep to platysma, superficial to the veins" }
+  cervical_3: { xyz: [63, 80, 175], why: "toward platysma" }
+  post_aur_1: { xyz: [58, 66, 242], why: "posterior auricular branch leaves the trunk and passes in front of the mastoid tip" }
+  post_aur_2: { xyz: [67, 55, 254], why: "runs up and back over the anterior mastoid toward the auricular muscles", snap: { surface: zygomatic_region, offset_mm: 3 } }
+  digastric_br: { xyz: [50, 62, 245], why: "branch to the posterior belly of the digastric" }
+
+  # Great auricular nerve: over the sternocleidomastoid toward the ear lobe and gland.
+  gan_1: { xyz: [66, 58, 150], why: "emerges at the posterior border of the SCM near its midpoint", snap: { surface: scm_r, offset_mm: 2 } }
+  gan_2: { xyz: [70, 62, 180], why: "ascends obliquely over the SCM", snap: { surface: scm_r, offset_mm: 2 } }
+  gan_div: { xyz: [74, 66, 204], why: "divides near the lower pole of the gland", snap: { surface: scm_r, offset_mm: 2 } }
+  gan_ant: { xyz: [79, 84, 226], why: "anterior branch over the gland toward the skin of the angle and cheek" }
+  gan_post: { xyz: [78, 66, 250], why: "posterior branch toward the ear lobe and mastoid skin" }
+
+  # Veins.
+  rmv_top: { xyz: [54.5, 75, 257], why: "formed behind the mandibular neck by superficial temporal and maxillary veins, between the condyle and the ear canal" }
+  rmv_1: { xyz: [56, 78, 243], why: "descends in the gland, medial (deep) to the nerve and lateral to the ECA" }
+  rmv_2: { xyz: [57, 80, 222], why: "continues posterior to the ramus" }
+  rmv_div: { xyz: [59, 81, 206], why: "divides near the lower pole of the gland" }
+  rmv_ant: { xyz: [52, 96, 192], why: "anterior division joins the facial vein" }
+  rmv_post: { xyz: [59, 73, 196], why: "posterior division joins the posterior auricular vein" }
+  ejv_1: { xyz: [66, 76, 180], why: "external jugular vein descends over the SCM", snap: { surface: scm_r, offset_mm: 3 } }
+  ejv_2: { xyz: [65, 70, 150], why: "crosses the SCM obliquely", snap: { surface: scm_r, offset_mm: 3 } }
+
+  # Arteries.
+  eca_1: { xyz: [22, 80, 168], why: "external carotid artery ascends from the carotid bifurcation" }
+  eca_2: { xyz: [27, 79, 195], why: "passes deep (medial) to the posterior belly of the digastric and stylohyoid" }
+  eca_3: { xyz: [37, 80, 222], why: "enters the deep surface of the gland" }
+  eca_4: { xyz: [49, 80, 242], why: "ascends deep to the retromandibular vein, posterior to the ramus" }
+  eca_div: { xyz: [50, 81, 252], why: "divides behind the mandibular neck" }
+  maxillary_1: { xyz: [42, 86, 253], why: "maxillary artery passes anteromedially behind the condylar neck" }
+  maxillary_2: { xyz: [32, 94, 255], why: "into the infratemporal fossa" }
+  sta_0: { xyz: [60, 79, 257], why: "superficial temporal artery ascends behind the condylar neck, lateral to the vein" }
+  sta_1: { xyz: [61, 78, 266], why: "ascends in front of the tragus, lateral to the vein" }
+  sta_2: { xyz: [64, 75, 280], why: "crosses the root of the zygomatic arch, superficial to the temporal fascia", snap: { surface: zygomatic_region, offset_mm: 6 } }
+  sta_3: { xyz: [63, 76, 298], why: "into the temporal region over temporalis", snap: { surface: zygomatic_region, offset_mm: 9 } }
+
+  # Muscle and bone authored because segmentation gave only fragments (ADR-0002).
+  dig_origin: { landmark: digastric_origin }
+  dig_1: { xyz: [46, 64, 230], why: "posterior belly runs anteroinferiorly, medial to the parotid tail" }
+  dig_2: { xyz: [39, 75, 207], why: "lateral to the internal jugular vein and carotid" }
+  dig_3: { xyz: [32, 85, 186], why: "toward the intermediate tendon at the hyoid" }
+  dig_tendon: { xyz: [28, 89, 177], why: "intermediate tendon near the hyoid greater horn" }
+  sty_base: { landmark: styloid_base }
+  sty_tip: { landmark: styloid_tip }
+
+snap_surfaces:
+  masseter_r: head_muscles/masseter_right
+  scm_r: headneck_muscles/sternocleidomastoid_right
+  zygomatic_region: craniofacial_structures/skull
+
+segments:
+  - { id: facial_nerve_trunk, kind: nerve, path: [smf, trunk_mid, pes], radius: [1.33, 1.2], claims: [fn-exits-stylomastoid-foramen, fn-trunk-length, fn-trunk-diameter, landmark-styloid] }
+  - { id: facial_nerve_temporofacial, kind: nerve, path: [pes, tf_1, tf_end], radius: [1.0, 0.9], claims: [fn-bifurcation] }
+  - { id: facial_nerve_cervicofacial, kind: nerve, path: [pes, cf_1, cf_end], radius: [0.95, 0.85], claims: [fn-bifurcation] }
+  - { id: facial_nerve_temporal, kind: nerve, path: [tf_end, temporal_1, temporal_2, temporal_3], radius: [0.65, 0.35], claims: [fn-five-branch-groups] }
+  - { id: facial_nerve_zygomatic, kind: nerve, path: [tf_end, zygomatic_1, zygomatic_2, zygomatic_3], radius: [0.65, 0.35], claims: [fn-five-branch-groups] }
+  - { id: facial_nerve_buccal, kind: nerve, path: [cf_end, buccal_1, buccal_2, buccal_3], radius: [0.65, 0.35], claims: [fn-five-branch-groups, buccal-branch-course] }
+  - { id: facial_nerve_marginal_mandibular, kind: nerve, path: [cf_end, mm_1, mm_2, mm_3], radius: [0.6, 0.3], claims: [fn-five-branch-groups] }
+  - { id: facial_nerve_cervical, kind: nerve, path: [cf_end, cervical_1, cervical_2, cervical_3], radius: [0.6, 0.3], claims: [fn-five-branch-groups] }
+  - { id: facial_nerve_posterior_auricular, kind: nerve, path: [trunk_mid, post_aur_1, post_aur_2], radius: [0.45, 0.3], claims: [fn-exits-stylomastoid-foramen] }
+  - { id: facial_nerve_digastric_branch, kind: nerve, path: [trunk_mid, digastric_br], radius: [0.35, 0.3], claims: [fn-exits-stylomastoid-foramen] }
+  - { id: great_auricular_nerve, kind: nerve, path: [gan_1, gan_2, gan_div], radius: [0.9, 0.8], claims: [great-auricular-nerve-course] }
+  - { id: great_auricular_nerve_anterior, kind: nerve, path: [gan_div, gan_ant], radius: [0.6, 0.4], claims: [great-auricular-nerve-course] }
+  - { id: great_auricular_nerve_posterior, kind: nerve, path: [gan_div, gan_post], radius: [0.6, 0.4], claims: [great-auricular-nerve-course] }
+  - { id: retromandibular_vein, kind: vein, path: [rmv_top, rmv_1, rmv_2, rmv_div], radius: [2.4, 3.0], claims: [fn-lateral-to-retromandibular-vein, eca-rmv-in-gland] }
+  - { id: retromandibular_vein_anterior, kind: vein, path: [rmv_div, rmv_ant], radius: [2.4, 2.2], claims: [eca-rmv-in-gland] }
+  - { id: retromandibular_vein_posterior, kind: vein, path: [rmv_div, rmv_post, ejv_1], radius: [2.4, 2.8], claims: [eca-rmv-in-gland] }
+  - { id: external_jugular_vein, kind: vein, path: [ejv_1, ejv_2], radius: [2.8, 3.0], claims: [great-auricular-nerve-course] }
+  - { id: external_carotid_artery, kind: artery, path: [eca_1, eca_2, eca_3, eca_4, eca_div], radius: [3.0, 2.2], claims: [eca-rmv-in-gland] }
+  - { id: maxillary_artery, kind: artery, path: [eca_div, maxillary_1, maxillary_2], radius: [1.6, 1.3], claims: [eca-rmv-in-gland] }
+  - { id: superficial_temporal_artery, kind: artery, path: [eca_div, sta_0, sta_1, sta_2, sta_3], radius: [1.5, 1.0], claims: [eca-rmv-in-gland] }
+  - { id: digastric_posterior_belly, kind: muscle, path: [dig_origin, dig_1, dig_2, dig_3, dig_tendon], radius: [5.0, 2.0], claims: [landmark-posterior-belly-digastric] }
+  - { id: styloid_process, kind: bone, path: [sty_base, sty_tip], radius: [2.4, 0.7], claims: [landmark-styloid] }
+
+checks:
+  trunk_length_mm: { segment: facial_nerve_trunk, claim: fn-trunk-length, range: [8.6, 22.8] }
+  pes_inside_parotid: { node: pes, mask: head_glands_cavities/parotid_gland_right, max_outside_mm: 2 }
+  # Applies inside the gland, where the nerve crosses the vein; the trunk runs posterior to the vein before it enters.
+  nerve_lateral_to_rmv: { nerve: [facial_nerve_trunk, facial_nerve_temporofacial, facial_nerve_cervicofacial], vessel: retromandibular_vein, within_mask: head_glands_cavities/parotid_gland_right, claim: fn-lateral-to-retromandibular-vein }
+  eca_deep_to_rmv: { deep: external_carotid_artery, superficial: retromandibular_vein, claim: eca-rmv-in-gland }
+  eca_deep_to_digastric: { deep: external_carotid_artery, superficial: digastric_posterior_belly, claim: eca-rmv-in-gland }
+  branch_order_superior_to_inferior: { at_y: 100, order: [facial_nerve_temporal, facial_nerve_zygomatic, facial_nerve_buccal, facial_nerve_marginal_mandibular] }
+  mm_near_mandible_border: { segment: facial_nerve_marginal_mandibular, mask: craniofacial_structures/mandible, max_mm: 12 }
+  temporal_superficial_to_arch: { segment: facial_nerve_temporal, mask: craniofacial_structures/skull }
+  no_bone_intersection: { kinds: [nerve, vein, artery, muscle], masks: [craniofacial_structures/skull, craniofacial_structures/mandible], allow_near: [smf, sty_base, dig_origin] }
+  landmark_distances:
+    tympanomastoid_dropoff: { claim: landmark-tympanomastoid-suture, ranges: { witt-2005: [0, 4], rea-2010: [1.7, 3.3], pather-osman-2006: [4.9, 18.6] } }
+    digastric_origin: { claim: landmark-posterior-belly-digastric, ranges: { witt-2005: [5, 17], rea-2010: [1.3, 9.7], pather-osman-2006: [9.7, 24.3] } }
+    styloid_base: { claim: landmark-styloid, ranges: { pather-osman-2006: [4.3, 18.6] } }
+    # Sources disagree five-fold and the claim is classed 'uncertain': reported for review, not asserted.
+    tragal_pointer: { claim: landmark-tragal-pointer, ranges: { rea-2010: [3.3, 10.5], pather-osman-2006: [24.3, 49.2] }, assert: false }
+  superficial_fraction: { claim: parotid-lobes-surgical, range: [0.55, 0.75] }
+  graph_connected_single_root: { root: smf }
+  no_tube_contacts: { allow: [[facial_nerve_digastric_branch, digastric_posterior_belly]] }

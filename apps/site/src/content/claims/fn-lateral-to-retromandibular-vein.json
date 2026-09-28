@@ -1,0 +1,25 @@
+{
+  "id": "fn-lateral-to-retromandibular-vein",
+  "statement": {
+    "essentials": "Inside the gland the nerve lies on the outer side of a large vein, which scans use to estimate where the nerve runs.",
+    "anatomy": "The facial nerve lies superficial (lateral) to the retromandibular vein and the external carotid artery within the gland; the vein is the usual imaging surrogate for the nerve plane."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "statpearls-parotidectomy",
+      "support": "direct"
+    },
+    {
+      "sourceId": "kochhar-2016",
+      "support": "direct"
+    }
+  ],
+  "limitations": "No study found giving the proportion of people in whom the nerve lies medial to the vein; variants exist.",
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

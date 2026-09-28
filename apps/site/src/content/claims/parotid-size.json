@@ -1,0 +1,30 @@
+{
+  "id": "parotid-size",
+  "statement": {
+    "essentials": "The parotid is the largest salivary gland, weighing about 18 g.",
+    "anatomy": "Mean gland dimensions about 66 × 47 mm and weight about 18 g."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "pujol-olmo-2020",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Mean gland weight",
+      "value": 18.1,
+      "unit": "g",
+      "population": "Adult anatomical specimens",
+      "design": "Anatomical dissection study",
+      "sourceId": "pujol-olmo-2020",
+      "n": "19 specimens"
+    }
+  ],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "id": "landmark-posterior-belly-digastric",
+  "statement": {
+    "essentials": "A small neck muscle points to the nerve: the trunk lies just above its upper edge.",
+    "anatomy": "The trunk lies superior to the posterior belly of the digastric near its mastoid attachment; reported distances vary."
+  },
+  "evidenceClass": "standard-principle",
+  "sources": [
+    {
+      "sourceId": "witt-2005",
+      "support": "direct"
+    },
+    {
+      "sourceId": "rea-2010",
+      "support": "direct"
+    },
+    {
+      "sourceId": "pather-osman-2006",
+      "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Posterior belly to trunk (cadaver)",
+      "value": 12.4,
+      "unit": "mm",
+      "population": "Cadavers",
+      "design": "Cadaver and intraoperative measurement",
+      "sourceId": "witt-2005",
+      "n": "14 cadavers",
+      "range": [
+        7,
+        17
+      ]
+    },
+    {
+      "label": "Posterior belly to trunk",
+      "value": 5.5,
+      "unit": "mm",
+      "population": "Cadavers",
+      "design": "Cadaveric study (mean ± SD 2.1 mm)",
+      "sourceId": "rea-2010",
+      "n": "26 cadavers"
+    },
+    {
+      "label": "Posterior belly to trunk",
+      "value": 14.6,
+      "unit": "mm",
+      "population": "Adult cadavers",
+      "design": "Cadaveric dissection study",
+      "sourceId": "pather-osman-2006",
+      "n": "40 cadavers",
+      "range": [
+        9.7,
+        24.3
+      ]
+    }
+  ],
+  "disagreement": "Distances differ two- to three-fold between studies.",
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

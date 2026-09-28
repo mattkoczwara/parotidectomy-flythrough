@@ -1,0 +1,48 @@
+{
+  "id": "fn-trunk-length",
+  "statement": {
+    "essentials": "The main trunk of the nerve runs only about 1.5 cm before it divides.",
+    "anatomy": "The extratemporal trunk measures roughly 14–16 mm from the stylomastoid foramen to its bifurcation, with wide individual variation."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "pather-osman-2006",
+      "support": "direct"
+    },
+    {
+      "sourceId": "salame-2002",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Trunk length, foramen to bifurcation",
+      "value": 14.0,
+      "unit": "mm",
+      "population": "Adult cadavers",
+      "design": "Cadaveric dissection study",
+      "sourceId": "pather-osman-2006",
+      "n": "40 cadavers",
+      "range": [
+        8.6,
+        22.8
+      ]
+    },
+    {
+      "label": "Trunk length, foramen to bifurcation",
+      "value": 16.44,
+      "unit": "mm",
+      "population": "Adult cadavers, both sides",
+      "design": "Microsurgical cadaveric study (mean ± SD 3.2 mm)",
+      "sourceId": "salame-2002",
+      "n": "23 cadavers"
+    }
+  ],
+  "disagreement": "Means differ by about 2.4 mm between the two cadaveric series; ranges overlap.",
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

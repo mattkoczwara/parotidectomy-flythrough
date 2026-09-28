@@ -1,0 +1,20 @@
+{
+  "id": "great-auricular-nerve-course",
+  "statement": {
+    "essentials": "A skin nerve for the earlobe crosses the neck muscle toward the ear and is often numbed by the operation.",
+    "anatomy": "The great auricular nerve ascends over the sternocleidomastoid, parallel to the external jugular vein, and divides into anterior and posterior branches; the anterior branch often cannot be preserved."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "statpearls-parotidectomy",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

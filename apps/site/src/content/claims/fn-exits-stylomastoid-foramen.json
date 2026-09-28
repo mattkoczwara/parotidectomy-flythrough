@@ -1,0 +1,26 @@
+{
+  "id": "fn-exits-stylomastoid-foramen",
+  "statement": {
+    "essentials": "The facial nerve leaves the skull through a small opening behind the ear, between two bony points, and passes straight into the parotid gland.",
+    "anatomy": "The extratemporal facial nerve exits the stylomastoid foramen, between the styloid and mastoid processes, and enters the posteromedial surface of the parotid gland."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "statpearls-parotidectomy",
+      "support": "direct",
+      "locator": "Anatomy"
+    },
+    {
+      "sourceId": "kochhar-2016",
+      "support": "direct"
+    }
+  ],
+  "limitations": "Wording taken from narrative and reference sources; not a measurement.",
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

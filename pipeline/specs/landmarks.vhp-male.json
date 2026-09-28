@@ -1,0 +1,328 @@
+{
+  "frame": "VHP male normal CT, RAS mm (ADR-0002)",
+  "side": "right",
+  "landmarks": {
+    "eac_centroid": {
+      "xyz": [
+        59.8,
+        69.9,
+        265.5
+      ],
+      "method": "centroid of TotalSegmentator auditory_canal_right"
+    },
+    "eac_lateral": {
+      "xyz": [
+        74.2,
+        69.5,
+        265.6
+      ],
+      "method": "lateral-most 0.5% of auditory_canal_right"
+    },
+    "mastoid_tip": {
+      "xyz": [
+        55.5,
+        59.9,
+        246.5
+      ],
+      "method": "lowest skull voxels posterior to the EAC and within 30 mm medial of it"
+    },
+    "styloid_fragment_top": {
+      "xyz": [
+        43.6,
+        71.0,
+        254.1
+      ],
+      "method": "highest voxels of the (fragmentary) styloid segmentation"
+    },
+    "styloid_fragment_bottom": {
+      "xyz": [
+        40.6,
+        76.8,
+        234.0
+      ],
+      "method": "lowest voxels of the (fragmentary) styloid segmentation"
+    },
+    "condyle_top": {
+      "xyz": [
+        51.8,
+        83.5,
+        270.3
+      ],
+      "method": "highest right mandible voxels"
+    },
+    "gonion": {
+      "xyz": [
+        49.6,
+        88.8,
+        203.5
+      ],
+      "method": "right mandible extreme along posterior-inferior diagonal"
+    },
+    "mandible_lower_border_mid": {
+      "xyz": [
+        40.0,
+        110.3,
+        193.6
+      ],
+      "method": "lowest right mandible voxels mid-body"
+    },
+    "ramus_posterior_border": {
+      "polyline": [
+        [
+          50.8,
+          84.3,
+          208.0
+        ],
+        [
+          50.8,
+          83.5,
+          211.0
+        ],
+        [
+          51.5,
+          82.8,
+          214.0
+        ],
+        [
+          51.5,
+          82.8,
+          217.0
+        ],
+        [
+          51.5,
+          82.8,
+          220.0
+        ],
+        [
+          50.8,
+          82.8,
+          222.0
+        ],
+        [
+          50.8,
+          83.5,
+          225.0
+        ],
+        [
+          51.5,
+          84.3,
+          229.0
+        ],
+        [
+          51.5,
+          84.3,
+          232.0
+        ],
+        [
+          51.5,
+          84.3,
+          235.0
+        ],
+        [
+          51.5,
+          84.3,
+          238.0
+        ],
+        [
+          52.3,
+          84.3,
+          241.0
+        ],
+        [
+          51.5,
+          83.5,
+          244.0
+        ],
+        [
+          53.0,
+          83.5,
+          247.0
+        ],
+        [
+          53.0,
+          82.8,
+          250.0
+        ],
+        [
+          53.0,
+          82.0,
+          253.0
+        ],
+        [
+          54.5,
+          81.3,
+          256.0
+        ],
+        [
+          53.0,
+          79.8,
+          259.0
+        ],
+        [
+          50.8,
+          78.3,
+          262.0
+        ]
+      ],
+      "method": "most posterior right-mandible voxel per 3 mm z band, gonion to condylar neck"
+    },
+    "zygomatic_arch_lateral": {
+      "xyz": [
+        55.8,
+        100.7,
+        272.0
+      ],
+      "method": "lateral-most 10% of skull voxels anterior to the EAC at its level"
+    },
+    "zygomatic_arch_lower_border": {
+      "xyz": [
+        54.9,
+        123.9,
+        260.4
+      ],
+      "method": "lowest of those lateral arch voxels"
+    },
+    "hyoid_greater_horn_tip_r": {
+      "xyz": [
+        29.4,
+        84.3,
+        174.4
+      ],
+      "method": "hyoid extreme posterolaterally on the right"
+    },
+    "tragus_skin": {
+      "xyz": [
+        78.5,
+        77.5,
+        264.0
+      ],
+      "method": "skin point nearest to 6 mm lateral, 8 mm anterior, 2 mm inferior of the EAC opening"
+    },
+    "parotid_centroid": {
+      "xyz": [
+        68.5,
+        81.4,
+        232.9
+      ],
+      "method": "centroid of parotid_gland_right"
+    },
+    "parotid_superior": {
+      "xyz": [
+        65.2,
+        81.9,
+        255.2
+      ],
+      "method": "parotid_gland_right extreme [0, 0, 1]"
+    },
+    "parotid_inferior": {
+      "xyz": [
+        67.0,
+        85.9,
+        200.4
+      ],
+      "method": "parotid_gland_right extreme [0, 0, -1]"
+    },
+    "parotid_anterior": {
+      "xyz": [
+        70.5,
+        98.2,
+        240.4
+      ],
+      "method": "parotid_gland_right extreme [0, 1, 0]"
+    },
+    "parotid_posterior": {
+      "xyz": [
+        66.6,
+        63.4,
+        236.6
+      ],
+      "method": "parotid_gland_right extreme [0, -1, 0]"
+    },
+    "parotid_lateral": {
+      "xyz": [
+        77.9,
+        82.2,
+        232.2
+      ],
+      "method": "parotid_gland_right extreme [1, 0, 0]"
+    },
+    "parotid_medial": {
+      "xyz": [
+        56.6,
+        73.3,
+        246.9
+      ],
+      "method": "parotid_gland_right extreme [-1, 0, 0]"
+    },
+    "stylomastoid_foramen": {
+      "xyz": [
+        45.0,
+        64.0,
+        253.0
+      ],
+      "uncertainty_mm": 3,
+      "method": "visual pick on CT: lower end of the facial canal (small bony ring at about x 44, y 63 on axial z 258, correctly oriented crops) where it opens on the inferior temporal-bone surface, posterior to the styloid base and anteromedial to the mastoid; consistent with coronal and sagittal cuts",
+      "evidence": "docs/qc/m1-landmarks/stylomastoid_search.png, facial_canal_search.png"
+    },
+    "styloid_base": {
+      "xyz": [
+        40.5,
+        72.0,
+        253.0
+      ],
+      "uncertainty_mm": 2,
+      "method": "visual pick on sagittal CT x=40: upper end of the styloid process",
+      "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+    },
+    "styloid_tip": {
+      "xyz": [
+        40.0,
+        78.0,
+        232.0
+      ],
+      "uncertainty_mm": 2,
+      "method": "visual pick on sagittal CT x=40: lower end of the styloid process (about 21 mm long)",
+      "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+    },
+    "mastoid_tip_visual": {
+      "xyz": [
+        55.0,
+        60.0,
+        245.0
+      ],
+      "uncertainty_mm": 2,
+      "method": "visual pick on coronal CT y=62: inferior end of the mastoid process",
+      "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+    },
+    "tympanomastoid_dropoff": {
+      "xyz": [
+        50.0,
+        63.0,
+        252.0
+      ],
+      "uncertainty_mm": 4,
+      "method": "visual estimate: medial (drop-off) end of the tympanomastoid fissure on the inferior temporal bone surface, between the tympanic plate below the EAC and the anterior mastoid; the fissure itself is not resolved at this CT resolution",
+      "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+    },
+    "digastric_origin": {
+      "xyz": [
+        50.0,
+        57.0,
+        246.0
+      ],
+      "uncertainty_mm": 4,
+      "method": "estimate: mastoid notch, medial to the mastoid tip; the posterior belly is not segmented (ADR-0002)",
+      "evidence": "docs/qc/m1-landmarks/parotid_depth.png"
+    },
+    "tragal_pointer": {
+      "xyz": [
+        67.0,
+        72.0,
+        262.0
+      ],
+      "uncertainty_mm": 5,
+      "method": "estimate: medial tip of the tragal (conchal) cartilage at the anteroinferior cartilaginous canal, about 7 mm medial of the canal opening; cartilage is not resolved on this CT",
+      "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+    }
+  }
+}

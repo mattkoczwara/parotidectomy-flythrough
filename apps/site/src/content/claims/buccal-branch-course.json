@@ -1,0 +1,21 @@
+{
+  "id": "buccal-branch-course",
+  "statement": {
+    "essentials": "The branch to the cheek runs forward about a finger-width below the cheekbone.",
+    "anatomy": "The buccal branch runs roughly parallel to and about 1 cm below the zygomatic arch; it can be traced back to find the trunk (retrograde approach)."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "support": "direct"
+    }
+  ],
+  "limitations": "Rule of thumb from one institutional protocol.",
+  "numbers": [],
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "stylomastoid_foramen": {
+    "xyz": [
+      45.0,
+      64.0,
+      253.0
+    ],
+    "uncertainty_mm": 3,
+    "method": "visual pick on CT: lower end of the facial canal (small bony ring at about x 44, y 63 on axial z 258, correctly oriented crops) where it opens on the inferior temporal-bone surface, posterior to the styloid base and anteromedial to the mastoid; consistent with coronal and sagittal cuts",
+    "evidence": "docs/qc/m1-landmarks/stylomastoid_search.png, facial_canal_search.png"
+  },
+  "styloid_base": {
+    "xyz": [
+      40.5,
+      72.0,
+      253.0
+    ],
+    "uncertainty_mm": 2,
+    "method": "visual pick on sagittal CT x=40: upper end of the styloid process",
+    "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+  },
+  "styloid_tip": {
+    "xyz": [
+      40.0,
+      78.0,
+      232.0
+    ],
+    "uncertainty_mm": 2,
+    "method": "visual pick on sagittal CT x=40: lower end of the styloid process (about 21 mm long)",
+    "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+  },
+  "mastoid_tip_visual": {
+    "xyz": [
+      55.0,
+      60.0,
+      245.0
+    ],
+    "uncertainty_mm": 2,
+    "method": "visual pick on coronal CT y=62: inferior end of the mastoid process",
+    "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+  },
+  "tympanomastoid_dropoff": {
+    "xyz": [
+      50.0,
+      63.0,
+      252.0
+    ],
+    "uncertainty_mm": 4,
+    "method": "visual estimate: medial (drop-off) end of the tympanomastoid fissure on the inferior temporal bone surface, between the tympanic plate below the EAC and the anterior mastoid; the fissure itself is not resolved at this CT resolution",
+    "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+  },
+  "digastric_origin": {
+    "xyz": [
+      50.0,
+      57.0,
+      246.0
+    ],
+    "uncertainty_mm": 4,
+    "method": "estimate: mastoid notch, medial to the mastoid tip; the posterior belly is not segmented (ADR-0002)",
+    "evidence": "docs/qc/m1-landmarks/parotid_depth.png"
+  },
+  "tragal_pointer": {
+    "xyz": [
+      67.0,
+      72.0,
+      262.0
+    ],
+    "uncertainty_mm": 5,
+    "method": "estimate: medial tip of the tragal (conchal) cartilage at the anteroinferior cartilaginous canal, about 7 mm medial of the canal opening; cartilage is not resolved on this CT",
+    "evidence": "docs/qc/m1-landmarks/facial_canal_search.png"
+  }
+}

@@ -106,6 +106,11 @@ export const claim = z.strictObject({
   limitations: nonEmpty.optional(),
   disagreement: nonEmpty.optional(),
   lastChecked: isoDate,
+  /**
+   * `to-verify`: numbers or wording come from an abstract or a secondary extraction and must be confirmed
+   * against the source before public display. The public build refuses to-verify claims (plan §10).
+   */
+  verification: z.enum(['checked', 'to-verify']),
   clinicalReview: z.strictObject({
     status: z.enum(['pending', 'approved', 'revise']),
     reviewer: nonEmpty.optional(),

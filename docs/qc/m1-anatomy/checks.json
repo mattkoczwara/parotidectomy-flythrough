@@ -1,0 +1,115 @@
+{
+  "trunk_length_mm": {
+    "pass": true,
+    "value": 17.2,
+    "range": [
+      8.6,
+      22.8
+    ],
+    "summary": "17.2 mm (Pather range 8.6\u201322.8; means 14.0 and 16.4)"
+  },
+  "pes_inside_parotid": {
+    "pass": true,
+    "sdf_mm": -2.71,
+    "summary": "signed distance -2.7 mm (negative = inside)"
+  },
+  "nerve_lateral_to_rmv": {
+    "pass": true,
+    "pairs": 316,
+    "violations": 0,
+    "min_gap_mm": 0.33,
+    "summary": "316 level-matched pairs, 0 violations, min clearance 0.3 mm"
+  },
+  "eca_deep_to_rmv": {
+    "pass": true,
+    "pairs": 516,
+    "violations": 0,
+    "min_gap_mm": 0.13,
+    "summary": "516 pairs, 0 violations, min clearance 0.1 mm"
+  },
+  "eca_deep_to_digastric": {
+    "pass": true,
+    "pairs": 367,
+    "violations": 0,
+    "min_gap_mm": 0.47,
+    "summary": "367 pairs, 0 violations, min clearance 0.5 mm"
+  },
+  "branch_order_superior_to_inferior": {
+    "pass": true,
+    "z_at_plane": {
+      "facial_nerve_temporal": 277.44964920886906,
+      "facial_nerve_zygomatic": 258.3658242774321,
+      "facial_nerve_buccal": 249.26944697599902,
+      "facial_nerve_marginal_mandibular": 200.89424299953924
+    },
+    "summary": "temporal=277 > zygomatic=258 > buccal=249 > marginal_mandibular=201"
+  },
+  "mm_near_mandible_border": {
+    "pass": true,
+    "max_mm": 7.8,
+    "summary": "distal half within 7.8 mm of the mandible surface"
+  },
+  "temporal_superficial_to_arch": {
+    "pass": true,
+    "min_clearance_mm": 1.28,
+    "summary": "min clearance from skull 1.3 mm"
+  },
+  "no_bone_intersection": {
+    "pass": true,
+    "hits": {},
+    "summary": "none"
+  },
+  "landmark_distances": {
+    "pass": true,
+    "detail": {
+      "tympanomastoid_dropoff": {
+        "distance_mm": 3.2,
+        "within": {
+          "witt-2005": true,
+          "rea-2010": true,
+          "pather-osman-2006": false
+        },
+        "claim": "landmark-tympanomastoid-suture",
+        "asserted": true
+      },
+      "digastric_origin": {
+        "distance_mm": 10.3,
+        "within": {
+          "witt-2005": true,
+          "rea-2010": false,
+          "pather-osman-2006": true
+        },
+        "claim": "landmark-posterior-belly-digastric",
+        "asserted": true
+      },
+      "styloid_base": {
+        "distance_mm": 9.2,
+        "within": {
+          "pather-osman-2006": true
+        },
+        "claim": "landmark-styloid",
+        "asserted": true
+      },
+      "tragal_pointer": {
+        "distance_mm": 18.9,
+        "within": {
+          "rea-2010": false,
+          "pather-osman-2006": false
+        },
+        "claim": "landmark-tragal-pointer",
+        "asserted": false
+      }
+    },
+    "summary": "tympanomastoid_dropoff 3.2 mm in ['witt-2005', 'rea-2010']; digastric_origin 10.3 mm in ['witt-2005', 'pather-osman-2006']; styloid_base 9.2 mm in ['pather-osman-2006']; tragal_pointer 18.9 mm in no study range (reported only)"
+  },
+  "no_tube_contacts": {
+    "pass": true,
+    "contacts": {},
+    "summary": "no unintended contacts between authored structures"
+  },
+  "graph_connected_single_root": {
+    "pass": true,
+    "orphans": [],
+    "summary": "10 facial-nerve segments, all descend from the foramen"
+  }
+}

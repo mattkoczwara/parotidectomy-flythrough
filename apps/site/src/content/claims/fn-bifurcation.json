@@ -1,0 +1,51 @@
+{
+  "id": "fn-bifurcation",
+  "statement": {
+    "essentials": "Inside the gland the nerve usually splits into an upper and a lower division.",
+    "anatomy": "At the pes anserinus the trunk usually bifurcates into temporofacial and cervicofacial divisions; trifurcation also occurs."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "triantafyllou-2024",
+      "support": "direct"
+    },
+    {
+      "sourceId": "poutoglidis-2022",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Trunk bifurcates",
+      "value": 94.1,
+      "unit": "%",
+      "population": "Cadaveric and intraoperative nerves, mostly Asian series",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "triantafyllou-2024",
+      "n": "19 studies, 2,453 nerves",
+      "ci": [
+        88.9,
+        97.9
+      ]
+    },
+    {
+      "label": "Trunk trifurcates",
+      "value": 12.0,
+      "unit": "%",
+      "population": "Cadaveric and intraoperative nerves, mostly Asian series",
+      "design": "Systematic review and meta-analysis (pooled separately from bifurcation)",
+      "sourceId": "triantafyllou-2024",
+      "ci": [
+        6.8,
+        18.2
+      ]
+    }
+  ],
+  "disagreement": "Poutoglidis 2022 reports 3.2% trifurcation; pooled estimates are not mutually exclusive.",
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

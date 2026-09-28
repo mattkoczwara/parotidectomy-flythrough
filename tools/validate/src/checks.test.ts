@@ -30,6 +30,7 @@ const baseClaim: Claim = claimSchema.parse({
     },
   ],
   lastChecked: '2026-09-28',
+  verification: 'to-verify',
   clinicalReview: { status: 'pending' },
 });
 

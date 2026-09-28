@@ -1,0 +1,39 @@
+{
+  "id": "parotid-lobes-surgical",
+  "statement": {
+    "essentials": "The 'lobes' of the parotid are not separate parts: surgeons name the tissue on the outer side of the nerve 'superficial' and the rest 'deep'.",
+    "anatomy": "Superficial and deep lobes are a surgical division defined by the plane of the facial nerve; by weight about two-thirds of the gland lies superficial to it."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "statpearls-parotidectomy",
+      "support": "direct"
+    },
+    {
+      "sourceId": "pujol-olmo-2020",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Gland weight superficial to the nerve (ESGS levels I+II)",
+      "value": 65.0,
+      "unit": "%",
+      "population": "Adult anatomical specimens",
+      "design": "Anatomical dissection study",
+      "sourceId": "pujol-olmo-2020",
+      "n": "19 specimens",
+      "range": [
+        61.0,
+        69.0
+      ]
+    }
+  ],
+  "limitations": "Small anatomical sample; the commonly quoted 80% figure is not supported by this measurement.",
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

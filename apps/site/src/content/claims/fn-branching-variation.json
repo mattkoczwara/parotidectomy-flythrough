@@ -1,0 +1,46 @@
+{
+  "id": "fn-branching-variation",
+  "statement": {
+    "essentials": "The branching pattern differs from person to person; the pattern shown here is one common arrangement.",
+    "anatomy": "Interconnections between branches are common and follow several recognised patterns (Davis types I–VI); no classification captures all variants."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "triantafyllou-2024",
+      "support": "direct"
+    },
+    {
+      "sourceId": "davis-1956",
+      "support": "indirect"
+    },
+    {
+      "sourceId": "katz-catalano-1987",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Davis type I (no interconnections)",
+      "value": 15.5,
+      "unit": "%",
+      "population": "Pooled cadaveric and intraoperative series",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "triantafyllou-2024"
+    },
+    {
+      "label": "Davis type III (one temporofacial–cervicofacial interconnection)",
+      "value": 23.1,
+      "unit": "%",
+      "population": "Pooled cadaveric and intraoperative series",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "triantafyllou-2024"
+    }
+  ],
+  "limitations": "The authors conclude that no classification describes the variability well.",
+  "lastChecked": "2026-09-28",
+  "verification": "to-verify",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}
