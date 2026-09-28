@@ -1,0 +1,24 @@
+{
+  "id": "salame-2002",
+  "citation": {
+    "authors": [
+      "Salame K",
+      "Ouaknine GE",
+      "Arensburg B",
+      "Rochkind S"
+    ],
+    "title": "Microsurgical anatomy of the facial nerve trunk",
+    "container": "Clin Anat",
+    "year": 2002,
+    "volume": "15",
+    "pages": "93-9"
+  },
+  "publicationType": "cadaveric-study",
+  "pmid": "11877786",
+  "doi": "10.1002/ca.1102",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/11877786/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "23 cadavers, bilateral."
+}

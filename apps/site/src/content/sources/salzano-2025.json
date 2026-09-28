@@ -1,0 +1,30 @@
+{
+  "id": "salzano-2025",
+  "citation": {
+    "authors": [
+      "Salzano G",
+      "Scocca V",
+      "Troise S",
+      "Abbate V",
+      "Bonavolontà P",
+      "Vaira LA",
+      "Committeri U",
+      "Lechien JR",
+      "Tramontano S",
+      "Canterino V",
+      "Dell'Aversana Orabona G"
+    ],
+    "title": "Pleomorphic Adenoma: Extracapsular Dissection vs. Superficial Parotidectomy-An Updated Systematic Review and Meta-Analysis",
+    "container": "Med Sci (Basel)",
+    "year": 2025,
+    "volume": "13"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "40843726",
+  "doi": "10.3390/medsci13030104",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/40843726/",
+  "status": "active",
+  "verification": "full-text",
+  "checkedDate": "2026-09-28",
+  "notes": "Single-arm pooled proportions: ECD and SP arms pooled separately and compared indirectly; 17 of 21 studies retrospective; internal numerical inconsistencies (point estimates outside stated CIs)."
+}

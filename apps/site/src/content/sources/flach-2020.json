@@ -1,0 +1,27 @@
+{
+  "id": "flach-2020",
+  "citation": {
+    "authors": [
+      "Flach S",
+      "Hey SY",
+      "Lim A",
+      "Maniam P",
+      "Li Z",
+      "Donnan PT",
+      "Manickavasagam J"
+    ],
+    "title": "Outpatient (same-day discharge) versus inpatient parotidectomy: A systematic review and meta-analysis",
+    "container": "Clin Otolaryngol",
+    "year": 2020,
+    "volume": "45",
+    "pages": "529-537"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "32105399",
+  "doi": "10.1111/coa.13519",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/32105399/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "3,664 patients; selected, non-randomised."
+}

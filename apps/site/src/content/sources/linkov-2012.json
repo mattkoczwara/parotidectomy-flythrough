@@ -1,0 +1,24 @@
+{
+  "id": "linkov-2012",
+  "citation": {
+    "authors": [
+      "Linkov G",
+      "Morris LG",
+      "Shah JP",
+      "Kraus DH"
+    ],
+    "title": "First bite syndrome: incidence, risk factors, treatment, and outcomes",
+    "container": "Laryngoscope",
+    "year": 2012,
+    "volume": "122",
+    "pages": "1773-8"
+  },
+  "publicationType": "case-series",
+  "pmid": "22573579",
+  "doi": "10.1002/lary.23372",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22573579/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "499 deep-lobe, parapharyngeal and infratemporal cases; not representative of superficial benign surgery."
+}

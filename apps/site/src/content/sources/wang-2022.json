@@ -1,0 +1,24 @@
+{
+  "id": "wang-2022",
+  "citation": {
+    "authors": [
+      "Wang Z",
+      "Zhao H",
+      "Guo H",
+      "An C"
+    ],
+    "title": "Application of the Milan System for Reporting Salivary Gland Cytopathology: A systematic review and meta-analysis",
+    "container": "Cancer Cytopathol",
+    "year": 2022,
+    "volume": "130",
+    "pages": "849-859"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "35637572",
+  "doi": "10.1002/cncy.22604",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/35637572/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "35 studies, 10,706 FNAs."
+}

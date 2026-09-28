@@ -1,0 +1,22 @@
+{
+  "id": "bron-obrien-1997",
+  "citation": {
+    "authors": [
+      "Bron LP",
+      "O'Brien CJ"
+    ],
+    "title": "Facial nerve function after parotidectomy",
+    "container": "Arch Otolaryngol Head Neck Surg",
+    "year": 1997,
+    "volume": "123",
+    "pages": "1091-6"
+  },
+  "publicationType": "case-series",
+  "pmid": "9339986",
+  "doi": "10.1001/archotol.1997.01900100065009",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/9339986/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "259 parotidectomies."
+}

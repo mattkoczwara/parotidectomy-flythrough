@@ -1,0 +1,26 @@
+{
+  "id": "bovenzi-2019",
+  "citation": {
+    "authors": [
+      "Bovenzi CD",
+      "Ciolek P",
+      "Crippen M",
+      "Curry JM",
+      "Krein H",
+      "Heffelfinger R"
+    ],
+    "title": "Reconstructive trends and complications following parotidectomy: incidence and predictors in 11,057 cases",
+    "container": "J Otolaryngol Head Neck Surg",
+    "year": 2019,
+    "volume": "48",
+    "pages": "64"
+  },
+  "publicationType": "cohort",
+  "pmid": "31744535",
+  "doi": "10.1186/s40463-019-0387-y",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/31744535/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "11,057 cases, US database."
+}

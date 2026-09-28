@@ -1,0 +1,24 @@
+{
+  "id": "franzen-2018",
+  "citation": {
+    "authors": [
+      "Franzen AM",
+      "Kaup Franzen C",
+      "Guenzel T",
+      "Lieder A"
+    ],
+    "title": "Increased incidence of Warthin tumours of the parotid gland: a 42-year evaluation",
+    "container": "Eur Arch Otorhinolaryngol",
+    "year": 2018,
+    "volume": "275",
+    "pages": "2593-2598"
+  },
+  "publicationType": "cohort",
+  "pmid": "30121841",
+  "doi": "10.1007/s00405-018-5092-3",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/30121841/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "806 patients; rising Warthin share over 42 years."
+}

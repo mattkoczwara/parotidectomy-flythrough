@@ -1,0 +1,20 @@
+{
+  "id": "bernhard-2026",
+  "citation": {
+    "authors": [
+      "Bernhard C",
+      "Schlattmann P",
+      "Guntinas-Lichius O"
+    ],
+    "container": "Front Surg",
+    "year": 2026,
+    "volume": "13",
+    "pages": "1836835"
+  },
+  "publicationType": "network-meta-analysis",
+  "doi": "10.3389/fsurg.2026.1836835",
+  "status": "active",
+  "verification": "full-text",
+  "checkedDate": "2026-09-28",
+  "notes": "23 studies, 4,674 patients. PMID not yet confirmed. Authors flag transitivity problems and a mean 66-month follow-up too short for late recurrence."
+}

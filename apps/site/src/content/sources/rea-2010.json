@@ -1,0 +1,23 @@
+{
+  "id": "rea-2010",
+  "citation": {
+    "authors": [
+      "Rea PM",
+      "McGarry G",
+      "Shaw-Dunn J"
+    ],
+    "title": "The precision of four commonly used surgical landmarks for locating the facial nerve in anterograde parotidectomy in humans",
+    "container": "Ann Anat",
+    "year": 2010,
+    "volume": "192",
+    "pages": "27-32"
+  },
+  "publicationType": "cadaveric-study",
+  "pmid": "19883997",
+  "doi": "10.1016/j.aanat.2009.09.005",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/19883997/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "26 cadavers; landmark-to-trunk distances. Disagrees with Witt 2005 and Pather & Osman 2006 because reference points differ."
+}

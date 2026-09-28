@@ -1,0 +1,25 @@
+{
+  "id": "liu-2016",
+  "citation": {
+    "authors": [
+      "Liu CC",
+      "Jethwa AR",
+      "Khariwala SS",
+      "Johnson J",
+      "Shin JJ"
+    ],
+    "title": "Sensitivity, Specificity, and Posttest Probability of Parotid Fine-Needle Aspiration: A Systematic Review and Meta-analysis",
+    "container": "Otolaryngol Head Neck Surg",
+    "year": 2016,
+    "volume": "154",
+    "pages": "9-23"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "26428476",
+  "doi": "10.1177/0194599815607841",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26428476/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "63 studies, 5,647 patients."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "albergotti-2012",
+  "citation": {
+    "authors": [
+      "Albergotti WG",
+      "Nguyen SA",
+      "Zenk J",
+      "Gillespie MB"
+    ],
+    "title": "Extracapsular dissection for benign parotid tumors: a meta-analysis",
+    "container": "Laryngoscope",
+    "year": 2012,
+    "volume": "122",
+    "pages": "1954-60"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "22753318",
+  "doi": "10.1002/lary.23396",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/22753318/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "9 studies, 1,882 patients."
+}

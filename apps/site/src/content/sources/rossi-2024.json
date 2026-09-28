@@ -1,0 +1,28 @@
+{
+  "id": "rossi-2024",
+  "citation": {
+    "authors": [
+      "Rossi ED",
+      "Baloch Z",
+      "Barkan G",
+      "Foschini MP",
+      "Kurtycz D",
+      "Pusztaszeri M",
+      "Vielh P",
+      "Faquin WC"
+    ],
+    "title": "Second edition of the Milan System for Reporting Salivary Gland Cytopathology: Refining the role of salivary gland FNA",
+    "container": "J Am Soc Cytopathol",
+    "year": 2024,
+    "volume": "13",
+    "pages": "67-77"
+  },
+  "publicationType": "consensus",
+  "pmid": "38184365",
+  "doi": "10.1016/j.jasc.2023.08.004",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/38184365/",
+  "status": "active",
+  "verification": "citation-only",
+  "checkedDate": "2026-09-28",
+  "notes": "Milan System 2nd edition (also Cancer Cytopathol, DOI 10.1002/cncy.22753). Risk-of-malignancy figures so far come only from a secondary summary; confirm against this primary before display."
+}

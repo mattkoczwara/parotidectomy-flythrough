@@ -1,0 +1,25 @@
+{
+  "id": "hui-2003",
+  "citation": {
+    "authors": [
+      "Hui Y",
+      "Wong DS",
+      "Wong LY",
+      "Ho WK",
+      "Wei WI"
+    ],
+    "title": "A prospective controlled double-blind trial of great auricular nerve preservation at parotidectomy",
+    "container": "Am J Surg",
+    "year": 2003,
+    "volume": "185",
+    "pages": "574-9"
+  },
+  "publicationType": "randomised-trial",
+  "pmid": "12781889",
+  "doi": "10.1016/s0002-9610(03)00068-0",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/12781889/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "81 patients."
+}

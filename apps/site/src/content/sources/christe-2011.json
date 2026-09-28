@@ -1,0 +1,25 @@
+{
+  "id": "christe-2011",
+  "citation": {
+    "authors": [
+      "Christe A",
+      "Waldherr C",
+      "Hallett R",
+      "Zbaeren P",
+      "Thoeny H"
+    ],
+    "title": "MR imaging of parotid tumors: typical lesion characteristics in MR imaging improve discrimination between benign and malignant disease",
+    "container": "AJNR Am J Neuroradiol",
+    "year": 2011,
+    "volume": "32",
+    "pages": "1202-7"
+  },
+  "publicationType": "case-series",
+  "pmid": "21724574",
+  "doi": "10.3174/ajnr.A2520",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21724574/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "84 patients."
+}

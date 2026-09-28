@@ -1,0 +1,30 @@
+{
+  "id": "jin-2019",
+  "citation": {
+    "authors": [
+      "Jin H",
+      "Kim BY",
+      "Kim H",
+      "Lee E",
+      "Park W",
+      "Choi S",
+      "Chung MK",
+      "Son YI",
+      "Baek CH",
+      "Jeong HS"
+    ],
+    "title": "Incidence of postoperative facial weakness in parotid tumor surgery: a tumor subsite analysis of 794 parotidectomies",
+    "container": "BMC Surg",
+    "year": 2019,
+    "volume": "19",
+    "pages": "199"
+  },
+  "publicationType": "cohort",
+  "pmid": "31878919",
+  "doi": "10.1186/s12893-019-0666-6",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/31878919/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "794 parotidectomies."
+}

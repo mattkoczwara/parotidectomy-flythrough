@@ -1,0 +1,22 @@
+{
+  "id": "katz-catalano-1987",
+  "citation": {
+    "authors": [
+      "Katz AD",
+      "Catalano P"
+    ],
+    "title": "The clinical significance of the various anastomotic branches of the facial nerve. Report of 100 patients",
+    "container": "Arch Otolaryngol Head Neck Surg",
+    "year": 1987,
+    "volume": "113",
+    "pages": "959-62"
+  },
+  "publicationType": "case-series",
+  "pmid": "3606847",
+  "doi": "10.1001/archotol.1987.01860090057019",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/3606847/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "100 patients, intraoperative."
+}

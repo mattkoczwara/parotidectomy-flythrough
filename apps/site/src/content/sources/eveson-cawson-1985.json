@@ -1,0 +1,22 @@
+{
+  "id": "eveson-cawson-1985",
+  "citation": {
+    "authors": [
+      "Eveson JW",
+      "Cawson RA"
+    ],
+    "title": "Salivary gland tumours. A review of 2410 cases with particular reference to histological types, site, age and sex distribution",
+    "container": "J Pathol",
+    "year": 1985,
+    "volume": "146",
+    "pages": "51-8"
+  },
+  "publicationType": "case-series",
+  "pmid": "4009321",
+  "doi": "10.1002/path.1711460106",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/4009321/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "2,410 UK salivary tumours."
+}

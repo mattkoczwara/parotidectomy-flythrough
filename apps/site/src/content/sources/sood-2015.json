@@ -1,0 +1,23 @@
+{
+  "id": "sood-2015",
+  "citation": {
+    "authors": [
+      "Sood AJ",
+      "Houlton JJ",
+      "Nguyen SA",
+      "Gillespie MB"
+    ],
+    "title": "Facial nerve monitoring during parotidectomy: a systematic review and meta-analysis",
+    "container": "Otolaryngol Head Neck Surg",
+    "year": 2015,
+    "volume": "152",
+    "pages": "631-7"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "25628369",
+  "doi": "10.1177/0194599814568779",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25628369/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28"
+}

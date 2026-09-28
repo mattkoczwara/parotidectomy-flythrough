@@ -1,0 +1,28 @@
+{
+  "id": "quer-2016",
+  "citation": {
+    "authors": [
+      "Quer M",
+      "Guntinas-Lichius O",
+      "Marchal F",
+      "Vander Poorten V",
+      "Chevalier D",
+      "León X",
+      "Eisele D",
+      "Dulguerov P"
+    ],
+    "title": "Classification of parotidectomies: a proposal of the European Salivary Gland Society",
+    "container": "Eur Arch Otorhinolaryngol",
+    "year": 2016,
+    "volume": "273",
+    "pages": "3307-12"
+  },
+  "publicationType": "consensus",
+  "pmid": "26861548",
+  "doi": "10.1007/s00405-016-3916-6",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26861548/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "European Salivary Gland Society classification of parotidectomies."
+}

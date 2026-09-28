@@ -1,0 +1,24 @@
+{
+  "id": "pujol-olmo-2020",
+  "citation": {
+    "authors": [
+      "Pujol-Olmo A",
+      "Mirapeix RM",
+      "Sañudo-Tejero JR",
+      "Quer-Agustí M"
+    ],
+    "title": "Description and relationships of the parotid gland levels proposed by the European Salivary Gland Society staging system: an anatomical study",
+    "container": "Surg Radiol Anat",
+    "year": 2020,
+    "volume": "42",
+    "pages": "1101-1107"
+  },
+  "publicationType": "anatomical-study",
+  "pmid": "32372113",
+  "doi": "10.1007/s00276-020-02483-x",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/32372113/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "19 specimens; ESGS level weights; superficial (I+II) about 61-69% by weight."
+}

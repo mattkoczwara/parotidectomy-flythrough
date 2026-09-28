@@ -1,0 +1,22 @@
+{
+  "id": "kim-kim-2018",
+  "citation": {
+    "authors": [
+      "Kim HJ",
+      "Kim JS"
+    ],
+    "title": "Ultrasound-guided core needle biopsy in salivary glands: A meta-analysis",
+    "container": "Laryngoscope",
+    "year": 2018,
+    "volume": "128",
+    "pages": "118-125"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "28699165",
+  "doi": "10.1002/lary.26764",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/28699165/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "10 studies, 1,315 procedures."
+}

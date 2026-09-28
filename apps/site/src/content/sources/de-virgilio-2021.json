@@ -1,0 +1,29 @@
+{
+  "id": "de-virgilio-2021",
+  "citation": {
+    "authors": [
+      "De Virgilio A",
+      "Costantino A",
+      "Russo E",
+      "Ferreli F",
+      "Pellini R",
+      "Petruzzi G",
+      "Zocchi J",
+      "Spriano G",
+      "Mercante G"
+    ],
+    "title": "Different Surgical Strategies in the Prevention of Frey Syndrome: A Systematic Review and Meta-analysis",
+    "container": "Laryngoscope",
+    "year": 2021,
+    "volume": "131",
+    "pages": "1761-1768"
+  },
+  "publicationType": "network-meta-analysis",
+  "pmid": "33502015",
+  "doi": "10.1002/lary.29414",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/33502015/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "3,830 patients."
+}

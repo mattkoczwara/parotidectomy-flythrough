@@ -1,0 +1,23 @@
+{
+  "id": "witt-2005",
+  "citation": {
+    "authors": [
+      "Witt RL",
+      "Weinstein GS",
+      "Rejto LK"
+    ],
+    "title": "Tympanomastoid suture and digastric muscle in cadaver and live parotidectomy",
+    "container": "Laryngoscope",
+    "year": 2005,
+    "volume": "115",
+    "pages": "574-7"
+  },
+  "publicationType": "anatomical-study",
+  "pmid": "15805861",
+  "doi": "10.1097/01.mlg.0000161343.85009.4c",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/15805861/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "14 cadavers and 22 live parotidectomies."
+}

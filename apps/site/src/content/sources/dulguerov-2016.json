@@ -1,0 +1,23 @@
+{
+  "id": "dulguerov-2016",
+  "citation": {
+    "authors": [
+      "Dulguerov N",
+      "Makni A",
+      "Dulguerov P"
+    ],
+    "title": "The superficial musculoaponeurotic system flap in the prevention of Frey syndrome: A meta-analysis",
+    "container": "Laryngoscope",
+    "year": 2016,
+    "volume": "126",
+    "pages": "1581-4"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "26915301",
+  "doi": "10.1002/lary.25895",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26915301/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "11 studies; I2 85%."
+}

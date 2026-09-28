@@ -1,0 +1,27 @@
+{
+  "id": "ye-2019",
+  "citation": {
+    "authors": [
+      "Ye L",
+      "Cao Y",
+      "Yang W",
+      "Wu F",
+      "Lin J",
+      "Li L",
+      "Li C"
+    ],
+    "title": "Graft interposition for preventing Frey's syndrome in patients undergoing parotidectomy",
+    "container": "Cochrane Database Syst Rev",
+    "year": 2019,
+    "volume": "10",
+    "pages": "CD012323"
+  },
+  "publicationType": "cochrane-review",
+  "pmid": "31578708",
+  "doi": "10.1002/14651858.CD012323.pub2",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/31578708/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "Very low-certainty evidence for interposition barriers."
+}

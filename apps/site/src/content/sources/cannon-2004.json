@@ -1,0 +1,23 @@
+{
+  "id": "cannon-2004",
+  "citation": {
+    "authors": [
+      "Cannon CR",
+      "Replogle WH",
+      "Schenk MP"
+    ],
+    "title": "Facial nerve in parotidectomy: a topographical analysis",
+    "container": "Laryngoscope",
+    "year": 2004,
+    "volume": "114",
+    "pages": "2034-7"
+  },
+  "publicationType": "case-series",
+  "pmid": "15510038",
+  "doi": "10.1097/01.mlg.0000147943.13052.62",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/15510038/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "79 parotidectomies; tragal pointer distance less than the textbook 1 cm."
+}

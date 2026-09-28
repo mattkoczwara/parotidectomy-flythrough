@@ -1,0 +1,23 @@
+{
+  "id": "vieira-2002",
+  "citation": {
+    "authors": [
+      "Vieira MB",
+      "Maia AF",
+      "Ribeiro JC"
+    ],
+    "title": "Randomized prospective study of the validity of the great auricular nerve preservation in parotidectomy",
+    "container": "Arch Otolaryngol Head Neck Surg",
+    "year": 2002,
+    "volume": "128",
+    "pages": "1191-5"
+  },
+  "publicationType": "randomised-trial",
+  "pmid": "12365892",
+  "doi": "10.1001/archotol.128.10.1191",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/12365892/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "30 patients."
+}

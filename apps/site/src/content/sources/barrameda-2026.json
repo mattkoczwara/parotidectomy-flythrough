@@ -1,0 +1,28 @@
+{
+  "id": "barrameda-2026",
+  "citation": {
+    "authors": [
+      "Barrameda BN",
+      "Gogulapati A",
+      "Guo K",
+      "Squires L"
+    ],
+    "title": "Efficacy of Intraoperative Facial Nerve Monitoring in Parotidectomy: A Systematic Review and Meta-Analysis (1970-2025)",
+    "container": "Otolaryngol Head Neck Surg",
+    "year": 2026,
+    "volume": "174",
+    "pages": "291-296"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "41353726",
+  "doi": "10.1002/ohn.70083",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/41353726/",
+  "status": "retracted",
+  "retraction": {
+    "date": "2026-07-28",
+    "noticePmid": "42520282"
+  },
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "RETRACTED. Do not cite."
+}

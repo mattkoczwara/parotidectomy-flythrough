@@ -1,0 +1,25 @@
+{
+  "id": "witt-2015",
+  "citation": {
+    "authors": [
+      "Witt RL",
+      "Eisele DW",
+      "Morton RP",
+      "Nicolai P",
+      "Poorten VV",
+      "Zbären P"
+    ],
+    "title": "Etiology and management of recurrent parotid pleomorphic adenoma",
+    "container": "Laryngoscope",
+    "year": 2015,
+    "volume": "125",
+    "pages": "888-93"
+  },
+  "publicationType": "narrative-review",
+  "pmid": "25289881",
+  "doi": "10.1002/lary.24964",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25289881/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28"
+}

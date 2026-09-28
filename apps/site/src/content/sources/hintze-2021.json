@@ -1,0 +1,27 @@
+{
+  "id": "hintze-2021",
+  "citation": {
+    "authors": [
+      "Hintze JM",
+      "O'Duffy F",
+      "White-Gibson A",
+      "O'Neill P",
+      "Kinsella J",
+      "Timon C",
+      "Lennon P"
+    ],
+    "title": "Supporting the use of adjuvant radiotherapy in recurrent pleomorphic adenoma of the parotid",
+    "container": "Acta Otolaryngol",
+    "year": 2021,
+    "volume": "141",
+    "pages": "971-976"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "34622733",
+  "doi": "10.1080/00016489.2021.1980226",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/34622733/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-09-28",
+  "notes": "14 studies, 697 patients; groups not randomised."
+}
