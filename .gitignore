@@ -28,3 +28,6 @@ pipeline/**/.venv/
 .DS_Store
 Thumbs.db
 .idea/
+
+# spike output
+spikes/*/output/

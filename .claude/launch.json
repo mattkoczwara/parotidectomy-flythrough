@@ -4,8 +4,22 @@
     {
       "name": "site",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 4321
+    },
+    {
+      "name": "spike",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "-w",
+        "@atlas/spike-renderer"
+      ],
+      "port": 5174
     }
   ]
 }

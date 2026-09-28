@@ -61,7 +61,7 @@ This plan comes from three parallel research passes: medical evidence, anatomica
      - no retracted sources;
      - provenance required;
      - pinned versions.
-   - `docs/adr/0001-stack-provisional.md`: the stack is provisional until the M0 renderer spike passes.
+   - `docs/adr/0001-web-stack.md`: the stack is provisional until the M0 renderer spike passes.
    - Bibliography corrections in `docs/parotid_surgery_atlas_research_references.md`: the Rea PMID, the Barrameda retraction, the Salzano caveat, and the Milan figures to verify.
 3. **Workspace.** A root `package.json` with npm workspaces, a shared `tsconfig.base.json`, `.gitignore` (node_modules, dist, raw pipeline data), `.editorconfig`, `.nvmrc` (Node 24).
 4. **Web framework.** `apps/site` from Astro's **minimal (empty) starter** only. No theme, template, integration or styling boilerplate. One blank page.
@@ -338,7 +338,7 @@ docs/adr/             decision records; CLAUDE.md for agent conventions
 |---|---|
 | Incision | A separate skin patch per variant, stitched to the face along a real seam. A per-vertex path parameter drives the ink line and the cut progress. A small morph opens the wound edge. |
 | Skin flap | A skinned 4–6-bone hinge chain plus a corrective morph. A modelled cut-edge rim. The underside renders as fat through `frontFacing`. Retractors are rigid props parented to the bones. |
-| Superficial lobe dissection | A vertex-shader **peel driven by baked fields**. The per-vertex attribute `d` is the distance from the trunk along the branches, which gives antegrade order. The lobe lifts anteriorly off the nerve as `progress` passes `d`. The exposed deep surface renders as cut parenchyma. It is continuous, exactly scrubbable, and never hollow. |
+| Superficial lobe dissection | A vertex-shader **peel driven by baked fields**, with the fold hinge on the lobe's lateral surface at the dissection front (the M0 spike showed a deep-face hinge self-intersects). The per-vertex attribute `d` is the distance from the trunk along the branches, which gives antegrade order. The lobe lifts anteriorly off the nerve as `progress` passes `d`. The exposed deep surface renders as cut parenchyma. It is continuous, exactly scrubbable, and never hollow. |
 | Partial superficial | The same peel, gated by the baked ESGS level attribute. |
 | ECD | The same shader with a different field: distance from the tumour surface, with a cuff uniform. The branches are deliberately **not** exposed; that is the lesson. |
 | Total / deep lobe | A nerve-mobilisation morph plus a second peel field for the deep lobe, labelled schematic. |
@@ -347,7 +347,7 @@ docs/adr/             decision records; CLAUDE.md for agent conventions
 
 **Clipping:** one custom clip uniform inside our own node materials. Caps come from `frontFacing`, which avoids depending on `ClippingGroup` or `material.clippingPlanes`.
 
-**Transparency:** follows anatomical nesting render order. Ghost mode uses alpha-hash plus TRAA. The three.js OIT pass node will be evaluated later, not relied on.
+**Transparency:** follows anatomical nesting render order. Ghost mode uses a **single-layer blend**: a depth-only twin draws first, then the tissue blends over the opaque interior. The M0 spike rejected alpha-hash plus TRAA because of residual stipple (ADR-0001). The three.js OIT pass node will be evaluated later, not relied on.
 
 ## 9. Performance and accessibility
 
