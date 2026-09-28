@@ -1,0 +1,13 @@
+{
+  "name": "@atlas/timeline",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Pure TypeScript scene-state engine: compile(steps) -> Track, evaluate(track, t) -> SceneState. No rendering dependencies.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  }
+}

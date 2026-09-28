@@ -1,0 +1,13 @@
+{
+  "name": "@atlas/validate",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Build-failing validators: content schemas now; claims, retraction blocklist, number populations, asset provenance and structure/glTF ids from M0.",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@atlas/schema": "*"
+  }
+}

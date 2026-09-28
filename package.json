@@ -1,0 +1,29 @@
+{
+  "name": "parotid-atlas",
+  "private": true,
+  "type": "module",
+  "description": "Interactive Parotid Surgery Atlas: a scroll-controlled 3D anatomical explanation of parotid tumours and parotidectomy.",
+  "engines": {
+    "node": ">=24"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tools/validate"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @atlas/site",
+    "build": "npm run build -w @atlas/site",
+    "preview": "npm run preview -w @atlas/site",
+    "test": "vitest run",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "validate": "tsx tools/validate/src/index.ts",
+    "check": "npm run typecheck && npm test && npm run validate && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.2"
+  }
+}

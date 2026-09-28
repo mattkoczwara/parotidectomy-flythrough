@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.astro/
+*.tsbuildinfo
+
+# test / capture output
+coverage/
+test-results/
+playwright-report/
+tools/capture/output/
+
+# anatomy pipeline: raw third-party data and intermediates are never committed;
+# pipeline/sources/*.json manifests (URL + sha256 + licence) are.
+pipeline/sources/raw/
+pipeline/**/work/
+pipeline/**/.venv/
+*.blend1
+
+# logs & env
+*.log
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/

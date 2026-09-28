@@ -1,0 +1,16 @@
+{
+  "name": "@atlas/schema",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "description": "zod schemas for steps, claims, sources, structures and assets: the single source of truth shared by the site, pipeline and validators.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
+  }
+}
