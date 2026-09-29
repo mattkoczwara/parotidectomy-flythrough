@@ -7,7 +7,7 @@ Frame: the canonical CT RAS frame (mm) is mapped to glTF (metres, +Y up, model f
 This is a proper rotation (patient right = -X, the viewer's left when facing the model).
 
 Every node is named with its structure id (the key used by content/structures and the stage). Custom per-vertex
-attributes use glTF's underscore convention (_PEEL). Label anchors are empty nodes named `anchor__<structureId>`.
+attributes use glTF's underscore convention (_PEEL; _CUT, _CUTS, _FLAPW for the incision and flap). Label anchors are empty nodes named `anchor__<structureId>`.
 Writes pipeline/build/out/slice.raw.glb and pipeline/build/out/frame.json. gltf-transform then optimises into
 apps/site/public/assets/ (see pipeline/build/README.md).
 """
@@ -35,7 +35,7 @@ SCENE = [
     "masseter_r", "temporalis_r", "sternocleidomastoid_r", "digastric_posterior_belly", "submandibular_gland_r",
     "internal_jugular_vein_r", "mandible", "skull", "styloid_process", "nerve_plane",
 ]
-ATTRS = {"peel_order": "_PEEL"}
+ATTRS = {"peel_order": "_PEEL", "cut": "_CUT", "cut_s": "_CUTS", "flap_w": "_FLAPW"}
 
 
 def to_gltf(p: np.ndarray, origin: np.ndarray) -> np.ndarray:
@@ -93,6 +93,12 @@ def main() -> None:
 
     # Label anchors: authored points in the CT frame.
     nodes = json.loads((SPECS / "nodes.resolved.json").read_text(encoding="utf-8"))
+    def lateral_point(sid, a, s):
+        """The most lateral surface point of a mesh within an (A, S) window (mm): a visible anchor on its face."""
+        p = np.load(MESHES / f"{sid}.npz")["positions"]
+        sel = p[(p[:, 1] > a[0]) & (p[:, 1] < a[1]) & (p[:, 2] > s[0]) & (p[:, 2] < s[1])]
+        return sel[np.argmax(sel[:, 0])]
+
     def mid(sid):
         c = np.load(MESHES / f"{sid}.npz")["centre"]
         return c[len(c) // 2]
@@ -108,7 +114,9 @@ def main() -> None:
         "pes_anserinus": np.array(nodes["pes"]),
         "retromandibular_vein": mid("retromandibular_vein"),
         "external_carotid_artery": mid("external_carotid_artery"),
-        "great_auricular_nerve": mid("great_auricular_nerve"),
+        # nerve and neck muscle anchors lie in the field exposed by the flap (above the incision's neck limb)
+        "great_auricular_nerve": np.load(MESHES / "great_auricular_nerve.npz")["centre"][-3],
+        "external_jugular_vein": np.load(MESHES / "external_jugular_vein.npz")["centre"][1],
         "digastric_posterior_belly": mid("digastric_posterior_belly"),
         "styloid_process": mid("styloid_process"),
         "stylomastoid_foramen": np.array(landmarks["stylomastoid_foramen"]["xyz"]),
@@ -122,7 +130,7 @@ def main() -> None:
         "subcutaneous_fat": np.array(landmarks["parotid_anterior"]["xyz"]) + [14, 22, 20],
         "skin": np.array(landmarks["parotid_anterior"]["xyz"]) + [16, 34, 30],
         "parotid_fascia": np.array(landmarks["parotid_lateral"]["xyz"]) + [2, 8, 8],
-        "sternocleidomastoid_r": np.array(landmarks["mastoid_tip_visual"]["xyz"]) + [8, -2, -40],
+        "sternocleidomastoid_r": lateral_point("sternocleidomastoid_r", a=(60, 72), s=(206, 220)),
         "mandible": np.array(landmarks["mandible_lower_border_mid"]["xyz"]),  # visible below the masseter
     }
     for sid, p in anchors.items():
@@ -134,6 +142,7 @@ def main() -> None:
     gltf.set_binary_blob(bytes(blob))
     gltf.save_binary(str(OUT / "slice.raw.glb"))
     peel = json.loads((MESHES / "peel.json").read_text(encoding="utf-8"))
+    flap = json.loads((MESHES / "flap.json").read_text(encoding="utf-8"))
     bounds = {}
     for sid in SCENE:
         pos = to_gltf(np.load(MESHES / f"{sid}.npz")["positions"].astype(np.float64), origin)
@@ -144,6 +153,9 @@ def main() -> None:
         # Peel of the superficial lobe (and tumour) in glTF metres: fold about a vertical (Y) hinge on the lobe's
         # lateral surface (X = hinge_x), at a dissection front moving from front_z0 (posterior) to front_z1.
         "peel": {"hinge_x": -(peel["hinge_x"] - origin[0]) * 0.001, "front_z0": (peel["y_min"] - origin[1]) * 0.001, "front_z1": (peel["y_max"] - origin[1]) * 0.001},
+        # Incision and flap (flap.py): fold axis (point in metres, unit direction) in the glTF frame; `cut`
+        # attributes are stored as signed mm / cut_scale_mm.
+        "flap": {"axis_point": to_gltf(np.array([flap["axis_point"]]), origin)[0].round(6).tolist(), "axis_dir": [0.0, flap["axis_dir"][2], flap["axis_dir"][1]], "max_angle": flap["max_angle_rad"], "cut_scale_mm": flap["cut_scale_mm"]},
         "bounds": bounds,
         "structures": summary,
         "triangles_total": int(sum(v["triangles"] for v in summary.values())),

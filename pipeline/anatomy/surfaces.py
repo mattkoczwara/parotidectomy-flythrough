@@ -81,6 +81,30 @@ def lobulated(center, radii, seed, subdiv=4) -> trimesh.Trimesh:
     return m
 
 
+def muscle_around(ct, aff, tubes, hu_min: float, reach_mm: float) -> np.ndarray:
+    """Muscle-density voxels (3x3x3 median >= hu_min) within reach_mm of authored muscle tubes and connected to
+    their cores: the belly as the CT shows it, where the authored tube is only its axis and a nominal radius."""
+    inv = np.linalg.inv(aff)
+    out = np.zeros(ct.shape, bool)
+    for t in tubes:
+        c, r = t["centre"], t["radii"]
+        lo = nib.affines.apply_affine(inv, c.min(0) - r.max() - reach_mm)
+        hi = nib.affines.apply_affine(inv, c.max(0) + r.max() + reach_mm)
+        a = np.clip(np.floor(np.minimum(lo, hi)).astype(int), 0, np.array(ct.shape) - 1)
+        b = np.clip(np.ceil(np.maximum(lo, hi)).astype(int) + 1, 1, np.array(ct.shape))
+        sub = tuple(slice(a[i], b[i]) for i in range(3))
+        grid = np.stack(np.meshgrid(*[np.arange(a[i], b[i]) for i in range(3)], indexing="ij"), -1).reshape(-1, 3)
+        d, j = cKDTree(c).query(nib.affines.apply_affine(aff, grid))
+        surf = (d - r[j]).reshape(tuple(b - a))
+        dense = ndimage.median_filter(ct[sub], 3) >= hu_min
+        core = surf <= 0
+        zone = (surf <= reach_mm) & (dense | core)
+        lab, _ = ndimage.label(zone)
+        keep = np.isin(lab, np.unique(lab[core])) & (lab > 0)
+        out[sub] |= keep & dense & ~core
+    return out
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     spec = yaml.safe_load((ROOT / "pipeline/specs/anatomy.yaml").read_text(encoding="utf-8"))
@@ -133,6 +157,11 @@ def main() -> None:
         tdat = np.load(OUT / f"{sid}.npz")
         dist, j = cKDTree(tdat["centre"]).query(cw)
         ok &= dist > tdat["radii"][j] + g["authored_margin_mm"]
+    # Muscle is wider than the authored tube: exclude muscle-density tissue continuous with it (QC log: at z 222-240
+    # the deep region within 0-4 mm of the digastric measured 17-29 HU, against 3 HU for gland and 38 HU for muscle).
+    mx = g["muscle_exclusion"]
+    muscle = muscle_around(ct, aff, [np.load(OUT / f"{sid}.npz") for sid in mx["around"]], mx["hu_min"], mx["reach_mm"])
+    ok &= ~ndimage.binary_dilation(muscle, iterations=1)[tuple(cand_idx.T)]
     region = np.zeros_like(parotid)
     region[tuple(cand_idx[ok].T)] = True
     lab, _ = ndimage.label(region | parotid)
@@ -142,11 +171,16 @@ def main() -> None:
     checks["deep_lobe_completion"] = {"pass": True, "method": "authored region (anatomical bounds; CT does not resolve the deep-lobe boundary)", "added_ml": round(added_ml, 2), "summary": f"authored retromandibular portion adds {added_ml:.1f} mL to the {parotid.sum() * np.prod(zooms) / 1000:.1f} mL segmented gland"}
     original = parotid
     parotid = grown
-    save("parotid_gland_r_complete", mesh_from_mask(parotid, aff, 20000, sigma=0.8, smooth_iter=6))
-    # The capsule as a closed surface about 1.5 mm outside the gland (a one-voxel shell's inner and outer
-    # surfaces crossed after smoothing and rendered as stripes). The cutaway window reveals the gland inside it.
-    fascia = ndimage.binary_dilation(parotid, iterations=2)
-    save("parotid_fascia", mesh_from_mask(fascia, aff, 20000, sigma=0.8, smooth_iter=6))
+    complete = mesh_from_mask(parotid, aff, 20000, sigma=0.8, smooth_iter=6)
+    save("parotid_gland_r_complete", complete)
+    # The capsule: the completed gland surface, smoothed further (the CT's 1-3 mm slice steps showed as ripples
+    # on a voxel-dilated capsule) and offset 1 mm outward along its normals, so it stays outside the gland and
+    # stays thin (the gland lies only 3.9 mm under the skin at the lower pole in the source CT; QC log). A closed
+    # surface, not a one-voxel shell, whose inner and outer faces crossed after smoothing and rendered as stripes.
+    fascia = complete.copy()
+    trimesh.smoothing.filter_taubin(fascia, iterations=24)
+    fascia.vertices = fascia.vertices + fascia.vertex_normals * 1.0
+    save("parotid_fascia", fascia)
 
     superficial = parotid.copy()
     coords = nib.affines.apply_affine(aff, np.argwhere(parotid))
@@ -156,6 +190,19 @@ def main() -> None:
     superficial[tuple(idx[lateral].T)] = True
     deep = parotid & ~superficial
     frac = float(superficial.sum() / parotid.sum())
+    # Residual muscle-density tissue in the deep lobe beside the authored digastric (after the exclusion above).
+    ctf = ndimage.median_filter(ct, 3)
+    tdat = np.load(OUT / "digastric_posterior_belly.npz")
+    didx = np.argwhere(deep)
+    dd, dj = cKDTree(tdat["centre"]).query(nib.affines.apply_affine(aff, didx))
+    beside = (dd - tdat["radii"][dj]) <= 4.0
+    dense_frac = float((ctf[tuple(didx[beside].T)] >= mx["hu_min"]).mean()) if beside.any() else 0.0
+    checks["deep_lobe_muscle_overlap"] = {
+        "pass": dense_frac <= mx["max_dense_fraction"],
+        "value": round(dense_frac, 3),
+        "limit": mx["max_dense_fraction"],
+        "summary": f"{dense_frac:.0%} of deep-lobe voxels within 4 mm of the posterior digastric are muscle-density (>= {mx['hu_min']} HU)",
+    }
     rng = spec["checks"]["superficial_fraction"]["range"]
     # Reported against the literature, not used to tune geometry: an individual gland may differ.
     checks["superficial_fraction"] = {"pass": rng[0] <= frac <= rng[1], "value": round(frac, 3), "range": rng, "summary": f"{frac:.1%} of the completed gland lies lateral to the nerve plane (Pujol-Olmo 2020: 61–69% by weight in 19 specimens; reported, not tuned)"}
@@ -220,7 +267,7 @@ def main() -> None:
 
     checks_path.write_text(json.dumps(checks, indent=2), encoding="utf-8")
     render_split_qc(ct, aff, original, parotid, superficial, rbf, tumour)
-    for k in ("deep_lobe_completion", "superficial_fraction", "tumour_placement", "vessels_within_gland"):
+    for k in ("deep_lobe_completion", "deep_lobe_muscle_overlap", "superficial_fraction", "tumour_placement", "vessels_within_gland"):
         v = checks[k]
         print(f"{'PASS' if v['pass'] else 'FAIL'}  {k}: {v['summary']}")
 

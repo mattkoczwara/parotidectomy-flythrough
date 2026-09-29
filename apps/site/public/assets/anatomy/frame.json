@@ -10,6 +10,20 @@
     "front_z0": -0.01933910105649423,
     "front_z1": 0.018186100169142478
   },
+  "flap": {
+    "axis_point": [
+      -0.002161,
+      0.004913,
+      0.043926
+    ],
+    "axis_dir": [
+      0.0,
+      -0.9509337094564273,
+      0.30939469972745004
+    ],
+    "max_angle": 2.4,
+    "cut_scale_mm": 64.0
+  },
   "bounds": {
     "skin": {
       "min": [
@@ -61,14 +75,14 @@
     },
     "parotid_fascia": {
       "min": [
-        -0.01164,
-        -0.0379,
-        -0.02333
+        -0.01116,
+        -0.03683,
+        -0.02231
       ],
       "max": [
-        0.02363,
-        0.02602,
-        0.01968
+        0.02316,
+        0.02504,
+        0.01919
       ]
     },
     "parotid_superficial_lobe": {
@@ -99,7 +113,7 @@
       "min": [
         0.00122,
         -0.02992,
-        -0.02181
+        -0.02145
       ],
       "max": [
         0.02213,
@@ -470,16 +484,16 @@
   },
   "structures": {
     "skin": {
-      "vertices": 34728,
-      "triangles": 69452
+      "vertices": 75153,
+      "triangles": 150302
     },
     "eyes": {
       "vertices": 144,
       "triangles": 280
     },
     "subcutaneous_fat": {
-      "vertices": 19998,
-      "triangles": 40000
+      "vertices": 45971,
+      "triangles": 91946
     },
     "smas": {
       "vertices": 14942,
@@ -622,5 +636,5 @@
       "triangles": 3822
     }
   },
-  "triangles_total": 400352
+  "triangles_total": 533148
 }

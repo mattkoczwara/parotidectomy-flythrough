@@ -17,7 +17,7 @@
     ]
   },
   "attribution": "Anatomy derived from the Visible Human Project male CT, courtesy of the U.S. National Library of Medicine; segmentations by TotalSegmentator; generic face from MakeHuman/MPFB (CC0); nerves, small vessels, deep-lobe completion and tumour authored to cited anatomy (pipeline/specs).",
-  "sha256": "9a7323e36859945bd6d87ef962de434c67e9ff94316bf5dbfd6ceb123cd70fd3",
+  "sha256": "64d11e6b8c8ea284be12e8623f8fba0807bea1e9d5650665ae023b7396fd0557",
   "derivedFrom": [
     "vhp-male-normal-ct-head",
     "totalsegmentator-head-neck",

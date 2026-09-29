@@ -249,7 +249,7 @@ export const step = z.strictObject({
   title: nonEmpty,
   delta: plateDelta,
   transition: z
-    .strictObject({ camera: span.optional(), structures: span.optional(), op: span.optional(), labels: span.optional() })
+    .strictObject({ camera: span.optional(), structures: span.optional(), op: span.optional(), labels: span.optional(), opKeys: z.record(nonEmpty, span).optional() })
     .optional(),
   /** What is visible, cut, retracted or at risk — the assistive-technology and static-figure description. */
   sceneDescription: nonEmpty,

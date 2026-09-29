@@ -30,7 +30,14 @@ export function checkSteps(dir: string, refs: StepRefs): { errors: string[]; ste
       errors.push(`${where}: missing frontmatter`);
       continue;
     }
-    const parsed = stepSchema.safeParse(parse(m[1]!));
+    let front: unknown;
+    try {
+      front = parse(m[1]!);
+    } catch (err) {
+      errors.push(`${where}: frontmatter is not valid YAML: ${(err as Error).message.split('\n')[0]}`);
+      continue;
+    }
+    const parsed = stepSchema.safeParse(front);
     if (!parsed.success) {
       for (const issue of parsed.error.issues) errors.push(`${where}: ${issue.path.join('.') || '(root)'}: ${issue.message}`);
       continue;

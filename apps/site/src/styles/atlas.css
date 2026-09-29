@@ -3,13 +3,14 @@
  * camera leaves free, margin labels with hairline leaders, and no accent hue in the chrome (plan §5).
  */
 :root {
-  --field: #2d3330;
-  --field-deep: #232826;
+  /* Drape field: OKLCH L 0.279, C 0.008 (plan §5: L 0.24-0.28, C <= 0.02; ADR-0003). */
+  --field: #252a28;
+  --field-deep: #1d2120;
   --ink: #ece6dc;
   --ink-soft: #c8c1b6;
   --ink-faint: #8f8a82;
   --rule: rgba(236, 230, 220, 0.18);
-  --scrim: rgba(35, 40, 38, 0.78);
+  --scrim: rgba(29, 33, 32, 0.8);
   --ochre: #c9a55a; /* complications and warnings only */
   --column: min(34rem, 36vw);
   --rail: 7.5rem;
@@ -162,7 +163,7 @@ body {
   line-height: 1.25;
   color: var(--ink);
   padding: 0.15rem 0.4rem;
-  background: rgba(35, 40, 38, 0.72);
+  background: rgba(29, 33, 32, 0.74);
   border-radius: 2px;
   white-space: nowrap;
   transition: opacity 200ms ease;
@@ -477,6 +478,19 @@ body[data-depth='clinical'] .claim {
   .gauge {
     display: none;
   }
+}
+
+/* Field A/B for look development (ADR-0003): neutral graphite, OKLCH L 0.273, C 0. */
+body[data-field='graphite'] {
+  --field: #272727;
+  --field-deep: #1f1f1f;
+  --scrim: rgba(31, 31, 31, 0.8);
+}
+body[data-field='drape'] {
+  --field: #252a28;
+}
+html:has(body[data-field='graphite']) {
+  background: #272727;
 }
 
 /* Capture mode (tools/capture): the stage alone, for static fallback figures and determinism checks. */

@@ -42,7 +42,10 @@ const LABEL_GAP = 30;
 
 export function start(): void {
   const data = JSON.parse(document.getElementById('atlas-data')!.textContent!) as ClientData;
-  if (new URLSearchParams(location.search).has('capture')) document.body.classList.add('capture');
+  const query = new URLSearchParams(location.search);
+  if (query.has('capture')) document.body.classList.add('capture');
+  // Look-development A/B of the field colour (ADR-0003); the decided field is the stylesheet default.
+  if (query.get('field') === 'graphite' || query.get('field') === 'drape') document.body.dataset.field = query.get('field')!;
   const names = new Map(data.structures.map((s) => [s.id, s.names]));
 
   // Every content structure starts present, in context; plates record only what changes.
@@ -181,6 +184,7 @@ export function start(): void {
         canvas,
         tier: params.get('tier') === 'mid' ? 'mid' : 'high',
         forceWebGL: params.get('backend') === 'webgl' || !hasGPU,
+        field: getComputedStyle(document.body).getPropertyValue('--field').trim() || '#252a28',
         structures: data.structures.map((s) => ({ id: s.id, tissue: s.tissue as never })),
       });
       await s.load('/assets/anatomy/slice.glb', '/assets/anatomy/frame.json');

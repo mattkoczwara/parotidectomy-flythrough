@@ -1,0 +1,33 @@
+---
+id: flap
+chapter: operation
+order: 8
+title: The skin flap is raised
+delta:
+  camera: { azimuth: 8, elevation: 4, zoom: 1.35, frame: [parotid_superficial_lobe, sternocleidomastoid_r, masseter_r] }
+  gauge: 2
+  op: { flap: 1 }
+  structures:
+    skin: { emphasis: context }
+    subcutaneous_fat: { emphasis: context }
+    smas: { presence: 0 }
+    parotid_fascia: { emphasis: focus }
+    sternocleidomastoid_r: { emphasis: focus }
+    great_auricular_nerve: { emphasis: focus }
+    great_auricular_nerve_anterior: { emphasis: focus }
+    great_auricular_nerve_posterior: { emphasis: focus }
+    external_jugular_vein: { emphasis: context }
+  labels:
+    - { structureId: parotid_fascia }
+    - { structureId: great_auricular_nerve }
+    - { structureId: sternocleidomastoid_r }
+    - { structureId: external_jugular_vein }
+transition: { camera: [0, 0.4], structures: [0.1, 0.5], op: [0.3, 1] }
+sceneDescription: The skin and the fat beneath it are cut along the ink line and folded forward over the cheek, still attached in front. Beneath lies the pale capsule of the gland; behind and below it, a thin nerve to the earlobe (the great auricular nerve) crosses the neck muscle beside a vein. The thin muscle sheet of the neck (platysma) is not shown.
+claims: [flap-plane, great-auricular-nerve-course]
+---
+import Claim from '../../components/Claim.astro';
+
+<Claim id="flap-plane">The skin and the fat beneath it are lifted forward in the layer just outside the gland's capsule.</Claim> <Claim id="great-auricular-nerve-course">Behind the gland, a thin nerve to the skin of the earlobe crosses the neck muscle toward the ear; the operation often numbs part of the earlobe.</Claim>
+
+In the model the flap folds forward in one piece.

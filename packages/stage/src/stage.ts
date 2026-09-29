@@ -8,7 +8,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { SceneState } from '@atlas/timeline';
-import { setOpacity, tissue, U, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
+import { cpuFold, cpuInFlap, cpuPeel, cpuWindowCut, FLAP_OPEN, setOpacity, tissue, U, type FlapFrame, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
 
 export type Tier = 'high' | 'mid';
 
@@ -21,6 +21,8 @@ export interface StageOptions {
   canvas: HTMLCanvasElement;
   tier: Tier;
   forceWebGL?: boolean;
+  /** Field (background) colour as CSS, shared with the page (ADR-0003). */
+  field: string;
   /** Structures present in the asset with their tissue families (from the content collection). */
   structures: readonly StructureInfo[];
 }
@@ -34,6 +36,7 @@ export interface AnchorProjection {
 
 interface Frame {
   peel: PeelFrame;
+  flap: FlapFrame;
   bounds: Record<string, { min: [number, number, number]; max: [number, number, number] }>;
 }
 
@@ -45,6 +48,10 @@ const WINDOW_LAYERS: Record<string, { key: string; inset: number }> = {
   parotid_fascia: { key: 'cut_fascia', inset: 0.009 },
 };
 const PEELED = new Set(['parotid_superficial_lobe', 'pleomorphic_adenoma']);
+/** Layers cut by the incision and raised as the flap (skin and subcutaneous fat; plan §8). */
+const FLAPPED = new Set(['skin', 'subcutaneous_fat']);
+
+type Part = { mesh: THREE.Mesh; twin: THREE.Mesh; mat: TissueMaterial };
 
 /**
  * Meshopt quantisation stores positions/normals as 16-bit vec3 and custom scalars as 16-bit, which WebGPU has no
@@ -73,9 +80,10 @@ function normaliseGeometry(mesh: THREE.Mesh) {
   g.computeBoundingSphere();
 }
 
-/** Near-neutral drape field; pre-compensated for the Neutral tone-mapping toe (ADR-0001 gotcha). */
-function field(): THREE.Color {
-  const target = new THREE.Color().setRGB(0.176, 0.2, 0.19, THREE.SRGBColorSpace);
+/** The page's field colour (CSS), pre-compensated for the Neutral tone-mapping toe (ADR-0001 gotcha) so the
+ *  canvas background matches the page around it. */
+function field(css: string): THREE.Color {
+  const target = new THREE.Color().setStyle(css, THREE.SRGBColorSpace);
   const m = Math.min(target.r, target.g, target.b);
   const x = Math.sqrt(m / 6.25);
   return new THREE.Color(target.r + x - m, target.g + x - m, target.b + x - m);
@@ -89,7 +97,9 @@ export class Stage {
   private traaNode: { _jitterIndex: number; _historyRenderTarget: THREE.RenderTarget } | null = null;
   private focus = uniform(0);
   private outlineObjects: THREE.Object3D[] = [];
-  private meshes = new Map<string, { mesh: THREE.Mesh; twin: THREE.Mesh; mat: TissueMaterial }>();
+  private meshes = new Map<string, Part>();
+  /** The raised flap of each FLAPPED layer: same geometry, folded; shown once the incision opens. */
+  private flaps = new Map<string, Part>();
   private anchors = new Map<string, THREE.Vector3>();
   private windowOpen: Record<string, THREE.UniformNode<'float', number>> = {};
   private frame!: Frame;
@@ -105,7 +115,7 @@ export class Stage {
   constructor(private readonly opts: StageOptions) {
     this.renderer = new THREE.WebGPURenderer({ canvas: opts.canvas, antialias: false, forceWebGL: opts.forceWebGL ?? false });
     this.renderer.toneMapping = THREE.NeutralToneMapping;
-    this.scene.background = field();
+    this.scene.background = field(opts.field);
     for (const [, l] of Object.entries(WINDOW_LAYERS)) this.windowOpen[l.key] = uniform(0);
   }
 
@@ -123,6 +133,10 @@ export class Stage {
     U.windowCenter.value.set((b.min[2] + b.max[2]) / 2 + 0.004, (b.min[1] + b.max[1]) / 2 - 0.002);
     U.windowHalf.value.set(0.036, 0.034);
     U.windowSideX.value = 0.03;
+    (U.flapPivot.value as THREE.Vector3).fromArray(this.frame.flap.axis_point);
+    (U.flapAxis.value as THREE.Vector3).fromArray(this.frame.flap.axis_dir).normalize();
+    U.flapMax.value = this.frame.flap.max_angle;
+    U.cutScale.value = this.frame.flap.cut_scale_mm;
 
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     const gltf = await loader.loadAsync(glbUrl);
@@ -139,21 +153,21 @@ export class Stage {
       const s = info.get(node.name);
       if (!s) continue; // assets may carry structures the content does not yet describe
       const w = WINDOW_LAYERS[node.name];
-      const mat = tissue({
-        family: s.tissue,
-        ...(w ? { window: { open: this.windowOpen[w.key]!, inset: w.inset } } : {}),
-        peel: PEELED.has(node.name),
-      });
+      const window = w ? { window: { open: this.windowOpen[w.key]!, inset: w.inset } } : {};
+      const flapped = FLAPPED.has(node.name);
+      const mat = tissue({ family: s.tissue, ...window, peel: PEELED.has(node.name), ...(flapped ? { flap: 'rest' as const, ink: node.name === 'skin' } : {}) });
       node.material = mat.material;
       node.renderOrder = order.length - order.indexOf(node.name);
-      const twin = new THREE.Mesh(node.geometry, mat.twin);
-      twin.matrix.copy(node.matrix);
-      twin.matrixAutoUpdate = false;
-      twin.matrixWorld.copy(node.matrixWorld);
-      twin.renderOrder = node.renderOrder - 0.5;
-      twin.visible = false;
-      node.parent!.add(twin);
-      this.meshes.set(node.name, { mesh: node, twin, mat });
+      this.meshes.set(node.name, { mesh: node, twin: this.twinOf(node, mat), mat });
+      if (flapped) {
+        const fmat = tissue({ family: s.tissue, ...window, flap: 'flap', ink: node.name === 'skin' });
+        const copy = new THREE.Mesh(node.geometry, fmat.material);
+        copy.name = `${node.name}__flap`;
+        copy.renderOrder = node.renderOrder;
+        copy.visible = false;
+        node.parent!.add(copy);
+        this.flaps.set(node.name, { mesh: copy, twin: this.twinOf(copy, fmat), mat: fmat });
+      }
     }
     this.scene.add(gltf.scene);
 
@@ -162,8 +176,20 @@ export class Stage {
     this.scene.environmentIntensity = 0.35;
     this.key.position.set(-1, 1.2, 0.8);
     this.rim.position.set(0.8, 0.4, -1);
-    this.scene.add(this.key, this.rim, new THREE.HemisphereLight(0xf3efe9, 0x2a2f2c, 0.35));
+    this.scene.add(this.key, this.rim, new THREE.HemisphereLight(0xf3efe9, 0x322c28, 0.4));
     this.buildPipeline();
+  }
+
+  /** Depth-only twin for the single-layer ghost (drawn just before its mesh). */
+  private twinOf(mesh: THREE.Mesh, mat: TissueMaterial): THREE.Mesh {
+    const twin = new THREE.Mesh(mesh.geometry, mat.twin);
+    twin.matrix.copy(mesh.matrix);
+    twin.matrixAutoUpdate = false;
+    twin.matrixWorld.copy(mesh.matrixWorld);
+    twin.renderOrder = mesh.renderOrder - 0.5;
+    twin.visible = false;
+    mesh.parent!.add(twin);
+    return twin;
   }
 
   private buildPipeline() {
@@ -205,12 +231,21 @@ export class Stage {
       setOpacity(mesh, twin, Math.min(opacity, 1));
       mat.dim.value = s?.emphasis === 'dim' ? 0.75 : s?.emphasis === 'context' ? 0.18 : 0;
       if (mesh.visible && s?.emphasis === 'focus') focus.push(mesh);
+      const flap = this.flaps.get(id);
+      if (flap) {
+        flap.mesh.visible = mesh.visible && (state.op['flap'] ?? 0) > FLAP_OPEN;
+        setOpacity(flap.mesh, flap.twin, Math.min(opacity, 1));
+        flap.mat.dim.value = mat.dim.value;
+        if (flap.mesh.visible && s?.emphasis === 'focus') focus.push(flap.mesh);
+      }
     }
     this.outlineObjects.length = 0;
     this.outlineObjects.push(...focus);
     this.focus.value = focus.length ? 1 : 0;
     for (const { key } of Object.values(WINDOW_LAYERS)) this.windowOpen[key]!.value = state.op[key] ?? 0;
     U.peel.value = state.op['peel'] ?? 0;
+    U.ink.value = state.op['ink'] ?? 0;
+    U.flap.value = state.op['flap'] ?? 0;
     // Light presets: studio (anatomy), operative (a cooler key with tighter falloff), specimen (even).
     const preset = state.light.preset;
     this.key.color.set(preset === 'operative' ? 0xf1f4ff : 0xfff4e8);
@@ -286,10 +321,37 @@ export class Stage {
     for (let i = 0; i < 64; i++) this.render();
   }
 
-  /** Screen positions (CSS px) of label anchors, with occlusion by visible opaque tissue other than the target. */
+  /**
+   * Screen positions (CSS px) of label anchors, with occlusion by visible opaque tissue other than the target.
+   * Raycasts see rest geometry, so occluders are tested as the shaders show them: surfaces moved in the vertex
+   * stage (peel, flap) are raycast as CPU-deformed proxies, and hits the fragment masks discard (cutaway
+   * windows, the opened incision) are skipped (materials.ts CPU mirrors).
+   */
   projectAnchors(ids: readonly string[], width: number, height: number): AnchorProjection[] {
     const out: AnchorProjection[] = [];
-    const occluders = [...this.meshes.values()].filter((m) => m.mesh.visible && !(m.mesh.material as THREE.Material).transparent).map((m) => m.mesh);
+    const occluders: { mesh: THREE.Mesh; id: string; role: 'rest' | 'flap' }[] = [];
+    for (const [id, m] of this.meshes) {
+      if (!m.mesh.visible || (m.mesh.material as THREE.Material).transparent) continue;
+      occluders.push({ mesh: PEELED.has(id) && (U.peel.value as number) > 0 ? this.deformed(m.mesh, 'peel') : m.mesh, id, role: 'rest' });
+      const f = this.flaps.get(id);
+      if (f?.mesh.visible) occluders.push({ mesh: this.deformed(f.mesh, 'flap'), id, role: 'flap' });
+    }
+    const tri = new THREE.Triangle();
+    const bary = new THREE.Vector3();
+    const discarded = (o: (typeof occluders)[number], hit: THREE.Intersection) => {
+      const w = WINDOW_LAYERS[o.id];
+      if (w && cpuWindowCut(hit.point, this.windowOpen[w.key]!.value as number, w.inset)) return true;
+      if (!FLAPPED.has(o.id) || !hit.face) return false;
+      const g = o.mesh.geometry;
+      const pos = g.getAttribute('position');
+      tri.setFromAttributeAndIndices(pos, hit.face.a, hit.face.b, hit.face.c).getBarycoord(hit.point, bary);
+      const at = (name: string) => {
+        const a = g.getAttribute(name);
+        return a.getX(hit.face!.a) * bary.x + a.getX(hit.face!.b) * bary.y + a.getX(hit.face!.c) * bary.z;
+      };
+      const inFlap = cpuInFlap(at('_cut'), at('_flapw'));
+      return o.role === 'flap' ? !inFlap : (U.flap.value as number) > FLAP_OPEN && inFlap;
+    };
     for (const id of ids) {
       const p = this.anchors.get(id);
       if (!p) continue;
@@ -298,9 +360,39 @@ export class Stage {
       const dist = dir.length();
       this.raycaster.set(this.camera.position, dir.normalize());
       this.raycaster.far = dist - 0.004; // hits within 4 mm of the anchor are the structure's own surface
-      const hits = this.raycaster.intersectObjects(occluders.filter((m) => !m.name.startsWith(id) && !id.startsWith(m.name)), false);
-      out.push({ id, x: ((ndc.x + 1) / 2) * width, y: ((1 - ndc.y) / 2) * height, visible: hits.length === 0 && ndc.z < 1 });
+      let blocked = false;
+      for (const o of occluders) {
+        if (o.id.startsWith(id) || id.startsWith(o.id)) continue;
+        if (this.raycaster.intersectObject(o.mesh, false).some((hit) => !discarded(o, hit))) {
+          blocked = true;
+          break;
+        }
+      }
+      out.push({ id, x: ((ndc.x + 1) / 2) * width, y: ((1 - ndc.y) / 2) * height, visible: !blocked && ndc.z < 1 });
     }
     return out;
+  }
+
+  /** A raycast proxy of a mesh with its vertex-stage deformation applied on the CPU, cached per parameter value. */
+  private proxies = new Map<THREE.Mesh, { key: number; mesh: THREE.Mesh }>();
+  private deformed(mesh: THREE.Mesh, kind: 'peel' | 'flap'): THREE.Mesh {
+    const key = (kind === 'peel' ? U.peel.value : U.flap.value) as number;
+    const cached = this.proxies.get(mesh);
+    if (cached && cached.key === key) return cached.mesh;
+    const g = mesh.geometry.clone();
+    const pos = g.getAttribute('position') as THREE.BufferAttribute;
+    const field = g.getAttribute(kind === 'peel' ? '_peel' : '_flapw');
+    const v = new THREE.Vector3();
+    for (let i = 0; i < pos.count; i++) {
+      v.fromBufferAttribute(pos, i);
+      (kind === 'peel' ? cpuPeel(v, field.getX(i)) : cpuFold(v, field.getX(i))).toArray(pos.array, i * 3);
+    }
+    pos.needsUpdate = true;
+    g.computeBoundingSphere();
+    g.computeBoundingBox();
+    const proxy = new THREE.Mesh(g, mesh.material);
+    cached?.mesh.geometry.dispose();
+    this.proxies.set(mesh, { key, mesh: proxy });
+    return proxy;
   }
 }

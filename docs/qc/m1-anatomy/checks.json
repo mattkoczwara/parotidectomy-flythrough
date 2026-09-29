@@ -115,17 +115,17 @@
   "deep_lobe_completion": {
     "pass": true,
     "method": "authored region (anatomical bounds; CT does not resolve the deep-lobe boundary)",
-    "added_ml": 8.06,
-    "summary": "authored retromandibular portion adds 8.1 mL to the 18.0 mL segmented gland"
+    "added_ml": 7.72,
+    "summary": "authored retromandibular portion adds 7.7 mL to the 18.0 mL segmented gland"
   },
   "superficial_fraction": {
     "pass": true,
-    "value": 0.585,
+    "value": 0.592,
     "range": [
       0.55,
       0.75
     ],
-    "summary": "58.5% of the completed gland lies lateral to the nerve plane (Pujol-Olmo 2020: 61\u201369% by weight in 19 specimens; reported, not tuned)"
+    "summary": "59.2% of the completed gland lies lateral to the nerve plane (Pujol-Olmo 2020: 61\u201369% by weight in 19 specimens; reported, not tuned)"
   },
   "vessels_within_gland": {
     "pass": true,
@@ -195,7 +195,7 @@
       "masseter_r": 7.57,
       "maxillary_artery": 27.31,
       "parotid_deep_lobe": 11.67,
-      "parotid_fascia": 2.77,
+      "parotid_fascia": 2.38,
       "parotid_gland_r_complete": 3.37,
       "parotid_superficial_lobe": 3.37,
       "pleomorphic_adenoma": 2.98,
@@ -209,8 +209,27 @@
       "superficial_temporal_artery": 10.6,
       "temporalis_r": 4.19
     },
-    "min_depth_soft_tissue_mm": 2.77,
+    "min_depth_soft_tissue_mm": 2.38,
     "min_depth_bone_mm": 1.76,
-    "summary": "conform-region residual median 0.66 mm (p95 2.05); shallowest soft tissue 2.77 mm and bone 1.76 mm below the skin; 14% of head vertices conformed"
+    "summary": "conform-region residual median 0.66 mm (p95 2.05); shallowest soft tissue 2.38 mm and bone 1.76 mm below the skin; 14% of head vertices conformed"
+  },
+  "deep_lobe_muscle_overlap": {
+    "pass": true,
+    "value": 0.006,
+    "limit": 0.2,
+    "summary": "1% of deep-lobe voxels within 4 mm of the posterior digastric are muscle-density (>= 20 HU)"
+  },
+  "incision_flap": {
+    "pass": true,
+    "incision_length_mm": 162.3,
+    "skin": {
+      "flap_vertices": 22836,
+      "auricle_vertices_excluded": 1741
+    },
+    "subcutaneous_fat": {
+      "flap_vertices": 21729,
+      "auricle_vertices_excluded": 710
+    },
+    "summary": "modified Blair incision 162 mm (projected); flap fields baked on skin and subcutaneous fat; auricle excluded"
   }
 }

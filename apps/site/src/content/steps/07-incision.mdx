@@ -1,0 +1,31 @@
+---
+id: incision
+chapter: operation
+order: 7
+title: The incision is marked
+delta:
+  camera: { azimuth: 6, elevation: 2, zoom: 1.3, frame: [parotid_superficial_lobe, masseter_r, submandibular_gland_r] }
+  gauge: 0
+  light: { preset: operative, exposure: 1.0 }
+  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, ink: 1, flap: 0 }
+  structures:
+    skin: { mode: solid, opacity: 1, emphasis: focus }
+    eyes: { presence: 1 }
+    subcutaneous_fat: { emphasis: context }
+    smas: { emphasis: context }
+    parotid_fascia: { emphasis: context }
+    nerve_plane: { presence: 0 }
+    parotid_superficial_lobe: { mode: solid, opacity: 1, emphasis: context }
+    parotid_deep_lobe: { emphasis: context }
+    pleomorphic_adenoma: { mode: solid, opacity: 1, emphasis: context }
+    retromandibular_vein: { emphasis: context }
+  labels: []
+transition: { camera: [0, 0.5], structures: [0.15, 0.55], op: [0.15, 0.55], opKeys: { ink: [0.6, 1] } }
+sceneDescription: The right side of the face and upper neck with the skin closed, seen from the side. A violet ink line marks the planned incision, running down the crease in front of the ear, around under the earlobe, then forward in a crease of the neck below the angle of the jaw.
+claims: [incision-modified-blair]
+---
+import Claim from '../../components/Claim.astro';
+
+<Claim id="incision-modified-blair">A common incision runs in the crease in front of the ear, curves around the earlobe, and continues into a natural crease in the neck below the jaw.</Claim> In the model it is drawn as a marker line on the skin.
+
+This is one representative incision; the choice depends on the surgeon and the tumour.

@@ -72,6 +72,8 @@ export interface TransitionSpec {
   structures?: Opt<readonly [number, number]>;
   op?: Opt<readonly [number, number]>;
   labels?: Opt<readonly [number, number]>;
+  /** Per-key windows for operative parameters that must not move together (e.g. ink drawn after windows close). */
+  opKeys?: Opt<Readonly<Record<string, readonly [number, number]>>>;
 }
 
 export interface PlateSpec {

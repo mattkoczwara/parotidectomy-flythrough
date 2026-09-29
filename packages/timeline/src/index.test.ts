@@ -21,7 +21,8 @@ const specs: PlateSpec[] = [
   },
   {
     id: 'peel',
-    delta: { camera: { azimuth: 350 }, op: { peel: 0.6 }, variants: { resection: 'superficial' } },
+    delta: { camera: { azimuth: 350 }, op: { peel: 0.6, ink: 1 }, variants: { resection: 'superficial' } },
+    transition: { op: [0, 0.5], opKeys: { ink: [0.5, 1] } },
   },
 ];
 const track = compile(specs);
@@ -47,6 +48,14 @@ describe('evaluate', () => {
     const forward = [0, 0.3, 0.7, 1.2, 1.4].map((t) => evaluate(track, t));
     const backward = [1.4, 1.2, 0.7, 0.3, 0].map((t) => evaluate(track, t)).reverse();
     expect(forward).toEqual(backward);
+  });
+
+  it('gives named operative keys their own windows', () => {
+    const mid = evaluate(track, 1.5);
+    expect(mid.op['peel']).toBe(0.6);
+    expect(mid.op['ink']).toBe(0);
+    expect(evaluate(track, 1.75).op['ink']).toBeCloseTo(0.5);
+    expect(() => compile([{ id: 'x', delta: {}, transition: { opKeys: { ink: [0.8, 0.2] } } }])).toThrow(/opKeys.ink/);
   });
 
   it('honours staged windows: camera first, then reveal', () => {

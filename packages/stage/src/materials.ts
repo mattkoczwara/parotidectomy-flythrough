@@ -1,5 +1,5 @@
 import * as THREE from 'three/webgpu';
-import { Fn, abs, attribute, cos, dot, float, frontFacing, length, max, mix, normalLocal, positionLocal, positionWorld, sin, smoothstep, transformNormalToView, uniform, vec2, vec3 } from 'three/tsl';
+import { Fn, abs, attribute, cos, cross, dot, float, frontFacing, length, max, mix, normalLocal, positionLocal, positionWorld, sin, smoothstep, transformNormalToView, uniform, vec2, vec3 } from 'three/tsl';
 
 /**
  * Tissue materials. The techniques were proven in the M0 renderer spike (ADR-0001): back faces seen through a
@@ -16,14 +16,16 @@ interface Preset {
   clearcoat?: number;
   sheen?: number;
   sss?: number;
+  /** Strength of the thickness (wrap-SSS) term; skin kept low so it reads as skin, not a red glow. */
+  sssScale?: number;
 }
 
 /** Naturalistic tissue colours (sRGB) with restrained illustrator conventions: artery red, vein blue-grey, nerve ivory. */
 const PRESETS: Record<TissueFamily, Preset> = {
-  skin: { base: 0xd6a48c, cut: 0xe4c3ae, roughness: 0.55, sheen: 0.25, sss: 0xc2412a },
-  fat: { base: 0xe6c46e, cut: 0xf0d58f, roughness: 0.45, clearcoat: 0.45 },
+  skin: { base: 0xc99c86, cut: 0xe2c6b3, roughness: 0.58, sheen: 0.22, sss: 0xa4503c, sssScale: 1.4 },
+  fat: { base: 0xf2d27a, cut: 0xf4dc98, roughness: 0.42, clearcoat: 0.5 },
   fascia: { base: 0xd9ccb9, cut: 0xe3d8c8, roughness: 0.5, sheen: 0.6 },
-  gland: { base: 0xd2926f, cut: 0xe6b89c, roughness: 0.55, clearcoat: 0.28, sss: 0x9c3a22 },
+  gland: { base: 0xd2926f, cut: 0xe6b89c, roughness: 0.55, clearcoat: 0.28, sss: 0x9c3a22, sssScale: 3.0 },
   duct: { base: 0xe8d6c2, cut: 0xe8d6c2, roughness: 0.45, clearcoat: 0.4 },
   muscle: { base: 0x9c3f38, cut: 0xb45a50, roughness: 0.6, sheen: 0.3, clearcoat: 0.25 },
   bone: { base: 0xe6ddc8, cut: 0xefe7d4, roughness: 0.72 },
@@ -41,6 +43,14 @@ export interface PeelFrame {
   front_z1: number;
 }
 
+/** Incision and flap (pipeline/anatomy/flap.py): fold axis on the skin in front of the incision (glTF frame). */
+export interface FlapFrame {
+  axis_point: [number, number, number];
+  axis_dir: [number, number, number];
+  max_angle: number;
+  cut_scale_mm: number;
+}
+
 /** Scene-wide uniforms written by the stage from the resolved state. */
 export const U = {
   peel: uniform(0),
@@ -50,7 +60,23 @@ export const U = {
   hingeX: uniform(0),
   frontZ0: uniform(0),
   frontZ1: uniform(0),
+  /** Incision ink drawn along the path, 0..1. */
+  ink: uniform(0),
+  /** Flap raised, 0..1 (0 = skin closed; any value above FLAP_OPEN cuts along the incision). */
+  flap: uniform(0),
+  flapPivot: uniform(new THREE.Vector3()),
+  flapAxis: uniform(new THREE.Vector3(0, 1, 0)),
+  flapMax: uniform(1.9),
+  cutScale: uniform(64),
 };
+
+/** Flap progress above which the incision is open (the flap copy shows and the resting layer is cut). */
+export const FLAP_OPEN = 0.0005;
+/** Flap weight below which tissue counts as attached (stays with the resting layer). */
+export const FLAP_ATTACHED = 0.01;
+/** Marker ink: gentian violet, matte, the only violet in the atlas (plan §5). Half-width of the line in mm. */
+const INK = 0x4b2c6f;
+const INK_HALF_MM = [0.5, 0.8] as const;
 
 const rgb = (hex: number) => {
   const c = new THREE.Color(hex);
@@ -76,6 +102,23 @@ function peel() {
   return { position: rot(positionLocal.sub(pivot)).add(pivot), normal: rot(normalLocal) };
 }
 
+/** Signed distance to the incision (mm, positive on the flap side) and the flap weight. */
+const cutMM = () => attribute('_cut', 'float').mul(U.cutScale);
+const flapW = () => attribute('_flapw', 'float');
+const inFlap = () => cutMM().greaterThan(0).and(flapW().greaterThan(FLAP_ATTACHED));
+
+/**
+ * Curl about the fold axis (Rodrigues): the angle grows with the flap weight, so the attached border stays put.
+ * Negative about the axis (which runs from the incision's upper end toward its lower end) swings the flap
+ * laterally and forward.
+ */
+function fold() {
+  const angle = U.flap.mul(U.flapMax).mul(flapW()).negate();
+  const k = U.flapAxis;
+  const rot = (v: THREE.Node<'vec3'>) => v.mul(cos(angle)).add(cross(k, v).mul(sin(angle))).add(k.mul(dot(k, v)).mul(float(1).sub(cos(angle))));
+  return { position: rot(positionLocal.sub(U.flapPivot)).add(U.flapPivot), normal: rot(normalLocal) };
+}
+
 export interface TissueMaterial {
   material: THREE.MeshPhysicalNodeMaterial;
   twin: THREE.MeshPhysicalNodeMaterial;
@@ -87,6 +130,10 @@ export interface TissueOptions {
   /** Cutaway window this layer obeys, with its inset (m) so deeper layers open narrower (terraced). */
   window?: { open: THREE.UniformNode<'float', number>; inset: number };
   peel?: boolean;
+  /** Layers cut by the incision: 'rest' loses the flap region once it opens; 'flap' is only the flap, folded. */
+  flap?: 'rest' | 'flap';
+  /** Draw the incision ink (skin). */
+  ink?: boolean;
 }
 
 export function tissue(o: TissueOptions): TissueMaterial {
@@ -109,16 +156,30 @@ export function tissue(o: TissueOptions): TissueMaterial {
       m.thicknessAmbientNode = uniform(0.25);
       m.thicknessAttenuationNode = uniform(0.6);
       m.thicknessPowerNode = uniform(3.0);
-      m.thicknessScaleNode = uniform(4.0);
+      m.thicknessScaleNode = uniform(p.sssScale ?? 3.0);
     }
     const base = rgb(p.base);
     // Context dimming lowers value and saturation rather than recolouring.
     const grey = vec3(dot(base, vec3(0.299, 0.587, 0.114)));
-    const dimmed = mix(base, grey, dim.mul(0.7)).mul(float(1).sub(dim.mul(0.5)));
-    m.colorNode = frontFacing.select(dimmed, rgb(p.cut));
-    if (o.window) m.maskNode = windowMask(o.window.open, o.window.inset);
-    if (o.peel) {
-      const f = peel();
+    let surface: THREE.Node<'vec3'> = mix(base, grey, dim.mul(0.7)).mul(float(1).sub(dim.mul(0.5)));
+    if (o.ink) {
+      // drawn from the preauricular start (cut_s 0) toward the neck end (1) as U.ink rises
+      // Beyond either end the signed distance changes sign across the end tangent's extension; its interpolated
+      // zero there is not the incision, so ink only where the nearest path point is interior (cut_s in (0, 1)).
+      const s = attribute('_cuts', 'float');
+      const interior = smoothstep(0, 0.003, s).mul(float(1).sub(smoothstep(0.997, 1, s)));
+      const drawn = float(1).sub(smoothstep(U.ink.sub(0.004), U.ink, s)).mul(interior);
+      const line = float(1).sub(smoothstep(INK_HALF_MM[0], INK_HALF_MM[1], abs(cutMM())));
+      surface = mix(surface, rgb(INK), line.mul(drawn).mul(0.88));
+    }
+    m.colorNode = frontFacing.select(surface, rgb(p.cut));
+    const masks = [];
+    if (o.window) masks.push(windowMask(o.window.open, o.window.inset));
+    if (o.flap === 'rest') masks.push(U.flap.greaterThan(FLAP_OPEN).and(inFlap()).not());
+    if (o.flap === 'flap') masks.push(inFlap());
+    if (masks.length) m.maskNode = masks.reduce((a, b) => a.and(b));
+    if (o.peel || o.flap === 'flap') {
+      const f = o.peel ? peel() : fold();
       m.positionNode = f.position;
       m.normalNode = frontFacing.select(transformNormalToView(f.normal), vec3(0, 0, 1));
     } else {
@@ -132,6 +193,47 @@ export function tissue(o: TissueOptions): TissueMaterial {
   twin.transparent = true;
   twin.depthWrite = true;
   return { material, twin, dim };
+}
+
+/*
+ * CPU mirrors of the shader masks and deformations above, for label occlusion (raycasts see the rest geometry,
+ * not what the shaders discard or move). Keep them in step with windowMask(), inFlap(), peel() and fold().
+ */
+
+/** True where the cutaway window discards a surface point (glTF frame, metres). */
+export function cpuWindowCut(p: THREE.Vector3, open: number, inset: number): boolean {
+  if (open <= 0.001) return false;
+  const c = U.windowCenter.value as THREE.Vector2;
+  const h = U.windowHalf.value as THREE.Vector2;
+  const qx = Math.abs(p.z - c.x) - Math.max(h.x * open - inset, 0);
+  const qy = Math.abs(p.y - c.y) - Math.max(h.y * open - inset, 0);
+  return Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) < 0.008 * open && p.x < (U.windowSideX.value as number);
+}
+
+/** True where the incision has opened and the point belongs to the flap (discarded from the resting layer). */
+export function cpuInFlap(cutStored: number, w: number): boolean {
+  return cutStored * (U.cutScale.value as number) > 0 && w > FLAP_ATTACHED;
+}
+
+const rotY = (p: THREE.Vector3, pivotX: number, pivotZ: number, a: number) => {
+  const x = p.x - pivotX;
+  const z = p.z - pivotZ;
+  p.x = x * Math.cos(a) + z * Math.sin(a) + pivotX;
+  p.z = z * Math.cos(a) - x * Math.sin(a) + pivotZ;
+  return p;
+};
+
+export function cpuPeel(p: THREE.Vector3, d: number): THREE.Vector3 {
+  const peelV = U.peel.value as number;
+  const t = Math.min(Math.max((peelV - d) / 0.45, 0), 1);
+  const front = (U.frontZ0.value as number) + ((U.frontZ1.value as number) - (U.frontZ0.value as number)) * Math.min(peelV, 1);
+  return rotY(p, U.hingeX.value as number, front, t * t * (3 - 2 * t) * 2.3);
+}
+
+export function cpuFold(p: THREE.Vector3, w: number): THREE.Vector3 {
+  const pivot = U.flapPivot.value as THREE.Vector3;
+  const angle = -(U.flap.value as number) * (U.flapMax.value as number) * w;
+  return p.sub(pivot).applyAxisAngle(U.flapAxis.value as THREE.Vector3, angle).add(pivot);
 }
 
 /** Single-layer ghost: the depth-only twin draws first, then the tissue blends over the opaque interior. */

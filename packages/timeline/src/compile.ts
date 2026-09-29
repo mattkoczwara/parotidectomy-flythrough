@@ -8,14 +8,23 @@ export interface Track {
   readonly transitions: readonly TransitionWindows[];
 }
 
-/** Resolved transition windows (every group present). */
-export type TransitionWindows = { readonly [K in keyof TransitionSpec]-?: readonly [number, number] };
+type Window = readonly [number, number];
+
+/** Resolved transition windows (every group present; opKeys override `op` for the keys they name). */
+export interface TransitionWindows {
+  readonly camera: Window;
+  readonly structures: Window;
+  readonly op: Window;
+  readonly labels: Window;
+  readonly opKeys: Readonly<Record<string, Window>>;
+}
 
 const defaultTransition: TransitionWindows = {
   camera: [0, 1],
   structures: [0, 1],
   op: [0, 1],
   labels: [0.6, 1],
+  opKeys: {},
 };
 
 /** Drops keys whose value is undefined so they do not overwrite inherited values when spread. */
@@ -70,7 +79,8 @@ export function compile(specs: readonly PlateSpec[], initial: SceneState = empty
 
   const transitions: TransitionWindows[] = specs.map((s) => ({ ...defaultTransition, ...defined(s.transition ?? {}) }));
   for (const [i, tr] of transitions.entries()) {
-    for (const [key, [a, b]] of Object.entries(tr)) {
+    const { opKeys, ...groups } = tr;
+    for (const [key, [a, b]] of [...Object.entries(groups), ...Object.entries(opKeys).map(([k, w]) => [`opKeys.${k}`, w] as const)]) {
       if (!(a >= 0 && b <= 1 && a < b)) throw new RangeError(`plate "${ids[i]}": transition window ${key} [${a}, ${b}] is invalid`);
     }
   }

@@ -62,7 +62,7 @@ export function evaluate(track: Track, t: number): SceneState {
 
   const op: Record<string, number> = {};
   for (const key of new Set([...Object.keys(a.op), ...Object.keys(b.op)])) {
-    op[key] = lerp(a.op[key] ?? 0, b.op[key] ?? 0, wo);
+    op[key] = lerp(a.op[key] ?? 0, b.op[key] ?? 0, tr.opKeys[key] ? windowed(f, tr.opKeys[key]) : wo);
   }
 
   const labels: LabelState[] = [];

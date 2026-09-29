@@ -181,7 +181,7 @@ def main() -> None:
     fitted = aligned + (w * offset)[:, None] * nrm
     # The auricle is thin and projecting, so normal projection crumples it: move it rigidly with the mean
     # displacement of the skin ring around its root instead (both ears, so the head stays symmetric in form).
-    helices = []
+    helices, helix_right = [], None
     for side in (1, -1):
         band = (np.abs(aligned[:, 2] - spec["ear_level_z"]) < 25) & (aligned[:, 0] * side > 0)
         helix = aligned[band][np.argmax(aligned[band][:, 0] * side)]
@@ -192,6 +192,10 @@ def main() -> None:
             shift = (fitted[ring] - aligned[ring]).mean(0)
             fitted[ear] = aligned[ear] + shift
             helices.append(helix + shift)
+            if side == 1:
+                helix_right = helix + shift
+    # the fitted right helix locates the auricle for the incision and flap (flap.py)
+    (WORK / "face.resolved.json").write_text(json.dumps({"helix_right": [round(float(v), 2) for v in helix_right]}, indent=2), encoding="utf-8")
 
     # Coverage: wherever segmented bone or muscle comes within `coverage_mm` of the skin (the cadaver's neck
     # flares faster than the envelope follows; the generic face is thin over the nasal bones), push the skin out
