@@ -27,7 +27,7 @@ const PRESETS: Record<TissueFamily, Preset> = {
   fascia: { base: 0xd9ccb9, cut: 0xe3d8c8, roughness: 0.5, sheen: 0.6 },
   gland: { base: 0xd2926f, cut: 0xe6b89c, roughness: 0.55, clearcoat: 0.28, sss: 0x9c3a22, sssScale: 3.0 },
   duct: { base: 0xe8d6c2, cut: 0xe8d6c2, roughness: 0.45, clearcoat: 0.4 },
-  muscle: { base: 0x9c3f38, cut: 0xb45a50, roughness: 0.6, sheen: 0.3, clearcoat: 0.25 },
+  muscle: { base: 0xae4a41, cut: 0xbd6157, roughness: 0.6, sheen: 0.3, clearcoat: 0.25 },
   bone: { base: 0xe6ddc8, cut: 0xefe7d4, roughness: 0.72 },
   cartilage: { base: 0xdfe2d6, cut: 0xe8eadf, roughness: 0.45, clearcoat: 0.4 },
   nerve: { base: 0xf1e3b2, cut: 0xf1e3b2, roughness: 0.45, clearcoat: 0.3, sheen: 0.6 },

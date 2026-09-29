@@ -4,7 +4,9 @@
  * (CLAUDE.md): passive scrolling never moves focus; explicit navigation moves focus to the destination heading
  * once it has settled; only settled plates are announced, each once.
  */
-import { compile, defaultStructure, evaluate, positionAt, restingY, shouldDissolve, type PlateBand, type PlateSpec, type SceneState, type StructureState } from '@atlas/timeline';
+import { compile, defaultStructure, evaluate, positionAt, restingY, scrollYAt, shouldDissolve, type PlateBand, type PlateSpec, type SceneState, type StructureState } from '@atlas/timeline';
+import { updateGlyph } from './glyph.ts';
+import { TierManager, type TierChoice } from './tiers.ts';
 
 type Depth = 'essentials' | 'anatomy' | 'clinical';
 
@@ -39,6 +41,8 @@ interface SourceRecord {
 const LONG_JUMP = 1.5;
 const SETTLE_MS = 220;
 const LABEL_GAP = 30;
+const LABEL_WIDTH = 230; // px reserved for the margin label column
+const SVG_NS = 'http://www.w3.org/2000/svg';
 
 export function start(): void {
   const data = JSON.parse(document.getElementById('atlas-data')!.textContent!) as ClientData;
@@ -51,7 +55,7 @@ export function start(): void {
   // Every content structure starts present, in context; plates record only what changes.
   const initialStructures: Record<string, StructureState> = {};
   for (const s of data.structures) initialStructures[s.id] = { ...defaultStructure };
-  const track = compile(data.plates, {
+  const initialState: SceneState = {
     camera: { azimuth: 0, elevation: 0, zoom: 1, frames: [] },
     structures: initialStructures,
     gauge: 0,
@@ -59,7 +63,8 @@ export function start(): void {
     variants: {},
     labels: [],
     light: { preset: 'studio', exposure: 1 },
-  });
+  };
+  let track = compile(data.plates, initialState);
 
   const articles = [...document.querySelectorAll<HTMLElement>('[data-plate]')];
   const headings = articles.map((a) => a.querySelector('h3') as HTMLElement);
@@ -71,6 +76,8 @@ export function start(): void {
   const gaugeItems = [...document.querySelectorAll<HTMLElement>('.gauge li')];
   const railLinks = [...document.querySelectorAll<HTMLAnchorElement>('.rail a')];
   const resetBtn = document.querySelector<HTMLButtonElement>('.reset-view')!;
+  const glyph = document.querySelector<SVGSVGElement>('.orient');
+  const qualitySelect = document.querySelector<HTMLSelectElement>('#quality');
 
   // ── Preferences (per-viewer conveniences; storage may be unavailable) ──────────────────
   const store = {
@@ -154,9 +161,11 @@ export function start(): void {
   // ── Stage (optional: the page is complete without it) ─────────────────────────────────
   type StageLike = import('@atlas/stage').Stage;
   let stage: StageLike | null = null;
+  let tiers: TierManager | null = null;
   const hasGPU = 'gpu' in navigator;
   const hasWebGL2 = !!document.createElement('canvas').getContext('webgl2');
-  if (!hasGPU && !hasWebGL2) document.body.classList.add('static');
+  // Static tier: no WebGPU or WebGL2, or asked for (?static): the captured figures carry the lesson.
+  if ((!hasGPU && !hasWebGL2) || query.has('static')) document.body.classList.add('static');
 
   let current = 0; // rendered t
   let lastApplied = Number.NaN;
@@ -171,7 +180,8 @@ export function start(): void {
     if (!stage) return;
     const r = stageEl.getBoundingClientRect();
     stage.resize(r.width, r.height);
-    stage.frameOffsetX = r.width > r.height * 1.05 ? 0.3 : 0;
+    // Beside the text column the subject moves right; capture mode (figures, determinism) frames it centred.
+    stage.frameOffsetX = r.width > r.height * 1.05 && !query.has('capture') ? 0.3 : 0;
     dirty = true;
   };
 
@@ -179,21 +189,44 @@ export function start(): void {
     if (document.body.classList.contains('static')) return;
     try {
       const { Stage } = await import('@atlas/stage');
-      const params = new URLSearchParams(location.search);
+      // A tier forced by URL, or capture mode, is never changed automatically: captures stay deterministic.
+      const forcedTier = query.get('tier') === 'mid' || query.get('tier') === 'high' ? (query.get('tier') as 'mid' | 'high') : null;
+      const forced = !!forcedTier || query.has('capture');
+      const stored = store.get('atlas.tier');
+      const choice: TierChoice = forcedTier ?? (query.has('capture') ? 'high' : stored === 'high' || stored === 'mid' ? stored : 'auto');
       const s = new Stage({
         canvas,
-        tier: params.get('tier') === 'mid' ? 'mid' : 'high',
-        forceWebGL: params.get('backend') === 'webgl' || !hasGPU,
+        tier: choice === 'mid' ? 'mid' : 'high',
+        forceWebGL: query.get('backend') === 'webgl' || !hasGPU,
         field: getComputedStyle(document.body).getPropertyValue('--field').trim() || '#252a28',
         structures: data.structures.map((s) => ({ id: s.id, tissue: s.tissue as never })),
       });
       await s.load('/assets/anatomy/slice.glb', '/assets/anatomy/frame.json');
+      const tm = new TierManager(s, choice, forced, (tier, reason) => {
+        document.body.dataset.tier = tier;
+        document.body.dataset.tierReason = reason;
+        dirty = true;
+      });
+      s.setTier(tm.initial());
+      tiers = tm;
+      document.body.dataset.tier = s.tier;
+      document.body.dataset.backend = s.backend;
+      if (qualitySelect) {
+        qualitySelect.value = choice;
+        qualitySelect.disabled = forced;
+        qualitySelect.addEventListener('change', () => {
+          store.set('atlas.tier', qualitySelect.value);
+          tm.choose(qualitySelect.value as TierChoice);
+        });
+      }
       stage = s; // publish only once loaded: the frame loop checks `stage`
-      if (import.meta.env.DEV) Object.assign(window, { __atlas: { stage: s, track, evaluate, layoutLabels, get settledPlate() { return settledPlate; }, get current() { return current; }, targetT } });
+      if (import.meta.env.DEV) Object.assign(window, { __atlas: { stage: s, get track() { return track; }, evaluate, layoutLabels, get settledPlate() { return settledPlate; }, get current() { return current; }, targetT } });
       document.body.classList.add('scene-active');
       resize();
       canvas.dataset.ready = '1';
+      performance.mark('atlas:ready'); // the scene is interactive (performance harness)
       canvas.dispatchEvent(new Event('atlas:ready'));
+      await tm.warmUp();
     } catch (err) {
       console.error('3D scene unavailable; continuing with the text and static figures.', err);
       stage = null;
@@ -259,38 +292,101 @@ export function start(): void {
     if (depth === 'essentials') return { main: n.plain, latin: '' };
     return { main: n.anatomical, latin: depth === 'clinical' ? (n.latin ?? '') : '' };
   }
+  /** A leader: a dark halo under a light hairline, so it holds contrast over pale bone and dark muscle alike. */
+  function leader(x1: number, y1: number, x2: number, y2: number) {
+    for (const cls of ['halo', 'line']) {
+      const line = document.createElementNS(SVG_NS, 'line');
+      line.setAttribute('class', cls);
+      line.setAttribute('x1', String(x1));
+      line.setAttribute('y1', String(y1));
+      line.setAttribute('x2', String(x2));
+      line.setAttribute('y2', String(y2));
+      leaders.append(line);
+    }
+    const dot = document.createElementNS(SVG_NS, 'circle');
+    dot.setAttribute('cx', String(x1));
+    dot.setAttribute('cy', String(y1));
+    dot.setAttribute('r', '2.2');
+    leaders.append(dot);
+  }
+  function labelItem(id: string, emphasis: string) {
+    const { main, latin } = labelText(id);
+    const li = document.createElement('li');
+    li.dataset.structure = id;
+    li.dataset.emphasis = emphasis; // read by the capture suite's contrast and luminance checks
+    li.innerHTML = `${main}${latin ? `<span class="latin">${latin}</span>` : ''}`;
+    labelsEl.append(li);
+    return li;
+  }
+  /**
+   * Landscape: one margin column to the right of the focus structures (never over them), sorted by height.
+   * Portrait: a band of at most four labels along the bottom of the scene (plan §5).
+   */
   function layoutLabels() {
     labelsEl.replaceChildren();
     leaders.replaceChildren();
     if (!stage || settledPlate < 0) return;
     const state = evaluate(track, settledPlate);
     const r = stageEl.getBoundingClientRect();
-    const max = r.width > r.height ? (depth === 'essentials' ? 4 : 6) : 4;
+    const landscape = r.width > r.height;
+    const max = landscape ? (depth === 'essentials' ? 4 : 6) : 4;
     const ids = [...state.labels].sort((a, b) => a.priority - b.priority).slice(0, max).map((l) => l.structureId);
-    const proj = stage.projectAnchors(ids, r.width, r.height).filter((p) => p.visible && p.x > 0 && p.x < r.width && p.y > 0 && p.y < r.height);
-    const columnX = r.width > r.height ? r.width - Math.min(260, r.width * 0.2) : r.width * 0.62;
-    proj.sort((a, b) => a.y - b.y);
-    let lastY = -Infinity;
-    for (const p of proj) {
-      const y = Math.max(p.y, lastY + LABEL_GAP);
-      lastY = y;
-      const { main, latin } = labelText(p.id);
-      const li = document.createElement('li');
-      li.innerHTML = `${main}${latin ? `<span class="latin">${latin}</span>` : ''}`;
-      li.style.left = `${columnX}px`;
-      li.style.top = `${y - 10}px`;
-      labelsEl.append(li);
-      const ns = 'http://www.w3.org/2000/svg';
-      const line = document.createElementNS(ns, 'line');
-      line.setAttribute('x1', String(p.x));
-      line.setAttribute('y1', String(p.y));
-      line.setAttribute('x2', String(columnX - 4));
-      line.setAttribute('y2', String(y));
-      const dot = document.createElementNS(ns, 'circle');
-      dot.setAttribute('cx', String(p.x));
-      dot.setAttribute('cy', String(p.y));
-      dot.setAttribute('r', '2');
-      leaders.append(line, dot);
+    const proj = stage.projectAnchors(ids, r.width, r.height).filter((p) => p.visible && p.x > 8 && p.x < r.width - 8 && p.y > 8 && p.y < r.height - 8);
+    if (landscape) {
+      const focus = Object.entries(state.structures).filter(([, s]) => s.emphasis === 'focus' && s.presence > 0.5).map(([id]) => id);
+      const box = stage.screenBox(focus, r.width, r.height);
+      // The right margin, unless the focus reaches into it: then the gap between the text column and the focus.
+      const textRight = document.querySelector('main')!.getBoundingClientRect().right;
+      let columnX = r.width - LABEL_WIDTH;
+      const left = !!box && box.right > columnX - 12 && box.left - LABEL_WIDTH - 36 > textRight;
+      if (left) columnX = box!.left - LABEL_WIDTH - 36;
+      proj.sort((a, b) => a.y - b.y);
+      let bottom = 56 - LABEL_GAP; // first label no higher than just below the masthead
+      for (const p of proj.filter((q) => (left ? q.x > columnX + LABEL_WIDTH + 16 : q.x < columnX - 16))) {
+        const li = labelItem(p.id, state.structures[p.id]?.emphasis ?? 'context');
+        if (left) li.style.right = `${r.width - columnX - LABEL_WIDTH}px`; // right-aligned against the focus side
+        else li.style.left = `${columnX}px`;
+        const h = li.offsetHeight; // two lines at Clinical depth (Latin name)
+        const top = Math.max(p.y - 10, bottom + 6);
+        if (top + h > r.height - 8) {
+          li.remove();
+          break;
+        }
+        li.style.top = `${top}px`;
+        bottom = top + h;
+        leader(p.x, p.y, left ? columnX + LABEL_WIDTH + 4 : columnX - 4, top + 10);
+      }
+    } else {
+      // Rows of labels flowing left to right, stacked upward from the bottom edge of the scene.
+      const items = proj.sort((a, b) => a.x - b.x).map((p) => {
+        const li = labelItem(p.id, state.structures[p.id]?.emphasis ?? 'context');
+        li.classList.add('band');
+        li.style.maxWidth = `${r.width - 12}px`;
+        return { p, li, w: li.offsetWidth, h: li.offsetHeight };
+      });
+      const rows: (typeof items)[] = [[]];
+      let x = 6;
+      for (const it of items) {
+        if (x + it.w > r.width - 6 && rows.at(-1)!.length) {
+          rows.push([]);
+          x = 6;
+        }
+        rows.at(-1)!.push(it);
+        x += it.w + 8;
+      }
+      let y = r.height - 8;
+      for (const row of rows.reverse()) {
+        const rowH = Math.max(...row.map((it) => it.h));
+        y -= rowH;
+        let rx = 6;
+        for (const it of row) {
+          it.li.style.left = `${rx}px`;
+          it.li.style.top = `${y}px`;
+          leader(it.p.x, it.p.y, rx + Math.min(it.w / 2, 24), y);
+          rx += it.w + 8;
+        }
+        y -= 6;
+      }
     }
   }
 
@@ -364,8 +460,12 @@ export function start(): void {
       const state = evaluate(track, current);
       stage.apply(state);
       stage.render();
+      tiers?.frame(now);
       updateGauge(state);
+      const v = stage.view;
+      updateGlyph(glyph, v.azimuth, v.elevation);
       lastApplied = current;
+      document.body.dataset.t = current.toFixed(4); // the rendered position (reduced-motion check)
       dirty = false;
       converging = settledPlate >= 0;
     } else if (stage && converging && performance.now() >= fadeUntil) {
@@ -373,6 +473,7 @@ export function start(): void {
       await stage.settle();
       layoutLabels();
       document.body.dataset.converged = String(settledPlate); // readiness signal for tests and captures
+      if (!performance.getEntriesByName('atlas:converged').length) performance.mark('atlas:converged');
     }
   };
 
@@ -432,4 +533,26 @@ export function start(): void {
   addEventListener('load', seat);
   canvas.addEventListener('atlas:ready', seat);
   requestAnimationFrame(frame);
+
+  // Director's console: development builds only (plan §8); never part of the production bundle.
+  if (import.meta.env.DEV) {
+    void import('./console.ts').then(({ mountConsole }) =>
+      mountConsole({
+        plates: data.plates,
+        setDelta: (i, delta) => {
+          const next = data.plates.map((p, k) => (k === i ? { ...p, delta } : p));
+          track = compile(next, initialState);
+          data.plates[i] = next[i]!;
+          dirty = true;
+        },
+        current: () => current,
+        scrubTo: (t) => scrollTo({ top: scrollYAt(t, bands) - readingLine(), behavior: 'auto' }),
+        camera: () => {
+          const st = evaluate(track, current);
+          const o = stage?.override ?? { azimuth: 0, elevation: 0, zoom: 1 };
+          return { azimuth: st.camera.azimuth + o.azimuth, elevation: st.camera.elevation + o.elevation, zoom: st.camera.zoom * o.zoom, frame: st.camera.frames.at(-1)?.ids ?? [] };
+        },
+      }),
+    );
+  }
 }

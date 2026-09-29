@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { compile, evaluate, positionAt, restingY, shouldDissolve, type PlateSpec } from './index.ts';
+import { compile, evaluate, positionAt, restingY, scrollYAt, shouldDissolve, type PlateSpec } from './index.ts';
 
 const specs: PlateSpec[] = [
   {
@@ -112,5 +112,6 @@ describe('scroll mapping', () => {
   });
   it('rests inside the plateau', () => {
     expect(positionAt(restingY(1, bands), bands)).toBe(1);
+    for (const t of [0, 0.25, 0.5, 1, 1.5, 1.9, 2]) expect(positionAt(scrollYAt(t, bands), bands)).toBeCloseTo(t);
   });
 });

@@ -1,0 +1,116 @@
+{
+  "date": "2026-09-29T02:44:59.507Z",
+  "browser": "firefox 156.0.1",
+  "plates": [
+    {
+      "id": "face",
+      "converged": true,
+      "ms": 5595,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 0,
+      "errors": []
+    },
+    {
+      "id": "where-parotid",
+      "converged": true,
+      "ms": 3851,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 4,
+      "errors": []
+    },
+    {
+      "id": "layers",
+      "converged": true,
+      "ms": 4178,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 1,
+      "errors": []
+    },
+    {
+      "id": "tumour",
+      "converged": true,
+      "ms": 4326,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 2,
+      "errors": []
+    },
+    {
+      "id": "nerve-within",
+      "converged": true,
+      "ms": 4311,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 3,
+      "errors": []
+    },
+    {
+      "id": "nerve-plane",
+      "converged": true,
+      "ms": 4960,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 4,
+      "errors": []
+    },
+    {
+      "id": "incision",
+      "converged": true,
+      "ms": 4134,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 0,
+      "errors": []
+    },
+    {
+      "id": "flap",
+      "converged": true,
+      "ms": 4681,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 3,
+      "errors": []
+    },
+    {
+      "id": "landmarks",
+      "converged": true,
+      "ms": 5124,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 2,
+      "errors": []
+    },
+    {
+      "id": "peel",
+      "converged": true,
+      "ms": 4061,
+      "backend": "webgpu",
+      "tier": "high",
+      "static": false,
+      "gpu": true,
+      "labels": 2,
+      "errors": []
+    }
+  ]
+}

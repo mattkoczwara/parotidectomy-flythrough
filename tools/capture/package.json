@@ -6,7 +6,8 @@
   "description": "Playwright harness against the production build: static fallback figures, plate determinism, and accessibility behaviour (focus, announcements).",
   "scripts": {
     "typecheck": "tsc --noEmit -p .",
-    "capture": "playwright test"
+    "capture": "playwright test",
+    "perf": "playwright test -c playwright.perf.config.ts"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

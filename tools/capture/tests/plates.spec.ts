@@ -47,6 +47,7 @@ test('static fallback figure for every plate', async ({ page }) => {
 });
 
 test('plates are deterministic: cold load vs forward and backward scroll arrival', async ({ page }) => {
+  test.setTimeout(15 * 60_000); // three arrivals per plate, ten plates (the criterion itself is unchanged)
   const ids = await plateIds(page);
   const results: Record<string, { forward: number; backward: number }> = {};
   const scrollToPlate = async (id: string) => {
@@ -123,4 +124,41 @@ test('explicit navigation moves focus to the destination heading once settled', 
   await waitConverged(page, 1);
   const focused = await page.evaluate(() => document.activeElement?.closest('[data-plate]')?.id);
   expect(focused).toBe(ids[1]);
+});
+
+test('reduced motion renders plateau states only (dissolves, no camera flights)', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await waitConverged(page, 0);
+  await page.evaluate(() => {
+    const seen: string[] = [];
+    (window as unknown as { __t: string[] }).__t = seen;
+    new MutationObserver(() => seen.push(document.body.dataset.t ?? '')).observe(document.body, { attributes: true, attributeFilter: ['data-t'] });
+  });
+  await page.mouse.move(400, 500);
+  for (let k = 0; k < 60; k++) {
+    await page.mouse.wheel(0, 90);
+    await page.waitForTimeout(40);
+  }
+  await page.waitForTimeout(1500);
+  const seen = await page.evaluate(() => (window as unknown as { __t: string[] }).__t);
+  expect(seen.length).toBeGreaterThan(0);
+  for (const t of seen) expect(Number(t) % 1, `rendered t ${t}`).toBe(0);
+});
+
+test('static tier: every plate has its figure and description without the 3D scene', async ({ page }) => {
+  await page.goto('/?static');
+  await expect(page.locator('body')).toHaveClass(/static/);
+  await expect(page.locator('.stage')).toBeHidden();
+  const plates = await page.$$eval('[data-plate]', (els) =>
+    els.map((a) => {
+      const img = a.querySelector<HTMLImageElement>('.plate-figure img');
+      const cap = a.querySelector<HTMLElement>('.plate-figure figcaption');
+      return { id: a.id, img: !!img && getComputedStyle(img).display !== 'none', caption: (cap?.innerText ?? '').length };
+    }),
+  );
+  for (const p of plates) {
+    expect(p.img, `${p.id}: figure shown`).toBe(true);
+    expect(p.caption, `${p.id}: description`).toBeGreaterThan(40);
+  }
 });

@@ -15,7 +15,8 @@
     "@atlas/schema": "*",
     "@atlas/stage": "*",
     "@atlas/timeline": "*",
-    "astro": "^7.3.5"
+    "astro": "^7.3.5",
+    "yaml": "^2.8.0"
   },
   "allowScripts": {
     "esbuild": true

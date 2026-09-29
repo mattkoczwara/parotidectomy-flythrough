@@ -34,3 +34,16 @@ export function restingY(i: number, bands: readonly PlateBand[]): number {
   if (!band) return 0;
   return band.plateauStart + Math.min(24, (band.plateauEnd - band.plateauStart) / 2);
 }
+
+/** Document y for timeline position t (the inverse of positionAt, for scrubbing tools): plateaus rest as in
+ *  restingY; fractional t lies proportionally within the spacer after plate floor(t). */
+export function scrollYAt(t: number, bands: readonly PlateBand[]): number {
+  if (bands.length === 0) return 0;
+  const tc = Math.min(Math.max(t, 0), bands.length - 1);
+  const i = Math.floor(tc);
+  const f = tc - i;
+  if (f === 0 || i === bands.length - 1) return restingY(i, bands);
+  const a = bands[i]!.plateauEnd;
+  const b = bands[i + 1]!.plateauStart;
+  return a + (b - a) * f;
+}

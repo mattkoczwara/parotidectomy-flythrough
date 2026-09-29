@@ -22,7 +22,9 @@
     "validate": "tsx tools/validate/src/index.ts",
     "check": "npm run typecheck && npm test && npm run validate && npm run build",
     "capture": "npm run build && npm run capture -w @atlas/capture",
-    "anatomy": "bash pipeline/build/build.sh"
+    "anatomy": "bash pipeline/build/build.sh",
+    "perf": "npm run build && npm run perf -w @atlas/capture",
+    "review": "tsx tools/validate/src/review.ts"
   },
   "devDependencies": {
     "@gltf-transform/cli": "^4.5.1",

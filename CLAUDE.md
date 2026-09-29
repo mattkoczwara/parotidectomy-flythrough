@@ -16,6 +16,7 @@ Private educational atlas of parotid tumours and parotidectomy, with pleomorphic
 - `npm run typecheck` — check workspaces; use `npm run typecheck -w @atlas/timeline` for that workspace alone.
 - `npm run validate` — check content, evidence and asset provenance.
 - `npm run check` — typecheck, test, validate and build. Run it before checkpoint commits.
+- `npm run capture` — Playwright on the production build (real Chrome, WebGPU): static figures, determinism, focus/announcements, reduced motion, static tier, label legibility. `npm run perf` measures frame pacing and load; `npm run review` regenerates the clinical review packet; `npm run anatomy` rebuilds the anatomy asset.
 
 ## Project invariants
 

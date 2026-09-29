@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-29T02:42:30.747Z",
+  "gpu": "NVIDIA GeForce RTX 3070 (driver 617.14)",
+  "browser": "Chrome (Playwright channel \"chrome\")",
+  "high_1600x1000": {
+    "tier": "high",
+    "backend": "webgpu",
+    "frames": 1292,
+    "medianMs": 16.7,
+    "p95Ms": 16.8,
+    "medianFps": 59.9
+  },
+  "high_2560x1440_device_px": {
+    "tier": "high",
+    "backend": "webgpu",
+    "frames": 1239,
+    "medianMs": 16.7,
+    "p95Ms": 16.8,
+    "medianFps": 59.9,
+    "canvas": "2538x1440"
+  },
+  "mid_webgl2_cpu4x_1600x1000": {
+    "tier": "mid",
+    "backend": "webgl2",
+    "frames": 1287,
+    "medianMs": 16.7,
+    "p95Ms": 16.8,
+    "medianFps": 59.9
+  },
+  "cold_load_50mbps": {
+    "bytesTransferred": 4095244,
+    "megabytes": 4.1,
+    "sceneInteractiveMs": 1248,
+    "firstPlateConvergedMs": 3191,
+    "textReadableMs": 187
+  }
+}

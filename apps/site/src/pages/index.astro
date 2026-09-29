@@ -3,10 +3,13 @@ import { getCollection, render } from 'astro:content';
 import { Font } from 'astro:assets';
 import { depthPlanes } from '@atlas/schema';
 import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { glyphMarkup } from '../scripts/glyph.ts';
 import '../styles/atlas.css';
 
 // Static fallback figures are captured from the running scene (tools/capture); link only those that exist.
-const hasFigure = (id: string) => existsSync(new URL(`../../public/plates/${id}.png`, import.meta.url));
+// Resolved from the site root (the build's working directory): import.meta.url points into the compiled output.
+const hasFigure = (id: string) => existsSync(resolve('public/plates', `${id}.png`));
 
 const chapters = (await getCollection('chapters')).map((c) => c.data).sort((a, b) => a.order - b.order);
 const stepEntries = (await getCollection('steps')).sort((a, b) => a.data.order - b.data.order);
@@ -58,6 +61,11 @@ const planeLabel: Record<string, string> = {
           <label><input type="radio" name="depth" value="clinical" /> Clinical</label>
         </fieldset>
         <label class="motion"><input type="checkbox" id="reduce-motion" /> Reduce motion</label>
+        <label class="quality">Quality <select id="quality">
+          <option value="auto">Auto</option>
+          <option value="high">High</option>
+          <option value="mid">Standard</option>
+        </select></label>
       </div>
     </header>
 
@@ -69,6 +77,7 @@ const planeLabel: Record<string, string> = {
         <p class="gauge-title">Depth</p>
         <ol>{depthPlanes.map((p) => <li data-plane={p}>{planeLabel[p]}</li>)}</ol>
       </div>
+      <svg class="orient" viewBox="-34 -34 68 76" aria-hidden="true" set:html={glyphMarkup}></svg>
       <button type="button" class="reset-view" hidden>Return to the authored view</button>
     </div>
 

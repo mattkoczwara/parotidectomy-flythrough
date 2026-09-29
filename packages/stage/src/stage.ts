@@ -177,6 +177,7 @@ export class Stage {
     this.key.position.set(-1, 1.2, 0.8);
     this.rim.position.set(0.8, 0.4, -1);
     this.scene.add(this.key, this.rim, new THREE.HemisphereLight(0xf3efe9, 0x322c28, 0.4));
+    this.tierNow = this.opts.tier;
     this.buildPipeline();
   }
 
@@ -192,12 +193,28 @@ export class Stage {
     return twin;
   }
 
+  /** Current quality tier (plan §9); the tier manager may step it down at run time. */
+  get tier(): Tier {
+    return this.tierNow;
+  }
+  private tierNow: Tier = 'high';
+
+  /** Switch quality tier: rebuilds the post-processing pipeline (materials and geometry are shared). */
+  setTier(tier: Tier) {
+    if (tier === this.tierNow && this.pipeline) return;
+    this.tierNow = tier;
+    (this.pipeline as unknown as { dispose?: () => void } | undefined)?.dispose?.();
+    this.traaNode = null;
+    this.tierNow = this.opts.tier;
+    this.buildPipeline();
+  }
+
   private buildPipeline() {
     this.pipeline = new THREE.RenderPipeline(this.renderer);
     const contour = vec3(0.93, 0.9, 0.78); // near nerve luminance: a line, not a glow
     const outlinePass = outline(this.scene, this.camera, { selectedObjects: this.outlineObjects, edgeThickness: float(1.0), edgeGlow: float(0) });
     const edge = outlinePass.visibleEdge.mul(this.focus).clamp(0, 1).mul(0.85); // hidden edges off (no x-ray)
-    if (this.opts.tier === 'high') {
+    if (this.tierNow === 'high') {
       const prePass = pass(this.scene, this.camera);
       prePass.transparent = false;
       prePass.setMRT(mrt({ output: packNormalToRGB(normalView), velocity }));
@@ -256,6 +273,7 @@ export class Stage {
   }
 
   private placeCamera(cam: SceneState['camera']) {
+    this.lastCamera = { azimuth: cam.azimuth, elevation: cam.elevation };
     const center = new THREE.Vector3();
     let radius = 0;
     let total = 0;
@@ -311,6 +329,10 @@ export class Stage {
 
   /** Render until the TRAA jitter returns to phase 0, then two full cycles: a deterministic settled frame. */
   async settle() {
+    // Every visible material's pipeline must exist before the history is reseeded: on a cold load a variant still
+    // compiling would be missing from the seed frame and a trace of its absence would survive accumulation.
+    await (this.renderer as unknown as { compileAsync?: (s: THREE.Object3D, c: THREE.Camera) => Promise<void> }).compileAsync?.(this.scene, this.camera);
+    for (let i = 0; i < 4; i++) this.render();
     let guard = 0;
     do this.render();
     while ((this.traaNode?._jitterIndex ?? 0) !== 0 && ++guard < 64);
@@ -372,6 +394,29 @@ export class Stage {
     }
     return out;
   }
+
+  /** Screen-space box (CSS px) of the given structures' bounds, for keeping labels clear of the focus. */
+  screenBox(ids: readonly string[], width: number, height: number): { left: number; right: number; top: number; bottom: number } | null {
+    let box: { left: number; right: number; top: number; bottom: number } | null = null;
+    const v = new THREE.Vector3();
+    for (const id of ids) {
+      const b = this.frame.bounds[id];
+      if (!b) continue;
+      for (let k = 0; k < 8; k++) {
+        v.set(k & 1 ? b.max[0] : b.min[0], k & 2 ? b.max[1] : b.min[1], k & 4 ? b.max[2] : b.min[2]).project(this.camera);
+        const x = ((v.x + 1) / 2) * width;
+        const y = ((1 - v.y) / 2) * height;
+        box = box ? { left: Math.min(box.left, x), right: Math.max(box.right, x), top: Math.min(box.top, y), bottom: Math.max(box.bottom, y) } : { left: x, right: x, top: y, bottom: y };
+      }
+    }
+    return box;
+  }
+
+  /** Current view direction in the anatomical frame (degrees), including any instrument-mode override. */
+  get view(): { azimuth: number; elevation: number } {
+    return { azimuth: this.lastCamera.azimuth + this.override.azimuth, elevation: this.lastCamera.elevation + this.override.elevation };
+  }
+  private lastCamera = { azimuth: 0, elevation: 0 };
 
   /** A raycast proxy of a mesh with its vertex-stage deformation applied on the CPU, cached per parameter value. */
   private proxies = new Map<THREE.Mesh, { key: number; mesh: THREE.Mesh }>();
