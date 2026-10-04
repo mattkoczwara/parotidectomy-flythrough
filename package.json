@@ -24,7 +24,9 @@
     "capture": "npm run build && npm run capture -w @atlas/capture",
     "anatomy": "bash pipeline/build/build.sh",
     "perf": "npm run build && npm run perf -w @atlas/capture",
-    "review": "tsx tools/validate/src/review.ts"
+    "review": "tsx tools/validate/src/review.ts",
+    "validate:public": "tsx tools/validate/src/index.ts --public",
+    "build:public": "npm run validate:public && npm run build"
   },
   "devDependencies": {
     "@gltf-transform/cli": "^4.5.1",

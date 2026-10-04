@@ -1,0 +1,10 @@
+{
+  "id": "auriculotemporal-nerve",
+  "term": "Auriculotemporal nerve",
+  "plain": "The nerve in front of the ear that carries the signal for saliva",
+  "definition": "A nerve in front of the ear, the auriculotemporal nerve, gives feeling to the temple skin and carries the signal that makes the parotid gland produce saliva.",
+  "claims": [
+    "auriculotemporal-course"
+  ],
+  "structureId": "auriculotemporal_nerve"
+}

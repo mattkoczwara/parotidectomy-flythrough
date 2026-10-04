@@ -1,20 +1,22 @@
 {
   "id": "great-auricular-nerve-course",
   "statement": {
-    "essentials": "A skin nerve for the earlobe crosses the neck muscle toward the ear and is often numbed by the operation.",
-    "anatomy": "The great auricular nerve ascends over the sternocleidomastoid, parallel to the external jugular vein, and divides into anterior and posterior branches; the anterior branch often cannot be preserved."
+    "essentials": "A skin nerve for the earlobe lies on the neck muscle below the gland and is often numbed by the operation; its back branches can usually be kept.",
+    "anatomy": "The great auricular nerve lies on the sternocleidomastoid and divides into branches; the posterior branches supplying the lower ear can be preserved in the majority of cases. The skin cut about the earlobe can injure its small superficial branches. Numbness about the incision and the ear is a described consequence."
   },
-  "evidenceClass": "established-anatomy",
+  "evidenceClass": "representative-technique",
   "sources": [
     {
-      "sourceId": "statpearls-parotidectomy",
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Operative procedure; Describe expected sequelae",
       "support": "direct"
     }
   ],
   "numbers": [],
   "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
-  }
+  },
+  "limitations": "One institution's protocol; how often the nerve is preserved and how often numbness follows are given by other claims (gan-preservation, minor-complications)."
 }

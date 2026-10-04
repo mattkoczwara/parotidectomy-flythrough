@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '../layouts/Page.astro';
+
+const assets = (await getCollection('assets')).map((a) => a.data).sort((a, b) => a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
+const sources = (await getCollection('sources')).map((s) => s.data);
+const claims = (await getCollection('claims')).map((c) => c.data);
+
+const kindLabel: Record<string, string> = {
+  'source-data': 'Source data',
+  'derived-mesh': 'Derived model',
+  'model-weights': 'Software model',
+  texture: 'Texture',
+  font: 'Typeface',
+  image: 'Image',
+};
+const groups = Object.entries(
+  assets.reduce<Record<string, typeof assets>>((acc, a) => ((acc[a.kind] ??= []).push(a), acc), {}),
+);
+const cited = new Map<string, number>();
+for (const c of claims) for (const r of c.sources) cited.set(r.sourceId, (cited.get(r.sourceId) ?? 0) + 1);
+const bibliography = sources
+  .filter((s) => cited.has(s.id))
+  .sort((a, b) => (a.citation.authors[0] ?? '').localeCompare(b.citation.authors[0] ?? '') || (a.citation.year ?? 0) - (b.citation.year ?? 0));
+const uncited = sources.length - bibliography.length;
+const link = (s: (typeof sources)[number]) => (s.pmid ? `https://pubmed.ncbi.nlm.nih.gov/${s.pmid}/` : s.doi ? `https://doi.org/${s.doi}` : s.url);
+const how: Record<string, string> = { 'full-text': 'read in full', abstract: 'abstract read', secondary: 'secondary source', 'citation-only': 'citation only' };
+---
+
+<Page title="Credits and sources" description="Where every part of the Parotid Atlas comes from: the data, software and typefaces with their licences, and the papers behind each medical statement." current="credits">
+  <p class="lede">Every asset has a record of where it came from, the licence it is used under, what was done to it and a checksum. This page is generated from those records.</p>
+
+  <section>
+    <h2>Data, models and typefaces</h2>
+    {groups.map(([kind, list]) => (
+      <>
+        <h3>{kindLabel[kind] ?? kind}</h3>
+        <ul class="credit-list">
+          {list.map((a) => (
+            <li id={a.id}>
+              <p class="credit-name"><a href={a.source.url} rel="noreferrer">{a.source.name}</a></p>
+              <p>{a.attribution}</p>
+              <p class="credit-meta">Licence: <a href={a.licence.url} rel="noreferrer">{a.licence.id}</a>{a.source.retrieved ? ` · retrieved ${a.source.retrieved}` : ''}{a.sha256 ? ` · sha256 ${a.sha256.slice(0, 12)}…` : ''}</p>
+              {a.licence.obligations.length > 0 && <p class="credit-meta">Obligations: {a.licence.obligations.join('; ')}.</p>}
+              {a.transformations.length > 0 && (
+                <details>
+                  <summary>What was done to it ({a.transformations.length} step{a.transformations.length === 1 ? '' : 's'})</summary>
+                  <ol>{a.transformations.map((t) => <li>{t}</li>)}</ol>
+                </details>
+              )}
+            </li>
+          ))}
+        </ul>
+      </>
+    ))}
+    <p>The pictures on each plate are renders of the model and carry the credits above. Sources and licences were checked one by one: nothing here is assumed to share the licence of another.</p>
+  </section>
+
+  <section>
+    <h2>The papers behind the medical statements</h2>
+    <p>{bibliography.length} papers are cited by the claims that the plates carry{uncited > 0 ? `; ${uncited} more are on record but not currently cited` : ''}. The last column says how much of each paper was read when its claims were written. This is not a judgement of the paper.</p>
+    <ol class="bibliography">
+      {bibliography.map((s) => {
+        const c = s.citation;
+        const href = link(s);
+        return (
+          <li id={s.id}>
+            {c.authors.slice(0, 3).join(', ')}{c.authors.length > 3 ? ' et al.' : ''} {c.year ? `(${c.year}). ` : ''}{c.title ? `${c.title}. ` : ''}<i>{c.container}</i>{c.volume ? `, ${c.volume}` : ''}{c.pages ? `: ${c.pages}` : ''}.
+            {' '}<span class="credit-meta">{s.publicationType.replaceAll('-', ' ')} · {how[s.verification]} · cited by {cited.get(s.id)} claim{cited.get(s.id) === 1 ? '' : 's'}{s.status !== 'active' ? ` · ${s.status}` : ''}</span>
+            {href && <> <a href={href} rel="noreferrer">Link</a></>}
+          </li>
+        );
+      })}
+    </ol>
+  </section>
+</Page>

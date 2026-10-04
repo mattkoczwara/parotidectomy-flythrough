@@ -1,0 +1,10 @@
+{
+  "id": "digastric-posterior-belly",
+  "term": "Posterior belly of the digastric",
+  "plain": "A small muscle under the jaw that points toward the nerve",
+  "definition": "The trunk lies superior to the posterior belly of the digastric near its mastoid attachment; reported distances vary.",
+  "claims": [
+    "landmark-posterior-belly-digastric"
+  ],
+  "structureId": "digastric_posterior_belly"
+}

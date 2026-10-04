@@ -1,0 +1,9 @@
+{
+  "id": "minor-test",
+  "term": "Minor starch-iodine test",
+  "plain": "The test that shows where the skin sweats when eating",
+  "definition": "Frey syndrome is diagnosed with the starch-iodine test: iodine is painted on the cheek, starch dusted over it and a lemon slice or sour drop given; the area of gustatory sweating stains dark blue.",
+  "claims": [
+    "frey-incidence"
+  ]
+}

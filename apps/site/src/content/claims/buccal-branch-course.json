@@ -1,20 +1,21 @@
 {
   "id": "buccal-branch-course",
   "statement": {
-    "essentials": "The branch to the cheek runs forward about a finger-width below the cheekbone.",
-    "anatomy": "The buccal branch runs roughly parallel to and about 1 cm below the zygomatic arch; it can be traced back to find the trunk (retrograde approach)."
+    "essentials": "The branch to the cheek runs forward about a centimetre below the cheekbone, toward the corner of the mouth.",
+    "anatomy": "The buccal branch runs parallel to the zygomatic arch and about 1 cm below it, toward the corner of the mouth. The thin-walled parotid duct travels closely beside it, usually just below."
   },
   "evidenceClass": "representative-technique",
   "sources": [
     {
       "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Facial nerve identification: retrograde methods",
       "support": "direct"
     }
   ],
   "limitations": "Rule of thumb from one institutional protocol.",
   "numbers": [],
   "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

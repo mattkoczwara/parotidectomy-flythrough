@@ -1,25 +1,29 @@
 {
   "id": "landmark-tympanomastoid-suture",
   "statement": {
-    "essentials": "Surgeons find the nerve trunk just deep to a seam in the bone below the ear canal.",
-    "anatomy": "The tympanomastoid suture points to the trunk, which lies a few millimetres deep to its medial end; reported distances vary with the reference point used."
+    "essentials": "Surgeons find the nerve trunk a few millimetres below a seam in the bone below the ear canal.",
+    "anatomy": "The tympanomastoid suture is a bony landmark for the trunk: in cadavers and live patients the closest distance was about 2 mm, and one protocol places the nerve approximately 2 mm inferior to the suture. Reported distances vary with the reference point used."
   },
   "evidenceClass": "standard-principle",
   "sources": [
     {
       "sourceId": "witt-2005",
+      "locator": "Abstract, Results",
       "support": "direct"
     },
     {
       "sourceId": "rea-2010",
+      "locator": "Abstract, Results",
       "support": "direct"
     },
     {
       "sourceId": "pather-osman-2006",
+      "locator": "Abstract, Results",
       "support": "direct"
     },
     {
-      "sourceId": "statpearls-parotidectomy",
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Operative procedure: landmarks",
       "support": "direct"
     }
   ],
@@ -28,8 +32,8 @@
       "label": "Suture to trunk (cadaver)",
       "value": 1.8,
       "unit": "mm",
-      "population": "Cadavers",
-      "design": "Cadaver and intraoperative measurement",
+      "population": "14 cadavers (22 live patients gave a mean of 2.0 mm, range 0 to 4)",
+      "design": "Prospective measurement of the closest distance from the suture to the nerve",
       "sourceId": "witt-2005",
       "n": "14 cadavers",
       "range": [
@@ -41,8 +45,8 @@
       "label": "Suture to trunk",
       "value": 2.5,
       "unit": "mm",
-      "population": "Cadavers",
-      "design": "Cadaveric study (mean ± SD 0.4 mm)",
+      "population": "26 embalmed cadavers (mean ± SD 2.5 ± 0.4 mm)",
+      "design": "Cadaveric measurement to the main trunk",
       "sourceId": "rea-2010",
       "n": "26 cadavers"
     },
@@ -50,8 +54,8 @@
       "label": "Suture to trunk",
       "value": 10.0,
       "unit": "mm",
-      "population": "Adult cadavers",
-      "design": "Cadaveric dissection study",
+      "population": "40 adult cadavers (mean 10.0 mm)",
+      "design": "Micro-dissection, shortest distance to the trunk",
       "sourceId": "pather-osman-2006",
       "n": "40 cadavers",
       "range": [
@@ -62,7 +66,7 @@
   ],
   "disagreement": "Studies measure from different points on the suture; the ranges do not agree.",
   "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

@@ -2,7 +2,7 @@
   "id": "anatomy-slice-glb",
   "kind": "derived-mesh",
   "source": {
-    "name": "Parotid Atlas M1 anatomy scene (pipeline/build)",
+    "name": "Parotid Atlas anatomy scene (pipeline/build): slice.glb and frame.json",
     "url": "https://www.nlm.nih.gov/research/visible/visible_human.html",
     "retrieved": "2026-09-28"
   },
@@ -17,7 +17,7 @@
     ]
   },
   "attribution": "Anatomy derived from the Visible Human Project male CT, courtesy of the U.S. National Library of Medicine; segmentations by TotalSegmentator; generic face from MakeHuman/MPFB (CC0); nerves, small vessels, deep-lobe completion and tumour authored to cited anatomy (pipeline/specs).",
-  "sha256": "64d11e6b8c8ea284be12e8623f8fba0807bea1e9d5650665ae023b7396fd0557",
+  "sha256": "66a4e103b7047516561aba69510a57ab2a27f238e62f7b8d1cf2fb307012efc4",
   "derivedFrom": [
     "vhp-male-normal-ct-head",
     "totalsegmentator-head-neck",
@@ -29,17 +29,24 @@
     "marching cubes, Taubin smoothing, quadric decimation",
     "spec-authored nerves and vessels (pipeline/specs/anatomy.yaml)",
     "authored retromandibular deep-lobe region; nerve-plane lobe split; baked peel field",
+    "gland cut into the ESGS levels and the extracapsular cuff (pieces.py), with baked cut-face, ink and mobilisation fields",
+    "schematic and illustrative meshes authored to specification: accessory lobe and duct, alternate tumour positions, auriculotemporal nerve and Frey regrowth, instruments (probe, needle, stimulator, drain), SMAS flap, neck-muscle strip, graft sheet, saliva collection, recurrence nodules, imaging planes",
     "MPFB base head fitted (per-axis scale, envelope and local conform) over the dissection field",
     "scene cut at z=150 mm; glTF export; meshopt compression and quantisation"
   ],
   "specClaims": [
-    "fn-trunk-length",
-    "fn-trunk-diameter",
-    "fn-lateral-to-retromandibular-vein",
+    "barrier-options",
+    "drain-technique",
     "eca-rmv-in-gland",
-    "parotid-lobes-surgical",
-    "landmark-tympanomastoid-suture",
+    "fn-lateral-to-retromandibular-vein",
+    "fn-trunk-diameter",
+    "fn-trunk-length",
     "landmark-posterior-belly-digastric",
-    "landmark-styloid"
-  ]
+    "landmark-styloid",
+    "landmark-tympanomastoid-suture",
+    "parotid-lobes-surgical",
+    "recurrence-factors",
+    "sialocele-rates"
+  ],
+  "file": "apps/site/public/assets/anatomy/slice.glb"
 }

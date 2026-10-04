@@ -1,17 +1,14 @@
 {
   "id": "landmark-styloid",
   "statement": {
-    "essentials": "The trunk passes just outside the thin styloid bone.",
-    "anatomy": "The trunk crosses lateral to the base of the styloid process."
+    "essentials": "The thin spur of bone called the styloid process lies near the nerve trunk, about a centimetre away on average.",
+    "anatomy": "The styloid process is one of the bony landmarks measured from the facial nerve trunk: in 40 adult cadavers the shortest distance ranged from 4.3 to 18.6 mm (mean 9.8 mm)."
   },
-  "evidenceClass": "established-anatomy",
+  "evidenceClass": "comparative-evidence",
   "sources": [
     {
       "sourceId": "pather-osman-2006",
-      "support": "direct"
-    },
-    {
-      "sourceId": "kochhar-2016",
+      "locator": "Abstract, Results",
       "support": "direct"
     }
   ],
@@ -20,19 +17,20 @@
       "label": "Styloid process to trunk",
       "value": 9.8,
       "unit": "mm",
-      "population": "Adult cadavers",
-      "design": "Cadaveric dissection study",
-      "sourceId": "pather-osman-2006",
-      "n": "40 cadavers",
       "range": [
         4.3,
         18.6
-      ]
+      ],
+      "n": "40 cadavers",
+      "population": "40 adult cadavers",
+      "design": "Micro-dissection, shortest distance to the facial nerve trunk",
+      "sourceId": "pather-osman-2006"
     }
   ],
   "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
-  }
+  },
+  "limitations": "One cadaveric series. The styloid is deep and is not itself seen at operation; it is a bony reference measured in specimens."
 }

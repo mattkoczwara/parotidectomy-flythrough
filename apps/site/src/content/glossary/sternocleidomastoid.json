@@ -1,0 +1,10 @@
+{
+  "id": "sternocleidomastoid",
+  "term": "Sternocleidomastoid",
+  "plain": "The long muscle on the side of the neck",
+  "definition": "The surgeon frees the front edge of the large neck muscle and finds the small muscle under the jaw (the digastric), then follows it toward the bony knob behind the ear.",
+  "claims": [
+    "neck-muscle-exposure"
+  ],
+  "structureId": "sternocleidomastoid_r"
+}

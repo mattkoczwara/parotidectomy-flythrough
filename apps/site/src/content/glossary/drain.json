@@ -1,0 +1,10 @@
+{
+  "id": "drain",
+  "term": "Drain",
+  "plain": "A thin soft tube left in the wound to draw off blood and saliva",
+  "definition": "Many surgeons leave a thin soft tube, a drain, in the wound for a day or more to draw off blood and saliva. In one hospital's routine it comes out through a separate small cut in the neck, away from the nerve.",
+  "claims": [
+    "drain-technique"
+  ],
+  "structureId": "drain_tube"
+}

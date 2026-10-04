@@ -6,6 +6,7 @@ import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { glyphMarkup } from '../scripts/glyph.ts';
 import '../styles/atlas.css';
+import '../styles/print.css';
 
 // Static fallback figures are captured from the running scene (tools/capture); link only those that exist.
 // Resolved from the site root (the build's working directory): import.meta.url points into the compiled output.
@@ -110,6 +111,11 @@ const planeLabel: Record<string, string> = {
       <nav class="plate-nav" aria-label="Plates">
         <button type="button" data-nav="prev">Previous plate</button>
         <button type="button" data-nav="next">Next plate</button>
+      </nav>
+      <nav class="about-links" aria-label="About this atlas">
+        <a href="/method/">Method and limits</a>
+        <a href="/credits/">Credits and sources</a>
+        <a href="/glossary/">Glossary</a>
       </nav>
     </main>
 

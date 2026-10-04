@@ -1,0 +1,108 @@
+/*
+ * Print: the atlas becomes a document. The scene, controls and rail are dropped; each plate prints its text, its
+ * still figure (captured from the model by `npm run capture`) with the description of what it shows, the margin notes
+ * open and the reference pages in black on white.
+ */
+@media print {
+  :root {
+    --field: #fff;
+    --field-deep: #fff;
+    --ink: #111;
+    --ink-soft: #333;
+    --ink-faint: #555;
+    --rule: rgba(0, 0, 0, 0.3);
+    --scrim: transparent;
+    color-scheme: light;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #111;
+    font-size: 11pt;
+  }
+  .skip,
+  .masthead,
+  .rail,
+  .stage,
+  .plate-nav,
+  .live,
+  dialog.evidence,
+  .claim-ref,
+  .para-src,
+  .noscript,
+  .doc-header nav {
+    display: none !important;
+  }
+  main,
+  body.static main {
+    position: static;
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+  .chapter-title {
+    margin-top: 1.2rem;
+    font-size: 11pt;
+    color: #333;
+    break-after: avoid;
+  }
+  .plate {
+    margin: 0 0 1.4rem;
+    padding: 0;
+    background: none;
+    border: 0;
+    break-inside: avoid-page;
+  }
+  .plate h3 {
+    font-size: 15pt;
+    break-after: avoid;
+  }
+  /* The still figure and its description are the picture on paper. */
+  body.scene-active .plate-figure {
+    position: static !important;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+  .plate-figure img {
+    display: block;
+    width: 100%;
+    max-width: 17cm;
+    height: auto;
+    border: 1px solid #999;
+  }
+  .plate-figure figcaption {
+    font-size: 9pt;
+    color: #333;
+  }
+  .visually-hidden-when-3d {
+    position: static !important;
+    width: auto;
+    height: auto;
+    clip-path: none;
+  }
+  .inset,
+  .framed,
+  .note {
+    background: none;
+    border-color: #999;
+    break-inside: avoid;
+  }
+  .note-body {
+    display: block !important;
+  }
+  .claim[data-marked] {
+    text-decoration: underline dotted;
+  }
+  a {
+    color: #111;
+  }
+  .doc-page .doc-header {
+    border-bottom: 1px solid #999;
+  }
+  .doc {
+    width: auto;
+    padding: 0;
+  }
+}

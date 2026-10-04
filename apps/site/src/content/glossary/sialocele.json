@@ -1,0 +1,10 @@
+{
+  "id": "sialocele",
+  "term": "Sialocele",
+  "plain": "A collection of saliva under the skin flap",
+  "definition": "A collection of saliva under the skin flap (a sialocele) or a leak of saliva through the wound is one of the commoner early problems; in one large series it affected roughly one patient in eleven, mostly within a month, and all settled.",
+  "claims": [
+    "sialocele-rates"
+  ],
+  "structureId": "sialocele_pocket"
+}

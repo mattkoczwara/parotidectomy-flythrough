@@ -8,18 +8,22 @@
   "sources": [
     {
       "sourceId": "witt-2005",
+      "locator": "Abstract, Results",
       "support": "direct"
     },
     {
       "sourceId": "rea-2010",
+      "locator": "Abstract, Results",
       "support": "direct"
     },
     {
       "sourceId": "pather-osman-2006",
+      "locator": "Abstract, Results",
       "support": "direct"
     },
     {
       "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Operative procedure: landmarks",
       "support": "direct"
     }
   ],
@@ -28,8 +32,8 @@
       "label": "Posterior belly to trunk (cadaver)",
       "value": 12.4,
       "unit": "mm",
-      "population": "Cadavers",
-      "design": "Cadaver and intraoperative measurement",
+      "population": "14 cadavers (22 live patients gave a mean of 10.7 mm, range 5 to 14)",
+      "design": "Prospective measurement of the closest distance from the muscle's posterior-superior margin to the nerve",
       "sourceId": "witt-2005",
       "n": "14 cadavers",
       "range": [
@@ -41,8 +45,8 @@
       "label": "Posterior belly to trunk",
       "value": 5.5,
       "unit": "mm",
-      "population": "Cadavers",
-      "design": "Cadaveric study (mean ± SD 2.1 mm)",
+      "population": "26 embalmed cadavers (mean ± SD 5.5 ± 2.1 mm)",
+      "design": "Cadaveric measurement to the main trunk",
       "sourceId": "rea-2010",
       "n": "26 cadavers"
     },
@@ -50,8 +54,8 @@
       "label": "Posterior belly to trunk",
       "value": 14.6,
       "unit": "mm",
-      "population": "Adult cadavers",
-      "design": "Cadaveric dissection study",
+      "population": "40 adult cadavers (mean 14.6 mm)",
+      "design": "Micro-dissection, shortest distance from the muscle's attachment to the trunk",
       "sourceId": "pather-osman-2006",
       "n": "40 cadavers",
       "range": [
@@ -62,8 +66,9 @@
   ],
   "disagreement": "Distances differ two- to three-fold between studies.",
   "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
-  }
+  },
+  "limitations": "The studies measure from different points on the muscle and in different specimens; none is a measurement in a patient with a tumour. In the protocol the nerve is described as immediately above the muscle."
 }

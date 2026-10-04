@@ -4,7 +4,7 @@
  * single contact sheet. Usage:
  *
  *   node tools/capture/snap.mjs <plate-id>... [--url http://localhost:4321] [--out dir] [--w 1280] [--h 800]
- *        [--sheet name.png] [--cols 2] [--eval "js run in the page after convergence"] [--wait ms]
+ *        [--sheet name.png] [--cols 2] [--clean] [--eval "js run in the page after convergence"] [--wait ms]
  *        [--patch '{"op":{"peel":1},"variantMix":{"resection":{"ecd":1}},"camera":{"azimuth":-20},"structures":{"skin":{"presence":0}}}']
  *
  * --patch (dev server only) merges the JSON into the plate's resolved state, applies it and settles: a look at a
@@ -22,6 +22,7 @@ const opt = (name, def) => {
   const i = args.indexOf(`--${name}`);
   return i >= 0 ? args[i + 1] : def;
 };
+const clean = args.includes('--clean');
 const flagValues = new Set(['--patch', '--url', '--out', '--w', '--h', '--sheet', '--cols', '--eval', '--wait', '--tier', '--backend']);
 const ids = args.filter((a, i) => !a.startsWith('--') && !flagValues.has(args[i - 1] ?? ''));
 const url = opt('url', 'http://localhost:4321');
@@ -43,6 +44,7 @@ for (const id of ids) {
   if (opt('tier')) q.set('tier', opt('tier'));
   if (opt('backend')) q.set('backend', opt('backend'));
   await page.goto(`${url}/?${q}#${id}`);
+  if (clean) await page.addStyleTag({ content: '.labels,.leaders,.orient,.gauge,.instrument-toggle,.reset-view{display:none!important}' });
   const index = await page.evaluate((pid) => [...document.querySelectorAll('[data-plate]')].findIndex((e) => e.id === pid), id);
   if (index < 0) {
     console.log(`no plate "${id}"`);

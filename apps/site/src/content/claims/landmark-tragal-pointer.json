@@ -2,24 +2,28 @@
   "id": "landmark-tragal-pointer",
   "statement": {
     "essentials": "The cartilage of the ear canal also points toward the nerve, but it moves and is a less exact guide.",
-    "anatomy": "The tragal pointer is often taught as '1 cm deep and inferior' to the trunk; measured distances disagree and the pointer is mobile."
+    "anatomy": "The tragal pointer is often taught as 1 cm inferior and 1 cm deep to the trunk; measured distances disagree. The pointer is cartilaginous, mobile and has an irregular tip, and in one prospective series of 79 parotidectomies the distance was significantly less than 1 cm."
   },
   "evidenceClass": "uncertain",
   "sources": [
     {
       "sourceId": "rea-2010",
+      "locator": "Abstract, Results",
       "support": "direct"
     },
     {
       "sourceId": "pather-osman-2006",
+      "locator": "Abstract, Results",
       "support": "direct"
     },
     {
       "sourceId": "cannon-2004",
+      "locator": "Abstract, Results and Conclusions",
       "support": "direct"
     },
     {
       "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Operative procedure: landmarks",
       "support": "direct"
     }
   ],
@@ -28,8 +32,8 @@
       "label": "Tragal pointer to trunk",
       "value": 6.9,
       "unit": "mm",
-      "population": "Cadavers",
-      "design": "Cadaveric study (mean ± SD 1.8 mm)",
+      "population": "26 embalmed cadavers (mean ± SD 6.9 ± 1.8 mm)",
+      "design": "Cadaveric measurement to the main trunk",
       "sourceId": "rea-2010",
       "n": "26 cadavers"
     },
@@ -37,8 +41,8 @@
       "label": "Tragal pointer to trunk",
       "value": 34.0,
       "unit": "mm",
-      "population": "Adult cadavers",
-      "design": "Cadaveric dissection study",
+      "population": "40 adult cadavers (mean 34 mm)",
+      "design": "Micro-dissection, shortest distance from the tragal pointer to the trunk",
       "sourceId": "pather-osman-2006",
       "n": "40 cadavers",
       "range": [
@@ -49,7 +53,7 @@
   ],
   "disagreement": "Rea (6.9 mm) and Pather (34 mm) differ five-fold; Cannon 2004 found the distance smaller than the textbook 1 cm. The '1 cm' rule is a rule of thumb.",
   "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

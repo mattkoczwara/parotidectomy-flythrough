@@ -1,0 +1,11 @@
+{
+  "id": "parotid-gland",
+  "term": "Parotid gland",
+  "plain": "The big salivary gland in front of and below the ear",
+  "definition": "The gland lies behind and lateral to the ramus of the mandible and in front of the sternocleidomastoid, enclosed in the parotid fascia, with the posterior belly of the digastric and the stylohyoid deep to it.",
+  "claims": [
+    "parotid-location",
+    "parotid-size"
+  ],
+  "structureId": "parotid_gland"
+}

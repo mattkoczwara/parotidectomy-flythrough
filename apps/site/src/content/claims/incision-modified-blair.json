@@ -8,17 +8,14 @@
   "sources": [
     {
       "sourceId": "iowa-parotidectomy-protocol",
-      "support": "direct"
-    },
-    {
-      "sourceId": "statpearls-parotidectomy",
+      "locator": "Operative procedure: incision and flap elevation; sample dictation",
       "support": "direct"
     }
   ],
   "limitations": "Incision choice varies by surgeon and tumour.",
   "numbers": [],
   "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

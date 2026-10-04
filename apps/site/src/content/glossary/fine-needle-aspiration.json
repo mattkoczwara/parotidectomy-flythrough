@@ -1,0 +1,10 @@
+{
+  "id": "fine-needle-aspiration",
+  "term": "Fine-needle aspiration",
+  "plain": "Drawing a few cells from a lump with a thin needle",
+  "definition": "A fine needle can take a few cells from the lump. The result usually separates cancer from non-cancer, but it is not perfect: it misses some cancers and sometimes cannot give an answer.",
+  "claims": [
+    "fna-accuracy"
+  ],
+  "structureId": "needle"
+}

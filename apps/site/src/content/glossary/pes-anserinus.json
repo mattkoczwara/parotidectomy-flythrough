@@ -1,0 +1,10 @@
+{
+  "id": "pes-anserinus",
+  "term": "Pes anserinus",
+  "plain": "The point inside the gland where the nerve trunk first divides",
+  "definition": "Inside the gland the trunk usually splits into an upper and a lower division.",
+  "claims": [
+    "fn-bifurcation"
+  ],
+  "structureId": "pes_anserinus"
+}

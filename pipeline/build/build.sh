@@ -19,3 +19,4 @@ $PY pipeline/build/export_gltf.py
 npx gltf-transform meshopt pipeline/build/out/slice.raw.glb apps/site/public/assets/anatomy/slice.glb --level medium
 cp pipeline/build/out/frame.json apps/site/public/assets/anatomy/frame.json
 sha256sum apps/site/public/assets/anatomy/slice.glb
+node tools/evidence/checksums.mjs

@@ -1,0 +1,10 @@
+{
+  "id": "deep-lobe",
+  "term": "Deep lobe",
+  "plain": "The inner part of the gland, on the inner side of the facial nerve",
+  "definition": "The superficial and deep lobes are a surgical division defined by the plane of the facial nerve; by weight about two-thirds of the gland lies superficial to it, and most tumours arise there.",
+  "claims": [
+    "parotid-lobes-surgical"
+  ],
+  "structureId": "parotid_deep_lobe"
+}

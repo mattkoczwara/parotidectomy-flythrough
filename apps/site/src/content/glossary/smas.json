@@ -1,0 +1,10 @@
+{
+  "id": "smas",
+  "term": "SMAS",
+  "plain": "The thin fibrous sheet over the gland",
+  "definition": "The gland is enclosed in parotid fascia. Over it lie subcutaneous fat and the superficial musculoaponeurotic system (SMAS), the fibromuscular layer of the face that can be raised and sutured back as a flap.",
+  "claims": [
+    "layers-over-gland"
+  ],
+  "structureId": "smas"
+}

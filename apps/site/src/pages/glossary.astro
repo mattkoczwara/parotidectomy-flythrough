@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '../layouts/Page.astro';
+
+const entries = (await getCollection('glossary')).map((g) => g.data).sort((a, b) => a.term.localeCompare(b.term));
+const structures = new Map((await getCollection('structures')).map((s) => [s.data.id, s.data]));
+const letters = [...new Set(entries.map((e) => e.term[0]!.toUpperCase()))];
+---
+
+<Page title="Glossary" description="The terms used in the Parotid Atlas, in plain words and in the words of the clinic." current="glossary">
+  <p class="lede">Each term has a plain gloss and a definition taken from the medical statement that supports it. The glosses are explanations of words, not claims; the definitions are claims, and each links to its evidence in the atlas.</p>
+  <nav class="az" aria-label="Jump to a letter">
+    {letters.map((l) => <a href={`#letter-${l}`}>{l}</a>)}
+  </nav>
+  <dl class="glossary">
+    {letters.map((l) => (
+      <>
+        <h2 id={`letter-${l}`} class="az-letter">{l}</h2>
+        {entries.filter((e) => e.term[0]!.toUpperCase() === l).map((e) => {
+          const s = e.structureId ? structures.get(e.structureId) : undefined;
+          return (
+            <div id={e.id} class="gloss">
+              <dt>{e.term}{s?.names.latin ? <span class="latin"> · {s.names.latin}</span> : null}</dt>
+              <dd class="plain">{e.plain}.</dd>
+              <dd>{e.definition}</dd>
+            </div>
+          );
+        })}
+      </>
+    ))}
+  </dl>
+</Page>

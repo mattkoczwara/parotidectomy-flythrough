@@ -1,0 +1,10 @@
+{
+  "id": "stensen-duct",
+  "term": "Stensen duct",
+  "plain": "The tube that carries saliva from the gland to the mouth",
+  "definition": "Saliva leaves the gland through a duct that runs forward across the chewing muscle (masseter) and passes through the cheek muscle (buccinator) into the mouth.",
+  "claims": [
+    "parotid-duct-course"
+  ],
+  "structureId": "parotid_duct"
+}

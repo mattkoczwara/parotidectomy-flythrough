@@ -56,7 +56,7 @@ export interface Instrument {
 const FAMILIES: ReadonlyArray<{ key: string; label: string }> = [
   { key: 'skin', label: 'Skin' },
   { key: 'fat', label: 'Fat' },
-  { key: 'fascia', label: 'Fascia (SMAS, capsule)' },
+  { key: 'fascia', label: 'Fascia' },
   { key: 'gland', label: 'Gland' },
   { key: 'duct', label: 'Duct' },
   { key: 'tumour', label: 'Tumour' },
@@ -69,7 +69,7 @@ const FAMILIES: ReadonlyArray<{ key: string; label: string }> = [
 const LEVELS: ReadonlyArray<{ label: string; value: number }> = [
   { label: 'Off', value: 0 },
   { label: 'Faint', value: 0.25 },
-  { label: 'As drawn', value: 1 },
+  { label: 'On', value: 1 },
 ];
 const RESECTIONS: ReadonlyArray<{ id: string; label: string }> = [
   { id: 'none', label: 'None: the whole gland' },

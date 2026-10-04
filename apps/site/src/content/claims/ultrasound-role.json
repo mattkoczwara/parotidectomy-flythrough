@@ -21,6 +21,11 @@
       "sourceId": "brennan-2012",
       "locator": "Abstract",
       "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Preoperative preparation: evaluation",
+      "support": "indirect"
     }
   ],
   "numbers": [

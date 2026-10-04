@@ -118,6 +118,17 @@ export function start(): void {
   };
   for (const r of document.querySelectorAll<HTMLInputElement>('input[name="depth"]')) r.addEventListener('change', () => setDepth(r.value as Depth));
 
+  // Printing opens every margin note so the paper carries what the screen folds away, then puts them back.
+  let noteStates: boolean[] = [];
+  addEventListener('beforeprint', () => {
+    const notes = [...document.querySelectorAll<HTMLDetailsElement>('details[data-note]')];
+    noteStates = notes.map((n) => n.open);
+    for (const n of notes) n.open = true;
+  });
+  addEventListener('afterprint', () => {
+    document.querySelectorAll<HTMLDetailsElement>('details[data-note]').forEach((n, i) => (n.open = noteStates[i] ?? false));
+  });
+
   // ── Scroll → t ────────────────────────────────────────────────────────────────────────
   let bands: PlateBand[] = [];
   const readingLine = () => innerHeight * parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--reading-line') || '0.4');

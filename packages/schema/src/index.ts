@@ -207,6 +207,8 @@ export const asset = z.strictObject({
   }),
   attribution: nonEmpty,
   sha256: z.string().regex(/^[a-f0-9]{64}$/).optional(),
+  /** Path of the shipped file (repo-relative); when given, the validator recomputes the checksum. */
+  file: nonEmpty.optional(),
   derivedFrom: z.array(id).default([]),
   transformations: z.array(nonEmpty).default([]),
   specClaims: z.array(id).default([]),

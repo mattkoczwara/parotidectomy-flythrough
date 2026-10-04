@@ -1,20 +1,45 @@
 {
   "id": "eca-rmv-in-gland",
   "statement": {
-    "essentials": "An artery and a vein also run through the gland, deeper than the nerve.",
-    "anatomy": "The external carotid artery passes deep to the posterior belly of the digastric and enters the gland, lying deep to the retromandibular vein; it divides behind the mandibular neck into the maxillary and superficial temporal arteries."
+    "essentials": "An artery and a vein also run through the gland, and in most people the nerve lies on their outer side.",
+    "anatomy": "The retromandibular vein and the external carotid artery run through the gland. In dissections of 30 adult cadavers the facial nerve lay lateral (outside) to the retromandibular vein in 86.7% and lateral to the external carotid artery in 80%."
   },
-  "evidenceClass": "established-anatomy",
+  "evidenceClass": "comparative-evidence",
   "sources": [
     {
-      "sourceId": "kochhar-2016",
+      "sourceId": "khoa-2019",
+      "locator": "Abstract, Results",
       "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Pertinent anatomy",
+      "support": "indirect"
     }
   ],
-  "limitations": "Source read at citation level only; confirm wording against the review before display.",
-  "numbers": [],
+  "limitations": "One small cadaveric series from one country, differing between the two sides of the body; the relation is not constant, and in some specimens the upper division loops around the vein. The model draws the usual relation.",
+  "numbers": [
+    {
+      "label": "Facial nerve lateral to the retromandibular vein",
+      "value": 86.7,
+      "unit": "%",
+      "n": "30 cadavers",
+      "population": "Adult Vietnamese cadavers in one anatomy department",
+      "design": "Descriptive cadaveric study",
+      "sourceId": "khoa-2019"
+    },
+    {
+      "label": "Facial nerve lateral to the external carotid artery",
+      "value": 80,
+      "unit": "%",
+      "n": "30 cadavers",
+      "population": "Adult Vietnamese cadavers in one anatomy department",
+      "design": "Descriptive cadaveric study",
+      "sourceId": "khoa-2019"
+    }
+  ],
   "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

@@ -83,3 +83,11 @@ describe('checkContent', () => {
     expect(errors.join()).toMatch(/outside the allow-list/);
   });
 });
+
+describe('checkContent: checked claims', () => {
+  it('refuses a checked claim that rests on a source read only at citation level', () => {
+    const cite = sourceSchema.parse({ ...baseSource, verification: 'citation-only' });
+    const checked = claimSchema.parse({ ...baseClaim, verification: 'checked' });
+    expect(checkContent(content({ sources: [cite], claims: [checked] })).join()).toMatch(/read only at citation-only level/);
+  });
+});

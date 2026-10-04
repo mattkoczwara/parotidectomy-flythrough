@@ -1,0 +1,10 @@
+{
+  "id": "pleomorphic-adenoma",
+  "term": "Pleomorphic adenoma",
+  "plain": "The commonest benign tumour of the parotid",
+  "definition": "Most lumps that grow in the parotid are benign, and the most common is a pleomorphic adenoma.",
+  "claims": [
+    "pa-most-common"
+  ],
+  "structureId": "pleomorphic_adenoma"
+}

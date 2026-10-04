@@ -1,0 +1,11 @@
+{
+  "id": "facial-nerve",
+  "term": "Facial nerve",
+  "plain": "The nerve that moves the face",
+  "definition": "The facial nerve leaves the skull through a small opening just behind the jaw and ear, and passes straight into the gland.",
+  "claims": [
+    "fn-exits-stylomastoid-foramen",
+    "fn-five-branch-groups"
+  ],
+  "structureId": "facial_nerve"
+}

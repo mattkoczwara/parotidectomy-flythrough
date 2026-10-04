@@ -1,0 +1,10 @@
+{
+  "id": "recurrence",
+  "term": "Recurrence",
+  "plain": "A tumour coming back after an operation",
+  "definition": "When a pleomorphic adenoma comes back, the most important cause named in one review is an operation that cut into the tumour and left some behind; a thin or incomplete capsule, finger-like extensions and satellite nodules make that more likely.",
+  "claims": [
+    "recurrence-factors"
+  ],
+  "structureId": "recurrence_nodules"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "modified-blair-incision",
+  "term": "Modified Blair incision",
+  "plain": "A common incision in front of the ear, around the lobe and into the neck",
+  "definition": "A common incision runs in the crease in front of the ear, curves around the earlobe, and continues into a natural neck crease below the jaw.",
+  "claims": [
+    "incision-modified-blair"
+  ],
+  "structureId": "incision_field"
+}

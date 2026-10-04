@@ -8,17 +8,15 @@
   "sources": [
     {
       "sourceId": "iowa-parotidectomy-protocol",
-      "support": "direct"
-    },
-    {
-      "sourceId": "statpearls-parotidectomy",
+      "locator": "Operative procedure: incision and flap elevation",
       "support": "direct"
     }
   ],
   "numbers": [],
   "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
-  }
+  },
+  "limitations": "The protocol also says the flap may be raised a little deeper than a facelift plane, just outside the periparotid fascia, to make it thicker."
 }

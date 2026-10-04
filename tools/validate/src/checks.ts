@@ -38,6 +38,12 @@ export function checkContent(content: Content): string[] {
       if (!s) errors.push(`claims/${c.id}: unknown source "${ref.sourceId}"`);
       else if (s.status === 'retracted') errors.push(`claims/${c.id}: cites retracted source "${s.id}"`);
     }
+    if (c.verification === 'checked') {
+      for (const ref of c.sources) {
+        const v = sources.get(ref.sourceId)?.verification;
+        if (v === 'citation-only' || v === 'secondary') errors.push(`claims/${c.id}: marked checked but "${ref.sourceId}" was read only at ${v} level`);
+      }
+    }
     for (const n of c.numbers) {
       if (!cited.has(n.sourceId)) {
         errors.push(`claims/${c.id}: number "${n.label}" comes from "${n.sourceId}", which the claim does not cite`);

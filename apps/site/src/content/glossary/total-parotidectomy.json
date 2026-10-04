@@ -1,0 +1,9 @@
+{
+  "id": "total-parotidectomy",
+  "term": "Total parotidectomy",
+  "plain": "Taking out both the outer and the inner parts of the gland while the nerve is kept",
+  "definition": "A total parotidectomy removes both the outer and the inner parts of the gland while the nerve is kept; in benign disease it is kept for tumours that reach the inner part.",
+  "claims": [
+    "total-parotidectomy-definition"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "milan-system",
+  "term": "Milan System",
+  "plain": "The standard tiers into which needle results for salivary glands are sorted",
+  "definition": "Needle-test results are sorted into standard tiers, and each tier carries its own chance of cancer: low when the result is a benign tumour, high when it is suspicious or malignant.",
+  "claims": [
+    "milan-categories"
+  ]
+}

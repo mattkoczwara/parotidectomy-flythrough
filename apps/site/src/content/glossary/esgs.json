@@ -1,0 +1,9 @@
+{
+  "id": "esgs",
+  "term": "ESGS levels",
+  "plain": "The European Salivary Gland Society scheme that divides the gland into five levels",
+  "definition": "The European Salivary Gland Society divides the parotid into five levels: I (lateral superior), II (lateral inferior), III (deep inferior), IV (deep superior) and V (accessory). Lateral and deep are set by the plane of the facial nerve; superior and inferior by where the main trunk divides into its temporofacial and cervicofacial branches.",
+  "claims": [
+    "esgs-five-levels"
+  ]
+}

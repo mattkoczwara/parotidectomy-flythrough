@@ -1,0 +1,10 @@
+{
+  "id": "accessory-parotid",
+  "term": "Accessory parotid gland",
+  "plain": "A small separate piece of gland tissue in front of the main gland, resting on the duct",
+  "definition": "Some people have a small separate piece of gland tissue in front of the main parotid, resting on the duct.",
+  "claims": [
+    "accessory-parotid-prevalence"
+  ],
+  "structureId": "parotid_accessory_lobe"
+}

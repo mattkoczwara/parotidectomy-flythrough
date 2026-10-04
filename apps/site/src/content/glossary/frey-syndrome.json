@@ -1,0 +1,10 @@
+{
+  "id": "frey-syndrome",
+  "term": "Frey syndrome",
+  "plain": "Sweating over the cheek when eating",
+  "definition": "After injury, the nerve fibres that should make saliva can grow into the sweat glands of the skin, so that eating makes the skin over the gland sweat.",
+  "claims": [
+    "frey-mechanism"
+  ],
+  "structureId": "frey_regrowth"
+}

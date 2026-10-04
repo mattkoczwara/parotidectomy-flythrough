@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '../layouts/Page.astro';
+
+const claims = (await getCollection('claims')).map((c) => c.data);
+const plates = await getCollection('steps');
+const sources = (await getCollection('sources')).map((s) => s.data);
+const structures = (await getCollection('structures')).map((s) => s.data);
+const checked = claims.filter((c) => c.verification === 'checked').length;
+const toVerify = claims.length - checked;
+const reviewed = claims.filter((c) => c.clinicalReview.status === 'approved').length;
+const classes = Object.entries(
+  claims.reduce<Record<string, number>>((acc, c) => ((acc[c.evidenceClass] = (acc[c.evidenceClass] ?? 0) + 1), acc), {}),
+).sort((a, b) => b[1] - a[1]);
+const numbers = claims.reduce((n, c) => n + c.numbers.length, 0);
+const fullText = sources.filter((s) => s.verification === 'full-text').length;
+---
+
+<Page title="Method" description="How the Parotid Atlas is built, how its evidence works, what is modelled and what is schematic, and what it cannot yet claim." current="method">
+  <p class="lede">The atlas follows one pleomorphic adenoma of the parotid gland from the anatomy around it to the operation that removes it, on one continuous model that you can scrub forwards and backwards. This page says how it is made and where it stops.</p>
+
+  <section>
+    <h2>What it is, and is not</h2>
+    <p>It is a private educational atlas. It shows one representative operation, a superficial parotidectomy through a modified Blair incision, and it shows the main variants beside it. It is not medical advice, not a plan for any patient, and not a claim that one hospital's way of operating is the way. Which operation suits a person is a decision for that person and their surgeon.</p>
+    <p>Its clinical content has <strong>not yet been reviewed by a specialist</strong>. {checked} of its {claims.length} medical statements have been compared with the text of the paper they cite by the person who wrote them; {reviewed} have been approved by a clinical reviewer. Until that review is done the atlas is for private use only.</p>
+  </section>
+
+  <section>
+    <h2>Where the anatomy comes from</h2>
+    <p>One body and one frame run through every plate. The structures come in three kinds, and the picture says which is which.</p>
+    <ul>
+      <li><strong>Modelled</strong> (shaded naturally): the gland, the bones, the chewing and neck muscles and the large veins are segmented from the male Visible Human Project CT, courtesy of the U.S. National Library of Medicine, with TotalSegmentator.</li>
+      <li><strong>Authored to cited anatomy</strong> (shaded naturally): the facial nerve and its branches, the small vessels, the plane of the nerve, the inner part of the gland, the layers over it and the tumour are built from written specifications in which each dimension names the claim it comes from. A scan cannot show them, so they are drawn to the published ranges and then checked against the scan.</li>
+      <li><strong>Schematic</strong> (drawn as lines and hatching): pseudopodia, the outline of a tumour on a scan, instruments, the regrowth behind Frey syndrome, a collection of saliva and a returning tumour. A simplification is drawn as a simplification, and the single ochre of the Complications chapter is used for nothing else.</li>
+    </ul>
+    <p>The face is a generic one from the MakeHuman base (CC0), fitted to the donor's skin and skull. No real person's face is used, and no patient images are shown: where a scan appears it is the donor's normal anatomy, with a tumour drawn on it as an outline.</p>
+    <p>The model is built from {structures.length} structures by a reproducible pipeline (<code>npm run anatomy</code>). A correction after clinical review is an edit to a specification followed by a rebuild.</p>
+  </section>
+
+  <section>
+    <h2>How the story works</h2>
+    <p>The {plates.length} plates are resting states along one timeline. The scene at any point is a pure function of the position on that timeline, so scrolling backwards restores exactly what was there, a link to a plate opens it directly, and nothing is replayed. A jump of more than a plate and a half, or reduced motion, dissolves to the destination instead of replaying the surgery.</p>
+    <p>Violet, the colour of the surgeon's marker, appears only as ink on tissue. Attention comes from dimming the context and a thin contour on the focus, never from a bright recolouring.</p>
+  </section>
+
+  <section>
+    <h2>How the evidence works</h2>
+    <p>Every medical sentence in a plate is tied to a <em>claim</em>: a statement at three levels of detail, its evidence class, the sources behind it with a locator, and any numbers. A number is never shown without its population and study design, and a disagreement between sources is shown rather than resolved. The build refuses a plate paragraph that carries neither a claim nor a statement about how the atlas draws things.</p>
+    <p>The {claims.length} claims carry {numbers} framed numbers from {sources.length} sources ({fullText} read in full text, the rest from abstracts and registers). Each claim's evidence class says what kind of statement it is:</p>
+    <ul>
+      {classes.map(([c, n]) => <li>{c.replaceAll('-', ' ')}: {n}</li>)}
+    </ul>
+    <p>Retracted papers are on a blocklist and cannot be cited; one that appeared in the starting bibliography (Barrameda 2026, a monitoring meta-analysis) is excluded for that reason.</p>
+    <p><strong>Checking a claim against its source is not clinical review.</strong> The first means the wording and numbers match the abstract or text that was read; the second means a clinician has judged them. {toVerify > 0 ? `${toVerify} claims are still marked to verify and would be refused by a public build.` : 'No claim is marked to verify.'}</p>
+  </section>
+
+  <section>
+    <h2>Representative, not universal</h2>
+    <p>The operation chapter follows one published institutional protocol, cross-checked with a review article. Steps that differ between surgeons are marked as such. The variants are drawn on the same gland so they can be compared: four extents of resection, two skin lines and several closure layers. The evidence for choosing between them comes mostly from records of what surgeons chose, which cannot show that one is safer than another for the same tumour, and the chapter says so.</p>
+  </section>
+
+  <section>
+    <h2>Reading it</h2>
+    <p>Three reading depths (Essentials, Anatomy and Clinical) change how many labels appear, how structures are named and how much evidence is visible; the main text is the same at all three. The page is complete without the 3D scene: every plate has its text, a description of what the picture shows and a still figure, in reading order. The scene needs a recent browser with WebGPU or WebGL 2; without one, or with <code>?static</code> in the address, the still figures carry the lesson. The keyboard moves between plates (J and K, or the arrow keys), scrolling never moves focus, and a screen reader hears each settled plate once.</p>
+  </section>
+
+  <section>
+    <h2>Known limits</h2>
+    <ul>
+      <li>The distance from the tragal pointer to the nerve trunk in the model (19.7 mm) lies outside both published ranges, which themselves disagree. It is reported, not tuned.</li>
+      <li>The facial nerve cannot be seen in the cryosection photographs at the resolution available, so it rests on CT landmarks, cited ranges and relationship checks, not on a tracing of the nerve itself.</li>
+      <li>The superficial part of the gland is about 60% of the model against 61 to 69% published, and the level shares differ from the published ones. They are reported, not tuned.</li>
+      <li>The fat, SMAS and capsule are layers of constant depth fitted under the skin, not segmented tissue. The skin flap is a fold, not a simulation, and there is no platysma. The facelift line is drawn as a planned line; the flap in the model is cut along the Blair path.</li>
+      <li>The lobe is lifted by folding closed pieces about a hinge; delivering the inner part of the gland from beneath the nerve in a total parotidectomy is schematic. The barrier flaps, the hollow left in the cheek, the collection of saliva, the regrowth behind Frey syndrome and the returning tumour are illustrations at illustrative size.</li>
+      <li>Imaging is shown by the donor's normal CT slice, a tumour outline and a probe plane. No ultrasound or MRI picture is shown.</li>
+      <li>Speed and compatibility were measured on one desktop graphics card with Chrome and Firefox. Safari, phones and mid-range laptops have not been tested; a throttled run stands in for them.</li>
+    </ul>
+  </section>
+</Page>

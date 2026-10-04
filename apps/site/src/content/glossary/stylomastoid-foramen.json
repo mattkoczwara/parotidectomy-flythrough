@@ -1,0 +1,10 @@
+{
+  "id": "stylomastoid-foramen",
+  "term": "Stylomastoid foramen",
+  "plain": "The small opening behind the jaw where the facial nerve leaves the skull",
+  "definition": "The facial nerve leaves the skull through a small opening just behind the jaw and ear, and passes straight into the gland.",
+  "claims": [
+    "fn-exits-stylomastoid-foramen"
+  ],
+  "structureId": "stylomastoid_foramen"
+}

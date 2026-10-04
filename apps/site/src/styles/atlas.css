@@ -706,7 +706,8 @@ html:has(body[data-field='graphite']) {
 body.capture main,
 body.capture .masthead,
 body.capture .rail,
-body.capture .gauge {
+body.capture .gauge,
+body.capture .instrument-toggle {
   visibility: hidden;
 }
 
@@ -750,6 +751,16 @@ body.capture .gauge {
 .instrument[hidden] {
   display: none;
 }
+.instrument:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+}
+.instrument .inst-card { order: 0; }
+.instrument .inst-op { order: 1; }
+.instrument .inst-depth { order: 2; }
+.instrument .inst-view { order: 3; }
+.instrument .inst-reset { order: 4; }
+.instrument .inst-op[hidden] { display: none; }
 .instrument header {
   display: flex;
   justify-content: space-between;
@@ -787,7 +798,7 @@ body.capture .gauge {
   margin: 0.2rem 0;
 }
 .instrument .inst-label {
-  flex: 0 0 5.2rem;
+  flex: 0 0 4.4rem;
   color: var(--ink-soft);
 }
 .instrument .inst-radios {
@@ -945,4 +956,21 @@ body.capture .gauge {
     width: auto;
     max-height: 62%;
   }
+}
+
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1.5rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--scrim);
+  border-left: 1px solid var(--rule);
+  font: 0.82rem var(--font-sans), system-ui, sans-serif;
+}
+.about-links a {
+  color: var(--ink-soft);
+}
+.about-links a:hover {
+  color: var(--ink);
 }

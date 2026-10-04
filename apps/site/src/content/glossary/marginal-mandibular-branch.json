@@ -1,0 +1,10 @@
+{
+  "id": "marginal-mandibular-branch",
+  "term": "Marginal mandibular branch",
+  "plain": "The branch of the facial nerve to the lower lip",
+  "definition": "Each group moves a different part of the face: the temporal and zygomatic branches the forehead and eyelids, the buccal branch the cheek and upper lip, and the marginal mandibular branch the lower lip.",
+  "claims": [
+    "fn-branch-targets"
+  ],
+  "structureId": "facial_nerve_marginal_mandibular"
+}

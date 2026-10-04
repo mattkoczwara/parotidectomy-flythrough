@@ -1,0 +1,10 @@
+{
+  "id": "nerve-stimulator",
+  "term": "Nerve stimulator",
+  "plain": "A small probe that makes the face twitch when touched to the nerve",
+  "definition": "During the operation the surgeon can touch a tissue with a small stimulator: if it is the nerve, the face twitches. The patient is kept from being paralysed so this can be seen.",
+  "claims": [
+    "stimulator-technique"
+  ],
+  "structureId": "stimulator_probe"
+}

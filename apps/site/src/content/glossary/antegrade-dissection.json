@@ -1,0 +1,9 @@
+{
+  "id": "antegrade-dissection",
+  "term": "Antegrade dissection",
+  "plain": "Finding the main trunk first and following the nerve forward",
+  "definition": "Surgeons usually find the main trunk of the nerve first, then follow it forward, lifting the gland off the nerve branch by branch.",
+  "claims": [
+    "antegrade-dissection"
+  ]
+}

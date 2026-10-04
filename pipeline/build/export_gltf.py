@@ -173,6 +173,10 @@ def main() -> None:
         "sternocleidomastoid_r": lateral_point("sternocleidomastoid_r", a=(60, 72), s=(206, 220)),
         "mandible": np.array(landmarks["mandible_lower_border_mid"]["xyz"]),  # visible below the masseter
     }
+    # Every mesh gets an anchor: authored where a label needs a particular point, otherwise a point on its lateral face.
+    for sid in SCENE:
+        if sid not in anchors:
+            anchors[sid] = outer_point(sid, k=30)
     for sid, p in anchors.items():
         t = to_gltf(np.atleast_2d(p), origin)[0]
         gltf.nodes.append(g.Node(name=f"anchor__{sid}", translation=t.tolist()))  # "__": three.js sanitises "." out of node names

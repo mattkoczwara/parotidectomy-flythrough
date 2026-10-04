@@ -1,0 +1,10 @@
+{
+  "id": "retromandibular-vein",
+  "term": "Retromandibular vein",
+  "plain": "The vein behind the jaw that runs through the gland",
+  "definition": "The retromandibular vein runs down through the gland and marks the division between its deep and superficial lobes, so it approximates the depth of the facial nerve. The lower division of the nerve usually lies lateral (superficial) to it.",
+  "claims": [
+    "fn-lateral-to-retromandibular-vein"
+  ],
+  "structureId": "retromandibular_vein"
+}

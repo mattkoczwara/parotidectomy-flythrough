@@ -1,0 +1,9 @@
+{
+  "id": "cuff",
+  "term": "Cuff of normal gland",
+  "plain": "The rim of normal gland taken around a tumour",
+  "definition": "Some surgeons argue that for a benign tumour a cuff of normal gland, not the whole outer lobe, is all that is needed, so the extent is a judgement.",
+  "claims": [
+    "cuff-sufficient-view"
+  ]
+}

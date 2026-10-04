@@ -1,0 +1,9 @@
+{
+  "id": "enucleation",
+  "term": "Enucleation",
+  "plain": "Shelling a tumour out of its capsule",
+  "definition": "The most important cause of recurrence is enucleation with rupture and incomplete excision. Incomplete pseudocapsule, extracapsular extension, pseudopodia and satellite tumours beyond the capsule are also linked to recurrence; surgical risk factors are positive margins and tumour spillage.",
+  "claims": [
+    "enucleation-recurrence"
+  ]
+}

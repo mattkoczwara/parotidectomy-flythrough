@@ -1,0 +1,53 @@
+---
+/**
+ * Shell for the reference pages (method, credits and sources, glossary): the same drape, type and ink as the atlas,
+ * with no 3D scene. Everything here is plain HTML.
+ */
+import { Font } from 'astro:assets';
+import '../styles/atlas.css';
+import '../styles/pages.css';
+import '../styles/print.css';
+
+interface Props {
+  title: string;
+  description: string;
+  current: 'method' | 'credits' | 'glossary';
+}
+const { title, description, current } = Astro.props;
+const links = [
+  { id: 'method', href: '/method/', label: 'Method' },
+  { id: 'credits', href: '/credits/', label: 'Credits and sources' },
+  { id: 'glossary', href: '/glossary/', label: 'Glossary' },
+] as const;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · Parotid Atlas</title>
+    <meta name="description" content={description} />
+    <Font cssVariable="--font-serif" preload />
+    <Font cssVariable="--font-sans" preload />
+  </head>
+  <body class="doc-page">
+    <a class="skip" href="#doc">Skip to the text</a>
+    <header class="doc-header">
+      <a class="wordmark" href="/">Parotid Atlas</a>
+      <nav aria-label="Reference pages">
+        <ul>
+          {links.map((l) => <li><a href={l.href} aria-current={l.id === current ? 'page' : undefined}>{l.label}</a></li>)}
+          <li><a href="/">Back to the atlas</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main id="doc" class="doc">
+      <h1>{title}</h1>
+      <slot />
+    </main>
+    <footer class="doc-footer">
+      <p>A private educational atlas. It is not medical advice and not a plan for any patient. Its clinical content awaits specialist review.</p>
+    </footer>
+  </body>
+</html>

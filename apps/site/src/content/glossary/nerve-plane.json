@@ -1,0 +1,10 @@
+{
+  "id": "nerve-plane",
+  "term": "Nerve plane",
+  "plain": "The imaginary sheet the facial nerve lies in, which divides the gland into outer and inner parts",
+  "definition": "The superficial and deep lobes are a surgical division defined by the plane of the facial nerve; by weight about two-thirds of the gland lies superficial to it, and most tumours arise there.",
+  "claims": [
+    "parotid-lobes-surgical"
+  ],
+  "structureId": "nerve_plane"
+}

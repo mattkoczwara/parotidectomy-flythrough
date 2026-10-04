@@ -1,0 +1,174 @@
+/*
+ * Reference pages (method, credits and sources, glossary): plain documents in the atlas's drape and type.
+ */
+body.doc-page {
+  background: var(--field);
+  color: var(--ink);
+}
+.doc-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem 1.5rem;
+  padding: 1rem clamp(1rem, 4vw, 2.5rem);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.85rem;
+}
+.doc-header .wordmark {
+  padding: 0;
+  background: none;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.15rem;
+}
+.doc-header ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.doc-header a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.doc-header a[aria-current='page'] {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.doc-header a:hover {
+  color: var(--ink);
+}
+.doc {
+  width: min(46rem, 100% - 2rem);
+  margin: 0 auto;
+  padding: 2.5rem 0 3rem;
+}
+.doc h1 {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.15;
+}
+.doc h2 {
+  margin: 2.2rem 0 0.6rem;
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+.doc h3 {
+  margin: 1.5rem 0 0.4rem;
+  font: 600 0.85rem var(--font-sans), system-ui, sans-serif;
+  color: var(--ink-soft);
+  text-transform: none;
+}
+.doc p,
+.doc li {
+  max-width: 40rem;
+}
+.doc .lede {
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+}
+.doc a {
+  color: var(--ink);
+  text-underline-offset: 0.2em;
+}
+.doc code {
+  font: 0.85em var(--font-sans), system-ui, sans-serif;
+  padding: 0.05em 0.3em;
+  background: var(--field-deep);
+  border: 1px solid var(--rule);
+}
+.doc ul {
+  padding-left: 1.2rem;
+}
+.doc li {
+  margin: 0.35rem 0;
+}
+.doc-footer {
+  padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 2.5rem;
+  border-top: 1px solid var(--rule);
+  font: 0.8rem/1.5 var(--font-sans), system-ui, sans-serif;
+  color: var(--ink-faint);
+}
+.doc-footer p {
+  margin: 0;
+  max-width: 46rem;
+}
+
+/* Credits and sources */
+.credit-list {
+  list-style: none;
+  padding: 0;
+}
+.credit-list li {
+  padding: 0.7rem 0;
+  border-top: 1px solid var(--rule);
+}
+.credit-list p {
+  margin: 0.15rem 0;
+}
+.credit-name {
+  font-weight: 600;
+}
+.credit-meta {
+  font: 0.78rem/1.45 var(--font-sans), system-ui, sans-serif;
+  color: var(--ink-faint);
+}
+.credit-list details {
+  margin-top: 0.3rem;
+  font: 0.85rem/1.45 var(--font-sans), system-ui, sans-serif;
+  color: var(--ink-soft);
+}
+.credit-list summary {
+  cursor: pointer;
+}
+.bibliography {
+  padding-left: 1.4rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.bibliography li {
+  margin: 0.55rem 0;
+}
+
+/* Glossary */
+.az {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  margin: 1rem 0 0.5rem;
+  font: 600 0.9rem var(--font-sans), system-ui, sans-serif;
+}
+.glossary {
+  margin: 0;
+}
+.glossary .az-letter {
+  margin: 1.6rem 0 0.2rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+  font: 600 1rem var(--font-sans), system-ui, sans-serif;
+  color: var(--ink-faint);
+}
+.gloss {
+  padding: 0.5rem 0;
+}
+.gloss dt {
+  font-weight: 600;
+}
+.gloss dt .latin {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.gloss dd {
+  margin: 0.1rem 0 0;
+}
+.gloss dd.plain {
+  color: var(--ink-soft);
+}
