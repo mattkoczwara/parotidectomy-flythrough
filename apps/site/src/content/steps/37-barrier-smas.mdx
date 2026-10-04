@@ -1,0 +1,37 @@
+---
+id: barrier-smas
+chapter: closure
+order: 37
+title: "A layer in between: the SMAS flap"
+delta:
+  camera: { azimuth: 2, elevation: 10, zoom: 0.75, frame: [parotid_deep_lobe, facial_nerve_branches] }
+  op: { smas: 0.5 }
+  structures:
+      smas_flap: { presence: 1, emphasis: focus }
+      parotid_deep_lobe: { emphasis: context }
+  labels:
+      - { structureId: smas_flap }
+      - { structureId: facial_nerve_marginal_mandibular }
+transition: { camera: [0, 0.4], structures: [0.1, 0.5], op: [0.2, 1] }
+sceneDescription: "A thin pale sheet, attached at its front edge, is swinging back from the cheek over the space the outer gland has left, to cover the nerve and the inner gland."
+claims: [barrier-options]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="barrier-options">To lower the chance of Frey syndrome, surgeons can put a layer between the skin flap and the bed left by the gland. One option is the thin fibrous sheet that covers the gland (the SMAS), raised as a flap and sewn back.</Claim>
+
+<Model>The sheet is drawn pale, hinged at its front edge. It is a schematic: laid back over the bed it would sag onto the tissue below.</Model>
+
+<Claim id="barrier-options">This is one of several options, and the studies compare them only indirectly.</Claim>
+
+<Note title="What the studies found for the SMAS flap">
+<Framed claim="barrier-options" match="SMAS flap" title="Frey syndrome with a SMAS flap" />
+</Note>

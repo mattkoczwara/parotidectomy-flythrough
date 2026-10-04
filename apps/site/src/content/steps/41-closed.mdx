@@ -1,0 +1,35 @@
+---
+id: closed
+chapter: closure
+order: 41
+title: "The wound is closed"
+delta:
+  camera: { azimuth: 6, elevation: 2, zoom: 0.8, frame: [incision_field, drain_tube] }
+  gauge: 0
+  light: { preset: studio, exposure: 1.0 }
+  op: { flap: 0, ink: 1, suture: 1, scar: 0, smas: 0, scm: 0 }
+  structures:
+      skin: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      subcutaneous_fat: { emphasis: context }
+      parotid_deep_lobe: { emphasis: context }
+      facial_nerve: { emphasis: context }
+      drain_tube: { presence: 1, emphasis: focus }
+  labels:
+      - { structureId: drain_tube }
+transition: { camera: [0, 0.6], structures: [0.1, 0.5], op: [0.2, 1] }
+sceneDescription: "The skin lies back in place. The violet ink line is crossed by short dark marks, the stitches, along the ear, the earlobe and the neck, and the drain leaves through its own small opening below."
+claims: [skin-closure]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="skin-closure">The wound is closed in layers: absorbable stitches under the skin and fine stitches in the skin itself, finer on the face than in the neck.</Claim>
+
+<Model>The stitches are drawn as short dark ticks across the ink line.</Model>

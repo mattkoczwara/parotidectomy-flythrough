@@ -1,0 +1,49 @@
+---
+id: after-anatomy
+chapter: afterwards
+order: 42
+title: "What is gone and what remains"
+delta:
+  camera: { azimuth: -30, elevation: 18, zoom: 1.05, frame: [parotid_gland, facial_nerve_branches] }
+  gauge: 5
+  light: { preset: studio, exposure: 1.0 }
+  op: { peel: 0, out: 0, flap: 0, ink: 0, suture: 0, scar: 0, hollow: 0 }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.12, emphasis: context }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      eyes: { presence: 0 }
+      smas_flap: { presence: 0 }
+      drain_tube: { presence: 0 }
+      barrier_graft: { presence: 0 }
+      parotid_superficial_lobe: { presence: 1, mode: ghost, opacity: 0.3, emphasis: dim }
+      pleomorphic_adenoma: { presence: 1, mode: ghost, opacity: 0.5, emphasis: dim }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      facial_nerve: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+  labels:
+      - { structureId: parotid_superficial_lobe }
+      - { structureId: pleomorphic_adenoma }
+      - { structureId: parotid_deep_lobe }
+      - { structureId: facial_nerve_trunk }
+transition: { camera: [0, 0.6], structures: [0.5, 1], op: [0, 0.3], opKeys: { out: [0, 0.25], peel: [0, 0.25] } }
+sceneDescription: "The skin is faded to an outline. The outer part of the gland and the tumour are drawn as a faint ghost where they used to be; they are gone. The nerve and the inner part of the gland, drawn solid, remain."
+claims: [superficial-parotidectomy-definition, parotid-lobes-surgical]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="superficial-parotidectomy-definition">A superficial parotidectomy takes the whole outer lobe, the part that lies outside the facial nerve. The nerve, dissected along its length, stays.</Claim> <Claim id="parotid-lobes-surgical">The "lobes" are a surgical division defined by the plane of the nerve, not separate parts of the gland, so the inner part that remains is still gland tissue.</Claim>
+
+<Model>The faint ghost shows where the removed tissue lay; nothing of it is left in the wound.</Model>

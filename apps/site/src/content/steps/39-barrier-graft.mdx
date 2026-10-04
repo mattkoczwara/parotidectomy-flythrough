@@ -1,0 +1,38 @@
+---
+id: barrier-graft
+chapter: closure
+order: 39
+title: "A layer in between: a graft"
+delta:
+  camera: { azimuth: 2, elevation: 10, zoom: 0.75, frame: [parotid_deep_lobe, facial_nerve_branches] }
+  op: { smas: 0, scm: 0 }
+  structures:
+      barrier_graft: { presence: 1, emphasis: focus }
+      sternocleidomastoid_r: { emphasis: context }
+      parotid_deep_lobe: { emphasis: context }
+  labels:
+      - { structureId: barrier_graft }
+transition: { camera: [0, 0.4], structures: [0.1, 0.5], op: [0.2, 1] }
+sceneDescription: "The muscle strip is back in place. A thin, plain sheet now lies over the inner gland and the nerve."
+claims: [barrier-options]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="barrier-options">A third group of options is a graft: a sheet of the patient's own fat or fascia, or a manufactured sheet of dermal matrix, laid over the bed.</Claim>
+
+<Model>The sheet is drawn plain; the atlas does not distinguish between the materials.</Model>
+
+<Claim id="barrier-options">The only randomised trials gathered in a Cochrane review were small, and they found the evidence for grafts to be of low or very low certainty; a dermal matrix may raise the chance of wound infection.</Claim>
+
+<Note title="What the studies found for grafts">
+<Framed claim="barrier-options" match="dermal matrix" title="Frey syndrome with a dermal matrix" />
+<Framed claim="barrier-options" match="free fat graft" title="Frey syndrome with a free fat graft" />
+</Note>

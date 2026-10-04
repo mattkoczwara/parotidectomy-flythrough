@@ -7,12 +7,13 @@
 import { compile, defaultStructure, evaluate, positionAt, restingY, scrollYAt, shouldDissolve, type PlateBand, type PlateSpec, type SceneState, type StructureState } from '@atlas/timeline';
 import { updateGlyph } from './glyph.ts';
 import { TierManager, type TierChoice } from './tiers.ts';
+import { mountInstrument, type StructureRecord } from './instrument.ts';
 
 type Depth = 'essentials' | 'anatomy' | 'clinical';
 
 interface ClientData {
   plates: Array<PlateSpec & { title: string; chapter: string; sceneDescription: string }>;
-  structures: Array<{ id: string; names: { plain: string; anatomical: string; latin?: string }; tissue: string; depth: string; members?: string[]; schematic?: boolean; hidden?: boolean }>;
+  structures: Array<StructureRecord & { depth: string; schematic?: boolean; hidden?: boolean }>;
   claims: Record<string, ClaimRecord>;
   sources: Record<string, SourceRecord>;
   planes: readonly string[];
@@ -113,6 +114,7 @@ export function start(): void {
     // Margin notes: collapsed at Essentials and Anatomy (where their titles are the affordance), open at Clinical.
     for (const n of document.querySelectorAll<HTMLDetailsElement>('details[data-note]')) n.open = d === 'clinical';
     layoutLabels();
+    instrument.refreshCard();
   };
   for (const r of document.querySelectorAll<HTMLInputElement>('input[name="depth"]')) r.addEventListener('change', () => setDepth(r.value as Depth));
 
@@ -205,6 +207,25 @@ export function start(): void {
   let converging = false;
   let dirty = true;
 
+  // ── The instrument: depth dial, view buttons, structure card, operation controls (Explore) ──
+  const instrument = mountInstrument({
+    stageEl,
+    canvas,
+    getStage: () => stage,
+    structures: data.structures,
+    getDepth: () => depth,
+    openEvidence: (ids) => openEvidence(ids),
+    markDirty: () => {
+      dirty = true;
+      resetBtn.hidden = !(stage && (stage.override.azimuth || stage.override.elevation || stage.override.zoom !== 1));
+    },
+    resetCamera: () => resetOverride(),
+    onToggle: () => {
+      layoutLabels();
+      dirty = true;
+    },
+  });
+
   const resize = () => {
     if (!stage) return;
     const r = stageEl.getBoundingClientRect();
@@ -265,21 +286,30 @@ export function start(): void {
     }
   })();
 
-  // ── Instrument mode: constrained orbit on drag; any scroll returns to the authored view ──
-  let drag: { x: number; y: number; az: number; el: number } | null = null;
+  // ── Instrument mode: constrained orbit on drag; a click picks; any scroll returns the camera to the authored pose ──
+  let drag: { x: number; y: number; az: number; el: number; moved: boolean } | null = null;
   canvas.addEventListener('pointerdown', (e) => {
     if (!stage) return;
-    drag = { x: e.clientX, y: e.clientY, az: stage.override.azimuth, el: stage.override.elevation };
+    drag = { x: e.clientX, y: e.clientY, az: stage.override.azimuth, el: stage.override.elevation, moved: false };
     canvas.setPointerCapture(e.pointerId);
   });
   canvas.addEventListener('pointermove', (e) => {
     if (!drag || !stage) return;
-    stage.override.azimuth = Math.max(-35, Math.min(35, drag.az + (e.clientX - drag.x) * 0.25));
-    stage.override.elevation = Math.max(-25, Math.min(25, drag.el - (e.clientY - drag.y) * 0.25));
+    if (!drag.moved && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 4) return;
+    drag.moved = true;
+    const lim = instrument.limits();
+    stage.override.azimuth = Math.max(-lim.az, Math.min(lim.az, drag.az + (e.clientX - drag.x) * 0.25));
+    stage.override.elevation = Math.max(-lim.el, Math.min(lim.el, drag.el - (e.clientY - drag.y) * 0.25));
     resetBtn.hidden = false;
     dirty = true;
   });
-  canvas.addEventListener('pointerup', () => (drag = null));
+  canvas.addEventListener('pointerup', (e) => {
+    if (drag && !drag.moved && stage) {
+      const r = canvas.getBoundingClientRect();
+      instrument.pickAt(e.clientX - r.left, e.clientY - r.top, r.width, r.height);
+    }
+    drag = null;
+  });
   const resetOverride = () => {
     if (!stage) return;
     stage.override.azimuth = 0;
@@ -355,7 +385,7 @@ export function start(): void {
   function layoutLabels() {
     labelsEl.replaceChildren();
     leaders.replaceChildren();
-    if (!stage || settledPlate < 0) return;
+    if (!stage || settledPlate < 0 || instrument.isOpen()) return;
     const state = evaluate(track, settledPlate);
     const r = stageEl.getBoundingClientRect();
     const landscape = r.width > r.height;
@@ -464,10 +494,11 @@ export function start(): void {
     }
 
     // Scrolling returns the view from instrument mode to the authored pose.
-    if (Math.abs(target - lastTarget) > 1e-4 && stage && (stage.override.azimuth || stage.override.elevation)) {
+    if (Math.abs(target - lastTarget) > 1e-4 && stage && (stage.override.azimuth || stage.override.elevation || stage.override.zoom !== 1)) {
       stage.override.azimuth *= 0.85;
       stage.override.elevation *= 0.85;
-      if (Math.abs(stage.override.azimuth) < 0.2 && Math.abs(stage.override.elevation) < 0.2) resetOverride();
+      stage.override.zoom = 1 + (stage.override.zoom - 1) * 0.85;
+      if (Math.abs(stage.override.azimuth) < 0.2 && Math.abs(stage.override.elevation) < 0.2 && Math.abs(stage.override.zoom - 1) < 0.01) resetOverride();
       dirty = true;
     }
     lastTarget = target;
@@ -487,7 +518,7 @@ export function start(): void {
     }
 
     if (stage && (dirty || current !== lastApplied)) {
-      const state = held ?? evaluate(track, current);
+      const state = held ?? instrument.override(evaluate(track, current));
       stage.apply(state);
       stage.render();
       tiers?.frame(now);
@@ -518,6 +549,7 @@ export function start(): void {
       announcedPlate = i;
     }
     for (const a of railLinks) a.setAttribute('aria-current', String(a.dataset.chapter === p.chapter));
+    instrument.onPlate(p.chapter);
     if (pendingFocus === i) {
       headings[i]!.focus({ preventScroll: true });
       pendingFocus = null;

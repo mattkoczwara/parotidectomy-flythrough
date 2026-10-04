@@ -1,0 +1,36 @@
+---
+id: barrier-scm
+chapter: closure
+order: 38
+title: "A layer in between: a strip of neck muscle"
+delta:
+  camera: { azimuth: 2, elevation: 10, zoom: 0.75, frame: [parotid_deep_lobe, facial_nerve_branches] }
+  op: { smas: 0, scm: 1 }
+  structures:
+      smas_flap: { presence: 0 }
+      sternocleidomastoid_r: { emphasis: focus }
+      parotid_deep_lobe: { emphasis: context }
+  labels:
+      - { structureId: scm_flap }
+      - { structureId: facial_nerve_marginal_mandibular }
+transition: { camera: [0, 0.4], structures: [0.1, 0.5], op: [0.2, 1] }
+sceneDescription: "The SMAS sheet is gone. A strip cut from the front edge of the long neck muscle, still attached at its upper end, has been turned up and forward into the space the gland has left."
+claims: [barrier-options]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="barrier-options">Another option is a strip of the large neck muscle, kept attached at its upper end and turned up into the space.</Claim>
+
+<Model>The strip is drawn turned about its upper end, as a rigid piece; a real strip bends and is sewn in place.</Model>
+
+<Note title="What the studies found for the muscle flap">
+<Framed claim="barrier-options" match="sternocleidomastoid" title="Frey syndrome with a neck-muscle flap" />
+</Note>

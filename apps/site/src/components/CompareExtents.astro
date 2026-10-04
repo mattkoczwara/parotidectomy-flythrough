@@ -1,0 +1,32 @@
+---
+/**
+ * Plate 54: the four operations side by side on the same gland. Each picture is a render of the real model with that
+ * resection applied (tools/capture/compare.mjs), so the extents are the ones the scene moves; the table is computed
+ * from the same piece volumes. If the renders have not been captured, the table and the text still stand alone.
+ */
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { loadExtents, operations, type Operation } from '../lib/extents.ts';
+
+const { rows, bodyTotal, maskTotal } = loadExtents();
+const names: Record<Operation, string> = { ecd: 'Extracapsular dissection', partial: 'Partial superficial', superficial: 'Superficial', total: 'Total, nerve kept' };
+const shown = (op: Operation) => existsSync(resolve('public/compare', `${op}.png`));
+const levelName = (id: string) => (id === 'parotid_ecd_cuff' ? 'cuff around the tumour' : `level ${id.slice(-1)}`);
+---
+
+<div class="compare">
+  <ul class="compare-grid">
+    {operations.map((op) => (
+      <li>
+        <figure>
+          {shown(op) && <img src={`/compare/${op}.png`} alt={`The gland after ${names[op].toLowerCase()}: the pieces taken are lifted away and the rest stays with the nerve.`} loading="lazy" width="640" height="480" />}
+          <figcaption>
+            <strong>{names[op]}</strong>
+            <span>Takes {rows[op].pieces.map(levelName).join(', ')}: {rows[op].ml.toFixed(1)} mL, {Math.round(rows[op].share * 100)}% of the modelled gland.</span>
+          </figcaption>
+        </figure>
+      </li>
+    ))}
+  </ul>
+  <p class="compare-note">Volumes are measured on the model's own pieces; the five body pieces sum to {bodyTotal.toFixed(1)} mL, against {maskTotal.toFixed(1)} mL for the whole gland mask (voxel and mesh rounding). The accessory lobe is not counted.</p>
+</div>

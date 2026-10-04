@@ -8,7 +8,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { SceneState } from '@atlas/timeline';
-import { ZONE_SLOTS, cpuFold, cpuInFlap, cpuPeel, cpuWindowCut, FLAP_OPEN, hatch, setOpacity, tissue, U, zoneCentre, zoneRadii, zoneWeight, type FlapFrame, type HatchMaterial, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
+import { ZONE_SLOTS, cpuFold, cpuInFlap, cpuPeel, cpuWindowCut, FLAP_OPEN, hatch, OCHRE, setOpacity, tissue, U, zoneCentre, zoneRadii, zoneWeight, type FlapFrame, type HatchMaterial, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
 import { REMOVABLE, RESECTIONS, memberWeight, poseMatrix, resectionWeights, type Mechanic } from './resection.ts';
 
 export type Tier = 'high' | 'mid';
@@ -79,6 +79,8 @@ const VARIANT_PARTS: Readonly<Record<string, Readonly<Record<string, readonly st
   },
 };
 const VARIANT_PART_IDS: ReadonlySet<string> = new Set(Object.values(VARIANT_PARTS).flatMap((v) => Object.values(v).flat()));
+/** Schematic content that belongs to the Complications chapter: drawn in the single ochre (plan §5), never in the pale line colour. */
+const COMPLICATION: ReadonlySet<string> = new Set(['sialocele_pocket', 'frey_regrowth', 'recurrence_nodules']);
 /** Schematic planes that lie inside tissue and are drawn on top of it. */
 const OVERLAY: ReadonlySet<string> = new Set(['us_plane']);
 /** Layers that sink with the contour change after resection. */
@@ -86,6 +88,7 @@ const HOLLOWED = new Set(['skin', 'subcutaneous_fat', 'smas']);
 /** Layers cut by the incision and raised as the flap (skin and subcutaneous fat; plan §8). */
 const FLAPPED = new Set(['skin', 'subcutaneous_fat']);
 
+type Occluder = { mesh: THREE.Mesh; id: string; role: 'rest' | 'flap' };
 type Part = { mesh: THREE.Mesh; twin: THREE.Mesh; mat: TissueMaterial; hatch?: HatchMaterial; tissue: TissueFamily; schematic: boolean };
 
 /** The state of a removable piece as last applied: its dissection progress and specimen pose (CPU mirror of the shader). */
@@ -178,6 +181,8 @@ export class Stage {
    * An override layer on top of the authored state (plan §4).
    */
   readonly dial: Partial<Record<TissueFamily, number>> = {};
+  /** A structure the viewer picked (instrument mode): drawn with the focus contour whatever the plate says. */
+  selected: string | null = null;
   /** Horizontal framing offset as a fraction of the half-width (positive moves the anatomy right), so the
    *  subject sits in the space the text column leaves free. Pans the camera; TRAA owns setViewOffset. */
   frameOffsetX = 0;
@@ -456,7 +461,7 @@ export class Stage {
       const opacity = presence * Math.min(ghostOpacity, dial);
       if (wantsHatch) {
         if (!part.hatch) {
-          part.hatch = hatch(LINE_COLOUR);
+          part.hatch = hatch(COMPLICATION.has(id) ? OCHRE : LINE_COLOUR);
           // An imaging plane is drawn over the tissue it passes through (it lies inside the head), not hidden by it.
           if (OVERLAY.has(id)) {
             part.hatch.material.depthTest = false;
@@ -481,6 +486,8 @@ export class Stage {
         if (flap.mesh.visible && s?.emphasis === 'focus') focus.push(flap.mesh);
       }
     }
+    const picked = this.selected ? this.meshes.get(this.selected) : undefined;
+    if (picked?.mesh.visible && !focus.includes(picked.mesh)) focus.push(picked.mesh);
     this.outlineObjects.length = 0;
     this.outlineObjects.push(...focus);
     this.focus.value = focus.length ? 1 : 0;
@@ -657,6 +664,40 @@ export class Stage {
     return q.applyMatrix4(st.pose);
   }
 
+  /** Meshes a ray can meet, as the shaders show them (deformed proxies for moved parts); opaque ones, or the transparent ones. */
+  private collectOccluders(opaque: boolean): Occluder[] {
+    const occluders: Occluder[] = [];
+    for (const [id, m] of this.meshes) {
+      if (!m.mesh.visible || isTransparent(m.mesh) === opaque) continue;
+      // The turned barriers move in the vertex stage and have no CPU mirror: a raised flap does not occlude labels.
+      if ((id === 'smas_flap' && (U.smas.value as number) > 0.01) || (id === 'scm_flap' && (U.scmTurn.value as number) > 0.01)) continue;
+      const st = this.pieceState.get(id);
+      occluders.push({ mesh: st?.moved ? this.deformed(m.mesh, id) : m.mesh, id, role: 'rest' });
+      const f = this.flaps.get(id);
+      if (f?.mesh.visible && opaque) occluders.push({ mesh: this.deformedFlap(f.mesh), id, role: 'flap' });
+    }
+    return occluders;
+  }
+
+  private readonly hitTri = new THREE.Triangle();
+  private readonly hitBary = new THREE.Vector3();
+  /** True where a fragment mask discards the hit (cutaway window, the opened incision, the CT clip). */
+  private hitDiscarded(o: Occluder, hit: THREE.Intersection): boolean {
+    if (hit.point.y > (U.clipY.value as number)) return true;
+    const w = WINDOW_LAYERS[o.id];
+    if (w && cpuWindowCut(hit.point, this.windowOpen[w.key]!.value as number, w.inset)) return true;
+    if (!FLAPPED.has(o.id) || !hit.face) return false;
+    const g = o.mesh.geometry;
+    const pos = g.getAttribute('position');
+    this.hitTri.setFromAttributeAndIndices(pos, hit.face.a, hit.face.b, hit.face.c).getBarycoord(hit.point, this.hitBary);
+    const at = (name: string) => {
+      const a = g.getAttribute(name);
+      return a.getX(hit.face!.a) * this.hitBary.x + a.getX(hit.face!.b) * this.hitBary.y + a.getX(hit.face!.c) * this.hitBary.z;
+    };
+    const inFlap = cpuInFlap(at('_cut'), at('_flapw'));
+    return o.role === 'flap' ? !inFlap : (U.flap.value as number) > FLAP_OPEN && inFlap;
+  }
+
   /**
    * Screen positions (CSS px) of label anchors, with occlusion by visible opaque tissue other than the target.
    * Raycasts see rest geometry, so occluders are tested as the shaders show them: surfaces moved in the vertex
@@ -665,33 +706,9 @@ export class Stage {
    */
   projectAnchors(ids: readonly string[], width: number, height: number): AnchorProjection[] {
     const out: AnchorProjection[] = [];
-    const occluders: { mesh: THREE.Mesh; id: string; role: 'rest' | 'flap' }[] = [];
-    for (const [id, m] of this.meshes) {
-      if (!m.mesh.visible || isTransparent(m.mesh)) continue;
-      // The turned barriers move in the vertex stage and have no CPU mirror: a raised flap does not occlude labels.
-      if ((id === 'smas_flap' && (U.smas.value as number) > 0.01) || (id === 'scm_flap' && (U.scmTurn.value as number) > 0.01)) continue;
-      const st = this.pieceState.get(id);
-      occluders.push({ mesh: st?.moved ? this.deformed(m.mesh, id) : m.mesh, id, role: 'rest' });
-      const f = this.flaps.get(id);
-      if (f?.mesh.visible) occluders.push({ mesh: this.deformedFlap(f.mesh), id, role: 'flap' });
-    }
-    const tri = new THREE.Triangle();
-    const bary = new THREE.Vector3();
+    const occluders = this.collectOccluders(true);
     const owns = (target: string, occluder: string) => target === occluder || occluder.startsWith(target) || target.startsWith(occluder) || (this.opts.groups?.[target]?.includes(occluder) ?? false);
-    const discarded = (o: (typeof occluders)[number], hit: THREE.Intersection) => {
-      const w = WINDOW_LAYERS[o.id];
-      if (w && cpuWindowCut(hit.point, this.windowOpen[w.key]!.value as number, w.inset)) return true;
-      if (!FLAPPED.has(o.id) || !hit.face) return false;
-      const g = o.mesh.geometry;
-      const pos = g.getAttribute('position');
-      tri.setFromAttributeAndIndices(pos, hit.face.a, hit.face.b, hit.face.c).getBarycoord(hit.point, bary);
-      const at = (name: string) => {
-        const a = g.getAttribute(name);
-        return a.getX(hit.face!.a) * bary.x + a.getX(hit.face!.b) * bary.y + a.getX(hit.face!.c) * bary.z;
-      };
-      const inFlap = cpuInFlap(at('_cut'), at('_flapw'));
-      return o.role === 'flap' ? !inFlap : (U.flap.value as number) > FLAP_OPEN && inFlap;
-    };
+    const discarded = (o: Occluder, hit: THREE.Intersection) => this.hitDiscarded(o, hit);
     for (const id of ids) {
       const p = this.anchorWorld(id);
       if (!p) continue;
@@ -740,15 +757,16 @@ export class Stage {
   pick(x: number, y: number, width: number, height: number): string | null {
     this.raycaster.setFromCamera(new THREE.Vector2((x / width) * 2 - 1, -(y / height) * 2 + 1), this.camera);
     this.raycaster.far = Infinity;
-    let best: { id: string; distance: number } | null = null;
-    for (const [id, part] of this.meshes) {
-      if (!part.mesh.visible || isTransparent(part.mesh)) continue;
-      const st = this.pieceState.get(id);
-      const target = st?.moved ? this.deformed(part.mesh, id) : part.mesh;
-      const hit = this.raycaster.intersectObject(target, false)[0];
-      if (hit && (!best || hit.distance < best.distance)) best = { id, distance: hit.distance };
+    // What the viewer sees at that point: the nearest opaque surface the shaders actually draw, else the nearest ghost.
+    for (const opaque of [true, false]) {
+      let best: { id: string; distance: number } | null = null;
+      for (const o of this.collectOccluders(opaque)) {
+        const hit = this.raycaster.intersectObject(o.mesh, false).find((h) => !this.hitDiscarded(o, h));
+        if (hit && (!best || hit.distance < best.distance)) best = { id: o.id, distance: hit.distance };
+      }
+      if (best) return best.id;
     }
-    return best?.id ?? null;
+    return null;
   }
 
   /** Current view direction in the anatomical frame (degrees), including any instrument-mode override. */

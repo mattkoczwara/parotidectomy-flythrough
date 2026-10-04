@@ -25,6 +25,8 @@ import Claim from '../../components/Claim.astro';
 import Model from '../../components/Model.astro';
 import Note from '../../components/Note.astro';
 import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
 
 <Claim id="choice-factors">Which operation is chosen depends on the tumour's size, how freely it moves, how deep it lies and how close it is to the nerve's branches — and on the surgeon.</Claim> <Claim id="choice-factors">Reviews describe extracapsular dissection as an option for small, mobile tumours of the outer lobe, up to about 3 cm; larger tumours, and those that touch several branches, call for a wider operation.</Claim>
 
@@ -33,3 +35,9 @@ import Framed from '../../components/Framed.astro';
 <Note title="What the numbers say about the inner part">
 <Framed claim="deep-lobe-pa-outcomes" />
 </Note>
+
+<Inset title="The four operations on the same gland" kind="table">
+<ChoiceTable />
+</Inset>
+
+<Model>The share of the gland is measured on the model's own pieces; it is a property of this one gland, not a general figure.</Model>

@@ -625,6 +625,18 @@
         0.01993
       ]
     },
+    "recurrence_nodules": {
+      "min": [
+        0.00041,
+        -0.01259,
+        -0.00783
+      ],
+      "max": [
+        0.01006,
+        0.00508,
+        0.01463
+      ]
+    },
     "needle": {
       "min": [
         -0.11784,
@@ -1002,6 +1014,33 @@
       ]
     }
   ],
+  "pieces": {
+    "parotid_level_1": {
+      "volume_ml": 2.18,
+      "share": 0.085
+    },
+    "parotid_level_2": {
+      "volume_ml": 8.33,
+      "share": 0.324
+    },
+    "parotid_ecd_cuff": {
+      "volume_ml": 4.87,
+      "share": 0.189
+    },
+    "parotid_level_3": {
+      "volume_ml": 7.76,
+      "share": 0.302
+    },
+    "parotid_level_4": {
+      "volume_ml": 2.71,
+      "share": 0.106
+    },
+    "parotid_accessory_lobe": {
+      "volume_ml": 0.43,
+      "share": 0.017
+    },
+    "total_gland_ml": 25.7
+  },
   "barriers": {
     "smas_hinge": [
       -0.011864328375958124,
@@ -1237,6 +1276,10 @@
       "vertices": 642,
       "triangles": 1280
     },
+    "recurrence_nodules": {
+      "vertices": 2568,
+      "triangles": 5120
+    },
     "needle": {
       "vertices": 1194,
       "triangles": 2368
@@ -1282,5 +1325,5 @@
       "triangles": 3822
     }
   },
-  "triangles_total": 625504
+  "triangles_total": 630624
 }

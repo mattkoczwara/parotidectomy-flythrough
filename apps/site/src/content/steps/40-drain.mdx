@@ -1,0 +1,38 @@
+---
+id: drain
+chapter: closure
+order: 40
+title: "A drain"
+delta:
+  camera: { azimuth: 8, elevation: 6, zoom: 0.9, frame: [parotid_deep_lobe, drain_tube] }
+  op: { smas: 0, scm: 0 }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.22, emphasis: context }
+      subcutaneous_fat: { presence: 0 }
+      barrier_graft: { presence: 0 }
+      smas_flap: { presence: 1, mode: ghost, opacity: 0.35, emphasis: context }
+      drain_tube: { presence: 1, emphasis: focus }
+  labels:
+      - { structureId: drain_tube }
+      - { structureId: smas_flap }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7] }
+sceneDescription: "The skin is faded so the path shows. The SMAS sheet lies back over the bed. A thin soft tube lies in the space under it and runs down under the skin of the neck to leave through a separate small opening, away from the nerve."
+claims: [drain-technique]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="drain-technique">Many surgeons leave a thin soft tube, a drain, in the wound for a day or more to draw off blood and saliva. In one hospital's routine it comes out through a separate small cut in the neck, away from the nerve.</Claim>
+
+<Model>The sheet shown here is only one of the options on the previous plates; the drain is drawn the same way with any of them.</Model>
+
+<Note title="One hospital's routine">
+<Framed claim="drain-technique" title="Suction drain after parotidectomy" />
+</Note>

@@ -108,7 +108,7 @@ export const zoneCentre = Array.from({ length: ZONE_SLOTS }, () => uniform(new T
 export const zoneRadii = Array.from({ length: ZONE_SLOTS }, () => uniform(new THREE.Vector3(1, 1, 1)));
 export const zoneWeight = Array.from({ length: ZONE_SLOTS }, () => uniform(0));
 /** The single desaturated ochre of complications (plan §5); shown only in the Complications chapter. */
-const OCHRE = 0xc9a55a;
+export const OCHRE = 0xc9a55a;
 
 /** Flap progress above which the incision is open (the flap copy shows and the resting layer is cut). */
 export const FLAP_OPEN = 0.0005;
@@ -273,15 +273,16 @@ export function tissue(o: TissueOptions): TissueMaterial {
     if (o.zones) {
       // Hatched ochre territories (the line grammar: a simplification, not a measured boundary): diagonal strokes
       // inside each ellipsoid and a firmer outline at its edge.
-      const stripe = fract(positionWorld.y.add(positionWorld.z.mul(0.7)).mul(520));
-      const strokes = smoothstep(0.58, 0.66, abs(stripe.sub(0.5)).mul(2).oneMinus());
+      const stripe = fract(positionWorld.y.add(positionWorld.z.mul(0.7)).mul(300));
+      const strokes = smoothstep(0.52, 0.66, abs(stripe.sub(0.5)).mul(2).oneMinus());
       for (let k = 0; k < ZONE_SLOTS; k++) {
         const q = positionWorld.sub(zoneCentre[k]!).div(zoneRadii[k]!);
         const r = length(q);
         const inside = float(1).sub(smoothstep(0.93, 1.0, r));
         const ring = smoothstep(0.84, 0.93, r).mul(float(1).sub(smoothstep(0.97, 1.03, r)));
-        const mark = max(inside.mul(strokes).mul(0.55), ring.mul(0.95)).mul(zoneWeight[k]!);
-        surface = mix(surface, rgb(OCHRE), mark.mul(0.9));
+        // Hatched strokes in the ochre, and a darker ochre outline so the territory holds its edge on pale skin.
+        surface = mix(surface, rgb(OCHRE), inside.mul(strokes).mul(0.9).mul(zoneWeight[k]!));
+        surface = mix(surface, rgb(OCHRE).mul(0.55), ring.mul(0.95).mul(zoneWeight[k]!));
       }
     }
     m.colorNode = frontFacing.select(surface, piece ? cutColour : rgb(p.cut));

@@ -10,6 +10,8 @@
 * barrier_graft      a thin sheet laid on the exposed bed (the cut faces of the inner levels): the "other barrier" (fascia, dermal
                      matrix or fat graft), drawn as a plain sheet; which material is not distinguished.
 * sialocele_pocket   a schematic collection of saliva under the flap (line grammar), for the complications chapter.
+* recurrence_nodules a few small nodules in the bed where the tumour lay (line grammar): recurrent pleomorphic adenoma is
+                     typically multinodular (claim recurrence-factors); a schematic cluster, not a predicted site.
 Writes work/meshes/<id>.npz, work/barriers.json (pivots, read by export_gltf.py) and appends checks.
 """
 import json
@@ -111,8 +113,14 @@ def main() -> None:
     pocket = lobulated(P["centre"], P["radii"], P["seed"], subdiv=3)
     save("sialocele_pocket", pocket)
 
+    # ── recurrence nodules (schematic) ──────────────────────────────────────────────────────
+    R = spec["recurrence"]
+    tc = np.array(json.loads((ROOT / "pipeline/specs/tumour.resolved.json").read_text())["center"], float)
+    nodules = [lobulated(tc + np.array(o, float), [r, r * 0.9, r * 1.05], R["seed"] + k, subdiv=3) for k, (o, r) in enumerate(zip(R["offsets_mm"], R["radii_mm"]))]
+    save("recurrence_nodules", trimesh.util.concatenate(nodules))
+
     (WORK / "barriers.json").write_text(json.dumps(info, indent=2), encoding="utf-8")
-    checks["barriers"] = {"pass": True, "summary": f"SMAS flap sheet, graft sheet, SCM strip {info['scm']['strip_ml']} mL ({info['scm']['length_mm']:.0f} mm long, hinged at its upper end), sialocele pocket", **info}
+    checks["barriers"] = {"pass": True, "summary": f"SMAS flap sheet, graft sheet, SCM strip {info['scm']['strip_ml']} mL ({info['scm']['length_mm']:.0f} mm long, hinged at its upper end), sialocele pocket, recurrence nodules", **info}
     checks_path.write_text(json.dumps(checks, indent=2), encoding="utf-8")
     print(checks["barriers"]["summary"])
 

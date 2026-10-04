@@ -1,0 +1,51 @@
+---
+id: healing
+chapter: afterwards
+order: 45
+title: "Healing"
+delta:
+  camera: { azimuth: -8, elevation: 3, zoom: 0.8, frame: [incision_field] }
+  gauge: 0
+  light: { preset: studio, exposure: 1.0 }
+  op: { peel: 0, out: 0, section: 0, ink_plane: 0, ink_cranial: 0, ink_cuff: 0, hollow: 1, suture: 0.3, scar: 1, ink: 1 }
+  structures:
+      skin: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      eyes: { presence: 1 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      parotid_superficial_lobe: { presence: 0 }
+      pleomorphic_adenoma: { presence: 0 }
+      parotid_deep_lobe: { presence: 0 }
+      masseter_r: { presence: 0 }
+      mandible: { presence: 0 }
+      sternocleidomastoid_r: { presence: 0 }
+      facial_nerve: { presence: 0 }
+      great_auricular_nerves: { presence: 0 }
+      retromandibular_veins: { presence: 0 }
+      external_jugular_vein: { presence: 0 }
+      external_carotid_artery: { presence: 0 }
+      parotid_ecd_cuff: { presence: 0 }
+      drain_tube: { presence: 0 }
+  labels: []
+transition: { camera: [0, 0.6], structures: [0.1, 0.5], op: [0.2, 1] }
+sceneDescription: "The same cheek seen from the side, with the stitches fading and the scar line pale. A timeline beside the text lists one hospital's routine, from the dressing on the day of the operation to the removal of the stitches and the drain."
+claims: [postop-timeline]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="postop-timeline">In one hospital's routine the dressing comes off once the patient is awake, they can go home the next day with the drain, and the stitches and drain come out about six days after the operation.</Claim>
+
+<Inset title="One hospital's routine, day by day" kind="table">
+<HealingTimeline />
+</Inset>
+
+<Model>The timeline describes one institution's practice, not a standard. The fading of the stitches and scar in the picture is not drawn to any time scale.</Model>

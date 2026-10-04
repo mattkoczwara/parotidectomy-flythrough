@@ -1,4 +1,5 @@
 import * as THREE from 'three/webgpu';
+import { RESECTION_EXTENT } from '@atlas/timeline';
 
 /*
  * Resections: which gland pieces each operation removes, and where the specimen goes. The pieces are the ESGS levels
@@ -31,7 +32,6 @@ export interface Resection {
 const L = (n: number) => `parotid_level_${n}`;
 export const TUMOUR = 'pleomorphic_adenoma';
 export const CUFF = 'parotid_ecd_cuff';
-const superficial = [L(1), L(2), CUFF, TUMOUR] as const;
 
 /** Pieces that can move; everything else in the gland stays put. */
 export const REMOVABLE: ReadonlySet<string> = new Set([L(1), L(2), L(3), L(4), CUFF, TUMOUR]);
@@ -42,13 +42,13 @@ const deepOut: Pose = { delta: [-0.07, 0.07, 0.01], rotYDeg: 30 };
 export const RESECTIONS: Readonly<Record<string, Resection>> = {
   none: { peel: [], out: [], deep: [], outPose: lift, deepPose: deepOut },
   // Extracapsular dissection: no fold and no nerve dissection; the tumour and its cuff are lifted out of the bed.
-  ecd: { peel: [], out: [CUFF, TUMOUR], deep: [], outPose: { delta: [-0.05, 0.075, 0.0], rotYDeg: 0 }, deepPose: deepOut },
+  ecd: { peel: [], out: RESECTION_EXTENT.ecd.out, deep: RESECTION_EXTENT.ecd.deep, outPose: { delta: [-0.05, 0.075, 0.0], rotYDeg: 0 }, deepPose: deepOut },
   // Partial superficial parotidectomy: the lower outer level (II), which holds the tumour, with the nerve dissected around it.
-  partial: { peel: [L(2), CUFF, TUMOUR], out: [L(2), CUFF, TUMOUR], deep: [], outPose: lift, deepPose: deepOut },
+  partial: { peel: RESECTION_EXTENT.partial.out, out: RESECTION_EXTENT.partial.out, deep: RESECTION_EXTENT.partial.deep, outPose: lift, deepPose: deepOut },
   // Superficial parotidectomy: both outer levels (I and II).
-  superficial: { peel: superficial, out: superficial, deep: [], outPose: lift, deepPose: deepOut },
+  superficial: { peel: RESECTION_EXTENT.superficial.out, out: RESECTION_EXTENT.superficial.out, deep: RESECTION_EXTENT.superficial.deep, outPose: lift, deepPose: deepOut },
   // Total parotidectomy with the nerve preserved: the outer levels, then the deep levels (III and IV) from beneath the nerve.
-  total: { peel: superficial, out: superficial, deep: [L(3), L(4)], outPose: lift, deepPose: deepOut },
+  total: { peel: RESECTION_EXTENT.total.out, out: RESECTION_EXTENT.total.out, deep: RESECTION_EXTENT.total.deep, outPose: lift, deepPose: deepOut },
 };
 
 /** The representative operation of the atlas; used when a plate names no resection (the M1 slice). */

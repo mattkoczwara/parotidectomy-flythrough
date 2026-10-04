@@ -1,0 +1,67 @@
+---
+id: compare
+chapter: explore
+order: 54
+title: "Four operations on the same gland"
+delta:
+  camera: { azimuth: -42, elevation: 16, zoom: 1.15, frame: [parotid_gland, parotid_accessory_lobe] }
+  gauge: 3
+  light: { preset: studio, exposure: 1.0 }
+  op: { peel: 0, out: 0, deep: 0, mobilise: 0, flap: 0, ink: 0, ink_facelift: 0, suture: 0, scar: 0, hollow: 0, explode: 1, section: 0, ct_clip: 0, smas: 0, scm: 0, cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, ink_plane: 1, ink_cranial: 1, ink_cuff: 1, zone_ear: 0, zone_lip: 0, zone_forehead: 0, zone_frey: 0, zone_bite: 0 }
+  variants: { resection: none, incision: blair }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.1, emphasis: context }
+      eyes: { presence: 0 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      skull: { presence: 1, mode: ghost, opacity: 0.18, emphasis: context }
+      temporalis_r: { presence: 0 }
+      parotid_superficial_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      pleomorphic_adenoma: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      parotid_duct: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      parotid_accessory_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      facial_nerve: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      great_auricular_nerves: { presence: 1, emphasis: context }
+      retromandibular_veins: { presence: 1, emphasis: context }
+      external_jugular_vein: { presence: 1, emphasis: context }
+      external_carotid_artery: { presence: 1, emphasis: context }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      digastric_posterior_belly: { presence: 1, emphasis: context }
+      smas_flap: { presence: 0 }
+      barrier_graft: { presence: 0 }
+      drain_tube: { presence: 0 }
+      sialocele_pocket: { presence: 0 }
+      recurrence_nodules: { presence: 0 }
+      frey_regrowth: { presence: 0 }
+      auriculotemporal_nerve: { presence: 0 }
+  labels:
+      - { structureId: parotid_ecd_cuff }
+      - { structureId: parotid_level_2 }
+      - { structureId: parotid_level_1 }
+      - { structureId: parotid_level_3 }
+      - { structureId: parotid_level_4 }
+transition: { camera: [0, 0.6], structures: [0.1, 0.6], op: [0, 0.7] }
+sceneDescription: "The gland is drawn pulled apart into its pieces, with violet ink marking the edges of the pieces and the cuff of gland around the tumour. Four small pictures beside the text show what each of the four operations takes from the same gland."
+claims: [evidence-limits-choice]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Inset title="What each operation takes, on the same gland" kind="figure">
+<CompareExtents />
+</Inset>
+
+<Claim id="evidence-limits-choice">Most comparisons between operations come from records of what surgeons chose, so they cannot show that one operation is safer than another for the same tumour.</Claim>
+
+<Model>The pictures show how much of this one gland each operation takes. They are not a ranking, and the volumes are properties of this model, not general figures.</Model>

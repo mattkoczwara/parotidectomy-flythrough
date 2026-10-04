@@ -256,7 +256,7 @@ incision_facelift:
 # the CT skin only over the anatomy of the dissection (right preauricular, parotid, cheek and upper neck) so the
 # tissue layers stay consistent; the central face keeps MPFB's generic features.
 face:
-  depth_check_exclude: [stimulator_probe, frey_regrowth, needle, us_probe, us_plane, ct_tumour_outline, drain_tube, smas_flap, barrier_graft, sialocele_pocket]   # instruments and schematic overlays (props.py, extras.py)
+  depth_check_exclude: [stimulator_probe, frey_regrowth, needle, us_probe, us_plane, ct_tumour_outline, drain_tube, smas_flap, barrier_graft, sialocele_pocket, recurrence_nodules]   # instruments and schematic overlays (props.py, extras.py)
   mpfb_neck_cut_dm: 5.3          # keep MPFB vertices above this height (decimetres); low enough that the z=150 mm scene cut is a closed loop
   neck_cut_z: 140                # CT-frame lower limit used for fitting (mm)
   ct_vertex_gap_mm: 11           # the CT starts at slice 1012, about 11 mm below the VHP vertex reference
@@ -373,3 +373,6 @@ barriers:
   graft: { cutface_min: 0.7, normal_x_min: 0.2, offset_mm: 0.9 }
   scm: { z_range_mm: [165, 240], posterior_fraction: 0.5 }
   sialocele: { centre: [77, 86, 226], radii: [5.5, 15, 13], seed: 53 }
+  # Recurrent pleomorphic adenoma is typically multinodular (claim recurrence-factors): a few small nodules in the bed where the
+  # tumour lay, drawn as a schematic cluster (offsets from the tumour centre, mm; RAS: -x is medial).
+  recurrence: { offsets_mm: [[-9, 2, 3], [-11, -7, -3], [-7, 10, -4], [-12, 4, -9]], radii_mm: [3.4, 2.7, 2.3, 1.9], seed: 71 }

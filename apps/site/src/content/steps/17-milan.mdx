@@ -37,13 +37,17 @@ delta:
       - { structureId: pleomorphic_adenoma }
 transition: { camera: [0, 0.5], structures: [0.2, 0.7] }
 sceneDescription: "The needle is gone and the tumour sits in the outer part of the gland, as before. A table beside the text lists the standard result categories with the chance of cancer for each."
-claims: [milan-categories]
+claims: [milan-categories, fna-accuracy]
 ---
 import Claim from '../../components/Claim.astro';
 import Model from '../../components/Model.astro';
 import Note from '../../components/Note.astro';
 import Framed from '../../components/Framed.astro';
 import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
 
 <Claim id="milan-categories">Needle results are sorted into standard tiers, and each tier carries its own chance of cancer: low when the result is a benign tumour, high when it is suspicious or malignant.</Claim>
 

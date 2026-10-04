@@ -361,7 +361,7 @@
   },
   "barriers": {
     "pass": true,
-    "summary": "SMAS flap sheet, graft sheet, SCM strip 17.4 mL (75 mm long, hinged at its upper end), sialocele pocket",
+    "summary": "SMAS flap sheet, graft sheet, SCM strip 17.4 mL (75 mm long, hinged at its upper end), sialocele pocket, recurrence nodules",
     "smas": {
       "hinge_y_mm": 101.41763749620745,
       "free_y_mm": 60.94060325156977,

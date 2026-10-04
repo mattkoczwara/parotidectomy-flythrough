@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
 import { step as stepSchema, type Step } from '@atlas/schema';
+import { checkAttribution } from './attribution.ts';
 
 export interface StepRefs {
   structures: ReadonlySet<string>;
@@ -53,7 +54,9 @@ export function checkSteps(dir: string, refs: StepRefs): { errors: string[]; ste
     for (const id of s.delta.camera?.frame ?? []) if (!/^specimen(@[0-9.]+)?$/.test(id)) need(id, refs.structures, 'camera frame structure');
     for (const c of s.claims) need(c, refs.claims, 'claim');
     for (const [, id] of m[2]!.matchAll(/<Claim\s+id="([^"]+)"/g)) need(id!, refs.claims, 'inline claim');
-    if (!/<Claim\s/.test(m[2]!)) errors.push(`${where}: the plate text cites no claims`);
+    errors.push(...checkAttribution(where, m[2]!).map((e) => e));
+    const inline = new Set([...m[2]!.matchAll(/<Claim\s+id="([^"]+)"/g)].map((x) => x[1]!));
+    for (const id of inline) if (!s.claims.includes(id)) errors.push(`${where}: inline claim "${id}" is not listed in the plate's claims`);
   }
   const ids = steps.map((s) => s.id);
   const dup = ids.find((id, i) => ids.indexOf(id) !== i);

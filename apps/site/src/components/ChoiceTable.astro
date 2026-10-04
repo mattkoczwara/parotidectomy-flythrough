@@ -1,0 +1,32 @@
+---
+/**
+ * The four operations on the same gland (plan §3 chapter 6): what each takes, from the definition claims, and how much of
+ * the modelled gland that is. The shares are measured on the model's own pieces (a Model statement, not a clinical figure).
+ */
+import { getEntry } from 'astro:content';
+import Claim from './Claim.astro';
+import { loadExtents, type Operation } from '../lib/extents.ts';
+
+const { rows, bodyTotal } = loadExtents();
+const defs: Array<{ op: Operation; name: string; claim: string }> = [
+  { op: 'ecd', name: 'Extracapsular dissection', claim: 'ecd-definition' },
+  { op: 'partial', name: 'Partial superficial parotidectomy', claim: 'partial-superficial-definition' },
+  { op: 'superficial', name: 'Superficial parotidectomy', claim: 'superficial-parotidectomy-definition' },
+  { op: 'total', name: 'Total parotidectomy, nerve kept', claim: 'total-parotidectomy-definition' },
+];
+const text = Object.fromEntries(await Promise.all(defs.map(async (d) => [d.claim, (await getEntry('claims', d.claim))!.data.statement.essentials])));
+---
+
+<table class="choice-table">
+  <caption class="visually-hidden">The four operations compared</caption>
+  <thead><tr><th scope="col">Operation</th><th scope="col">What it takes</th><th scope="col">Share of the modelled gland</th></tr></thead>
+  <tbody>
+    {defs.map((d) => (
+      <tr>
+        <th scope="row">{d.name}</th>
+        <td><Claim id={d.claim}>{text[d.claim]}</Claim></td>
+        <td class="num">{Math.round(rows[d.op].share * 100)}% ({rows[d.op].ml.toFixed(1)} of {bodyTotal.toFixed(1)} mL)</td>
+      </tr>
+    ))}
+  </tbody>
+</table>

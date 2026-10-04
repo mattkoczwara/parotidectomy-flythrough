@@ -1,0 +1,62 @@
+---
+id: first-bite
+chapter: complications
+order: 50
+title: "Pain with the first bite"
+delta:
+  camera: { azimuth: -8, elevation: 6, zoom: 1.6, frame: [parotid_deep_lobe, facial_nerve_branches] }
+  op: { peel: 1, out: 1, flap: 0, ink: 0, suture: 1, scar: 1, hollow: 0, explode: 0, section: 0, deep: 0, mobilise: 0, ct_clip: 0, smas: 0, scm: 0, cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, zone_ear: 0, zone_lip: 0, zone_forehead: 0, zone_frey: 0, zone_bite: 1 }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.4, emphasis: context }
+      eyes: { presence: 1 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      parotid_superficial_lobe: { presence: 0 }
+      pleomorphic_adenoma: { presence: 0 }
+      parotid_duct: { presence: 0 }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      facial_nerve: { presence: 1, mode: ghost, opacity: 0.35, emphasis: context }
+      great_auricular_nerves: { presence: 1, emphasis: context }
+      retromandibular_veins: { presence: 1, emphasis: context }
+      external_jugular_vein: { presence: 1, emphasis: context }
+      external_carotid_artery: { presence: 1, emphasis: context }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      digastric_posterior_belly: { presence: 1, emphasis: context }
+      smas_flap: { presence: 0 }
+      barrier_graft: { presence: 0 }
+      drain_tube: { presence: 0 }
+      auriculotemporal_nerve: { presence: 0 }
+      frey_regrowth: { presence: 0 }
+      sialocele_pocket: { presence: 0 }
+      recurrence_nodules: { presence: 0 }
+  labels:
+      - { structureId: parotid_deep_lobe }
+transition: { camera: [0, 0.5], structures: [0.1, 0.6], op: [0.2, 1] }
+sceneDescription: "The skin is drawn see-through, showing the inner part of the gland in the wound. An ochre patch on the cheek in front of the ear marks where the pain is felt with the first bite of a meal."
+claims: [first-bite-syndrome]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="first-bite-syndrome">Some people feel a sharp cramping pain in the cheek with the first bite of each meal, easing over the next bites. It followed 6% of operations for benign tumours in one series and was much more common after surgery on the deep part of the gland in another.</Claim>
+
+<Claim id="first-bite-syndrome">It is thought to arise from loss of the sympathetic nerve supply to the parotid.</Claim>
+
+<Model>The sympathetic supply is not modelled, so the patch marks only where the pain is felt.</Model>
+
+<Note title="How often, and after which operations">
+<Framed claim="first-bite-syndrome" source="linkov-2012" title="First bite syndrome after deep-lobe, parapharyngeal and skull-base surgery" />
+<Framed claim="first-bite-syndrome" source="lammek-2021" title="First bite syndrome after parotidectomy for benign tumours" />
+</Note>

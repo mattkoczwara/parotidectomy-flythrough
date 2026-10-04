@@ -715,3 +715,234 @@ body.capture .gauge {
     transition: none;
   }
 }
+
+/* ── Instrument (plan §4): depth dial, view buttons, structure card, operation controls ──── */
+.instrument-toggle {
+  position: absolute;
+  right: 6.2rem;
+  top: 3.6rem;
+  font: 500 0.8125rem var(--font-sans), system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--scrim);
+  border: 1px solid var(--rule);
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+.reset-view {
+  top: 6.5rem; /* below the instrument toggle */
+}
+.instrument {
+  position: absolute;
+  right: 1.1rem;
+  top: 9.4rem;
+  width: 17.5rem;
+  max-height: calc(100% - 10.6rem);
+  overflow-y: auto;
+  padding: 0.7rem 0.85rem 0.9rem;
+  background: rgba(21, 24, 23, 0.94);
+  border: 1px solid var(--rule);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--ink);
+  z-index: 3;
+}
+.instrument[hidden] {
+  display: none;
+}
+.instrument header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+.instrument h2 {
+  margin: 0;
+  font: 500 1rem var(--font-serif), Georgia, serif;
+}
+.instrument .inst-close {
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.instrument fieldset {
+  margin: 0.6rem 0 0;
+  padding: 0.5rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+.instrument legend {
+  padding: 0;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+.instrument .inst-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.1rem 0.5rem;
+  margin: 0.2rem 0;
+}
+.instrument .inst-label {
+  flex: 0 0 5.2rem;
+  color: var(--ink-soft);
+}
+.instrument .inst-radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 0.6rem;
+}
+.instrument .inst-op .inst-label {
+  flex-basis: 100%;
+}
+.instrument label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+.instrument input[type='radio'],
+.instrument input[type='range'] {
+  accent-color: var(--ink-soft);
+}
+.instrument input[type='range'] {
+  flex: 1 1 8rem;
+}
+.instrument output {
+  font-variant-numeric: tabular-nums;
+  min-width: 2.4rem;
+}
+.instrument .inst-view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  align-items: center;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--rule);
+}
+.instrument .inst-view .inst-label {
+  flex-basis: auto;
+  margin-right: 0.2rem;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+.instrument .inst-view button,
+.instrument .inst-reset,
+.instrument .inst-evidence {
+  font: 500 0.78rem var(--font-sans), system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--field-deep);
+  border: 1px solid var(--rule);
+  padding: 0.25rem 0.5rem;
+  min-width: 1.9rem;
+  cursor: pointer;
+}
+.instrument .inst-reset {
+  margin-top: 0.7rem;
+  width: 100%;
+}
+.instrument .inst-reset[hidden] {
+  display: none;
+}
+.instrument .inst-note,
+.instrument .inst-hint {
+  margin: 0.4rem 0;
+  color: var(--ink-faint);
+  font-size: 0.74rem;
+}
+.instrument .inst-card h3 {
+  margin: 0.2rem 0 0.15rem;
+  font: 500 1.05rem var(--font-serif), Georgia, serif;
+}
+.instrument .inst-card .latin {
+  margin: 0 0 0.3rem;
+  font: italic 400 0.85rem var(--font-serif), Georgia, serif;
+  color: var(--ink-soft);
+}
+.instrument .inst-card p {
+  margin: 0.25rem 0;
+}
+.stage.instrument-open .labels,
+.stage.instrument-open .leaders,
+.stage.instrument-open .gauge {
+  display: none;
+}
+
+/* ── Timeline, comparison and choice table insets ─────────────────────────────────────── */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+.timeline li {
+  display: grid;
+  grid-template-columns: 7.2rem 1fr;
+  gap: 0.6rem;
+  padding: 0.35rem 0;
+  border-top: 1px solid var(--rule);
+}
+.timeline li:first-child {
+  border-top: 0;
+}
+.timeline .when {
+  font-weight: 600;
+}
+.compare-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+.compare-grid figure {
+  margin: 0;
+}
+.compare-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--field);
+  border: 1px solid var(--rule);
+}
+.compare-grid figcaption {
+  margin-top: 0.3rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+.compare-grid figcaption span {
+  display: block;
+  color: var(--ink-soft);
+}
+.compare-note {
+  margin: 0.6rem 0 0;
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+  line-height: 1.45;
+}
+
+/* ── Portrait: the instrument opens as a sheet over the lower part of the scene ───────── */
+@media (max-aspect-ratio: 1/1), (max-width: 760px) {
+  .instrument-toggle {
+    right: 0.6rem;
+    top: 0.6rem;
+  }
+  .reset-view {
+    right: 0.6rem;
+    top: 3rem;
+  }
+  .instrument {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    max-height: 62%;
+  }
+}

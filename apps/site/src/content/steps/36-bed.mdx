@@ -1,0 +1,58 @@
+---
+id: bed
+chapter: closure
+order: 36
+title: "The nerve in its bed"
+delta:
+  camera: { azimuth: 2, elevation: 10, zoom: 0.75, frame: [parotid_deep_lobe, facial_nerve_branches] }
+  gauge: 5
+  light: { preset: operative, exposure: 1.0 }
+  op: { peel: 1, out: 1, flap: 1, ink: 1, ink_facelift: 0, suture: 0, scar: 0, hollow: 0, explode: 0, section: 0, deep: 0, mobilise: 0, cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, ct_clip: 0, smas: 1, scm: 0 }
+  variants: { resection: superficial, incision: blair }
+  structures:
+      skin: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      eyes: { presence: 1 }
+      subcutaneous_fat: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      parotid_superficial_lobe: { presence: 0 }
+      pleomorphic_adenoma: { presence: 0 }
+      parotid_duct: { presence: 0 }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      facial_nerve: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      great_auricular_nerves: { presence: 1, emphasis: context }
+      retromandibular_veins: { presence: 1, emphasis: context }
+      external_jugular_vein: { presence: 1, emphasis: context }
+      external_carotid_artery: { presence: 1, emphasis: context }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      digastric_posterior_belly: { presence: 1, emphasis: context }
+      stimulator_probe: { presence: 0 }
+      smas_flap: { presence: 0 }
+      barrier_graft: { presence: 0 }
+      drain_tube: { presence: 0 }
+  labels:
+      - { structureId: facial_nerve_trunk }
+      - { structureId: facial_nerve_marginal_mandibular }
+      - { structureId: parotid_deep_lobe }
+      - { structureId: digastric_posterior_belly }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7], op: [0.3, 1] }
+sceneDescription: "With the outer part of the gland gone, the nerve lies in the wound along the face of the inner part of the gland, from the trunk at the top to the branches fanning forward. The skin and fat are still folded forward over the cheek."
+claims: [bed-inspection]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="bed-inspection">Before closing, the bleeding is controlled and the wound rinsed. If the nerve was kept, the surgeon checks again that stimulating it makes the face move.</Claim>
+
+<Claim id="bed-inspection">One hospital's protocol states the principle that if the nerve was working before surgery, every effort is made to let it work afterwards, even if that means leaving a microscopic margin on it.</Claim>

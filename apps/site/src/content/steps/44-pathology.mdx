@@ -1,0 +1,64 @@
+---
+id: pathology
+chapter: afterwards
+order: 44
+title: "The specimen on the bench"
+delta:
+  camera: { azimuth: -34, elevation: 22, zoom: 1.0, frame: [specimen] }
+  gauge: 3
+  light: { preset: specimen, exposure: 1.0 }
+  op: { peel: 1, out: 1, section: 1, flap: 0, ink: 0, suture: 0, scar: 0, hollow: 0, ct_clip: 0, ink_plane: 1, ink_cranial: 1, ink_cuff: 1 }
+  structures:
+      skin: { presence: 0 }
+      eyes: { presence: 0 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      mandible: { presence: 0 }
+      masseter_r: { presence: 0 }
+      sternocleidomastoid_r: { presence: 0 }
+      digastric_posterior_belly: { presence: 0 }
+      submandibular_gland_r: { presence: 0 }
+      facial_nerve: { presence: 0 }
+      great_auricular_nerves: { presence: 0 }
+      retromandibular_veins: { presence: 0 }
+      external_jugular_vein: { presence: 0 }
+      external_carotid_artery: { presence: 0 }
+      maxillary_artery: { presence: 0 }
+      superficial_temporal_artery: { presence: 0 }
+      internal_jugular_vein_r: { presence: 0 }
+      styloid_process: { presence: 0 }
+      parotid_deep_lobe: { presence: 0 }
+      parotid_duct: { presence: 0 }
+      drain_tube: { presence: 0 }
+      smas_flap: { presence: 0 }
+      parotid_superficial_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      pleomorphic_adenoma: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+  labels:
+      - { structureId: pleomorphic_adenoma }
+      - { structureId: parotid_superficial_lobe }
+transition: { camera: [0, 0.6], structures: [0.2, 0.8], op: [0.2, 1] }
+sceneDescription: "The removed outer lobe lies on its own against the plain background, opened along a cut. The tumour shows grey-white inside a rim of normal gland, with violet ink marking the edges of the pieces."
+claims: [specimen-handling, pa-capsule-features]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="specimen-handling">The removed tissue is marked so the pathologist knows which way it lay, and a small piece may be examined while the operation continues.</Claim>
+
+<Claim id="pa-capsule-features">The tumour's outer layer is often thin or incomplete, and finger-like extensions can reach beyond it; that is why surgeons take a cuff of normal gland.</Claim>
+
+<Inset title="What the pathologist looks for at the tumour's edge" kind="schematic">
+<PseudocapsuleInset mode="features" />
+</Inset>
+
+<Model>The drawing above is a schematic of the features, not a section of a real tumour.</Model>

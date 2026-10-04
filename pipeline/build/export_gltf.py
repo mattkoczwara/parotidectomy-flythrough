@@ -35,7 +35,7 @@ SCENE = [
     "parotid_duct",
     "retromandibular_vein", "retromandibular_vein_anterior", "retromandibular_vein_posterior", "external_jugular_vein",
     "external_carotid_artery", "maxillary_artery", "superficial_temporal_artery",
-    "masseter_r", "temporalis_r", "sternocleidomastoid_main", "scm_flap", "digastric_posterior_belly", "stimulator_probe", "smas_flap", "barrier_graft", "sialocele_pocket", "needle", "us_probe", "us_plane", "ct_tumour_outline", "drain_tube", "submandibular_gland_r",
+    "masseter_r", "temporalis_r", "sternocleidomastoid_main", "scm_flap", "digastric_posterior_belly", "stimulator_probe", "smas_flap", "barrier_graft", "sialocele_pocket", "recurrence_nodules", "needle", "us_probe", "us_plane", "ct_tumour_outline", "drain_tube", "submandibular_gland_r",
     "internal_jugular_vein_r", "mandible", "skull", "styloid_process", "nerve_plane",
 ]
 ATTRS = {"peel_order": "_PEEL", "cut": "_CUT", "cut_s": "_CUTS", "flap_w": "_FLAPW", "cutface": "_CUTFACE", "ink": "_INK", "mob": "_MOB", "cut2": "_CUT2", "cut_s2": "_CUTS2", "foldw": "_FOLDW"}
@@ -137,6 +137,7 @@ def main() -> None:
         "smas_flap": np.load(MESHES / "smas_flap.npz")["positions"][::8].mean(0),
         "barrier_graft": np.load(MESHES / "barrier_graft.npz")["positions"][::8].mean(0),
         "sialocele_pocket": np.load(MESHES / "sialocele_pocket.npz")["positions"].mean(0),
+        "recurrence_nodules": np.load(MESHES / "recurrence_nodules.npz")["positions"].mean(0),
         "scm_flap": np.load(MESHES / "scm_flap.npz")["positions"][::20].mean(0),
         "needle": np.load(MESHES / "needle.npz")["positions"][::4].mean(0),
         "us_probe": np.load(MESHES / "us_probe.npz")["positions"][::6].mean(0),
@@ -226,6 +227,7 @@ def main() -> None:
         "bounds": bounds,
         "groups": groups,
         "zones": zones,
+        "pieces": {k: {"volume_ml": p["volume_ml"], "share": p["share"]} for k, p in json.loads((MESHES / "pieces.json").read_text())["pieces"].items()} | {"total_gland_ml": json.loads((MESHES / "pieces.json").read_text())["total_gland_ml"]},
         "barriers": {"smas_hinge": [-(json.loads((ROOT / "pipeline/segment/work/barriers.json").read_text())["smas"]["hinge_x_mm"] - origin[0]) * 0.001, (json.loads((ROOT / "pipeline/segment/work/barriers.json").read_text())["smas"]["hinge_y_mm"] - origin[1]) * 0.001], "scm_pivot": to_gltf(np.array([json.loads((ROOT / "pipeline/segment/work/barriers.json").read_text())["scm"]["pivot_mm"]], float), origin)[0].round(6).tolist()},
         "imaging": {**json.loads((ROOT / "pipeline/segment/work/imaging.json").read_text()), "origin_ras_mm": origin.tolist()},
         "imaging": {**json.loads((ROOT / "pipeline/segment/work/imaging.json").read_text()), "origin_ras_mm": origin.tolist()},

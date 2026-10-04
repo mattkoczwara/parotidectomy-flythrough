@@ -1,0 +1,61 @@
+---
+id: compl-map
+chapter: complications
+order: 46
+title: "Where things can go wrong"
+delta:
+  camera: { azimuth: 16, elevation: 4, zoom: 1.35, frame: [facial_nerve, mandible, parotid_gland] }
+  gauge: 0
+  light: { preset: studio, exposure: 1.0 }
+  op: { peel: 1, out: 1, flap: 0, ink: 0, suture: 1, scar: 1, hollow: 0, explode: 0, section: 0, deep: 0, mobilise: 0, ct_clip: 0, smas: 0, scm: 0, cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, zone_ear: 1, zone_lip: 1, zone_forehead: 1, zone_frey: 1, zone_bite: 1 }
+  variants: { resection: superficial, incision: blair }
+  structures:
+      skin: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      eyes: { presence: 1 }
+      subcutaneous_fat: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      smas: { presence: 1, emphasis: context }
+      parotid_fascia: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      parotid_superficial_lobe: { presence: 0 }
+      pleomorphic_adenoma: { presence: 0 }
+      parotid_duct: { presence: 0 }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      facial_nerve: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      great_auricular_nerves: { presence: 1, emphasis: context }
+      retromandibular_veins: { presence: 1, emphasis: context }
+      external_jugular_vein: { presence: 1, emphasis: context }
+      external_carotid_artery: { presence: 1, emphasis: context }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      digastric_posterior_belly: { presence: 1, emphasis: context }
+      smas_flap: { presence: 0 }
+      barrier_graft: { presence: 0 }
+      drain_tube: { presence: 0 }
+      auriculotemporal_nerve: { presence: 0 }
+      frey_regrowth: { presence: 0 }
+      sialocele_pocket: { presence: 0 }
+      recurrence_nodules: { presence: 0 }
+  labels: []
+transition: { camera: [0, 0.6], structures: [0.1, 0.6], op: [0.2, 1] }
+sceneDescription: "The healed right side of the face, seen from the side with the skin closed. Five hatched ochre patches mark places where a problem is felt: the earlobe, the forehead, the lower lip, the cheek in front of the ear, and the skin over the gland."
+claims: [minor-complications]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="minor-complications">Besides the major risks, a number of smaller problems are common after parotid surgery: numbness is the most frequent, followed by a visible hollow, collections of blood or saliva, and wound problems.</Claim>
+
+<Model>Each hatched ochre patch marks where a problem is felt. The next plates show the structure behind each one. Ochre is used only in this chapter, and the patches are simplifications, not measured territories.</Model>
+
+<Note title="How common the smaller problems are">
+<Framed claim="minor-complications" source="lambiel-2021" title="Minor complications after parotidectomy" />
+</Note>

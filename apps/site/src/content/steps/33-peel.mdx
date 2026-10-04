@@ -2,7 +2,7 @@
 id: peel
 chapter: operation
 order: 33
-title: Lifting the outer gland off the nerve
+title: "Lifting the outer gland off the nerve"
 delta:
   camera: { azimuth: -58, elevation: 32, zoom: 1.05, frame: [parotid_gland, facial_nerve_branches] }
   op: { peel: 0.8 }
@@ -31,7 +31,7 @@ delta:
       - { structureId: parotid_deep_lobe }
 transition: { camera: [0, 0.4], structures: [0.1, 0.5], op: [0.4, 1] }
 sceneDescription: "From behind and to the side, with the skin still faded, the outer part of the gland is folded forward off the nerve, carrying the tumour with it. The nerve's divisions and branches lie exposed on the inner part of the gland, which stays in place."
-claims: [antegrade-dissection, parotid-lobes-surgical]
+claims: [antegrade-dissection, parotid-lobes-surgical, superficial-parotidectomy-definition, choice-factors]
 ---
 
 import Claim from '../../components/Claim.astro';
@@ -39,6 +39,6 @@ import Model from '../../components/Model.astro';
 import Note from '../../components/Note.astro';
 import Framed from '../../components/Framed.astro';
 
-<Claim id="antegrade-dissection">Following the nerve forward from its trunk, the surgeon lifts the outer gland off it branch by branch.</Claim> The tumour comes away inside the outer gland, with a margin of normal tissue, while the nerve stays in place on the deeper tissue.
+<Claim id="antegrade-dissection">Following the nerve forward from its trunk, the surgeon lifts the outer gland off it branch by branch.</Claim> <Claim id="superficial-parotidectomy-definition">The tumour comes away inside the outer gland, with a margin of normal tissue, while the nerve stays in place on the deeper tissue.</Claim>
 
 <Claim id="choice-factors">This is one representative operation; which operation is right depends on the tumour and the surgeon.</Claim>

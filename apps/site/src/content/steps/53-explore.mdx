@@ -1,0 +1,62 @@
+---
+id: explore
+chapter: explore
+order: 53
+title: "Take the instrument"
+delta:
+  camera: { azimuth: -12, elevation: 8, zoom: 1.15, frame: [parotid_gland, facial_nerve, mandible] }
+  gauge: 3
+  light: { preset: studio, exposure: 1.0 }
+  op: { peel: 0, out: 0, deep: 0, mobilise: 0, flap: 0, ink: 0, ink_facelift: 0, suture: 0, scar: 0, hollow: 0, explode: 0, section: 0, ct_clip: 0, smas: 0, scm: 0, cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, ink_plane: 0, ink_cranial: 0, ink_cuff: 0, zone_ear: 0, zone_lip: 0, zone_forehead: 0, zone_frey: 0, zone_bite: 0 }
+  variants: { resection: none, incision: blair }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.12, emphasis: context }
+      eyes: { presence: 0 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      skull: { presence: 1, mode: ghost, opacity: 0.18, emphasis: context }
+      temporalis_r: { presence: 0 }
+      parotid_superficial_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      pleomorphic_adenoma: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      parotid_duct: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      parotid_accessory_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      facial_nerve: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      great_auricular_nerves: { presence: 1, emphasis: context }
+      retromandibular_veins: { presence: 1, emphasis: context }
+      external_jugular_vein: { presence: 1, emphasis: context }
+      external_carotid_artery: { presence: 1, emphasis: context }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      digastric_posterior_belly: { presence: 1, emphasis: context }
+      smas_flap: { presence: 0 }
+      barrier_graft: { presence: 0 }
+      drain_tube: { presence: 0 }
+      sialocele_pocket: { presence: 0 }
+      recurrence_nodules: { presence: 0 }
+      frey_regrowth: { presence: 0 }
+      auriculotemporal_nerve: { presence: 0 }
+  labels: []
+transition: { camera: [0, 0.6], structures: [0.1, 0.6], op: [0, 0.6] }
+sceneDescription: "The whole right parotid region seen from the side. The skin is a faint outline; the gland lies over the jaw and the chewing muscle, the facial nerve runs through it, and the tumour sits in the outer part. The Instrument button at the top right of the picture opens the controls."
+claims: []
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Model>From here the model is yours. The button at the top right of the picture, "Take the instrument", opens the controls. Drag the picture, or use the arrow buttons, to turn it, and click any structure to ask what it is.</Model>
+
+<Model>The depth controls fade or hide one kind of tissue at a time: skin, fat, nerves, bone. Nothing is deleted. Moving to another plate puts the picture back as the story drew it.</Model>
+
+<Model>Under "The operation" you can choose which resection is done, carry it out step by step with the slider, and try the skin line and the closure layer. It is the same model the story used, and it shows one representative way of doing each step; which operation suits a patient is a decision for the patient and the surgeon.</Model>
+
+<Model>Without the 3D scene, the plates before this one and the table on the next plate carry the lesson.</Model>

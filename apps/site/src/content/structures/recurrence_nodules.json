@@ -1,0 +1,22 @@
+{
+  "id": "recurrence_nodules",
+  "names": {
+    "plain": "Returning tumour (schematic)",
+    "anatomical": "Recurrent pleomorphic adenoma nodules (schematic)"
+  },
+  "gloss": "A few small nodules in the bed where the tumour lay. Recurrent pleomorphic adenoma is typically multinodular; this cluster is drawn as an outline to show the idea, not to predict where one would grow.",
+  "tissue": "tumour",
+  "depth": "superficial-lobe",
+  "schematic": true,
+  "hidden": true,
+  "claims": [
+    "recurrence-factors"
+  ],
+  "anchors": [
+    "anchor__recurrence_nodules"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": []
+}

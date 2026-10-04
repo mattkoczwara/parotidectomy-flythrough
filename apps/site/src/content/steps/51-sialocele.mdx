@@ -1,0 +1,61 @@
+---
+id: sialocele
+chapter: complications
+order: 51
+title: "A collection of saliva"
+delta:
+  camera: { azimuth: -10, elevation: 6, zoom: 1.0, frame: [sialocele_pocket, parotid_deep_lobe] }
+  op: { peel: 1, out: 1, flap: 0, ink: 0, suture: 1, scar: 1, hollow: 0, explode: 0, section: 0, deep: 0, mobilise: 0, ct_clip: 0, smas: 0, scm: 0, cut_skin: 1, cut_fat: 1, cut_smas: 1, cut_fascia: 1, zone_ear: 0, zone_lip: 0, zone_forehead: 0, zone_frey: 0, zone_bite: 0 }
+  structures:
+      skin: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      eyes: { presence: 1 }
+      subcutaneous_fat: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      smas: { presence: 1, emphasis: context }
+      parotid_fascia: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      parotid_superficial_lobe: { presence: 0 }
+      pleomorphic_adenoma: { presence: 0 }
+      parotid_duct: { presence: 0 }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      facial_nerve: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      great_auricular_nerves: { presence: 1, emphasis: context }
+      retromandibular_veins: { presence: 1, emphasis: context }
+      external_jugular_vein: { presence: 1, emphasis: context }
+      external_carotid_artery: { presence: 1, emphasis: context }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      digastric_posterior_belly: { presence: 1, emphasis: context }
+      smas_flap: { presence: 0 }
+      barrier_graft: { presence: 0 }
+      drain_tube: { presence: 0 }
+      auriculotemporal_nerve: { presence: 0 }
+      frey_regrowth: { presence: 0 }
+      sialocele_pocket: { presence: 1, emphasis: focus }
+      recurrence_nodules: { presence: 0 }
+  labels:
+      - { structureId: sialocele_pocket }
+      - { structureId: parotid_deep_lobe }
+transition: { camera: [0, 0.5], structures: [0.1, 0.6], op: [0.2, 1] }
+sceneDescription: "Through the window, an ochre outline marks a pocket in the space under the skin, over the inner gland, where saliva has collected."
+claims: [sialocele-rates]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+import HealingTimeline from '../../components/HealingTimeline.astro';
+import ChoiceTable from '../../components/ChoiceTable.astro';
+import CompareExtents from '../../components/CompareExtents.astro';
+
+<Claim id="sialocele-rates">A collection of saliva under the skin flap, or a leak of saliva through the wound, is one of the commoner early problems; in one large series it affected roughly one patient in eleven, mostly within a month, and all settled.</Claim> <Claim id="sialocele-rates">In one series it was more likely after an inferior or middle superficial parotidectomy than after other extents of dissection.</Claim>
+
+<Model>The pocket is drawn as an outline, an illustration of the idea and not a measured shape.</Model>
+
+<Note title="How often">
+<Framed claim="sialocele-rates" source="britt-2017" title="Sialocele or salivary fistula, one centre" />
+<Framed claim="sialocele-rates" source="lambiel-2021" title="Pooled across studies" />
+</Note>
