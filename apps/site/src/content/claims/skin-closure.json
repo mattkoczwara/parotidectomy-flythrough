@@ -1,0 +1,23 @@
+{
+  "id": "skin-closure",
+  "statement": {
+    "essentials": "The wound is closed in layers, with fine stitches in the skin so the scar is neat.",
+    "anatomy": "Deep tissue and the skin are closed separately: absorbable stitches under the skin, and fine stitches in the skin itself, finer on the face than in the neck.",
+    "clinical": "The University of Iowa protocol closes the subcutaneous tissue with 3-0 or 4-0 absorbable sutures (Vicryl or chromic) and the skin with a combination of running and interrupted 5-0 nylon in the neck and 6-0 nylon on the face. A pressure dressing is used until the patient is awake and then removed if a suction drain is used."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Completion of procedure",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "One institution's practice. Suture material, technique and dressing vary between surgeons.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

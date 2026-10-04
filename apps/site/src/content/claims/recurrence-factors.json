@@ -1,0 +1,28 @@
+{
+  "id": "recurrence-factors",
+  "statement": {
+    "essentials": "When a pleomorphic adenoma comes back, the most important cause named in one review is an operation that cut into the tumour and left some behind; a thin or incomplete capsule, finger-like extensions and satellite nodules make that more likely.",
+    "anatomy": "Features of the tumour linked to recurrence include its subtype, a thin or incomplete capsule, finger-like extensions and satellite nodules. Features of the operation linked to recurrence are positive margins and tumour spillage. Myxoid subtypes tend to have thinner, incomplete capsules and recur more often.",
+    "clinical": "A systematic review concluded that large or myxoid pleomorphic adenomas, especially in young patients, should be approached more cautiously to avoid recurrence. A review of recurrent tumours describes most as multinodular and enucleation with rupture and incomplete excision as the most important cause."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "dulguerov-2017",
+      "locator": "Abstract, Results and Conclusion",
+      "support": "direct"
+    },
+    {
+      "sourceId": "witt-2015",
+      "locator": "Abstract",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "The abstracts list associated variables without pooled effect sizes, and the association does not show which factor causes recurrence in a given patient. The drawn recurrent nodules are schematic: where a recurrence arises, and how many nodules, are illustrations.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

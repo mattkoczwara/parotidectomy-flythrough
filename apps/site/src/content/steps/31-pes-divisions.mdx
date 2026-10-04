@@ -4,10 +4,20 @@ chapter: operation
 order: 31
 title: Following the trunk to its first split
 delta:
-  camera: { azimuth: -24, elevation: 6, zoom: 1.15, frame: [facial_nerve_trunk, facial_nerve_temporofacial, facial_nerve_cervicofacial] }
+  camera: { azimuth: -42, elevation: 30, zoom: 1.25, frame: [facial_nerve_trunk, facial_nerve_temporofacial, facial_nerve_cervicofacial] }
   gauge: 4
-  op: { peel: 0.46 }
+  op: { peel: 0.6 }
   structures:
+      skin: { mode: ghost, opacity: 0.05, emphasis: context }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      eyes: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      mandible: { mode: ghost, opacity: 0.4, emphasis: context }
+      masseter_r: { mode: ghost, opacity: 0.45, emphasis: context }
+      sternocleidomastoid_r: { mode: ghost, opacity: 0.4, emphasis: context }
       stimulator_probe: { presence: 0 }
       facial_nerve_trunk: { emphasis: focus }
       facial_nerve_temporofacial: { emphasis: focus }
@@ -21,6 +31,7 @@ transition: { camera: [0, 0.5], structures: [0.2, 0.7], op: [0.3, 1] }
 sceneDescription: "More of the outer gland has been folded forward. The trunk, about a centimetre and a half long, divides into an upper and a lower division at the point called the pes anserinus."
 claims: [pes-dissection-technique, fn-bifurcation, fn-trunk-length]
 ---
+
 import Claim from '../../components/Claim.astro';
 import Model from '../../components/Model.astro';
 import Note from '../../components/Note.astro';

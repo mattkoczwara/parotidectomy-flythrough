@@ -17,5 +17,6 @@
   "assetIds": [
     "anatomy-slice-glb"
   ],
-  "members": []
+  "members": [],
+  "hidden": true
 }

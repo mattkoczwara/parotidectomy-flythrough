@@ -1,0 +1,88 @@
+{
+  "id": "weakness-rates",
+  "statement": {
+    "essentials": "Temporary weakness of part of the face is fairly common after parotid surgery and usually recovers; lasting weakness is much less common. The risk is higher with more extensive surgery, older age, a cancer, a repeat operation and a tumour in the deep part of the gland.",
+    "anatomy": "Weakness shows in the part of the face supplied by the affected branch. In one series lasting weakness mainly affected the marginal mandibular branch, but 10 of its 13 cases also had a neck dissection.",
+    "clinical": "A 2019 series of 794 parotidectomies with CT, nerve monitoring and magnification reported temporary weakness in 9.2% and permanent weakness (over 6 months) in 5.2%; old age, malignancy, recurrent tumours and tumours involving both lobes were independent risk factors, tumour size was not. A 1997 series of 259 parotidectomies found early weakness in 29% when the nerve was preserved, 16.5% after limited superficial parotidectomy for benign superficial tumours, and recovery within 6 months in 68%. A 2024 single-centre series of 160 benign parotidectomies reported 3.75% facial nerve palsy and no total paralysis."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "jin-2019",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "bron-obrien-1997",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "mortensen-2024",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Temporary facial weakness",
+      "value": 9.2,
+      "unit": "%",
+      "n": "794 parotidectomies",
+      "population": "Patients having parotidectomy for benign and malignant parotid tumours at one centre, 2009 to 2016, with CT, nerve monitoring and magnification",
+      "design": "Retrospective single-centre cohort",
+      "sourceId": "jin-2019"
+    },
+    {
+      "label": "Permanent facial weakness (over 6 months)",
+      "value": 5.2,
+      "unit": "%",
+      "n": "794 parotidectomies",
+      "population": "Patients having parotidectomy for benign and malignant parotid tumours at one centre, 2009 to 2016, with CT, nerve monitoring and magnification",
+      "design": "Retrospective single-centre cohort",
+      "sourceId": "jin-2019"
+    },
+    {
+      "label": "Early facial weakness with the nerve preserved",
+      "value": 29,
+      "unit": "%",
+      "n": "230 parotidectomies",
+      "population": "Patients with normal facial nerve function before surgery whose nerve was preserved, one surgeon, 1987 to 1995",
+      "design": "Review of prospectively collected single-surgeon data",
+      "sourceId": "bron-obrien-1997"
+    },
+    {
+      "label": "Early facial weakness after limited superficial parotidectomy for a benign superficial-lobe tumour",
+      "value": 16.5,
+      "unit": "%",
+      "population": "Patients with benign tumours in the superficial lobe, one surgeon, 1987 to 1995",
+      "design": "Review of prospectively collected single-surgeon data",
+      "sourceId": "bron-obrien-1997"
+    },
+    {
+      "label": "Early weakness recovered within 6 months",
+      "value": 68,
+      "unit": "%",
+      "n": "46 of 67",
+      "population": "Patients with initial weakness, one surgeon, 1987 to 1995",
+      "design": "Review of prospectively collected single-surgeon data",
+      "sourceId": "bron-obrien-1997"
+    },
+    {
+      "label": "Facial nerve palsy after parotidectomy for benign disease",
+      "value": 3.75,
+      "unit": "%",
+      "n": "160 patients",
+      "population": "Patients having parotid surgery for benign tumours at one university hospital over 3 years, excluding prior parotid surgery or preoperative palsy",
+      "design": "Single-centre retrospective quality project",
+      "sourceId": "mortensen-2024"
+    }
+  ],
+  "limitations": "Single-centre, mostly retrospective series with different definitions of weakness, populations (benign only, or benign and malignant) and follow-up, so the rates cannot be combined or compared with one another. The 1997 permanent-weakness figure (5.6%) is not shown because 10 of its 13 cases had a simultaneous neck dissection. The Jin abstract cites a range of 14 to 65% for immediate weakness in the literature.",
+  "disagreement": "Rates of weakness differ several-fold between series, from 3.75% in a recent benign-only series to 29% early weakness in the older series; the studies do not agree on one number.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

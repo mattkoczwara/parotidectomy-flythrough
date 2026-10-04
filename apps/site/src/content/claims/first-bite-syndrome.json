@@ -1,0 +1,84 @@
+{
+  "id": "first-bite-syndrome",
+  "statement": {
+    "essentials": "Some people feel a sharp cramping pain in the cheek with the first bite of each meal, easing over the next bites. It followed 6% of operations for benign tumours in one series and was much more common after surgery on the deep part of the gland in another.",
+    "anatomy": "First bite syndrome is thought to arise from loss of the sympathetic nerve supply to the parotid. In one series it followed surgery on the deep lobe, the space beside the throat or the sympathetic chain far more often than total parotidectomy.",
+    "clinical": "In 111 adults after parotidectomy for benign tumours, 7 (6.3%) had first bite syndrome. In 499 patients having surgery on the deep lobe, the parapharyngeal space or the infratemporal fossa, 45 (9.6%) did; it followed 48.6% of operations that sacrificed the sympathetic chain, 22.4% of parapharyngeal dissections, 38.4% of isolated deep-lobe resections and 0.8% of total parotidectomies. Symptoms partly resolved in 69% and fully in 12%, and no treatment worked consistently."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "linkov-2012",
+      "locator": "Abstract, Results and Conclusions",
+      "support": "direct"
+    },
+    {
+      "sourceId": "lammek-2021",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Describe potential complications",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "First bite syndrome after parotidectomy for benign tumours",
+      "value": 6.3,
+      "unit": "%",
+      "n": "7 of 111",
+      "population": "Adults operated for benign parotid tumours at one centre, assessed by questionnaire",
+      "design": "Single-centre questionnaire study",
+      "sourceId": "lammek-2021"
+    },
+    {
+      "label": "First bite syndrome after surgery of the deep lobe, parapharyngeal space or infratemporal fossa",
+      "value": 9.6,
+      "unit": "%",
+      "n": "45 of 499",
+      "population": "Patients having surgery of the deep lobe, parapharyngeal space and/or infratemporal fossa, 1992 to 2010",
+      "design": "Retrospective cohort, Kaplan-Meier incidence",
+      "sourceId": "linkov-2012"
+    },
+    {
+      "label": "First bite syndrome after isolated deep-lobe resection",
+      "value": 38.4,
+      "unit": "%",
+      "population": "Patients having resection of the deep lobe only, in the same series",
+      "design": "Retrospective cohort",
+      "sourceId": "linkov-2012"
+    },
+    {
+      "label": "First bite syndrome after total parotidectomy",
+      "value": 0.8,
+      "unit": "%",
+      "population": "Patients having total parotidectomy in the same series",
+      "design": "Retrospective cohort",
+      "sourceId": "linkov-2012"
+    },
+    {
+      "label": "Partial resolution of symptoms",
+      "value": 69,
+      "unit": "%",
+      "population": "Patients who developed first bite syndrome in the same series",
+      "design": "Retrospective cohort",
+      "sourceId": "linkov-2012"
+    },
+    {
+      "label": "Complete resolution of symptoms",
+      "value": 12,
+      "unit": "%",
+      "population": "Patients who developed first bite syndrome in the same series",
+      "design": "Retrospective cohort",
+      "sourceId": "linkov-2012"
+    }
+  ],
+  "limitations": "The larger series describes deep-lobe, parapharyngeal and infratemporal surgery, not routine superficial parotidectomy for a benign superficial tumour, so its rates do not apply to the representative operation shown. The mechanism (sympathetic denervation) is the accepted explanation, given as 'thought to be' in the Iowa protocol, not observed in individual patients. The model draws the region of pain as a schematic territory.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

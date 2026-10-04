@@ -1,0 +1,23 @@
+{
+  "id": "bed-inspection",
+  "statement": {
+    "essentials": "Before closing, the surgeon checks that the bed is dry and, where the nerve was kept, that it still works. In one hospital's protocol the aim is to keep a working nerve working, even if that means leaving a microscopic margin on it.",
+    "anatomy": "Bleeding is controlled with bipolar cautery and the wound is irrigated. If the nerve was kept, the operative note records whether stimulating it before closure produced the expected contraction of facial muscles.",
+    "clinical": "The University of Iowa protocol states the general principle that if the facial nerve is working before surgery every effort should be made to let it work after surgery, even if microscopic positive tumour margins are left on the nerve. It describes haemostasis with bipolar cautery followed by copious irrigation, and its sample operative note records whether the nerve was stimulated before closure and whether stimulation produced the expected contraction of facial muscles."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Completion of procedure; Sample dictation",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "One institution's protocol, not a standard; the 'leave a microscopic margin on the nerve' principle is stated there for a working nerve and is not a general rule for malignant tumours, for which the same protocol allows the nerve to be sacrificed.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

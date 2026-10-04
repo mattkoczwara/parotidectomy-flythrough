@@ -1,0 +1,151 @@
+{
+  "id": "minor-complications",
+  "statement": {
+    "essentials": "Besides the major risks, a number of smaller problems are common after parotid surgery: numbness is the most frequent, followed by a visible hollow, collections of blood or saliva, and wound problems.",
+    "anatomy": "The pooled minor complications are haematoma, wound infection, sialocele, salivary fistula, loss of skin of the flap, scar problems, numbness and deformity. Sialocele and fistula are more frequent after less extensive operations, while haematoma, infection, flap necrosis and aesthetic problems are worse after more extensive ones.",
+    "clinical": "In a systematic review of 235 studies the pooled incidence was haematoma 2.9%, wound infection 2.3%, sialocele 4.5%, salivary fistula 3.1%, flap necrosis 1.7%, scar problems 3.6%, numbness 33.9% and deformity 11.8%. A US database of 11,057 parotidectomies found 30-day surgical complications in 3.8% and surgical site infection in 2.7%."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "lambiel-2021",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "bovenzi-2019",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Haematoma",
+      "value": 2.9,
+      "unit": "%",
+      "ci": [
+        2.4,
+        3.5
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Wound infection",
+      "value": 2.3,
+      "unit": "%",
+      "ci": [
+        1.8,
+        2.9
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Sialocele",
+      "value": 4.5,
+      "unit": "%",
+      "ci": [
+        3.5,
+        5.7
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Salivary fistula",
+      "value": 3.1,
+      "unit": "%",
+      "ci": [
+        2.6,
+        3.7
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Flap necrosis",
+      "value": 1.7,
+      "unit": "%",
+      "ci": [
+        1.1,
+        2.5
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Scar problems",
+      "value": 3.6,
+      "unit": "%",
+      "ci": [
+        2.4,
+        5.4
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Numbness",
+      "value": 33.9,
+      "unit": "%",
+      "ci": [
+        25.6,
+        43.4
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Deformity",
+      "value": 11.8,
+      "unit": "%",
+      "ci": [
+        6.9,
+        19.5
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Surgical complications within 30 days",
+      "value": 3.8,
+      "unit": "%",
+      "n": "of 11,057 patients",
+      "population": "Patients in the US ACS-NSQIP database having parotidectomy, 2012 to 2017",
+      "design": "Retrospective database review",
+      "sourceId": "bovenzi-2019"
+    },
+    {
+      "label": "Surgical site infection within 30 days",
+      "value": 2.7,
+      "unit": "%",
+      "n": "of 11,057 patients",
+      "population": "Patients in the US ACS-NSQIP database having parotidectomy, 2012 to 2017",
+      "design": "Retrospective database review",
+      "sourceId": "bovenzi-2019"
+    }
+  ],
+  "limitations": "The pooled figures come from studies that define and detect each problem differently (numbness especially varies with how it is tested), and the review authors note that minor complications are more frequent than generally assumed. The database captures only the first 30 days.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

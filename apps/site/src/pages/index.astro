@@ -21,7 +21,7 @@ const sources = (await getCollection('sources')).map((s) => s.data);
 // Only what the client needs: plate deltas, structure names and tissue families, and the evidence.
 const clientData = {
   plates: steps.map(({ data }) => ({ id: data.id, title: data.title, chapter: data.chapter, delta: data.delta, transition: data.transition, sceneDescription: data.sceneDescription })),
-  structures: structures.map(({ id, names, tissue, depth, members, schematic }) => ({ id, names, tissue, depth, members, schematic })),
+  structures: structures.map(({ id, names, tissue, depth, members, schematic, hidden }) => ({ id, names, tissue, depth, members, schematic, hidden })),
   claims: Object.fromEntries(claims.map((c) => [c.id, c])),
   sources: Object.fromEntries(sources.map((s) => [s.id, s])),
   planes: depthPlanes,

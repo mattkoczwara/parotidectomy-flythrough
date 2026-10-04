@@ -1,0 +1,40 @@
+{
+  "id": "postop-timeline",
+  "statement": {
+    "essentials": "In one hospital's routine the dressing comes off once the patient is awake, they can go home the next day with the drain, and the stitches and drain come out about six days after the operation.",
+    "anatomy": "The wound is looked at once the patient has fully woken; the suction drain stays in at least 36 hours and is taken out once its output is low.",
+    "clinical": "The University of Iowa protocol exposes the wound by removing the pressure dressing after full emergence from anaesthesia. The suction drain stays in at least 36 hours and is removed after three consecutive 8-hour shifts with under 30 mL in total. After demonstrating proficiency with the drain the patient may be discharged on postoperative day 1 and return on day 6 for suture and drain removal."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Postoperative care; Suction drain management",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Postoperative day of discharge with the drain",
+      "value": 1,
+      "unit": "days",
+      "population": "Patients after parotidectomy with facial nerve dissection at one department who can manage the drain",
+      "design": "Institutional protocol (no outcome data)",
+      "sourceId": "iowa-parotidectomy-protocol"
+    },
+    {
+      "label": "Postoperative day of suture and drain removal",
+      "value": 6,
+      "unit": "days",
+      "population": "Patients after parotidectomy with facial nerve dissection at one department",
+      "design": "Institutional protocol (no outcome data)",
+      "sourceId": "iowa-parotidectomy-protocol"
+    }
+  ],
+  "limitations": "One institution's routine, not a standard. A systematic review of same-day against inpatient parotidectomy exists, but its selected, non-randomised comparison is not used here.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

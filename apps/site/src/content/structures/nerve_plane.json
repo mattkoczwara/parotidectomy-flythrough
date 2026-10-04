@@ -15,5 +15,6 @@
   ],
   "claims": [
     "parotid-lobes-surgical"
-  ]
+  ],
+  "hidden": true
 }

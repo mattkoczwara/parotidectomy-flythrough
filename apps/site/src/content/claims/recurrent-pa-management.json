@@ -1,0 +1,56 @@
+{
+  "id": "recurrent-pa-management",
+  "statement": {
+    "essentials": "When a pleomorphic adenoma comes back it is harder to treat, and a second recurrence is not rare. Radiotherapy after the repeat operation is linked with fewer further recurrences.",
+    "anatomy": "Recurrent tumours are often multinodular, MRI is the imaging study of choice, and treatment is individualised; total parotidectomy is appropriate in many patients but may not control the disease.",
+    "clinical": "In 14 studies of 697 patients with recurrent pleomorphic adenoma, the pooled risk of a further recurrence was 21%: 26% after surgery alone (151 of 538) and 10% with adjuvant radiotherapy (21 of 159)."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "hintze-2021",
+      "locator": "Abstract, Results and Conclusions",
+      "support": "direct"
+    },
+    {
+      "sourceId": "witt-2015",
+      "locator": "Abstract",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Further recurrence of recurrent pleomorphic adenoma, all treatments",
+      "value": 21,
+      "unit": "%",
+      "n": "14 studies, 697 patients",
+      "population": "Patients treated for recurrent parotid pleomorphic adenoma, English-language studies 1985 to 2019",
+      "design": "Systematic review and meta-analysis; groups not randomised",
+      "sourceId": "hintze-2021"
+    },
+    {
+      "label": "Further recurrence after surgery alone",
+      "value": 26,
+      "unit": "%",
+      "n": "151 of 538",
+      "population": "Patients with recurrent pleomorphic adenoma treated by surgery alone",
+      "design": "Systematic review and meta-analysis; groups not randomised",
+      "sourceId": "hintze-2021"
+    },
+    {
+      "label": "Further recurrence with adjuvant radiotherapy",
+      "value": 10,
+      "unit": "%",
+      "n": "21 of 159",
+      "population": "Patients with recurrent pleomorphic adenoma treated with adjuvant radiotherapy",
+      "design": "Systematic review and meta-analysis; groups not randomised",
+      "sourceId": "hintze-2021"
+    }
+  ],
+  "limitations": "The radiotherapy and surgery-only groups were not randomised, so who was chosen for radiotherapy may differ in ways that affect the result, and follow-up times differ. Radiotherapy has its own risks, which the abstract does not address.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

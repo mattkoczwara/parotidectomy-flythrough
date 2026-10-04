@@ -4,7 +4,7 @@ chapter: operation
 order: 27
 title: The skin flap is raised
 delta:
-  camera: { azimuth: 8, elevation: 4, zoom: 1.35, frame: [parotid_superficial_lobe, sternocleidomastoid_r, masseter_r] }
+  camera: { azimuth: 8, elevation: 8, zoom: 1.3, frame: [parotid_gland, masseter_r, great_auricular_nerves] }
   gauge: 2
   op: { flap: 1, ink: 1, ink_facelift: 0 }
   variants: { incision: blair }
@@ -30,6 +30,7 @@ transition: { camera: [0, 0.4], structures: [0.1, 0.5], op: [0.3, 1] }
 sceneDescription: "The skin and the fat beneath it are cut along the ink line and folded forward over the cheek, still attached in front. Beneath lies the pale capsule of the gland; behind and below it, a thin nerve to the earlobe (the great auricular nerve) crosses the neck muscle beside a vein. The thin muscle sheet of the neck (platysma) is not shown."
 claims: [flap-plane, great-auricular-nerve-course]
 ---
+
 import Claim from '../../components/Claim.astro';
 import Model from '../../components/Model.astro';
 import Note from '../../components/Note.astro';

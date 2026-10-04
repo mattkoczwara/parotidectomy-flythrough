@@ -4,10 +4,20 @@ chapter: operation
 order: 32
 title: Following the upper branches
 delta:
-  camera: { azimuth: -28, elevation: 8, zoom: 1.1, frame: [facial_nerve_temporofacial, facial_nerve_temporal, facial_nerve_zygomatic, pleomorphic_adenoma] }
+  camera: { azimuth: -50, elevation: 32, zoom: 1.2, frame: [facial_nerve_temporofacial, facial_nerve_temporal, facial_nerve_zygomatic, pleomorphic_adenoma] }
   gauge: 4
-  op: { peel: 0.58 }
+  op: { peel: 0.7 }
   structures:
+      skin: { mode: ghost, opacity: 0.05, emphasis: context }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      eyes: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      mandible: { mode: ghost, opacity: 0.4, emphasis: context }
+      masseter_r: { mode: ghost, opacity: 0.45, emphasis: context }
+      sternocleidomastoid_r: { mode: ghost, opacity: 0.4, emphasis: context }
       facial_nerve_temporofacial: { emphasis: focus }
       facial_nerve_temporal: { emphasis: focus }
       facial_nerve_zygomatic: { emphasis: focus }
@@ -21,6 +31,7 @@ transition: { camera: [0, 0.5], structures: [0.2, 0.7], op: [0.3, 1] }
 sceneDescription: "The folded-forward gland now reaches the tumour. The upper division and its two branches, one to the forehead and one to the eyelids, lie bare on the inner part of the gland, which stays in place."
 claims: [antegrade-dissection, fn-five-branch-groups]
 ---
+
 import Claim from '../../components/Claim.astro';
 import Model from '../../components/Model.astro';
 import Note from '../../components/Note.astro';

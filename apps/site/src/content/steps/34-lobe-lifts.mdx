@@ -4,9 +4,19 @@ chapter: operation
 order: 34
 title: The outer lobe comes away
 delta:
-  camera: { azimuth: -30, elevation: 12, zoom: 1.15, frame: [parotid_gland, facial_nerve_branches, parotid_superficial_lobe] }
+  camera: { azimuth: -60, elevation: 30, zoom: 1.05, frame: [parotid_gland, facial_nerve_branches] }
   op: { peel: 1 }
   structures:
+      skin: { mode: ghost, opacity: 0.05, emphasis: context }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      eyes: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      mandible: { mode: ghost, opacity: 0.4, emphasis: context }
+      masseter_r: { mode: ghost, opacity: 0.45, emphasis: context }
+      sternocleidomastoid_r: { mode: ghost, opacity: 0.4, emphasis: context }
       facial_nerve_branches: { emphasis: focus }
   labels:
       - { structureId: facial_nerve_trunk }
@@ -17,6 +27,7 @@ transition: { camera: [0, 0.4], op: [0.3, 1] }
 sceneDescription: "The outer part of the gland has been folded right over and is held clear of the field, with the tumour inside it. Every branch of the nerve, from the trunk to the edge of the gland, lies on the inner part of the gland, untouched."
 claims: [superficial-parotidectomy-definition, cuff-sufficient-view]
 ---
+
 import Claim from '../../components/Claim.astro';
 import Model from '../../components/Model.astro';
 import Note from '../../components/Note.astro';

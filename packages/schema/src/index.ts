@@ -181,6 +181,8 @@ export const structure = z.strictObject({
   members: z.array(id).default([]),
   /** Schematic, not modelled anatomy: always drawn in the line/hatch grammar (plan §2). */
   schematic: z.boolean().default(false),
+  /** Absent from the opening scene (props, imaging, alternatives and barriers): a plate has to bring it in. */
+  hidden: z.boolean().default(false),
 });
 export type Structure = z.infer<typeof structure>;
 

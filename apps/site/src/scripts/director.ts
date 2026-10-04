@@ -12,7 +12,7 @@ type Depth = 'essentials' | 'anatomy' | 'clinical';
 
 interface ClientData {
   plates: Array<PlateSpec & { title: string; chapter: string; sceneDescription: string }>;
-  structures: Array<{ id: string; names: { plain: string; anatomical: string; latin?: string }; tissue: string; depth: string; members?: string[]; schematic?: boolean }>;
+  structures: Array<{ id: string; names: { plain: string; anatomical: string; latin?: string }; tissue: string; depth: string; members?: string[]; schematic?: boolean; hidden?: boolean }>;
   claims: Record<string, ClaimRecord>;
   sources: Record<string, SourceRecord>;
   planes: readonly string[];
@@ -56,7 +56,7 @@ export function start(): void {
   const groups = Object.fromEntries(data.structures.filter((s) => s.members?.length).map((s) => [s.id, s.members!]));
   // Every content mesh starts present, in context; plates record only what changes.
   const initialStructures: Record<string, StructureState> = {};
-  for (const s of data.structures) if (!groups[s.id]) initialStructures[s.id] = { ...defaultStructure };
+  for (const s of data.structures) if (!groups[s.id]) initialStructures[s.id] = { ...defaultStructure, presence: s.hidden ? 0 : 1 };
   const initialState: SceneState = {
     camera: { azimuth: 0, elevation: 0, zoom: 1, frames: [] },
     structures: initialStructures,

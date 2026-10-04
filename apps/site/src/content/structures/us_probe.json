@@ -17,5 +17,6 @@
     "anatomy-slice-glb"
   ],
   "members": [],
-  "schematic": false
+  "schematic": false,
+  "hidden": true
 }

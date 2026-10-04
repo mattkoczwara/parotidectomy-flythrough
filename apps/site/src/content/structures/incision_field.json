@@ -13,5 +13,6 @@
   ],
   "claims": [],
   "members": [],
-  "schematic": false
+  "schematic": false,
+  "hidden": true
 }

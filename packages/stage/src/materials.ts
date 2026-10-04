@@ -134,12 +134,15 @@ function windowMask(open: THREE.UniformNode<'float', number>, inset: number) {
   })();
 }
 
+/** How far the dissected lobe is folded forward about its hinge (radians): past a right angle, so it lies clear of the nerve bed. */
+export const PEEL_ANGLE = 1.9;
+
 /** Fold about a vertical hinge at the dissection front, on the lobe's lateral surface (see ADR-0001 finding 2).
  *  `amount` is this part's dissection progress (the global peel for the M1 lobe, per piece for resections). */
 function peel(amount: THREE.Node<'float'>) {
   const d = attribute('_peel', 'float');
   const front = mix(U.frontZ0, U.frontZ1, amount.min(1));
-  const angle = smoothstep(0.0, 0.45, amount.sub(d)).mul(2.3);
+  const angle = smoothstep(0.0, 0.45, amount.sub(d)).mul(PEEL_ANGLE);
   const pivot = vec3(U.hingeX, 0, front);
   const rot = (v: THREE.Node<'vec3'>) => vec3(v.x.mul(cos(angle)).add(v.z.mul(sin(angle))), v.y, v.z.mul(cos(angle)).sub(v.x.mul(sin(angle))));
   return { position: rot(positionLocal.sub(pivot)).add(pivot), normal: rot(normalLocal) };
@@ -390,7 +393,7 @@ export function cpuPeel(p: THREE.Vector3, d: number, amount: number = U.peel.val
   const peelV = amount;
   const t = Math.min(Math.max((peelV - d) / 0.45, 0), 1);
   const front = (U.frontZ0.value as number) + ((U.frontZ1.value as number) - (U.frontZ0.value as number)) * Math.min(peelV, 1);
-  return rotY(p, U.hingeX.value as number, front, t * t * (3 - 2 * t) * 2.3);
+  return rotY(p, U.hingeX.value as number, front, t * t * (3 - 2 * t) * PEEL_ANGLE);
 }
 
 export function cpuFold(p: THREE.Vector3, w: number): THREE.Vector3 {

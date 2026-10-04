@@ -4,16 +4,25 @@ chapter: operation
 order: 33
 title: Lifting the outer gland off the nerve
 delta:
-  camera: { azimuth: -32, elevation: 10, zoom: 1.3, frame: [parotid_gland, facial_nerve_buccal] }
-  op: { peel: 0.72 }
+  camera: { azimuth: -58, elevation: 32, zoom: 1.05, frame: [parotid_gland, facial_nerve_branches] }
+  op: { peel: 0.8 }
   structures:
+      skin: { mode: ghost, opacity: 0.05, emphasis: context }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      eyes: { presence: 0 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      mandible: { mode: ghost, opacity: 0.4, emphasis: context }
+      masseter_r: { mode: ghost, opacity: 0.45, emphasis: context }
+      sternocleidomastoid_r: { mode: solid, opacity: 1, emphasis: context }
       parotid_superficial_lobe: { mode: solid, opacity: 1, emphasis: context }
       pleomorphic_adenoma: { mode: solid, opacity: 1, emphasis: context }
       parotid_deep_lobe: { mode: solid, opacity: 1, emphasis: context }
       facial_nerve_branches: { emphasis: focus }
       facial_nerve_temporofacial: { emphasis: context }
       digastric_posterior_belly: { emphasis: context }
-      sternocleidomastoid_r: { mode: solid, opacity: 1, emphasis: context }
   labels:
       - { structureId: pes_anserinus }
       - { structureId: facial_nerve_buccal }
@@ -24,6 +33,7 @@ transition: { camera: [0, 0.4], structures: [0.1, 0.5], op: [0.4, 1] }
 sceneDescription: "From behind and to the side, with the skin still faded, the outer part of the gland is folded forward off the nerve, carrying the tumour with it. The nerve's divisions and branches lie exposed on the inner part of the gland, which stays in place."
 claims: [antegrade-dissection, parotid-lobes-surgical]
 ---
+
 import Claim from '../../components/Claim.astro';
 import Model from '../../components/Model.astro';
 import Note from '../../components/Note.astro';

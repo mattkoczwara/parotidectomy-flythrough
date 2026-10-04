@@ -4,12 +4,17 @@ chapter: operation
 order: 29
 title: How surgeons find the nerve
 delta:
-  camera: { azimuth: -14, elevation: -2, zoom: 1.35, frame: [facial_nerve_trunk, digastric_posterior_belly, styloid_process] }
+  camera: { azimuth: -28, elevation: 10, zoom: 1.3, frame: [facial_nerve_trunk, digastric_posterior_belly, styloid_process] }
   gauge: 4
   light: { preset: operative, exposure: 1.05 }
   structures:
       nerve_plane: { presence: 0 }
-      skin: { mode: ghost, opacity: 0.14, emphasis: context }
+      skin: { mode: ghost, opacity: 0.06, emphasis: context }
+      skull: { mode: ghost, opacity: 0.2, emphasis: context }
+      mandible: { mode: ghost, opacity: 0.4, emphasis: context }
+      masseter_r: { mode: ghost, opacity: 0.4, emphasis: context }
+      temporalis_r: { presence: 0 }
+      eyes: { presence: 0 }
       subcutaneous_fat: { presence: 0 }
       parotid_fascia: { presence: 0 }
       sternocleidomastoid_r: { mode: ghost, opacity: 0.35, emphasis: context }
@@ -33,6 +38,7 @@ transition: { camera: [0, 0.6], structures: [0.3, 1] }
 sceneDescription: "A closer view behind the jaw. The skin is faded to an outline, the neck muscle and gland are see-through. The nerve trunk emerges from the skull between the mastoid bone and the thin styloid bone, just above a small muscle (the posterior belly of the digastric), and deep to a seam in the bone below the ear canal."
 claims: [landmark-tympanomastoid-suture, landmark-posterior-belly-digastric, landmark-tragal-pointer, landmark-styloid, neck-muscle-exposure]
 ---
+
 import Claim from '../../components/Claim.astro';
 import Model from '../../components/Model.astro';
 import Note from '../../components/Note.astro';

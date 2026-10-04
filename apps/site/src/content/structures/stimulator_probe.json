@@ -18,5 +18,6 @@
   ],
   "members": [],
   "schematic": false,
-  "role": "Tells the surgeon whether tissue is the nerve, and that it still works."
+  "role": "Tells the surgeon whether tissue is the nerve, and that it still works.",
+  "hidden": true
 }

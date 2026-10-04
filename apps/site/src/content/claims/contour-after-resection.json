@@ -1,0 +1,51 @@
+{
+  "id": "contour-after-resection",
+  "statement": {
+    "essentials": "Taking out part of the gland can leave a visible hollow in the cheek. The space is sometimes filled, but in most operations it is not.",
+    "anatomy": "A reduction in the volume of the cheek after the gland is removed is called a contour deformity. Reconstruction of the volume or contour is done to address it.",
+    "clinical": "A systematic review of 235 studies pooled a deformity rate of 11.8% (95% CI 6.9 to 19.5), with aesthetic problems worse after more extensive resections. In a US database of 11,057 parotidectomies, volume or contour reconstruction was relatively uncommon, at 18%."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "lambiel-2021",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "bovenzi-2019",
+      "locator": "Abstract, Background and Results",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Deformity after parotidectomy",
+      "value": 11.8,
+      "unit": "%",
+      "ci": [
+        6.9,
+        19.5
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence (descriptive statistics)",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Volume or contour reconstruction at parotidectomy",
+      "value": 18,
+      "unit": "%",
+      "n": "of 11,057 patients",
+      "population": "Patients in the US ACS-NSQIP database having parotidectomy, 2012 to 2017",
+      "design": "Retrospective database review identified by procedure codes",
+      "sourceId": "bovenzi-2019"
+    }
+  ],
+  "limitations": "How deformity was defined and graded differed between the pooled studies, and the database counts only what was coded, so the 18% may under-report. The hollow in the model is drawn at an illustrative depth, not a measured one.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

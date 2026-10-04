@@ -3,7 +3,7 @@
   "statement": {
     "essentials": "A collection of saliva under the skin flap (a sialocele) or a leak of saliva through the wound is one of the commoner early problems; in one large series it affected roughly one patient in eleven, mostly within a month, and all settled.",
     "anatomy": "In one series a sialocele or fistula was more likely after an inferior or middle superficial parotidectomy than after other extents of dissection.",
-    "clinical": "At one university centre, 70 of 771 patients (9.1%) over 1994 to 2013 developed a sialocele or salivary fistula; 67 (96%) did so within a month and all had resolved by 6 months. Inferior and middle superficial parotidectomy had a significantly higher rate than other extents; age, sex, pathology, body mass index and specimen volume did not differ. In the Cochrane review, acellular dermal matrix made little or no difference to seromas or sialoceles (risk ratio 2.33, 95% CI 0.66 to 8.23; 64 participants, low-certainty) but may raise wound infection."
+    "clinical": "At one university centre, 70 of 771 patients (9.1%) over 1994 to 2013 developed a sialocele or salivary fistula; 67 (96%) did so within a month and all had resolved by 6 months. Inferior and middle superficial parotidectomy had a significantly higher rate than other extents; age, sex, pathology, body mass index and specimen volume did not differ. In the Cochrane review, acellular dermal matrix made little or no difference to seromas or sialoceles (risk ratio 2.33, 95% CI 0.66 to 8.23; 64 participants, low-certainty) but may raise wound infection. A systematic review of 235 studies pooled sialocele at 4.5% (95% CI 3.5 to 5.7) and salivary fistula at 3.1% (2.6 to 3.7), and found both more frequent after less extensive operations."
   },
   "evidenceClass": "comparative-evidence",
   "sources": [
@@ -15,6 +15,11 @@
     {
       "sourceId": "ye-2019",
       "locator": "Abstract, Main results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "lambiel-2021",
+      "locator": "Abstract, Results",
       "support": "direct"
     }
   ],
@@ -49,6 +54,32 @@
       "population": "Adults undergoing superficial parotidectomy, mostly for benign lesions, in randomised trials",
       "design": "Cochrane systematic review, low-certainty evidence",
       "sourceId": "ye-2019"
+    },
+    {
+      "label": "Sialocele, pooled across studies",
+      "value": 4.5,
+      "unit": "%",
+      "ci": [
+        3.5,
+        5.7
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
+    },
+    {
+      "label": "Salivary fistula, pooled across studies",
+      "value": 3.1,
+      "unit": "%",
+      "ci": [
+        2.6,
+        3.7
+      ],
+      "n": "235 studies in total",
+      "population": "Patients in studies of parotidectomy reporting minor complications",
+      "design": "Systematic review, pooled incidence",
+      "sourceId": "lambiel-2021"
     }
   ],
   "limitations": "A single-centre series spanning two decades, so techniques changed over the period; the abstract does not say how the diagnosis was made or whether mild collections were counted. Results from one centre do not give the rate for another, and the figure is for sialocele together with salivary fistula. The schematic pocket drawn in the atlas is an illustration of the idea, not a measured shape.",
@@ -56,5 +87,6 @@
   "verification": "checked",
   "clinicalReview": {
     "status": "pending"
-  }
+  },
+  "disagreement": "A systematic review of 235 studies pooled sialocele at 4.5% and salivary fistula at 3.1%, lower than the 9.1% for the two together at the single centre above; both found them more frequent after less extensive operations."
 }

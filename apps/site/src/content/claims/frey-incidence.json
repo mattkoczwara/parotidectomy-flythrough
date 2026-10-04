@@ -1,0 +1,70 @@
+{
+  "id": "frey-incidence",
+  "statement": {
+    "essentials": "Sweating and flushing over the cheek when eating is common after parotid surgery if you test for it, but fewer people notice it themselves.",
+    "anatomy": "Frey syndrome is diagnosed with the starch-iodine test: iodine is painted on the cheek, starch dusted over it and a lemon slice or sour drop given; the area of gustatory sweating stains dark blue.",
+    "clinical": "In 59 patients after unilateral parotidectomy, 20 (33.9%) reported symptoms after eating, while 30 (50.8%) tested positive on Minor's starch-iodine test; 19 of those 30 (63.3%) had symptoms, and 2 of 29 test-negative patients (6.9%) did. Pooled single-arm rates in pleomorphic adenoma were lower after extracapsular dissection (4%) than after superficial parotidectomy (13%)."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "choi-2013",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Frey's syndrome",
+      "support": "direct"
+    },
+    {
+      "sourceId": "salzano-2025",
+      "locator": "Section 3.3",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Patients reporting symptoms after eating",
+      "value": 33.9,
+      "unit": "%",
+      "n": "20 of 59",
+      "population": "Patients after unilateral parotidectomy at one centre",
+      "design": "Single-centre case series with questionnaire",
+      "sourceId": "choi-2013"
+    },
+    {
+      "label": "Patients with a positive starch-iodine test",
+      "value": 50.8,
+      "unit": "%",
+      "n": "30 of 59",
+      "population": "Patients after unilateral parotidectomy at one centre",
+      "design": "Single-centre case series, Minor's starch-iodine test",
+      "sourceId": "choi-2013"
+    },
+    {
+      "label": "Symptoms among those with a positive test",
+      "value": 63.3,
+      "unit": "%",
+      "n": "19 of 30",
+      "population": "Patients with a positive starch-iodine test",
+      "design": "Single-centre case series",
+      "sourceId": "choi-2013"
+    },
+    {
+      "label": "Symptoms among those with a negative test",
+      "value": 6.9,
+      "unit": "%",
+      "n": "2 of 29",
+      "population": "Patients with a negative starch-iodine test",
+      "design": "Single-centre case series",
+      "sourceId": "choi-2013"
+    }
+  ],
+  "limitations": "One 59-patient series; the paper's own point is that the reported incidence varies widely with how Frey syndrome is measured. The pooled comparison after different operations is in claim ecd-vs-superficial-outcomes and is not a randomised comparison.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}
