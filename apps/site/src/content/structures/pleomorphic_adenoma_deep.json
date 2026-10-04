@@ -1,0 +1,19 @@
+{
+  "id": "pleomorphic_adenoma_deep",
+  "names": {
+    "plain": "The tumour, if it lay in the inner part",
+    "anatomical": "Pleomorphic adenoma, deep-lobe position"
+  },
+  "gloss": "The same kind of tumour placed in the inner part of the gland, beneath the nerve.",
+  "tissue": "tumour",
+  "depth": "deep-lobe",
+  "claims": [],
+  "anchors": [
+    "anchor__pleomorphic_adenoma_deep"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

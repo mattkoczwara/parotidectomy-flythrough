@@ -1,24 +1,60 @@
 {
   "id": "fn-lateral-to-retromandibular-vein",
   "statement": {
-    "essentials": "Inside the gland the nerve lies on the outer side of a large vein, which scans use to estimate where the nerve runs.",
-    "anatomy": "The facial nerve lies superficial (lateral) to the retromandibular vein and the external carotid artery within the gland; the vein is the usual imaging surrogate for the nerve plane."
+    "essentials": "Inside the gland the nerve usually lies on the outer side of a large vein, which scans use to estimate where the nerve runs.",
+    "anatomy": "The retromandibular vein runs down through the gland and marks the division between its deep and superficial lobes, so it approximates the depth of the facial nerve. The lower division of the nerve usually lies lateral (superficial) to it.",
+    "clinical": "The vein was deep or medial to the marginal mandibular branch or lower division in 77.1% of 35 parotidectomies, and in 92.6% of 1,454 sides across the literature and that cohort. The nerve ran medial to the vein in 3 of 49 donor bodies."
   },
   "evidenceClass": "established-anatomy",
   "sources": [
     {
-      "sourceId": "statpearls-parotidectomy",
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Pertinent anatomy",
       "support": "direct"
     },
     {
-      "sourceId": "kochhar-2016",
+      "sourceId": "mehel-2026",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "suchomlinov-2025",
+      "locator": "Abstract",
       "support": "direct"
     }
   ],
-  "limitations": "No study found giving the proportion of people in whom the nerve lies medial to the vein; variants exist.",
-  "numbers": [],
-  "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "numbers": [
+    {
+      "label": "Vein deep or medial to the lower division (classical relation)",
+      "value": 77.1,
+      "unit": "%",
+      "n": "27 of 35 parotidectomies",
+      "population": "Patients having parotidectomy, one centre, one year",
+      "design": "Prospective surgical study",
+      "sourceId": "mehel-2026"
+    },
+    {
+      "label": "Classical relation, pooled literature and cohort",
+      "value": 92.6,
+      "unit": "%",
+      "n": "1,346 of 1,454 sides",
+      "population": "Cadaveric, radiological and surgical series",
+      "design": "Narrative literature review with a prospective cohort",
+      "sourceId": "mehel-2026"
+    },
+    {
+      "label": "Atypical course medial to the vein",
+      "value": 6,
+      "unit": "%",
+      "n": "3 of 49 donor bodies",
+      "population": "Donor bodies, right hemifaces",
+      "design": "Cadaveric dissection",
+      "sourceId": "suchomlinov-2025"
+    }
+  ],
+  "limitations": "The relation is not constant; the authors stress that the vein is a landmark, not a guarantee. The model draws the usual relation.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

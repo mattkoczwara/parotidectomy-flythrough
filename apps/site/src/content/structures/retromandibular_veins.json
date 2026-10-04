@@ -1,0 +1,20 @@
+{
+  "id": "retromandibular_veins",
+  "names": {
+    "plain": "The vein behind the jaw",
+    "anatomical": "Retromandibular vein and its divisions"
+  },
+  "gloss": "The large vein that runs down through the gland just inside the facial nerve.",
+  "tissue": "vein",
+  "depth": "deep-lobe",
+  "members": [
+    "retromandibular_vein",
+    "retromandibular_vein_anterior",
+    "retromandibular_vein_posterior"
+  ],
+  "anchors": [],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

@@ -1,0 +1,29 @@
+{
+  "id": "rosa-2020",
+  "citation": {
+    "authors": [
+      "Rosa MA",
+      "Łazarz DP",
+      "Pękala JR",
+      "Skinningsrud B",
+      "Lauritzen SS",
+      "Solewski B",
+      "Pękala PA",
+      "Walocha JA",
+      "Tomaszewski KA"
+    ],
+    "title": "The Accessory Parotid Gland and its Clinical Significance",
+    "container": "J Craniofac Surg",
+    "year": 2020,
+    "volume": "31",
+    "pages": "856-860"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "31856138",
+  "doi": "10.1097/SCS.0000000000006092",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/31856138/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-10-04",
+  "notes": "13 articles, n=3115; pooled prevalence of the accessory parotid gland."
+}

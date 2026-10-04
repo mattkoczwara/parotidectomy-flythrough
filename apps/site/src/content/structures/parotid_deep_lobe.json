@@ -16,5 +16,9 @@
   ],
   "claims": [
     "parotid-lobes-surgical"
+  ],
+  "members": [
+    "parotid_level_3",
+    "parotid_level_4"
   ]
 }

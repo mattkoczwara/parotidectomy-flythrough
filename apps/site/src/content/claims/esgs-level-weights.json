@@ -1,0 +1,60 @@
+{
+  "id": "esgs-level-weights",
+  "statement": {
+    "essentials": "The lower outer part of the gland is the largest of the five.",
+    "anatomy": "By weight the lower outer part (level II) is the heaviest level of the gland, followed by levels I and III, which are similar; the upper inner part (level IV) is the lightest of the four body levels.",
+    "clinical": "In 19 dissected glands level II made up 41–47% of the weight, levels I and III 20–22% each, level IV 8–10%, and level V, when present, under 5%."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "pujol-olmo-2020",
+      "locator": "Results",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Level II share of gland weight",
+      "unit": "%",
+      "range": [
+        41,
+        47
+      ],
+      "n": "19 specimens",
+      "population": "Human anatomical specimens",
+      "design": "Anatomical dissection study",
+      "sourceId": "pujol-olmo-2020"
+    },
+    {
+      "label": "Levels I and III, each",
+      "unit": "%",
+      "range": [
+        20,
+        22
+      ],
+      "n": "19 specimens",
+      "population": "Human anatomical specimens",
+      "design": "Anatomical dissection study",
+      "sourceId": "pujol-olmo-2020"
+    },
+    {
+      "label": "Level IV share of gland weight",
+      "unit": "%",
+      "range": [
+        8,
+        10
+      ],
+      "n": "19 specimens",
+      "population": "Human anatomical specimens",
+      "design": "Anatomical dissection study",
+      "sourceId": "pujol-olmo-2020"
+    }
+  ],
+  "limitations": "Weights of one study of 19 specimens; the ranges depend on whether level V was present. The levels in the model are cut by the project’s own boundaries, and its volume shares differ from these figures (reported in the QC log, not tuned).",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -9,8 +9,12 @@ export PYTHONIOENCODING=utf-8
 $PY pipeline/anatomy/landmarks.py > /dev/null
 $PY pipeline/anatomy/author.py
 $PY pipeline/anatomy/surfaces.py
+$PY pipeline/anatomy/pieces.py
 $PY pipeline/anatomy/face.py
+$PY pipeline/anatomy/extras.py
+$PY pipeline/anatomy/props.py
 (cd pipeline/anatomy && "../../$PY" layers.py && "../../$PY" flap.py)
+$PY pipeline/anatomy/barriers.py
 $PY pipeline/build/export_gltf.py
 npx gltf-transform meshopt pipeline/build/out/slice.raw.glb apps/site/public/assets/anatomy/slice.glb --level medium
 cp pipeline/build/out/frame.json apps/site/public/assets/anatomy/frame.json

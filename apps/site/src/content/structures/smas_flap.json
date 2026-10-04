@@ -1,0 +1,21 @@
+{
+  "id": "smas_flap",
+  "names": {
+    "plain": "Flap of the thin fibrous sheet (SMAS)",
+    "anatomical": "SMAS and parotid fascia flap"
+  },
+  "gloss": "The thin fibrous layer over the gland, raised as a flap attached at its front edge and laid back over the space left by the gland.",
+  "tissue": "fascia",
+  "depth": "smas-fascia",
+  "claims": [
+    "barrier-options"
+  ],
+  "anchors": [
+    "anchor__smas_flap"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

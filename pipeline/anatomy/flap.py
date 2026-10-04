@@ -309,6 +309,10 @@ def build():
     helix = np.array(face["helix_right"], float)
     tumour = json.loads((ROOT / "pipeline/specs/tumour.resolved.json").read_text(encoding="utf-8"))
     path = catmull_rom(np.array(inc["points"], float))
+    # The facelift-type alternative is an incision line only (ink): it is drawn on the skin for comparison with the
+    # modified Blair path; the flap in the operative plates is the Blair one.
+    fl = spec.get("incision_facelift")
+    path2 = catmull_rom(np.array(fl["points"], float)) if fl else None
     skin = load("skin")
     faces = skin["indices"].reshape(-1, 3)
     head, a0, s0 = head_without_ear(skin["positions"], faces, helix, inc["ear_radius_mm"], inc["x_min"])
@@ -319,7 +323,10 @@ def build():
         sd_c *= inc["flap_side"]
         lateral = c[:, 0] > inc["x_min"] - 4
         in_flap = (sd_c > 0) & (flap_weight(c[:, 1:3], path, inc) > 0)
-        return np.where(lateral & (np.abs(sd_c) < 6), inc["edge_mm"][0], np.where(lateral & in_flap, inc["edge_mm"][1], np.inf))
+        near2 = np.zeros(len(c), bool)
+        if path2 is not None:
+            near2 = np.abs(signed_distance(c[:, 1:3], path2)[0]) < 6
+        return np.where(lateral & ((np.abs(sd_c) < 6) | near2), inc["edge_mm"][0], np.where(lateral & in_flap, inc["edge_mm"][1], np.inf))
 
     def lateral_factor(pos, nrm):
         """1 on the outermost lateral skin (within a few mm of the most lateral surface at that (A, S), facing
@@ -358,6 +365,10 @@ def build():
         d["cut"] = np.clip(sd / CUT_SCALE, -1, 1).astype(np.float32)
         d["cut_s"] = s.astype(np.float32)
         d["flap_w"] = w.astype(np.float32)
+        if mid == "skin" and path2 is not None:
+            sd2, s2 = signed_distance(pos[:, 1:3], path2)
+            d["cut2"] = np.clip(sd2 / CUT_SCALE, -1, 1).astype(np.float32)
+            d["cut_s2"] = s2.astype(np.float32)
         np.savez_compressed(OUT / f"{mid}.npz", **d)
         flap_v = (sd > 0) & (w > 0.01)
         checks[mid] = {"flap_vertices": int(flap_v.sum()), "auricle_vertices_excluded": int(aur.sum())}

@@ -1,0 +1,28 @@
+{
+  "id": "evidence-limits-choice",
+  "statement": {
+    "essentials": "Most comparisons between operations come from records of what surgeons chose, so they cannot show that one operation is safer than another for the same tumour.",
+    "anatomy": "No randomised trial has compared extracapsular dissection with superficial parotidectomy. The studies are retrospective, differ in size, follow-up and tumour mix, and rarely say how the operation was chosen, which introduces selection bias.",
+    "clinical": "The UK national guideline asks only that benign parotid tumours be completely excised, which offers good cure rates."
+  },
+  "evidenceClass": "uncertain",
+  "sources": [
+    {
+      "sourceId": "salzano-2025",
+      "locator": "Section 4, Limitations",
+      "support": "direct"
+    },
+    {
+      "sourceId": "sood-2016",
+      "locator": "Recommendations",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "Salzano 2025 is itself a single-arm pooled analysis of mostly retrospective studies with some internally inconsistent figures.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

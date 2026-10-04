@@ -1,0 +1,30 @@
+---
+id: option-total
+chapter: choosing
+order: 22
+title: Total parotidectomy
+delta:
+  camera: { azimuth: -30, elevation: 14, zoom: 1.3, frame: [parotid_deep_lobe, facial_nerve_branches, facial_nerve_trunk] }
+  gauge: 5
+  op: { peel: 1, out: 1, deep: 0.45, mobilise: 1, ink_plane: 0, ink_cranial: 0, ink_cuff: 0 }
+  variants: { resection: total }
+  structures:
+      parotid_superficial_lobe: { emphasis: context }
+      parotid_deep_lobe: { emphasis: focus }
+      facial_nerve: { emphasis: focus }
+  labels:
+      - { structureId: parotid_deep_lobe }
+      - { structureId: facial_nerve_trunk }
+      - { structureId: retromandibular_vein }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7], op: [0.3, 1] }
+sceneDescription: "With the outer part of the gland already removed, the branches of the nerve have been lifted a little to one side and the inner part of the gland is being drawn out from underneath them. The nerve is kept intact; only the gland is removed. This step is drawn schematically."
+claims: [total-parotidectomy-definition]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="total-parotidectomy-definition">A total parotidectomy also removes the inner levels, working from beneath the nerve, which is kept. In benign disease it is usually kept for tumours that reach the inner part of the gland.</Claim>
+
+<Claim id="total-parotidectomy-definition">Its main downsides are more temporary and permanent weakness of the face, Frey syndrome and a change in contour.</Claim> <Model>The way the inner part is delivered from beneath the nerve is drawn schematically here.</Model>

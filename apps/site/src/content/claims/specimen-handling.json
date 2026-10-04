@@ -1,0 +1,22 @@
+{
+  "id": "specimen-handling",
+  "statement": {
+    "essentials": "The removed tissue is marked so the pathologist knows which way it lay, and a small piece may be examined while the operation continues.",
+    "anatomy": "The specimen is oriented and sent to pathology; frozen section may be taken when the diagnosis is uncertain, and the nerve (or a branch) is sacrificed only for malignancy, or rarely for repeatedly recurrent adenoma."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Completion of procedure; sample dictation",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "One institution’s practice; the protocol itself notes that the accuracy of frozen section has been debated and depends on the pathologist.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

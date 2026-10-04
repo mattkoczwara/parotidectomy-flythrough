@@ -2,12 +2,13 @@
   "id": "fn-trunk-diameter",
   "statement": {
     "essentials": "At its exit from the skull the nerve is only about 2–3 mm thick.",
-    "anatomy": "Trunk diameter at the stylomastoid foramen is about 2.7 mm."
+    "anatomy": "The trunk measures about 2.7 mm across where it leaves the stylomastoid foramen."
   },
   "evidenceClass": "established-anatomy",
   "sources": [
     {
       "sourceId": "salame-2002",
+      "locator": "Abstract",
       "support": "direct"
     }
   ],
@@ -16,14 +17,15 @@
       "label": "Trunk diameter at the stylomastoid foramen",
       "value": 2.66,
       "unit": "mm",
-      "population": "Adult cadavers, both sides",
-      "design": "Microsurgical cadaveric study (mean ± SD 0.55 mm)",
-      "sourceId": "salame-2002",
-      "n": "23 cadavers"
+      "n": "23 cadavers (SD 0.55 mm)",
+      "population": "Formalin-fixed human cadavers",
+      "design": "Cadaveric microdissection study",
+      "sourceId": "salame-2002"
     }
   ],
-  "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "limitations": "Fixed tissue; the diameter falls as the nerve divides, and branches are far thinner than the trunk. Branch calibres in the model are authored from published ranges.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

@@ -12,7 +12,7 @@ type Depth = 'essentials' | 'anatomy' | 'clinical';
 
 interface ClientData {
   plates: Array<PlateSpec & { title: string; chapter: string; sceneDescription: string }>;
-  structures: Array<{ id: string; names: { plain: string; anatomical: string; latin?: string }; tissue: string; depth: string }>;
+  structures: Array<{ id: string; names: { plain: string; anatomical: string; latin?: string }; tissue: string; depth: string; members?: string[]; schematic?: boolean }>;
   claims: Record<string, ClaimRecord>;
   sources: Record<string, SourceRecord>;
   planes: readonly string[];
@@ -22,7 +22,7 @@ interface ClaimRecord {
   statement: { essentials: string; anatomy?: string; clinical?: string };
   evidenceClass: string;
   sources: Array<{ sourceId: string; locator?: string; support: string }>;
-  numbers: Array<{ label: string; value: number; unit: string; ci?: [number, number]; range?: [number, number]; n?: string; population: string; design: string; sourceId: string }>;
+  numbers: Array<{ label: string; value?: number; unit: string; ci?: [number, number]; range?: [number, number]; n?: string; population: string; design: string; sourceId: string }>;
   limitations?: string;
   disagreement?: string;
   verification: string;
@@ -52,19 +52,22 @@ export function start(): void {
   if (query.get('field') === 'graphite' || query.get('field') === 'drape') document.body.dataset.field = query.get('field')!;
   const names = new Map(data.structures.map((s) => [s.id, s.names]));
 
-  // Every content structure starts present, in context; plates record only what changes.
+  // Groups (the superficial lobe is several pieces) expand onto their members in the timeline.
+  const groups = Object.fromEntries(data.structures.filter((s) => s.members?.length).map((s) => [s.id, s.members!]));
+  // Every content mesh starts present, in context; plates record only what changes.
   const initialStructures: Record<string, StructureState> = {};
-  for (const s of data.structures) initialStructures[s.id] = { ...defaultStructure };
+  for (const s of data.structures) if (!groups[s.id]) initialStructures[s.id] = { ...defaultStructure };
   const initialState: SceneState = {
     camera: { azimuth: 0, elevation: 0, zoom: 1, frames: [] },
     structures: initialStructures,
     gauge: 0,
     op: {},
     variants: {},
+    variantMix: {},
     labels: [],
     light: { preset: 'studio', exposure: 1 },
   };
-  let track = compile(data.plates, initialState);
+  let track = compile(data.plates, initialState, { groups });
 
   const articles = [...document.querySelectorAll<HTMLElement>('[data-plate]')];
   const headings = articles.map((a) => a.querySelector('h3') as HTMLElement);
@@ -107,6 +110,8 @@ export function start(): void {
     document.body.dataset.depth = d;
     store.set('atlas.depth', d);
     for (const r of document.querySelectorAll<HTMLInputElement>('input[name="depth"]')) r.checked = r.value === d;
+    // Margin notes: collapsed at Essentials and Anatomy (where their titles are the affordance), open at Clinical.
+    for (const n of document.querySelectorAll<HTMLDetailsElement>('details[data-note]')) n.open = d === 'clinical';
     layoutLabels();
   };
   for (const r of document.querySelectorAll<HTMLInputElement>('input[name="depth"]')) r.addEventListener('change', () => setDepth(r.value as Depth));
@@ -129,21 +134,17 @@ export function start(): void {
   const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
   const fmt = (n: ClaimRecord['numbers'][number]) => {
     const unit = n.unit === '%' ? '%' : ` ${n.unit}`;
-    const bounds = n.ci ? ` (95% CI ${n.ci[0]}–${n.ci[1]}${unit})` : n.range ? ` (range ${n.range[0]}–${n.range[1]}${unit})` : '';
-    return `<span class="value">${n.value}${unit}</span>${bounds}`;
+    const bounds = n.ci ? ` (95% CI ${n.ci[0]}–${n.ci[1]}${unit})` : n.range && n.value !== undefined ? ` (range ${n.range[0]}–${n.range[1]}${unit})` : '';
+    return n.value === undefined ? `<span class="value">${n.range![0]}–${n.range![1]}${unit}</span> (range)` : `<span class="value">${n.value}${unit}</span>${bounds}`;
   };
-  document.addEventListener('click', (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLElement>('.claim-ref');
-    if (!btn) return;
-    const c = data.claims[btn.dataset.claim!];
-    if (!c) return;
+  const claimHtml = (c: ClaimRecord) => {
     const text = depth === 'clinical' ? (c.statement.clinical ?? c.statement.anatomy ?? c.statement.essentials) : depth === 'anatomy' ? (c.statement.anatomy ?? c.statement.essentials) : c.statement.essentials;
-    body.innerHTML = `
-      <p>${esc(text)}</p>
+    return `<section class="claim-card" data-claim="${esc(c.id)}">
+      <p class="claim-text">${esc(text)}</p>
       <p class="class">Evidence: ${esc(c.evidenceClass.replaceAll('-', ' '))}</p>
       ${c.numbers.map((n) => `<div class="figure"><div>${esc(n.label)}: ${fmt(n)}</div><div>${esc(n.population)}${n.n ? ` · ${esc(n.n)}` : ''}</div><div>${esc(n.design)} (${esc(data.sources[n.sourceId]?.citation.authors[0] ?? n.sourceId)} ${data.sources[n.sourceId]?.citation.year ?? ''})</div></div>`).join('')}
       ${c.disagreement ? `<p class="caveat">Disagreement: ${esc(c.disagreement)}</p>` : ''}
-      ${c.limitations ? `<p>Limitations: ${esc(c.limitations)}</p>` : ''}
+      ${c.limitations ? `<p class="why"><strong>Why this may not apply to you.</strong> ${esc(c.limitations)}</p>` : ''}
       <h3>Sources</h3>
       <ol class="sources">${c.sources
         .map((r) => {
@@ -151,12 +152,38 @@ export function start(): void {
           if (!s) return '';
           const cit = s.citation;
           const link = s.pmid ? `https://pubmed.ncbi.nlm.nih.gov/${s.pmid}/` : s.doi ? `https://doi.org/${s.doi}` : s.url;
-          return `<li>${esc(cit.authors.slice(0, 3).join(', '))}${cit.authors.length > 3 ? ' et al.' : ''} ${cit.year ?? ''}. ${cit.title ? esc(cit.title) + '. ' : ''}<i>${esc(cit.container)}</i>. ${esc(s.publicationType.replaceAll('-', ' '))}${r.support === 'indirect' ? ' (indirect support)' : ''}. ${link ? `<a href="${esc(link)}" rel="noreferrer">Link</a>` : ''}</li>`;
+          return `<li>${esc(cit.authors.slice(0, 3).join(', '))}${cit.authors.length > 3 ? ' et al.' : ''} ${cit.year ?? ''}. ${cit.title ? esc(cit.title) + '. ' : ''}<i>${esc(cit.container)}</i>. ${esc(s.publicationType.replaceAll('-', ' '))}${r.support === 'indirect' ? ' (indirect support)' : ''}${r.locator ? ` · ${esc(r.locator)}` : ''}. ${link ? `<a href="${esc(link)}" rel="noreferrer">Link</a>` : ''}</li>`;
         })
         .join('')}</ol>
-      <p class="status">Checked against sources: ${c.verification === 'checked' ? 'yes' : 'not yet'} · Clinical review: ${esc(c.clinicalReview.status)}</p>`;
+      <p class="status">Checked against sources: ${c.verification === 'checked' ? 'yes' : 'not yet'} · Clinical review: ${esc(c.clinicalReview.status)}</p>
+    </section>`;
+  };
+  const openEvidence = (ids: readonly string[]) => {
+    const claims = ids.map((id) => data.claims[id]).filter((c): c is ClaimRecord => !!c);
+    if (!claims.length) return;
+    body.innerHTML = claims.map(claimHtml).join('');
+    dialog.querySelector('#evidence-title')!.textContent = claims.length > 1 ? `Evidence for this paragraph (${claims.length} statements)` : 'Evidence';
     dialog.showModal();
+  };
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    const ref = t.closest<HTMLElement>('.claim-ref');
+    if (ref) return openEvidence([ref.dataset.claim!]);
+    const para = t.closest<HTMLElement>('.para-src');
+    if (para) openEvidence(para.dataset.claims!.split(' '));
   });
+  // Each paragraph ends with a small source affordance (plan §10); the claims inside it open together.
+  for (const p of document.querySelectorAll<HTMLElement>('.plate-body > p')) {
+    const ids = [...new Set([...p.querySelectorAll<HTMLElement>('.claim')].map((c) => c.dataset.claim!))];
+    if (!ids.length) continue;
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'para-src';
+    b.dataset.claims = ids.join(' ');
+    b.setAttribute('aria-label', ids.length > 1 ? `Sources for this paragraph (${ids.length} statements)` : 'Sources for this paragraph');
+    b.textContent = 'i';
+    p.append(b);
+  }
 
   // ── Stage (optional: the page is complete without it) ─────────────────────────────────
   type StageLike = import('@atlas/stage').Stage;
@@ -168,6 +195,8 @@ export function start(): void {
   if ((!hasGPU && !hasWebGL2) || query.has('static')) document.body.classList.add('static');
 
   let current = 0; // rendered t
+  /** Development only: a state pinned by the look-development tools (tools/capture/snap.mjs --patch). */
+  let held: SceneState | null = null;
   let lastApplied = Number.NaN;
   let settledPlate = -1;
   let announcedPlate = -1;
@@ -199,7 +228,8 @@ export function start(): void {
         tier: choice === 'mid' ? 'mid' : 'high',
         forceWebGL: query.get('backend') === 'webgl' || !hasGPU,
         field: getComputedStyle(document.body).getPropertyValue('--field').trim() || '#252a28',
-        structures: data.structures.map((s) => ({ id: s.id, tissue: s.tissue as never })),
+        structures: data.structures.filter((s) => !groups[s.id]).map((s) => ({ id: s.id, tissue: s.tissue as never, schematic: !!s.schematic })),
+        groups,
       });
       await s.load('/assets/anatomy/slice.glb', '/assets/anatomy/frame.json');
       const tm = new TierManager(s, choice, forced, (tier, reason) => {
@@ -220,7 +250,7 @@ export function start(): void {
         });
       }
       stage = s; // publish only once loaded: the frame loop checks `stage`
-      if (import.meta.env.DEV) Object.assign(window, { __atlas: { stage: s, get track() { return track; }, evaluate, layoutLabels, get settledPlate() { return settledPlate; }, get current() { return current; }, targetT } });
+      if (import.meta.env.DEV) Object.assign(window, { __atlas: { stage: s, get track() { return track; }, evaluate, layoutLabels, get settledPlate() { return settledPlate; }, get current() { return current; }, targetT, hold: (st: SceneState | null) => (held = st) } });
       document.body.classList.add('scene-active');
       resize();
       canvas.dataset.ready = '1';
@@ -457,7 +487,7 @@ export function start(): void {
     }
 
     if (stage && (dirty || current !== lastApplied)) {
-      const state = evaluate(track, current);
+      const state = held ?? evaluate(track, current);
       stage.apply(state);
       stage.render();
       tiers?.frame(now);
@@ -541,7 +571,7 @@ export function start(): void {
         plates: data.plates,
         setDelta: (i, delta) => {
           const next = data.plates.map((p, k) => (k === i ? { ...p, delta } : p));
-          track = compile(next, initialState);
+          track = compile(next, initialState, { groups });
           data.plates[i] = next[i]!;
           dirty = true;
         },

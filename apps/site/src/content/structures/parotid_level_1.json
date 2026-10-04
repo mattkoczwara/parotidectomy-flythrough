@@ -1,0 +1,20 @@
+{
+  "id": "parotid_level_1",
+  "names": {
+    "plain": "Upper outer part of the gland (level I)",
+    "anatomical": "ESGS level I (lateral superior)"
+  },
+  "gloss": "The upper part of the gland on the outer side of the facial nerve, traversed by the upper division.",
+  "tissue": "gland",
+  "depth": "superficial-lobe",
+  "claims": [
+    "esgs-five-levels",
+    "esgs-level-weights"
+  ],
+  "anchors": [
+    "anchor__parotid_level_1"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

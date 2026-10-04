@@ -1,0 +1,27 @@
+---
+id: evidence-limits
+chapter: choosing
+order: 24
+title: What the studies can and cannot tell
+delta:
+  camera: { azimuth: -18, elevation: 8, zoom: 1.4, frame: [parotid_gland, pleomorphic_adenoma] }
+  gauge: 3
+  structures:
+      pleomorphic_adenoma: { mode: solid, emphasis: focus }
+  labels:
+      - { structureId: pleomorphic_adenoma }
+      - { structureId: parotid_level_2 }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7] }
+sceneDescription: "The same see-through gland and tumour, with the figures from the studies that compared the operations set out in the text beside it. The studies compare groups that surgeons chose, not groups that were assigned by chance."
+claims: [evidence-limits-choice, ecd-vs-superficial-outcomes]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="evidence-limits-choice">No randomised trial has compared the operations, and the studies we have mostly record what surgeons chose, so they cannot show that one operation is safer than another for the same tumour.</Claim>
+
+<Framed claim="ecd-vs-superficial-outcomes" source="salzano-2025" title="Pleomorphic adenoma: extracapsular dissection against superficial parotidectomy" />
+
+<Claim id="evidence-limits-choice">The studies differ in size, follow-up and tumour mix, and rarely say how the operation was chosen.</Claim> <Claim id="ecd-vs-superficial-outcomes">The comparison above pools each operation on its own, and applies to small, mobile, superficial tumours, not to deep, large, recurrent or malignant ones.</Claim>

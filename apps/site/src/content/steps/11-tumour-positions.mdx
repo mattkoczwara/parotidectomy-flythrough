@@ -1,0 +1,44 @@
+---
+id: tumour-positions
+chapter: tumour
+order: 11
+title: Where these tumours grow
+delta:
+  camera: { azimuth: -38, elevation: 14, zoom: 1.05, frame: [parotid_gland, parotid_accessory_lobe] }
+  gauge: 3
+  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0 }
+  structures:
+      skin: { mode: ghost, opacity: 0.08, emphasis: context }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      parotid_superficial_lobe: { mode: ghost, opacity: 0.3, emphasis: context }
+      parotid_deep_lobe: { mode: ghost, opacity: 0.3, emphasis: context }
+      parotid_accessory_lobe: { presence: 1, mode: ghost, opacity: 0.4, emphasis: context }
+      pleomorphic_adenoma: { emphasis: focus }
+      pleomorphic_adenoma_deep: { presence: 1, mode: solid, emphasis: focus }
+      pleomorphic_adenoma_tail: { presence: 1, mode: solid, emphasis: focus }
+      pleomorphic_adenoma_accessory: { presence: 1, mode: solid, emphasis: focus }
+      facial_nerve: { emphasis: context }
+      retromandibular_veins: { emphasis: context }
+  labels:
+      - { structureId: pleomorphic_adenoma }
+      - { structureId: pleomorphic_adenoma_deep }
+      - { structureId: pleomorphic_adenoma_tail }
+      - { structureId: pleomorphic_adenoma_accessory }
+transition: { camera: [0, 0.6], structures: [0.3, 1] }
+sceneDescription: "The gland is see-through, seen from behind and above, with the same kind of tumour drawn in four places: in the outer part (the one followed in this atlas), in the inner part beneath the nerve, in the lower tail of the gland, and in the small separate lobe in front of it."
+claims: [pa-positions]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+
+<Claim id="pa-positions">Most of these tumours grow in the outer part of the gland; some grow in the inner part, in the lower tail, or in the small separate lobe in front.</Claim> <Model>The same tumour is drawn in each place to show where each lies in relation to the nerve; how common each place is comes from the studies below.</Model>
+
+<Note title="How often each place">
+<Framed claim="pa-positions" />
+</Note>

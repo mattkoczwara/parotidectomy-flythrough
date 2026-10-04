@@ -275,7 +275,9 @@ def main() -> None:
     # where a nearest-vertex normal test gives false alarms). Structures below the neck cut are excluded.
     depth_in = ndimage.distance_transform_edt(head_mask, sampling=zooms) - ndimage.distance_transform_edt(~head_mask, sampling=zooms)
     sd = {}
-    probes = [p.stem for p in OUT.glob("*.npz") if p.stem not in ("skin", "eyes", "subcutaneous_fat", "smas", "nerve_plane")]
+    # Instruments and schematic overlays are not anatomy: a probe leaves the wound, regrowth fibres lie a hand's breadth under the skin.
+    skip = {"skin", "eyes", "subcutaneous_fat", "smas", "nerve_plane", *spec.get("depth_check_exclude", [])}
+    probes = [p.stem for p in OUT.glob("*.npz") if p.stem not in skip]
     for n in probes:
         path = OUT / f"{n}.npz"
         if not path.exists():

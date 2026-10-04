@@ -1,45 +1,106 @@
 {
   "id": "fn-branching-variation",
   "statement": {
-    "essentials": "The branching pattern differs from person to person; the pattern shown here is one common arrangement.",
-    "anatomy": "Interconnections between branches are common and follow several recognised patterns (Davis types I–VI); no classification captures all variants."
+    "essentials": "The branching pattern differs from person to person; the pattern shown first is the simplest, with no cross-links between branches.",
+    "anatomy": "The branches often join each other in small loops. The patterns have been classified more than once, and no classification describes the variability well.",
+    "clinical": "In a systematic review using Davis’ classification the commonest pattern was type III (26.8% of 1,497 cases) and the simple type I, the textbook pattern, was only fourth (16.3%). Katz and Catalano’s 100 patients: 24% straight, 14% a loop involving the zygomatic branch, 44% a loop involving the buccal branch, 14% complex, 3% two main trunks. A meta-analysis found a single link between the divisions in 23.1% and two links in 8.9%."
   },
   "evidenceClass": "established-anatomy",
   "sources": [
     {
-      "sourceId": "triantafyllou-2024",
+      "sourceId": "poutoglidis-2022",
+      "locator": "Abstract",
       "support": "direct"
     },
     {
-      "sourceId": "davis-1956",
-      "support": "indirect"
+      "sourceId": "katz-catalano-1987",
+      "locator": "Abstract",
+      "support": "direct"
     },
     {
-      "sourceId": "katz-catalano-1987",
+      "sourceId": "triantafyllou-2024",
+      "locator": "Abstract",
       "support": "direct"
     }
   ],
   "numbers": [
     {
-      "label": "Davis type I (no interconnections)",
-      "value": 15.5,
+      "label": "Davis type III pattern",
+      "value": 26.8,
       "unit": "%",
-      "population": "Pooled cadaveric and intraoperative series",
-      "design": "Systematic review and meta-analysis",
+      "n": "21 studies, 1,497 cases",
+      "population": "Cadaveric and operative series",
+      "design": "Systematic review",
+      "sourceId": "poutoglidis-2022"
+    },
+    {
+      "label": "Davis type I pattern",
+      "value": 16.3,
+      "unit": "%",
+      "n": "21 studies, 1,497 cases",
+      "population": "Cadaveric and operative series",
+      "design": "Systematic review",
+      "sourceId": "poutoglidis-2022"
+    },
+    {
+      "label": "Straight pattern (type I)",
+      "value": 24,
+      "unit": "%",
+      "n": "100 patients",
+      "population": "Patients having parotid surgery, one surgical series",
+      "design": "Operative photographs and diagrams",
+      "sourceId": "katz-catalano-1987"
+    },
+    {
+      "label": "Loop involving the zygomatic branch (type II)",
+      "value": 14,
+      "unit": "%",
+      "n": "100 patients",
+      "population": "Patients having parotid surgery, one surgical series",
+      "design": "Operative photographs and diagrams",
+      "sourceId": "katz-catalano-1987"
+    },
+    {
+      "label": "Loop involving the buccal branch (type III)",
+      "value": 44,
+      "unit": "%",
+      "n": "100 patients",
+      "population": "Patients having parotid surgery, one surgical series",
+      "design": "Operative photographs and diagrams",
+      "sourceId": "katz-catalano-1987"
+    },
+    {
+      "label": "Complex pattern with several links (type IV)",
+      "value": 14,
+      "unit": "%",
+      "n": "100 patients",
+      "population": "Patients having parotid surgery, one surgical series",
+      "design": "Operative photographs and diagrams",
+      "sourceId": "katz-catalano-1987"
+    },
+    {
+      "label": "A single link between the two divisions",
+      "value": 23.1,
+      "unit": "%",
+      "n": "19 studies, 2,453 nerves",
+      "population": "Cadaveric and operative series",
+      "design": "Systematic review with meta-analysis",
       "sourceId": "triantafyllou-2024"
     },
     {
-      "label": "Davis type III (one temporofacial–cervicofacial interconnection)",
-      "value": 23.1,
+      "label": "Two links between the two divisions",
+      "value": 8.9,
       "unit": "%",
-      "population": "Pooled cadaveric and intraoperative series",
-      "design": "Systematic review and meta-analysis",
+      "n": "19 studies, 2,453 nerves",
+      "population": "Cadaveric and operative series",
+      "design": "Systematic review with meta-analysis",
       "sourceId": "triantafyllou-2024"
     }
   ],
-  "limitations": "The authors conclude that no classification describes the variability well.",
-  "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "limitations": "The classifications of Davis and of Katz and Catalano are not the same, so their percentages cannot be compared type for type. In the model the links are single twigs of typical position, drawn between existing branches; real patterns are more varied.",
+  "disagreement": "Katz and Catalano found the buccal-loop pattern in 44% of 100 patients, whereas the pooled Davis analysis puts its commonest pattern at 26.8%; the meta-analysis authors conclude that diversity is the rule.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

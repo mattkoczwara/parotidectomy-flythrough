@@ -1,0 +1,17 @@
+{
+  "id": "incision_field",
+  "names": {
+    "plain": "The operative field",
+    "anatomical": "Right preauricular, parotid and upper neck field"
+  },
+  "gloss": "The region of the face and upper neck the operation works in: from the ear to the angle of the jaw and the upper neck.",
+  "tissue": "skin",
+  "depth": "skin",
+  "anchors": [],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [],
+  "members": [],
+  "schematic": false
+}

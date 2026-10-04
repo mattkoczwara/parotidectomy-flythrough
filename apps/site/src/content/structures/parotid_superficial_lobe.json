@@ -17,5 +17,10 @@
   "claims": [
     "parotid-lobes-surgical",
     "parotid-size"
+  ],
+  "members": [
+    "parotid_level_1",
+    "parotid_level_2",
+    "parotid_ecd_cuff"
   ]
 }

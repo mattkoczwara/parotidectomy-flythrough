@@ -1,0 +1,21 @@
+{
+  "id": "us_probe",
+  "names": {
+    "plain": "Ultrasound probe",
+    "anatomical": "Ultrasound transducer"
+  },
+  "gloss": "The hand-held probe of an ultrasound scanner, pressed on the skin over the lump. An instrument, not anatomy.",
+  "tissue": "instrument",
+  "depth": "skin",
+  "claims": [
+    "ultrasound-role"
+  ],
+  "anchors": [
+    "anchor__us_probe"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

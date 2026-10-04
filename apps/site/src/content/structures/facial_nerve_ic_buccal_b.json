@@ -1,0 +1,21 @@
+{
+  "id": "facial_nerve_ic_buccal_b",
+  "names": {
+    "plain": "Linking twig, over the cheek",
+    "anatomical": "Buccozygomatic interconnection (over the masseter)"
+  },
+  "gloss": "A small branch that joins the cheek and eyelid branches farther forward, over the chewing muscle.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "claims": [
+    "fn-branching-variation"
+  ],
+  "anchors": [
+    "anchor__facial_nerve_ic_buccal_b"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

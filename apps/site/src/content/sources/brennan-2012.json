@@ -1,0 +1,25 @@
+{
+  "id": "brennan-2012",
+  "citation": {
+    "authors": [
+      "Brennan PA",
+      "Herd MK",
+      "Howlett DC",
+      "Gibson D",
+      "Oeppen RS"
+    ],
+    "title": "Is ultrasound alone sufficient for imaging superficial lobe benign parotid tumours before surgery?",
+    "container": "Br J Oral Maxillofac Surg",
+    "year": 2012,
+    "volume": "50",
+    "pages": "333-7"
+  },
+  "publicationType": "case-series",
+  "pmid": "21371794",
+  "doi": "10.1016/j.bjoms.2011.01.018",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/21371794/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-10-04",
+  "notes": "37 FNAC-confirmed benign parotid tumours with both US and CT/MRI"
+}

@@ -1,45 +1,37 @@
 {
   "id": "pa-most-common",
   "statement": {
-    "essentials": "Most lumps in the parotid are benign, and the most common is a pleomorphic adenoma.",
-    "anatomy": "Pleomorphic adenoma is the most common salivary gland neoplasm and arises most often in the parotid."
+    "essentials": "Most lumps that grow in the parotid are benign, and the most common is a pleomorphic adenoma.",
+    "anatomy": "Pleomorphic adenoma forms the largest group of salivary gland tumours at most sites, and is particularly common in the parotid.",
+    "clinical": "In a series of 2,410 salivary gland tumours the parotid was the principal site and pleomorphic adenomas were the largest group, particularly common in the parotid. Of 84 consecutive parotid tumours examined by MRI, 68% were benign, and 29 were pleomorphic adenomas."
   },
   "evidenceClass": "established-anatomy",
   "sources": [
     {
-      "sourceId": "statpearls-pleomorphic-adenoma",
+      "sourceId": "eveson-cawson-1985",
+      "locator": "Abstract",
       "support": "direct"
     },
     {
-      "sourceId": "eveson-cawson-1985",
-      "support": "indirect"
+      "sourceId": "christe-2011",
+      "locator": "Results",
+      "support": "direct"
     }
   ],
   "numbers": [
     {
-      "label": "Share of all salivary gland tumours",
-      "value": 60.0,
+      "label": "Benign among parotid tumours",
+      "value": 68,
       "unit": "%",
-      "range": [
-        45.0,
-        75.0
-      ],
-      "population": "Salivary gland tumours in published series",
-      "design": "Narrative reference chapter (secondary)",
-      "sourceId": "statpearls-pleomorphic-adenoma"
-    },
-    {
-      "label": "Arising in the parotid",
-      "value": 84.0,
-      "unit": "%",
-      "population": "Pleomorphic adenomas in published series",
-      "design": "Narrative reference chapter (secondary)",
-      "sourceId": "statpearls-pleomorphic-adenoma"
+      "n": "57 of 84",
+      "population": "Consecutive patients with a parotid tumour who had MRI before surgery, one centre",
+      "design": "Prospective inclusion, retrospective analysis",
+      "sourceId": "christe-2011"
     }
   ],
-  "limitations": "Secondary source; the share of Warthin tumour has risen in some regions (Franzen 2018), so proportions vary by era and place.",
-  "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "limitations": "Series from specialist centres; the share of benign tumours differs between studies (a single imaging cohort here).",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

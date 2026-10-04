@@ -1,0 +1,28 @@
+---
+id: incision-facelift
+chapter: operation
+order: 26
+title: A different incision
+delta:
+  camera: { azimuth: -8, elevation: 4, zoom: 0.8, frame: [incision_field] }
+  op: { ink_facelift: 1 }
+  variants: { incision: facelift }
+  structures:
+      skin: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+  labels: []
+transition: { camera: [0, 0.5], op: [0.3, 1] }
+sceneDescription: "The same view of the skin with a second, dashed violet line added. It follows the first line down in front of the ear and around the lobe, but then turns up behind the ear toward the hairline instead of running forward into the neck."
+claims: [facelift-incision]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="facelift-incision">An alternative incision, borrowed from facelift surgery, hides the scar in front of and behind the ear and in the hairline instead of in the neck.</Claim> <Model>It is drawn dashed beside the solid line of the first incision.</Model>
+
+<Claim id="facelift-incision">It gives adequate exposure for selected tumours, mostly small, mobile and benign, and in studies patients rate the scar better and develop less Frey syndrome — though these were surgeons' choices of patients, not a randomised comparison.</Claim>
+
+<Note title="What the studies found">
+<Framed claim="facelift-incision" title="Facelift against modified Blair incision" />
+</Note>

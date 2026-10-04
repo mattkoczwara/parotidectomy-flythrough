@@ -1,0 +1,20 @@
+{
+  "id": "parotid_level_4",
+  "names": {
+    "plain": "Upper inner part of the gland (level IV)",
+    "anatomical": "ESGS level IV (deep superior)"
+  },
+  "gloss": "The upper part of the gland on the inner side of the facial nerve; the lightest of the four main levels.",
+  "tissue": "gland",
+  "depth": "deep-lobe",
+  "claims": [
+    "esgs-five-levels",
+    "esgs-level-weights"
+  ],
+  "anchors": [
+    "anchor__parotid_level_4"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

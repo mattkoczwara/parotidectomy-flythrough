@@ -1,0 +1,46 @@
+---
+id: trunk-pes
+chapter: nerve
+order: 6
+title: From the skull to the first split
+delta:
+  camera: { azimuth: -32, elevation: 8, zoom: 1.0, frame: [facial_nerve_trunk, facial_nerve_temporofacial, facial_nerve_cervicofacial] }
+  gauge: 4
+  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0 }
+  structures:
+      skin: { mode: ghost, opacity: 0.08, emphasis: context }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      parotid_superficial_lobe: { mode: ghost, opacity: 0.16, emphasis: context }
+      parotid_deep_lobe: { mode: ghost, opacity: 0.2, emphasis: context }
+      skull: { mode: solid, emphasis: context }
+      facial_nerve_trunk: { emphasis: focus }
+      facial_nerve_temporofacial: { emphasis: focus }
+      facial_nerve_cervicofacial: { emphasis: focus }
+      facial_nerve_posterior_auricular: { emphasis: focus }
+      facial_nerve_digastric_branch: { emphasis: focus }
+  labels:
+      - { structureId: stylomastoid_foramen }
+      - { structureId: facial_nerve_trunk }
+      - { structureId: pes_anserinus }
+      - { structureId: facial_nerve_posterior_auricular }
+      - { structureId: facial_nerve_digastric_branch }
+transition: { camera: [0, 0.6], structures: [0.3, 1] }
+sceneDescription: "Seen from behind and to the side, the gland is almost invisible. The nerve comes out of the skull through a small opening, runs forward as a single short trunk, and divides into an upper and a lower division. Two thin twigs leave the trunk before the gland: one climbs behind the ear, one goes to a small muscle."
+claims: [fn-exits-stylomastoid-foramen, fn-trunk-length, fn-trunk-diameter, fn-bifurcation, fn-trunk-branches]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+
+<Claim id="fn-exits-stylomastoid-foramen">The nerve leaves the skull through a small opening behind the jaw and ear.</Claim> <Claim id="fn-trunk-length">The main trunk is short, about a centimetre and a half long,</Claim> <Claim id="fn-bifurcation">and inside the gland it usually splits into an upper and a lower division, at a point called the pes anserinus.</Claim> <Claim id="fn-trunk-branches">Before the gland it gives off two small branches, one to the skin behind the ear and one to a muscle under the jaw.</Claim>
+
+<Note title="Size of the trunk">
+<Claim id="fn-trunk-diameter">The trunk is only about 2.7 mm across where it leaves the skull.</Claim>
+
+<Framed claim="fn-trunk-length" title="Length of the trunk before it divides" />
+</Note>

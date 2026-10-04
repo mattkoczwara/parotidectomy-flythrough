@@ -1,0 +1,24 @@
+{
+  "id": "iwanaga-2026",
+  "citation": {
+    "authors": [
+      "Iwanaga J",
+      "Tubbs RS",
+      "Kitagawa N",
+      "Kim H",
+      "Hur MS"
+    ],
+    "title": "Facial landmark-based localization of the parotid duct: a cadaveric study with ultrasonographic feasibility assessment",
+    "container": "Sci Rep",
+    "year": 2026,
+    "volume": "16"
+  },
+  "publicationType": "anatomical-study",
+  "pmid": "41748702",
+  "doi": "10.1038/s41598-026-41701-1",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/41748702/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-10-04",
+  "notes": "32 hemifaces from 16 cadavers; duct position relative to the tragus-mouth corner line."
+}

@@ -1,0 +1,28 @@
+{
+  "id": "esgs-five-levels",
+  "statement": {
+    "essentials": "Surgeons divide the gland into five parts, called levels, so that an operation can be described by what it removes.",
+    "anatomy": "The European Salivary Gland Society divides the parotid into five levels: I (lateral superior), II (lateral inferior), III (deep inferior), IV (deep superior) and V (accessory). Lateral and deep are set by the plane of the facial nerve; superior and inferior by where the main trunk divides into its temporofacial and cervicofacial branches.",
+    "clinical": "Parotidectomies are classified by the levels removed and the extra-parotid structures ablated. Extracapsular dissection is classed separately: it avoids facial nerve dissection and removes less than one level, so level I or II is recorded only to show where the tumour lay."
+  },
+  "evidenceClass": "standard-principle",
+  "sources": [
+    {
+      "sourceId": "quer-2016",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "zanghi-2024",
+      "locator": "Section 2, Surgical techniques",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "A consensus classification, not a measurement. The model places the superior/inferior boundary through the buccal branch between the temporofacial and cervicofacial territories; the primary paper’s full text was not available, so this boundary is the project’s reading of the secondary description.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

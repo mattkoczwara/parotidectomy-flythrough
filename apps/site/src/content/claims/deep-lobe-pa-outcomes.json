@@ -1,0 +1,60 @@
+{
+  "id": "deep-lobe-pa-outcomes",
+  "statement": {
+    "essentials": "Tumours in the inner part of the gland are less common, are often larger when found, and their operations carry more complications and more recurrence.",
+    "anatomy": "In a single-centre series, deep-lobe pleomorphic adenomas were larger than superficial-lobe ones, were more often found by chance on imaging, and had more complications (mainly temporary facial weakness) and more recurrence.",
+    "clinical": "Complications occurred in 41% of 147 deep-lobe and 30% of 222 superficial-lobe pleomorphic adenomas (p = 0.025); recurrence in 4.1% and 0.4% (p = 0.016); median size 2.6 cm and 2.0 cm."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "levyn-2024",
+      "locator": "Results",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Complications after deep-lobe pleomorphic adenoma surgery",
+      "value": 41,
+      "unit": "%",
+      "n": "147 patients",
+      "population": "Previously untreated parotid pleomorphic adenoma, one centre, 1990–2015",
+      "design": "Retrospective chart review",
+      "sourceId": "levyn-2024"
+    },
+    {
+      "label": "Complications after superficial-lobe pleomorphic adenoma surgery",
+      "value": 30,
+      "unit": "%",
+      "n": "222 patients",
+      "population": "Previously untreated parotid pleomorphic adenoma, one centre, 1990–2015",
+      "design": "Retrospective chart review",
+      "sourceId": "levyn-2024"
+    },
+    {
+      "label": "Recurrence after deep-lobe pleomorphic adenoma surgery",
+      "value": 4.1,
+      "unit": "%",
+      "n": "6 of 147",
+      "population": "Previously untreated parotid pleomorphic adenoma, one centre, 1990–2015",
+      "design": "Retrospective chart review",
+      "sourceId": "levyn-2024"
+    },
+    {
+      "label": "Recurrence after superficial-lobe pleomorphic adenoma surgery",
+      "value": 0.4,
+      "unit": "%",
+      "n": "1 of 222",
+      "population": "Previously untreated parotid pleomorphic adenoma, one centre, 1990–2015",
+      "design": "Retrospective chart review",
+      "sourceId": "levyn-2024"
+    }
+  ],
+  "limitations": "One centre’s retrospective charts over 25 years; the groups differ in tumour size and presentation, and the operations were not the same.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

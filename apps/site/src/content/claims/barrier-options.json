@@ -1,0 +1,113 @@
+{
+  "id": "barrier-options",
+  "statement": {
+    "essentials": "To lower the chance of Frey syndrome, surgeons can put a layer between the skin flap and the bed left by the gland: the thin fibrous sheet (SMAS) sewn back, a strip of neck muscle, a graft or a manufactured sheet. Each has some support in studies, none of it strong.",
+    "anatomy": "Barriers used between the raised skin flap and the parotid bed are the SMAS flap sutured back, a sternocleidomastoid muscle flap turned up from the neck, a temporoparietal fascia flap, a free fat graft and an acellular dermal matrix sheet.",
+    "clinical": "In a network meta-analysis of 3,830 patients, compared with no treatment the odds ratio of clinical Frey syndrome was 0.42 for the SMAS flap, 0.38 for the sternocleidomastoid flap, 0.09 for acellular dermal matrix, 0.11 for free fat graft and 0.07 for temporoparietal fascia flap. A meta-analysis of 11 mostly non-randomised studies found an odds ratio of 0.25 for the SMAS flap (random-effects, I-squared 85%). A Cochrane review of three randomised trials (124 participants) judged the evidence for graft interposition to be of low or very low certainty."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "de-virgilio-2021",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "dulguerov-2016",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "ye-2019",
+      "locator": "Abstract, Main results and Authors' conclusions",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Clinical Frey syndrome after SMAS flap, versus no treatment (odds ratio)",
+      "value": 0.42,
+      "unit": "OR",
+      "ci": [
+        0.19,
+        0.97
+      ],
+      "n": "3,830 patients in total",
+      "population": "Patients after parotidectomy in the studies pooled (median age 50 years)",
+      "design": "Systematic review and Bayesian network meta-analysis",
+      "sourceId": "de-virgilio-2021"
+    },
+    {
+      "label": "Clinical Frey syndrome after sternocleidomastoid flap, versus no treatment (odds ratio)",
+      "value": 0.38,
+      "unit": "OR",
+      "ci": [
+        0.18,
+        0.73
+      ],
+      "n": "3,830 patients in total",
+      "population": "Patients after parotidectomy in the studies pooled (median age 50 years)",
+      "design": "Systematic review and Bayesian network meta-analysis",
+      "sourceId": "de-virgilio-2021"
+    },
+    {
+      "label": "Clinical Frey syndrome after acellular dermal matrix, versus no treatment (odds ratio)",
+      "value": 0.09,
+      "unit": "OR",
+      "ci": [
+        0.02,
+        0.35
+      ],
+      "n": "3,830 patients in total",
+      "population": "Patients after parotidectomy in the studies pooled (median age 50 years)",
+      "design": "Systematic review and Bayesian network meta-analysis",
+      "sourceId": "de-virgilio-2021"
+    },
+    {
+      "label": "Clinical Frey syndrome after free fat graft, versus no treatment (odds ratio)",
+      "value": 0.11,
+      "unit": "OR",
+      "ci": [
+        0.03,
+        0.42
+      ],
+      "n": "3,830 patients in total",
+      "population": "Patients after parotidectomy in the studies pooled (median age 50 years)",
+      "design": "Systematic review and Bayesian network meta-analysis",
+      "sourceId": "de-virgilio-2021"
+    },
+    {
+      "label": "Clinical Frey syndrome after temporoparietal fascia flap, versus no treatment (odds ratio)",
+      "value": 0.07,
+      "unit": "OR",
+      "ci": [
+        0.004,
+        0.57
+      ],
+      "n": "3,830 patients in total",
+      "population": "Patients after parotidectomy in the studies pooled (median age 50 years)",
+      "design": "Systematic review and Bayesian network meta-analysis",
+      "sourceId": "de-virgilio-2021"
+    },
+    {
+      "label": "Clinical Frey syndrome with SMAS flap versus classical parotidectomy (odds ratio)",
+      "value": 0.25,
+      "unit": "OR",
+      "ci": [
+        0.09,
+        0.66
+      ],
+      "n": "11 studies",
+      "population": "Patients after parotidectomy with and without a SMAS flap, minimum follow-up 1 year",
+      "design": "Meta-analysis, random-effects model (fixed-effect odds ratio 0.42, 0.32 to 0.56; I-squared 85%); studies mostly retrospective and not randomised",
+      "sourceId": "dulguerov-2016"
+    }
+  ],
+  "limitations": "Mostly retrospective, non-randomised studies with very high heterogeneity (I-squared 85% in the SMAS meta-analysis); the network meta-analysis ranks techniques indirectly and its authors call for randomised comparisons. The three randomised trials in the Cochrane review (124 participants, two at high risk of bias) found no clear difference for the sternocleidomastoid flap or for acellular dermal matrix, with very low-certainty evidence. The atlas draws the options as illustrations; it does not recommend one.",
+  "disagreement": "The network meta-analysis finds a clinical benefit for the SMAS and sternocleidomastoid flaps and for grafts; the Cochrane review, restricted to randomised trials, could not show one for the sternocleidomastoid flap or acellular dermal matrix, and found acellular dermal matrix may raise wound infection.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

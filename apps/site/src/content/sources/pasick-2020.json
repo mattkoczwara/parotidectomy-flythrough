@@ -1,0 +1,26 @@
+{
+  "id": "pasick-2020",
+  "citation": {
+    "authors": [
+      "Pasick LJ",
+      "Tong JY",
+      "Benito DA",
+      "Thakkar P",
+      "Goodman JF",
+      "Joshi AS"
+    ],
+    "title": "Surgical management and outcomes of accessory parotid gland neoplasms: A systematic review",
+    "container": "Am J Otolaryngol",
+    "year": 2020,
+    "volume": "41",
+    "pages": "102610"
+  },
+  "publicationType": "systematic-review",
+  "pmid": "32580067",
+  "doi": "10.1016/j.amjoto.2020.102610",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/32580067/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-10-04",
+  "notes": "15 studies, 187 patients with accessory parotid gland neoplasms."
+}

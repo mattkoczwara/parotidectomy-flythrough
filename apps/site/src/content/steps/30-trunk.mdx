@@ -1,0 +1,38 @@
+---
+id: trunk
+chapter: operation
+order: 30
+title: The trunk is found and tested
+delta:
+  camera: { azimuth: -18, elevation: 2, zoom: 1.15, frame: [facial_nerve_trunk, stimulator_probe, digastric_posterior_belly] }
+  gauge: 4
+  op: { peel: 0.34 }
+  structures:
+      stimulator_probe: { presence: 1, emphasis: focus }
+      facial_nerve_trunk: { emphasis: focus }
+      digastric_posterior_belly: { emphasis: context }
+      styloid_process: { emphasis: context }
+      parotid_superficial_lobe: { mode: solid, opacity: 1, emphasis: context }
+      parotid_deep_lobe: { mode: ghost, opacity: 0.4, emphasis: context }
+      pleomorphic_adenoma: { mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { mode: ghost, opacity: 0.3, emphasis: context }
+  labels:
+      - { structureId: facial_nerve_trunk }
+      - { structureId: stimulator_probe }
+      - { structureId: digastric_posterior_belly }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7], op: [0.3, 1] }
+sceneDescription: "The back edge of the outer gland has been eased forward. The pale trunk of the facial nerve lies bare just above the digastric muscle, and the tip of a thin probe, a nerve stimulator, rests on it."
+claims: [stimulator-technique, monitoring-evidence]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="stimulator-technique">A small stimulator touched to the tissue makes the face twitch if it is the nerve, so the surgeon knows what is nerve and that it still works; the patient is not paralysed, so the twitch can be seen.</Claim>
+
+<Claim id="monitoring-evidence">Monitoring the nerve lowers the chance of weakness straight after the operation; whether it changes lasting weakness has not been shown.</Claim>
+
+<Note title="What the reviews found">
+<Framed claim="monitoring-evidence" title="Intraoperative nerve monitoring" />
+</Note>

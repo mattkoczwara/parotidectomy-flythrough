@@ -1,0 +1,22 @@
+{
+  "id": "cuff-sufficient-view",
+  "statement": {
+    "essentials": "Some surgeons argue that for a benign tumour a cuff of normal gland, not the whole outer lobe, is all that is needed, so the extent is a judgement.",
+    "anatomy": "One protocol states that removing a cuff of parotid tissue around the tumour, without a total lobectomy, is all that is necessary for benign tumours, that adequate resection may need part of the deep lobe, and that en bloc removal with a cuff is usually possible only for tumours in the tail."
+  },
+  "evidenceClass": "varies-by-surgeon",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Facial nerve dissection",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "An institutional opinion, not a trial result; chapter 6 sets out how the evidence is split.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

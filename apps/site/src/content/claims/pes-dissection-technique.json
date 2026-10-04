@@ -1,0 +1,22 @@
+{
+  "id": "pes-dissection-technique",
+  "statement": {
+    "essentials": "With the trunk found, the surgeon follows it forward by gently spreading the tissue over it, dividing the gland only once the nerve is seen.",
+    "anatomy": "The nerve is dissected with careful blunt dissection directly on its sheath, advancing slowly; the gland is divided between the tines of an instrument over the nerve, and the pes anserinus (the first division into upper and lower branches) is identified before dissection continues along the divisions toward the tumour."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Facial nerve dissection",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "One institution’s sequence and instruments; the course of the dissection depends on where the tumour is.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "great_auricular_nerves",
+  "names": {
+    "plain": "The earlobe nerve",
+    "anatomical": "Great auricular nerve and its branches"
+  },
+  "gloss": "The skin nerve of the earlobe and the skin over the gland, with its front and back branches.",
+  "tissue": "nerve",
+  "depth": "subcutaneous",
+  "members": [
+    "great_auricular_nerve",
+    "great_auricular_nerve_anterior",
+    "great_auricular_nerve_posterior"
+  ],
+  "claims": [
+    "great-auricular-nerve-course"
+  ],
+  "anchors": [],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "fn-trunk-branches",
+  "statement": {
+    "essentials": "Before it enters the gland the trunk gives off two small branches: one to the skin behind the ear and one to a small muscle under the jaw.",
+    "anatomy": "Two branches consistently arise from the trunk: the posterior auricular nerve and the nerve to the posterior belly of the digastric. A branch to the stylohyoid and a link to the glossopharyngeal nerve are less constant."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "salame-2002",
+      "locator": "Abstract",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "One cadaver series of 23.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

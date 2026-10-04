@@ -1,0 +1,19 @@
+{
+  "id": "pleomorphic_adenoma_tail",
+  "names": {
+    "plain": "The tumour, if it lay in the lower tail",
+    "anatomical": "Pleomorphic adenoma, tail position"
+  },
+  "gloss": "The same kind of tumour placed in the lower tail of the gland, near the angle of the jaw.",
+  "tissue": "tumour",
+  "depth": "superficial-lobe",
+  "claims": [],
+  "anchors": [
+    "anchor__pleomorphic_adenoma_tail"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

@@ -1,0 +1,32 @@
+---
+id: gan
+chapter: operation
+order: 28
+title: The earlobe nerve
+delta:
+  camera: { azimuth: 14, elevation: 2, zoom: 1.0, frame: [great_auricular_nerves, external_jugular_vein, parotid_fascia] }
+  gauge: 2
+  structures:
+      great_auricular_nerves: { emphasis: focus }
+      external_jugular_vein: { emphasis: context }
+      sternocleidomastoid_r: { emphasis: context }
+      parotid_fascia: { emphasis: context }
+  labels:
+      - { structureId: great_auricular_nerve }
+      - { structureId: great_auricular_nerve_posterior }
+      - { structureId: external_jugular_vein }
+      - { structureId: sternocleidomastoid_r }
+transition: { camera: [0, 0.5], structures: [0.2, 0.6] }
+sceneDescription: "A closer view of the neck below and behind the gland. The thin nerve to the earlobe climbs over the neck muscle beside a vein and divides into a front and a back branch near the lower end of the gland."
+claims: [great-auricular-nerve-course, gan-preservation]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="great-auricular-nerve-course">Behind and below the gland a thin nerve to the skin of the earlobe climbs over the neck muscle and divides into a front and a back branch.</Claim> <Claim id="gan-preservation">The back branch can often be kept, and keeping it is linked with better feeling in the earlobe afterwards.</Claim>
+
+<Note title="What the trials found">
+<Framed claim="gan-preservation" />
+</Note>

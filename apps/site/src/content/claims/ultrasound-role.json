@@ -1,0 +1,43 @@
+{
+  "id": "ultrasound-role",
+  "statement": {
+    "essentials": "Ultrasound is usually the first scan for a lump in the outer part of the parotid. It works in real time, uses no radiation and can guide the needle, but it sees the deep part of the gland poorly.",
+    "anatomy": "For lesions in the superficial parotid, ultrasound is described as an ideal tool for initial assessment. The deep lobe is only partly visible because the jawbone lies over it, so a mass whose deep edge cannot be seen on ultrasound raises the question of deep-lobe extension.",
+    "clinical": "In 37 patients with needle-confirmed benign parotid tumours who had ultrasound and also CT or MRI, 35 (95%) had a clearly outlined superficial-lobe mass on ultrasound and the cross-sectional scan added nothing; in two the deep margin could not be seen on ultrasound and MRI confirmed deep extension."
+  },
+  "evidenceClass": "standard-principle",
+  "sources": [
+    {
+      "sourceId": "lee-yy-2008",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "martino-2020",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "brennan-2012",
+      "locator": "Abstract",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Superficial-lobe masses clearly outlined on ultrasound with no added information from CT or MRI",
+      "value": 95,
+      "unit": "%",
+      "n": "35 of 37",
+      "population": "Patients with needle-confirmed benign parotid tumours (11 to 45 mm, mean 22 mm; three with bilateral Warthin tumours) who had both ultrasound and CT or MRI",
+      "design": "Single-centre series; the abstract does not state whether data were collected prospectively",
+      "sourceId": "brennan-2012"
+    }
+  ],
+  "limitations": "Two narrative reviews and one small single-centre series; the series enrolled only tumours already confirmed as benign by needle and does not show what ultrasound alone would have missed. Ultrasound depends on the operator, and practice differs between centres. The atlas draws the probe and a plane outline, not an ultrasound picture.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

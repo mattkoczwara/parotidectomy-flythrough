@@ -1,0 +1,33 @@
+{
+  "id": "choice-factors",
+  "statement": {
+    "essentials": "Which operation is chosen depends on the tumour’s size, how freely it moves, how deep it lies and how close it is to the nerve’s branches, and on the surgeon.",
+    "anatomy": "Reviews describe extracapsular dissection as an option for small, mobile tumours of the superficial lobe, up to about 3 cm. Tumours that touch several branches, that are large, or that lie deep call for a wider operation.",
+    "clinical": "One meta-analysis concluded that extracapsular dissection may be the treatment of choice for pleomorphic adenomas up to 3 cm, mobile and in the superficial lobe. Another review would also use it for caudal tumours over 2.5 cm that only touch the cervicofacial branch, and notes that in the hands of an occasional parotid surgeon extracapsular dissection, a minimal-margin operation, may recur more often."
+  },
+  "evidenceClass": "varies-by-surgeon",
+  "sources": [
+    {
+      "sourceId": "salzano-2025",
+      "locator": "Section 5, Conclusions",
+      "support": "direct"
+    },
+    {
+      "sourceId": "zanghi-2024",
+      "locator": "Section 2",
+      "support": "direct"
+    },
+    {
+      "sourceId": "zbaren-2013",
+      "locator": "Conclusions",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "Authors’ recommendations from retrospective series; none of these sources provides a rule that decides the operation for an individual patient, and the atlas does not.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

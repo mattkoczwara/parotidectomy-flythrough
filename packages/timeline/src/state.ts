@@ -43,8 +43,13 @@ export interface SceneState {
   gauge: number;
   /** Continuous operative parameters (incision, flap, peel, …), each 0..1 unless documented otherwise. */
   op: Readonly<Record<string, number>>;
-  /** Discrete choices (incision variant, resection variant, …). */
+  /** Discrete choices (incision variant, resection variant, …): the variant in force, switching at the window midpoint. */
   variants: Readonly<Record<string, string>>;
+  /**
+   * The same choices as continuous weights, so a renderer can move between variants without a pop: key → variant →
+   * weight. A plateau is one-hot; inside a transition the two variants' weights sum to 1.
+   */
+  variantMix: Readonly<Record<string, Readonly<Record<string, number>>>>;
   labels: readonly LabelState[];
   light: { preset: LightPreset; exposure: number };
 }

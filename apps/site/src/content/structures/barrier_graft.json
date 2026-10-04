@@ -1,0 +1,21 @@
+{
+  "id": "barrier_graft",
+  "names": {
+    "plain": "Graft sheet",
+    "anatomical": "Interposition graft or acellular dermal matrix"
+  },
+  "gloss": "A thin sheet of fascia, fat or manufactured dermal matrix laid over the space left by the gland. Which material is not distinguished here.",
+  "tissue": "fascia",
+  "depth": "smas-fascia",
+  "claims": [
+    "barrier-options"
+  ],
+  "anchors": [
+    "anchor__barrier_graft"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

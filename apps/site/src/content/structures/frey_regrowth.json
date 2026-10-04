@@ -1,0 +1,21 @@
+{
+  "id": "frey_regrowth",
+  "names": {
+    "plain": "Regrown nerve fibres (schematic)",
+    "anatomical": "Aberrant reinnervation of sweat glands (schematic)"
+  },
+  "gloss": "An illustration of how saliva-making nerve fibres, after injury, can grow into the sweat glands of the skin over the gland. Drawn as lines because it is a mechanism, not a measured structure.",
+  "tissue": "nerve",
+  "depth": "subcutaneous",
+  "claims": [
+    "frey-mechanism"
+  ],
+  "schematic": true,
+  "anchors": [
+    "anchor__frey_regrowth"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": []
+}

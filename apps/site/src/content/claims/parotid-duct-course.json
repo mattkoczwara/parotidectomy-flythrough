@@ -1,0 +1,47 @@
+{
+  "id": "parotid-duct-course",
+  "statement": {
+    "essentials": "Saliva leaves the gland through a duct that runs forward across the chewing muscle (masseter) and passes through the cheek muscle (buccinator) into the mouth.",
+    "anatomy": "The parotid (Stensen's) duct leaves the anterior border of the gland, crosses the lateral surface of the masseter, penetrates the buccinator and opens in the mouth beside the second upper molar. In a cadaveric study it lay slightly above the line from the tragus to the mouth corner at the masseter's anterior border in most specimens.",
+    "clinical": "At the anterior border of the masseter the duct was slightly superior to the tragus–mouth-corner line in 84.4% of 32 hemifaces, on the line in 3.1% and below it in 12.5% (most of those with an accessory gland); it pierced the buccinator medial to the vertical through the lateral canthus in 87.5%."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "iwanaga-2026",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "support": "direct",
+      "locator": "Pertinent anatomy"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Duct slightly above the tragus–mouth-corner line at the masseter’s anterior border",
+      "value": 84.4,
+      "unit": "%",
+      "n": "27 of 32 hemifaces",
+      "population": "Cadaver hemifaces from 16 adults (mean age 82; 15 Korean, 1 Caucasian)",
+      "design": "Cadaveric dissection study",
+      "sourceId": "iwanaga-2026"
+    },
+    {
+      "label": "Buccinator penetration medial to the vertical through the lateral canthus",
+      "value": 87.5,
+      "unit": "%",
+      "n": "28 of 32 hemifaces",
+      "population": "Cadaver hemifaces from 16 adults (mean age 82; 15 Korean, 1 Caucasian)",
+      "design": "Cadaveric dissection study",
+      "sourceId": "iwanaga-2026"
+    }
+  ],
+  "limitations": "Sixteen elderly cadavers, almost all Korean; the course is described relative to surface landmarks and varies between people. The model draws the duct to the buccinator only.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

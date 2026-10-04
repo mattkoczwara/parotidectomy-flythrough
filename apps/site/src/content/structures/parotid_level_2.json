@@ -1,0 +1,20 @@
+{
+  "id": "parotid_level_2",
+  "names": {
+    "plain": "Lower outer part of the gland (level II)",
+    "anatomical": "ESGS level II (lateral inferior)"
+  },
+  "gloss": "The largest level: the lower part of the gland on the outer side of the facial nerve, traversed by the lower division.",
+  "tissue": "gland",
+  "depth": "superficial-lobe",
+  "claims": [
+    "esgs-five-levels",
+    "esgs-level-weights"
+  ],
+  "anchors": [
+    "anchor__parotid_level_2"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

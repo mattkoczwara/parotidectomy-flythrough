@@ -14,5 +14,9 @@
   "assetIds": [
     "anatomy-slice-glb"
   ],
-  "claims": []
+  "claims": [],
+  "members": [
+    "sternocleidomastoid_main",
+    "scm_flap"
+  ]
 }

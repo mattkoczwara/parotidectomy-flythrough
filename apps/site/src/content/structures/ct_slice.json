@@ -1,0 +1,19 @@
+{
+  "id": "ct_slice",
+  "names": {
+    "plain": "CT slice (donor)",
+    "anatomical": "Axial CT slice at the tumour level (donor, normal anatomy)"
+  },
+  "gloss": "A real CT cross-section from the donor this atlas is built from, at the level of the tumour. The donor had no tumour; the tumour is drawn on it as a dashed outline.",
+  "tissue": "instrument",
+  "depth": "subcutaneous",
+  "schematic": false,
+  "claims": [
+    "imaging-role"
+  ],
+  "anchors": [],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": []
+}

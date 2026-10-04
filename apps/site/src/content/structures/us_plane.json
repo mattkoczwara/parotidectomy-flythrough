@@ -1,0 +1,21 @@
+{
+  "id": "us_plane",
+  "names": {
+    "plain": "Slice the probe sees",
+    "anatomical": "Ultrasound imaging plane"
+  },
+  "gloss": "The thin flat slice of the body that the probe images. Drawn as an outline: it is not an ultrasound picture.",
+  "tissue": "instrument",
+  "depth": "subcutaneous",
+  "schematic": true,
+  "claims": [
+    "ultrasound-role"
+  ],
+  "anchors": [
+    "anchor__us_plane"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": []
+}

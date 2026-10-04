@@ -1,0 +1,135 @@
+{
+  "id": "fna-accuracy",
+  "statement": {
+    "essentials": "A fine needle can take a few cells from the lump. The result usually separates cancer from non-cancer, but it is not perfect: it misses some cancers and sometimes cannot give an answer.",
+    "anatomy": "In fine-needle aspiration a thin needle is passed through the skin into the lump and a few cells are drawn out for a pathologist; ultrasound can guide it. A wider needle can take a small core of tissue instead (core needle biopsy).",
+    "clinical": "In prospective studies pooled in one review, fine-needle aspiration had a sensitivity of 88.2% and a specificity of 99.5% for telling malignant from benign parotid lesions; about 5% of results were nondiagnostic and about 15% indeterminate. A pooled analysis of reports using the Milan system found a sensitivity of 88.0% and a specificity of 98.5% for salivary glands. Pooled ultrasound-guided core needle biopsy had a sensitivity of 94% and a specificity of 98%, with seven haematomas and no tumour seeding in 1,315 procedures."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "liu-2016",
+      "locator": "Abstract, Results and Conclusion",
+      "support": "direct"
+    },
+    {
+      "sourceId": "wang-2022",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "kim-kim-2018",
+      "locator": "Abstract, Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "lee-yy-2008",
+      "locator": "Abstract",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Sensitivity of fine-needle aspiration for malignancy",
+      "value": 88.2,
+      "unit": "%",
+      "ci": [
+        50.9,
+        98.2
+      ],
+      "n": "prospective subgroup of 63 studies (5,647 patients overall)",
+      "population": "Patients with a parotid mass who had both fine-needle aspiration and surgical excision, prospective-study subgroup",
+      "design": "Systematic review and meta-analysis, two-level mixed logistic regression",
+      "sourceId": "liu-2016"
+    },
+    {
+      "label": "Specificity of fine-needle aspiration for malignancy",
+      "value": 99.5,
+      "unit": "%",
+      "ci": [
+        96,
+        99.9
+      ],
+      "n": "prospective subgroup of 63 studies (5,647 patients overall)",
+      "population": "Patients with a parotid mass who had both fine-needle aspiration and surgical excision, prospective-study subgroup",
+      "design": "Systematic review and meta-analysis, two-level mixed logistic regression",
+      "sourceId": "liu-2016"
+    },
+    {
+      "label": "Probability of a nondiagnostic result",
+      "value": 5.3,
+      "unit": "%",
+      "ci": [
+        3,
+        7.5
+      ],
+      "n": "63 studies, 5,647 patients",
+      "population": "Patients with a parotid mass who had both fine-needle aspiration and surgical excision (the abstract does not say whether this estimate is for the prospective subgroup)",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "liu-2016"
+    },
+    {
+      "label": "Probability of an indeterminate result",
+      "value": 14.7,
+      "unit": "%",
+      "ci": [
+        10.6,
+        18.8
+      ],
+      "n": "63 studies, 5,647 patients",
+      "population": "Patients with a parotid mass who had both fine-needle aspiration and surgical excision (the abstract does not say whether this estimate is for the prospective subgroup)",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "liu-2016"
+    },
+    {
+      "label": "Sensitivity of Milan-system fine-needle aspiration for malignancy",
+      "value": 88,
+      "unit": "%",
+      "n": "35 studies, 10,706 aspirations (7,168 with histology)",
+      "population": "Salivary gland aspirations reported with the Milan system since 2018 (all salivary glands, not the parotid alone)",
+      "design": "Systematic review and meta-analysis of cohort studies",
+      "sourceId": "wang-2022"
+    },
+    {
+      "label": "Specificity of Milan-system fine-needle aspiration for malignancy",
+      "value": 98.5,
+      "unit": "%",
+      "n": "35 studies, 10,706 aspirations (7,168 with histology)",
+      "population": "Salivary gland aspirations reported with the Milan system since 2018 (all salivary glands, not the parotid alone)",
+      "design": "Systematic review and meta-analysis of cohort studies",
+      "sourceId": "wang-2022"
+    },
+    {
+      "label": "Sensitivity of ultrasound-guided core needle biopsy",
+      "value": 94,
+      "unit": "%",
+      "ci": [
+        92,
+        96
+      ],
+      "n": "10 studies",
+      "population": "Patients having ultrasound-guided core needle biopsy of salivary gland lesions (all salivary glands)",
+      "design": "Meta-analysis of observational studies, random-effects",
+      "sourceId": "kim-kim-2018"
+    },
+    {
+      "label": "Specificity of ultrasound-guided core needle biopsy",
+      "value": 98,
+      "unit": "%",
+      "ci": [
+        97,
+        99
+      ],
+      "n": "10 studies",
+      "population": "Patients having ultrasound-guided core needle biopsy of salivary gland lesions (all salivary glands)",
+      "design": "Meta-analysis of observational studies, random-effects",
+      "sourceId": "kim-kim-2018"
+    }
+  ],
+  "limitations": "Sensitivity and specificity here are for separating malignant from benign, not for naming the tumour type, and the abstracts do not give figures for pleomorphic adenoma alone. The prospective-subgroup sensitivity has a very wide interval (50.9% to 98.2%) and most of the pooled analyses were heterogeneous (I-squared above 70%). The Milan and core-biopsy figures describe all salivary glands, not the parotid alone. Results depend on the sampling, the pathologist and the centre.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

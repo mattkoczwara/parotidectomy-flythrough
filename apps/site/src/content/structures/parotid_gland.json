@@ -1,0 +1,23 @@
+{
+  "id": "parotid_gland",
+  "names": {
+    "plain": "The parotid gland",
+    "anatomical": "Parotid gland",
+    "latin": "Glandula parotidea"
+  },
+  "gloss": "The whole gland: the outer and inner parts, built from five levels.",
+  "tissue": "gland",
+  "depth": "superficial-lobe",
+  "members": [
+    "parotid_superficial_lobe",
+    "parotid_deep_lobe"
+  ],
+  "claims": [
+    "parotid-size",
+    "parotid-location"
+  ],
+  "anchors": [],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

@@ -85,16 +85,40 @@
         0.01919
       ]
     },
-    "parotid_superficial_lobe": {
+    "parotid_level_1": {
       "min": [
-        -0.01014,
-        -0.0359,
-        -0.01934
+        -0.00912,
+        0.01009,
+        -0.0156
       ],
       "max": [
-        0.01153,
-        0.02302,
-        0.01819
+        0.01163,
+        0.02318,
+        0.01614
+      ]
+    },
+    "parotid_level_2": {
+      "min": [
+        -0.00994,
+        -0.03609,
+        -0.01946
+      ],
+      "max": [
+        0.01151,
+        0.01618,
+        0.01831
+      ]
+    },
+    "parotid_ecd_cuff": {
+      "min": [
+        -0.01209,
+        -0.01318,
+        -0.01016
+      ],
+      "max": [
+        0.00519,
+        0.01018,
+        0.01453
       ]
     },
     "pleomorphic_adenoma": {
@@ -109,16 +133,76 @@
         0.01147
       ]
     },
-    "parotid_deep_lobe": {
+    "pleomorphic_adenoma_deep": {
       "min": [
-        0.00122,
-        -0.02992,
-        -0.02145
+        0.00971,
+        -0.00778,
+        -0.01772
       ],
       "max": [
-        0.02213,
-        0.02402,
-        0.01348
+        0.01946,
+        0.0042,
+        -0.00593
+      ]
+    },
+    "pleomorphic_adenoma_tail": {
+      "min": [
+        -0.00768,
+        -0.03411,
+        0.00046
+      ],
+      "max": [
+        0.00509,
+        -0.01631,
+        0.01625
+      ]
+    },
+    "pleomorphic_adenoma_accessory": {
+      "min": [
+        -0.00737,
+        0.00565,
+        0.02493
+      ],
+      "max": [
+        0.00148,
+        0.01575,
+        0.03586
+      ]
+    },
+    "parotid_level_3": {
+      "min": [
+        0.00138,
+        -0.0307,
+        -0.02166
+      ],
+      "max": [
+        0.02226,
+        0.01602,
+        0.01357
+      ]
+    },
+    "parotid_level_4": {
+      "min": [
+        0.00109,
+        0.0101,
+        -0.01683
+      ],
+      "max": [
+        0.02226,
+        0.02418,
+        0.01345
+      ]
+    },
+    "parotid_accessory_lobe": {
+      "min": [
+        -0.00365,
+        0.00381,
+        0.02205
+      ],
+      "max": [
+        0.00283,
+        0.01291,
+        0.03638
       ]
     },
     "facial_nerve_trunk": {
@@ -241,6 +325,66 @@
         -0.01437
       ]
     },
+    "facial_nerve_ic_buccal_a": {
+      "min": [
+        0.00055,
+        0.01412,
+        0.00593
+      ],
+      "max": [
+        0.00388,
+        0.02487,
+        0.00867
+      ]
+    },
+    "facial_nerve_ic_buccal_b": {
+      "min": [
+        -0.00046,
+        0.01745,
+        0.01854
+      ],
+      "max": [
+        0.00192,
+        0.02733,
+        0.02755
+      ]
+    },
+    "facial_nerve_ic_divisions": {
+      "min": [
+        0.0021,
+        0.00311,
+        -0.00663
+      ],
+      "max": [
+        0.00489,
+        0.01689,
+        -0.00431
+      ]
+    },
+    "auriculotemporal_nerve": {
+      "min": [
+        0.00061,
+        0.0274,
+        -0.01229
+      ],
+      "max": [
+        0.01159,
+        0.0629,
+        -0.00811
+      ]
+    },
+    "frey_regrowth": {
+      "min": [
+        -0.01477,
+        -0.00083,
+        -0.01867
+      ],
+      "max": [
+        0.00411,
+        0.04445,
+        -0.00232
+      ]
+    },
     "great_auricular_nerve": {
       "min": [
         -0.00439,
@@ -275,6 +419,18 @@
         -0.0008,
         0.01789,
         -0.01495
+      ]
+    },
+    "parotid_duct": {
+      "min": [
+        -0.00307,
+        0.00012,
+        0.011
+      ],
+      "max": [
+        0.01385,
+        0.01076,
+        0.05767
       ]
     },
     "retromandibular_vein": {
@@ -385,16 +541,28 @@
         0.05702
       ]
     },
-    "sternocleidomastoid_r": {
+    "sternocleidomastoid_main": {
       "min": [
-        -0.00188,
-        -0.0825,
-        -0.05245
+        -0.00197,
+        -0.16996,
+        -0.05278
       ],
       "max": [
-        0.03395,
-        0.01289,
-        0.0182
+        0.06559,
+        0.01322,
+        0.03315
+      ]
+    },
+    "scm_flap": {
+      "min": [
+        -0.00123,
+        -0.06812,
+        -0.03399
+      ],
+      "max": [
+        0.02837,
+        0.00796,
+        0.01202
       ]
     },
     "digastric_posterior_belly": {
@@ -407,6 +575,114 @@
         0.04246,
         0.01849,
         0.00928
+      ]
+    },
+    "stimulator_probe": {
+      "min": [
+        -0.02518,
+        0.01757,
+        -0.01584
+      ],
+      "max": [
+        0.01604,
+        0.02212,
+        -0.00801
+      ]
+    },
+    "smas_flap": {
+      "min": [
+        -0.01186,
+        -0.03741,
+        -0.02076
+      ],
+      "max": [
+        0.00697,
+        0.02459,
+        0.01972
+      ]
+    },
+    "barrier_graft": {
+      "min": [
+        0.00019,
+        -0.03107,
+        -0.01513
+      ],
+      "max": [
+        0.01708,
+        0.02275,
+        0.0141
+      ]
+    },
+    "sialocele_pocket": {
+      "min": [
+        -0.01421,
+        -0.02097,
+        -0.01191
+      ],
+      "max": [
+        -0.00284,
+        0.00765,
+        0.01993
+      ]
+    },
+    "needle": {
+      "min": [
+        -0.11784,
+        -0.0035,
+        0.00167
+      ],
+      "max": [
+        -0.00272,
+        0.00909,
+        0.03122
+      ]
+    },
+    "us_probe": {
+      "min": [
+        -0.06052,
+        -0.02304,
+        -0.03768
+      ],
+      "max": [
+        -0.01465,
+        0.02634,
+        0.00972
+      ]
+    },
+    "us_plane": {
+      "min": [
+        -0.01495,
+        -0.02084,
+        0.00192
+      ],
+      "max": [
+        0.02965,
+        0.01776,
+        0.00252
+      ]
+    },
+    "ct_tumour_outline": {
+      "min": [
+        -0.01155,
+        -0.00153,
+        -0.0072
+      ],
+      "max": [
+        0.00312,
+        -0.00097,
+        0.01174
+      ]
+    },
+    "drain_tube": {
+      "min": [
+        -0.01306,
+        -0.08219,
+        -0.03635
+      ],
+      "max": [
+        0.01338,
+        -0.00882,
+        0.00596
       ]
     },
     "submandibular_gland_r": {
@@ -480,20 +756,298 @@
         0.0245,
         0.0198
       ]
+    },
+    "incision_field": {
+      "min": [
+        -0.0365,
+        -0.0645,
+        -0.0517
+      ],
+      "max": [
+        0.0305,
+        0.0655,
+        0.0433
+      ]
+    },
+    "facial_nerve": {
+      "min": [
+        -0.00053,
+        -0.05779,
+        -0.02502
+      ],
+      "max": [
+        0.02482,
+        0.05984,
+        0.04119
+      ]
+    },
+    "facial_nerve_branches": {
+      "min": [
+        -0.00053,
+        -0.05779,
+        -0.01168
+      ],
+      "max": [
+        0.0208,
+        0.05984,
+        0.04119
+      ]
+    },
+    "great_auricular_nerves": {
+      "min": [
+        -0.01089,
+        -0.08425,
+        -0.02199
+      ],
+      "max": [
+        0.00274,
+        0.01789,
+        0.0027
+      ]
+    },
+    "parotid_deep_lobe": {
+      "min": [
+        0.00109,
+        -0.0307,
+        -0.02166
+      ],
+      "max": [
+        0.02226,
+        0.02418,
+        0.01357
+      ]
+    },
+    "parotid_gland": {
+      "min": [
+        -0.01209,
+        -0.03609,
+        -0.02166
+      ],
+      "max": [
+        0.02226,
+        0.02418,
+        0.01831
+      ]
+    },
+    "parotid_superficial_lobe": {
+      "min": [
+        -0.01209,
+        -0.03609,
+        -0.01946
+      ],
+      "max": [
+        0.01163,
+        0.02318,
+        0.01831
+      ]
+    },
+    "retromandibular_veins": {
+      "min": [
+        -0.00389,
+        -0.0538,
+        -0.01153
+      ],
+      "max": [
+        0.01865,
+        0.02683,
+        0.01642
+      ]
+    },
+    "sternocleidomastoid_r": {
+      "min": [
+        -0.00197,
+        -0.16996,
+        -0.05278
+      ],
+      "max": [
+        0.06559,
+        0.01322,
+        0.03315
+      ]
     }
+  },
+  "groups": {
+    "facial_nerve": [
+      "facial_nerve_trunk",
+      "facial_nerve_temporofacial",
+      "facial_nerve_cervicofacial",
+      "facial_nerve_temporal",
+      "facial_nerve_zygomatic",
+      "facial_nerve_buccal",
+      "facial_nerve_marginal_mandibular",
+      "facial_nerve_cervical",
+      "facial_nerve_posterior_auricular",
+      "facial_nerve_digastric_branch"
+    ],
+    "facial_nerve_branches": [
+      "facial_nerve_temporofacial",
+      "facial_nerve_cervicofacial",
+      "facial_nerve_temporal",
+      "facial_nerve_zygomatic",
+      "facial_nerve_buccal",
+      "facial_nerve_marginal_mandibular",
+      "facial_nerve_cervical"
+    ],
+    "great_auricular_nerves": [
+      "great_auricular_nerve",
+      "great_auricular_nerve_anterior",
+      "great_auricular_nerve_posterior"
+    ],
+    "parotid_deep_lobe": [
+      "parotid_level_3",
+      "parotid_level_4"
+    ],
+    "parotid_gland": [
+      "parotid_superficial_lobe",
+      "parotid_deep_lobe"
+    ],
+    "parotid_superficial_lobe": [
+      "parotid_level_1",
+      "parotid_level_2",
+      "parotid_ecd_cuff"
+    ],
+    "retromandibular_veins": [
+      "retromandibular_vein",
+      "retromandibular_vein_anterior",
+      "retromandibular_vein_posterior"
+    ],
+    "sternocleidomastoid_r": [
+      "sternocleidomastoid_main",
+      "scm_flap"
+    ]
+  },
+  "zones": [
+    {
+      "key": "ear_a",
+      "weight": "ear",
+      "centre": [
+        -0.016421,
+        -0.0005,
+        -0.0177
+      ],
+      "radii": [
+        0.012,
+        0.013000000000000001,
+        0.012
+      ]
+    },
+    {
+      "key": "ear_b",
+      "weight": "ear",
+      "centre": [
+        -0.011212,
+        -0.0175,
+        0.0023
+      ],
+      "radii": [
+        0.012,
+        0.014,
+        0.017
+      ]
+    },
+    {
+      "key": "lip",
+      "weight": "lip",
+      "centre": [
+        0.0545,
+        -0.0365,
+        0.0963
+      ],
+      "radii": [
+        0.016,
+        0.012,
+        0.01
+      ]
+    },
+    {
+      "key": "forehead",
+      "weight": "forehead",
+      "centre": [
+        0.0365,
+        0.0675,
+        0.0703
+      ],
+      "radii": [
+        0.022,
+        0.015,
+        0.016
+      ]
+    },
+    {
+      "key": "frey",
+      "weight": "frey",
+      "centre": [
+        -0.013884,
+        0.0105,
+        0.0063
+      ],
+      "radii": [
+        0.012,
+        0.023,
+        0.026000000000000002
+      ]
+    },
+    {
+      "key": "bite",
+      "weight": "bite",
+      "centre": [
+        -0.014512,
+        0.0035,
+        0.0023
+      ],
+      "radii": [
+        0.012,
+        0.016,
+        0.015
+      ]
+    }
+  ],
+  "barriers": {
+    "smas_hinge": [
+      -0.011864328375958124,
+      0.019717637496207446
+    ],
+    "scm_pivot": [
+      0.006113,
+      0.0075,
+      -0.024815
+    ]
+  },
+  "imaging": {
+    "z_mm": 231.0,
+    "x_mm": [
+      18.25,
+      103.75
+    ],
+    "y_mm": [
+      38.0,
+      128.0
+    ],
+    "image": "/assets/imaging/ct-axial.png",
+    "pixels": [
+      300,
+      285
+    ],
+    "level": 45,
+    "window": 380,
+    "origin_ras_mm": [
+      68.5,
+      81.7,
+      232.5
+    ]
   },
   "structures": {
     "skin": {
-      "vertices": 75153,
-      "triangles": 150302
+      "vertices": 83831,
+      "triangles": 167658
     },
     "eyes": {
       "vertices": 144,
       "triangles": 280
     },
     "subcutaneous_fat": {
-      "vertices": 45971,
-      "triangles": 91946
+      "vertices": 54844,
+      "triangles": 109692
     },
     "smas": {
       "vertices": 14942,
@@ -503,17 +1057,45 @@
       "vertices": 10002,
       "triangles": 20000
     },
-    "parotid_superficial_lobe": {
-      "vertices": 8002,
-      "triangles": 16000
+    "parotid_level_1": {
+      "vertices": 2502,
+      "triangles": 5000
+    },
+    "parotid_level_2": {
+      "vertices": 4744,
+      "triangles": 9500
+    },
+    "parotid_ecd_cuff": {
+      "vertices": 2252,
+      "triangles": 4500
     },
     "pleomorphic_adenoma": {
       "vertices": 2562,
       "triangles": 5120
     },
-    "parotid_deep_lobe": {
-      "vertices": 6002,
-      "triangles": 12000
+    "pleomorphic_adenoma_deep": {
+      "vertices": 642,
+      "triangles": 1280
+    },
+    "pleomorphic_adenoma_tail": {
+      "vertices": 642,
+      "triangles": 1280
+    },
+    "pleomorphic_adenoma_accessory": {
+      "vertices": 642,
+      "triangles": 1280
+    },
+    "parotid_level_3": {
+      "vertices": 3002,
+      "triangles": 6000
+    },
+    "parotid_level_4": {
+      "vertices": 1902,
+      "triangles": 3800
+    },
+    "parotid_accessory_lobe": {
+      "vertices": 642,
+      "triangles": 1280
     },
     "facial_nerve_trunk": {
       "vertices": 362,
@@ -555,6 +1137,26 @@
       "vertices": 194,
       "triangles": 384
     },
+    "facial_nerve_ic_buccal_a": {
+      "vertices": 266,
+      "triangles": 528
+    },
+    "facial_nerve_ic_buccal_b": {
+      "vertices": 290,
+      "triangles": 576
+    },
+    "facial_nerve_ic_divisions": {
+      "vertices": 302,
+      "triangles": 600
+    },
+    "auriculotemporal_nerve": {
+      "vertices": 650,
+      "triangles": 1296
+    },
+    "frey_regrowth": {
+      "vertices": 8040,
+      "triangles": 16008
+    },
     "great_auricular_nerve": {
       "vertices": 938,
       "triangles": 1872
@@ -566,6 +1168,10 @@
     "great_auricular_nerve_posterior": {
       "vertices": 794,
       "triangles": 1584
+    },
+    "parotid_duct": {
+      "vertices": 1010,
+      "triangles": 2016
     },
     "retromandibular_vein": {
       "vertices": 1170,
@@ -603,13 +1209,53 @@
       "vertices": 5002,
       "triangles": 10000
     },
-    "sternocleidomastoid_r": {
-      "vertices": 3162,
-      "triangles": 6320
+    "sternocleidomastoid_main": {
+      "vertices": 5502,
+      "triangles": 11000
+    },
+    "scm_flap": {
+      "vertices": 3002,
+      "triangles": 6000
     },
     "digastric_posterior_belly": {
       "vertices": 2182,
       "triangles": 4360
+    },
+    "stimulator_probe": {
+      "vertices": 582,
+      "triangles": 1160
+    },
+    "smas_flap": {
+      "vertices": 3266,
+      "triangles": 6232
+    },
+    "barrier_graft": {
+      "vertices": 1125,
+      "triangles": 1876
+    },
+    "sialocele_pocket": {
+      "vertices": 642,
+      "triangles": 1280
+    },
+    "needle": {
+      "vertices": 1194,
+      "triangles": 2368
+    },
+    "us_probe": {
+      "vertices": 738,
+      "triangles": 1468
+    },
+    "us_plane": {
+      "vertices": 396,
+      "triangles": 770
+    },
+    "ct_tumour_outline": {
+      "vertices": 945,
+      "triangles": 1644
+    },
+    "drain_tube": {
+      "vertices": 1418,
+      "triangles": 2832
     },
     "submandibular_gland_r": {
       "vertices": 3002,
@@ -636,5 +1282,5 @@
       "triangles": 3822
     }
   },
-  "triangles_total": 533148
+  "triangles_total": 625504
 }

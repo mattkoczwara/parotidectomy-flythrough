@@ -1,0 +1,18 @@
+{
+  "id": "sternocleidomastoid_main",
+  "names": {
+    "plain": "Side neck muscle",
+    "anatomical": "Sternocleidomastoid (main part)",
+    "latin": "Musculus sternocleidomastoideus"
+  },
+  "gloss": "The long muscle on the side of the neck, from behind the ear to the breastbone; the part that stays in place when a strip is turned up.",
+  "tissue": "muscle",
+  "depth": "subcutaneous",
+  "anchors": [],
+  "claims": [],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

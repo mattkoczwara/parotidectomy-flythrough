@@ -1,0 +1,73 @@
+{
+  "id": "monitoring-evidence",
+  "statement": {
+    "essentials": "A monitor that signals when the nerve is touched lowers the chance of weakness straight after surgery; whether it changes lasting weakness is not shown.",
+    "anatomy": "Meta-analyses find less immediate facial weakness with intraoperative nerve monitoring, mainly in superficial parotidectomy, and no clear difference in permanent weakness.",
+    "clinical": "Buntain 2026 (12 studies, 2,401 patients): odds of immediate dysfunction with monitoring 0.48 (95% CI 0.31–0.72); 0.51 for superficial and 0.93 (0.42–2.08) for total parotidectomy; permanent dysfunction 0.84 (0.44–1.60). Sood 2015 (7 studies, 546 patients): immediate weakness 22.5% monitored against 34.9% unmonitored; permanent 3.9% against 7.1%, not significantly different."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "buntain-2026",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "sood-2015",
+      "locator": "Abstract",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Immediate facial nerve dysfunction with monitoring (odds ratio)",
+      "value": 0.48,
+      "unit": "OR",
+      "ci": [
+        0.31,
+        0.72
+      ],
+      "n": "10 studies, 2,042 patients",
+      "population": "Patients having parotidectomy, retrospective and prospective two-arm studies",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "buntain-2026"
+    },
+    {
+      "label": "Permanent facial nerve dysfunction with monitoring (odds ratio)",
+      "value": 0.84,
+      "unit": "OR",
+      "ci": [
+        0.44,
+        1.6
+      ],
+      "n": "6 studies, 981 patients",
+      "population": "Patients having parotidectomy, retrospective and prospective two-arm studies",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "buntain-2026"
+    },
+    {
+      "label": "Immediate weakness, monitored",
+      "value": 22.5,
+      "unit": "%",
+      "n": "546 patients in 7 studies",
+      "population": "Patients having primary parotidectomy",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "sood-2015"
+    },
+    {
+      "label": "Immediate weakness, unmonitored",
+      "value": 34.9,
+      "unit": "%",
+      "n": "546 patients in 7 studies",
+      "population": "Patients having primary parotidectomy",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "sood-2015"
+    }
+  ],
+  "limitations": "Observational comparisons in which the surgeon chose whether to monitor. The authors conclude that the effect on permanent weakness, and in total parotidectomy, is uncertain and that use should be tailored to the operation and the surgeon.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,33 @@
+---
+id: option-ecd
+chapter: choosing
+order: 19
+title: Extracapsular dissection
+delta:
+  camera: { azimuth: -14, elevation: 10, zoom: 0.95, frame: [parotid_level_2, specimen@0.45] }
+  gauge: 3
+  op: { explode: 0, out: 0.45, ink_plane: 0, ink_cranial: 0, ink_cuff: 1 }
+  variants: { resection: ecd }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.1, emphasis: context }
+      pleomorphic_adenoma: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      parotid_superficial_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      parotid_ecd_cuff: { emphasis: focus }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      parotid_accessory_lobe: { emphasis: context }
+  labels:
+      - { structureId: pleomorphic_adenoma }
+      - { structureId: parotid_ecd_cuff }
+      - { structureId: parotid_level_2 }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7], op: [0.3, 1] }
+sceneDescription: "The skin is a faint outline. A violet line rings the tumour on the outer surface of the gland. The tumour and a thin rim of gland around it have been lifted a little way out of a bowl-shaped hollow in the lower outer part of the gland. The nerve is not exposed: the hollow lies wholly on the outer side of it."
+claims: [ecd-definition, ecd-vs-superficial-outcomes]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="ecd-definition">Extracapsular dissection takes the tumour out with a thin rim of normal gland, and does not search for the facial nerve.</Claim> <Model>The violet line is the margin; the piece raised above the gland is what comes out.</Model>
+
+<Claim id="ecd-vs-superficial-outcomes">For small, mobile tumours of the outer lobe, studies find similar recurrence after it, with less temporary facial weakness and less Frey syndrome than after the larger operation.</Claim> <Claim id="ecd-definition">It removes less than one level of the gland.</Claim>

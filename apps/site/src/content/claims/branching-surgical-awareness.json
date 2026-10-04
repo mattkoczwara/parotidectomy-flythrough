@@ -1,0 +1,27 @@
+{
+  "id": "branching-surgical-awareness",
+  "statement": {
+    "essentials": "Because the pattern differs from person to person, surgeons look for it early in the dissection rather than assuming it.",
+    "anatomy": "The authors of a systematic review conclude that early identification of the branching pattern during surgery reduces the risk of injuring the nerve; those of a meta-analysis advise utmost caution at parotidectomy because no classification captures the variation."
+  },
+  "evidenceClass": "standard-principle",
+  "sources": [
+    {
+      "sourceId": "poutoglidis-2022",
+      "locator": "Conclusion",
+      "support": "direct"
+    },
+    {
+      "sourceId": "triantafyllou-2024",
+      "locator": "Conclusions",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "These are the authors’ conclusions from anatomical series; no study measured whether identifying the pattern early lowers injury rates.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

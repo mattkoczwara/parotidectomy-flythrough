@@ -70,19 +70,21 @@ export const evidenceClasses = [
   'uncertain',
 ] as const;
 
-export const framedNumber = z.strictObject({
-  label: nonEmpty,
-  /** Point estimate, or the value as reported (e.g. a proportion as a percentage). */
-  value: z.number(),
-  unit: z.enum(['%', 'mm', 'cm', 'g', 'OR', 'RR', 'months', 'days', 'years', 'count']),
-  ci: z.tuple([z.number(), z.number()]).optional(),
-  range: z.tuple([z.number(), z.number()]).optional(),
-  n: nonEmpty.optional(),
-  /** Who the number describes; a number without its population is never displayed. */
-  population: nonEmpty,
-  design: nonEmpty,
-  sourceId: id,
-});
+export const framedNumber = z
+  .strictObject({
+    label: nonEmpty,
+    /** Point estimate, or the value as reported (e.g. a proportion as a percentage). Omitted when a source reports only a range. */
+    value: z.number().optional(),
+    unit: z.enum(['%', 'mm', 'cm', 'g', 'mL', 'OR', 'RR', 'months', 'days', 'years', 'hours', 'minutes', 'points', 'count']),
+    ci: z.tuple([z.number(), z.number()]).optional(),
+    range: z.tuple([z.number(), z.number()]).optional(),
+    n: nonEmpty.optional(),
+    /** Who the number describes; a number without its population is never displayed. */
+    population: nonEmpty,
+    design: nonEmpty,
+    sourceId: id,
+  })
+  .refine((n) => n.value !== undefined || n.range !== undefined, 'a number needs a value or a reported range');
 export type FramedNumber = z.infer<typeof framedNumber>;
 
 export const claim = z.strictObject({
@@ -136,6 +138,8 @@ export const tissueFamilies = [
   'vein',
   'lymph-node',
   'tumour',
+  /** Manufactured objects (probe, needle, drain): not anatomy, drawn as plain instruments. */
+  'instrument',
 ] as const;
 
 /** Positions on the plane gauge, superficial to deep. */
@@ -166,6 +170,17 @@ export const structure = z.strictObject({
   anchors: z.array(nonEmpty).default([]),
   assetIds: z.array(id).default([]),
   claims: z.array(id).default([]),
+  /** What it does, in a sentence (structure card; plan §4). */
+  role: nonEmpty.optional(),
+  /** Why it matters in this atlas (structure card). */
+  matters: nonEmpty.optional(),
+  /**
+   * A group stands for several meshes (e.g. the superficial lobe is built from ESGS levels): plate patches for the
+   * group apply to its members (@atlas/timeline compile `groups`). A group has no mesh of its own.
+   */
+  members: z.array(id).default([]),
+  /** Schematic, not modelled anatomy: always drawn in the line/hatch grammar (plan §2). */
+  schematic: z.boolean().default(false),
 });
 export type Structure = z.infer<typeof structure>;
 
@@ -220,7 +235,8 @@ export const plateDelta = z.strictObject({
       azimuth: z.number().optional(),
       elevation: z.number().min(-89).max(89).optional(),
       zoom: z.number().positive().optional(),
-      frame: z.array(id).min(1).optional(),
+      /** Structure ids to frame; `specimen` and `specimen@0.45` frame the lifted pieces (at the end, or part-way through their move). */
+      frame: z.array(z.string().regex(/^[a-z0-9]+(?:[-_][a-z0-9]+)*(?:@\d+(?:\.\d+)?)?$/, 'a structure id, or specimen@amount')).min(1).optional(),
     })
     .optional(),
   structures: z

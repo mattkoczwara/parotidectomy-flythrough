@@ -1,0 +1,22 @@
+{
+  "id": "neck-muscle-exposure",
+  "statement": {
+    "essentials": "The surgeon frees the front edge of the large neck muscle and finds the small muscle under the jaw (the digastric), then follows it toward the bony knob behind the ear.",
+    "anatomy": "The parotid is detached from the tragal cartilage and from the anterior border of the sternocleidomastoid; the digastric is identified and followed along its lateral surface toward the mastoid tip, which exposes the landmarks that lead to the trunk."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Mobilization of parotid in preparation for VIIth nerve dissection",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "One institution’s sequence; other surgeons find the nerve from a branch (retrograde) or by other routes.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,65 @@
+---
+/**
+ * Framed figures (plan §6): each number with its interval, n, population and design, and a line on why it may not
+ * apply. Rendered from the claim record so the figures cannot drift from the evidence drawer.
+ */
+import { getEntry } from 'astro:content';
+
+interface Props {
+  claim: string;
+  /** Show only the numbers from this source. */
+  source?: string;
+  /** Show only the numbers whose label contains this text. */
+  match?: string;
+  title?: string;
+}
+const { claim: id, source, match, title } = Astro.props;
+const entry = await getEntry('claims', id);
+if (!entry) throw new Error(`Unknown claim "${id}"`);
+const c = entry.data;
+const rows = c.numbers.filter((n) => (!source || n.sourceId === source) && (!match || n.label.toLowerCase().includes(match.toLowerCase())));
+if (!rows.length) throw new Error(`Framed: claim "${id}" has no matching numbers`);
+const sources = await Promise.all([...new Set(rows.map((n) => n.sourceId))].map(async (sid) => (await getEntry('sources', sid))!.data));
+const unit = (u: string) => (u === '%' ? '%' : ` ${u}`);
+const fmt = (n: (typeof rows)[number]) => {
+  const u = unit(n.unit);
+  const main = n.value !== undefined ? `${n.value}${u}` : `${n.range![0]}–${n.range![1]}${u}`;
+  const spread = n.ci ? `95% CI ${n.ci[0]}–${n.ci[1]}` : n.range && n.value !== undefined ? `range ${n.range[0]}–${n.range[1]}` : '';
+  return { main, spread };
+};
+// Rows sharing a population and design are grouped under one caption.
+const groups = new Map<string, typeof rows>();
+for (const n of rows) {
+  const key = `${n.population}|${n.design}|${n.sourceId}`;
+  groups.set(key, [...(groups.get(key) ?? []), n]);
+}
+---
+
+<figure class="framed" data-claim={id}>
+  {title && <figcaption class="framed-title">{title}</figcaption>}
+  {
+    [...groups.values()].map((g) => (
+      <div class="framed-group">
+        <table>
+          <tbody>
+            {g.map((n) => {
+              const f = fmt(n);
+              return (
+                <tr>
+                  <th scope="row">{n.label}</th>
+                  <td class="v">{f.main}</td>
+                  <td class="s">{[f.spread, n.n].filter(Boolean).join(' · ')}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <p class="framed-who">
+          {g[0]!.population}. {g[0]!.design}; {sources.find((s) => s.id === g[0]!.sourceId)!.citation.authors[0]} {sources.find((s) => s.id === g[0]!.sourceId)!.citation.year}.
+        </p>
+      </div>
+    ))
+  }
+  {c.limitations && <p class="framed-why"><strong>Why this may not apply to you.</strong> {c.limitations}</p>}
+  <button type="button" class="claim-ref framed-ref" data-claim={id} aria-label="Evidence for these figures"><span aria-hidden="true">Evidence</span></button>
+</figure>

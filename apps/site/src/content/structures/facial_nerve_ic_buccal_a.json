@@ -1,0 +1,21 @@
+{
+  "id": "facial_nerve_ic_buccal_a",
+  "names": {
+    "plain": "Linking twig, cheek to eyelid",
+    "anatomical": "Buccozygomatic interconnection (near the gland)"
+  },
+  "gloss": "A small branch that joins the cheek branch to the eyelid branch where they leave the gland: one of the commonest interconnections.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "claims": [
+    "fn-branching-variation"
+  ],
+  "anchors": [
+    "anchor__facial_nerve_ic_buccal_a"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

@@ -557,6 +557,101 @@ body[data-depth='clinical'] .claim {
   margin-left: calc(var(--rail) + 1.25rem);
 }
 
+/* ── Insets, notes and framed figures (inside the plate, in reading order) ─────────────── */
+.inset {
+  margin: 0.9rem 0 0.4rem;
+  padding: 0.65rem 0.8rem 0.8rem;
+  border: 1px solid var(--rule);
+  background: rgba(15, 17, 16, 0.5);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+.inset-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.45rem;
+}
+.inset-tag {
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+.inset svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* The line grammar: strokes in pale ink, hairlines, no tissue colour (plan §2). */
+.inset svg .ln { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; }
+.inset svg .hair { fill: none; stroke: var(--ink-soft); stroke-width: 0.8; }
+.inset svg .dash { fill: none; stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 3 3; }
+.inset svg .fill { fill: rgba(236, 230, 220, 0.14); stroke: var(--ink); stroke-width: 1.4; }
+.inset svg .hatch { fill: url(#hatch); stroke: var(--ink); stroke-width: 1.2; }
+.inset svg .ink { fill: none; stroke: #8a5fc4; stroke-width: 1.6; }
+.inset svg text { font: 500 9.5px var(--font-sans), system-ui, sans-serif; fill: var(--ink); }
+.inset svg text.soft { fill: var(--ink-soft); }
+.inset-caption {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.inset table { width: 100%; border-collapse: collapse; font-size: 0.8rem; line-height: 1.35; }
+.inset th, .inset td { text-align: left; vertical-align: top; padding: 0.3rem 0.4rem 0.3rem 0; border-top: 1px solid var(--rule); font-weight: 400; }
+.inset thead th { border-top: 0; color: var(--ink-faint); font-weight: 600; }
+.inset tbody th { font-weight: 600; color: var(--ink); }
+.inset td.num, .inset td .num { font-variant-numeric: tabular-nums; }
+
+.note {
+  margin: 0.55rem 0;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+.note summary {
+  cursor: pointer;
+  padding: 0.4rem 0;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+.note[open] summary { color: var(--ink); }
+.note-body p { margin: 0 0 0.5rem; }
+
+.framed {
+  position: relative;
+  margin: 0.85rem 0;
+  padding: 0.55rem 0.8rem 0.7rem;
+  border-left: 2px solid var(--rule);
+  background: rgba(15, 17, 16, 0.4);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+.framed-title { font-size: 0.78rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 0.3rem; }
+.framed table { width: 100%; border-collapse: collapse; font-size: 0.84rem; line-height: 1.35; }
+.framed th, .framed td { padding: 0.18rem 0.5rem 0.18rem 0; text-align: left; vertical-align: baseline; font-weight: 400; }
+.framed th { color: var(--ink-soft); }
+.framed td.v { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
+.framed td.s { color: var(--ink-faint); font-size: 0.76rem; font-variant-numeric: tabular-nums; }
+.framed-who { margin: 0.25rem 0 0.45rem; font-size: 0.76rem; color: var(--ink-faint); line-height: 1.4; }
+.framed-why { margin: 0.35rem 0 0; font-size: 0.78rem; line-height: 1.45; color: var(--ink-soft); }
+.framed .framed-ref { display: inline; position: absolute; right: 0.6rem; top: 0.4rem; vertical-align: baseline; line-height: 1.2; font-size: 0.72rem; font-weight: 500; text-decoration: underline; }
+.para-src {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-left: 0.35em;
+  width: 0.95em;
+  height: 0.95em;
+  padding: 0;
+  border: 1px solid var(--ink-faint);
+  border-radius: 50%;
+  background: none;
+  color: var(--ink-faint);
+  font: 600 0.62em/1 var(--font-sans), system-ui, sans-serif;
+  cursor: pointer;
+  position: relative;
+  top: -0.12em;
+}
+.para-src:hover, .para-src:focus-visible { color: var(--ink); border-color: var(--ink); }
+
 /* ── Portrait / narrow: scene on top, one text lane below ─────────────────────────────── */
 @media (max-aspect-ratio: 1/1), (max-width: 760px) {
   :root {

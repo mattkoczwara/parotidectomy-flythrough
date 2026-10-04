@@ -1,0 +1,21 @@
+{
+  "id": "needle",
+  "names": {
+    "plain": "Needle and syringe",
+    "anatomical": "Fine-needle aspiration needle and syringe"
+  },
+  "gloss": "A fine needle on a syringe, passed through the skin into the lump to draw out a few cells. An instrument, not anatomy.",
+  "tissue": "instrument",
+  "depth": "subcutaneous",
+  "claims": [
+    "fna-accuracy"
+  ],
+  "anchors": [
+    "anchor__needle"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

@@ -1,0 +1,68 @@
+{
+  "id": "facelift-incision",
+  "statement": {
+    "essentials": "An alternative incision, borrowed from facelift surgery, hides the scar in front of and behind the ear and in the hairline instead of in the neck.",
+    "anatomy": "The modified facelift incision follows the edge of the tragus to the earlobe, passes round the lobule and runs up behind the ear toward the hairline. It avoids a neck scar and gives adequate exposure for selected tumours, which are mostly small, mobile and benign.",
+    "clinical": "In a meta-analysis of seven studies of presumed benign tumours the facelift incision scored higher for cosmetic satisfaction and caused less Frey syndrome, with similar rates of facial palsy and salivary complications; operations took somewhat longer and the tumours were smaller. One series used it only for benign, mobile tumours under 4 cm and found tumours at the far periphery, and the upper neck nodes, not always reachable."
+  },
+  "evidenceClass": "varies-by-surgeon",
+  "sources": [
+    {
+      "sourceId": "lee-2021",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "terris-1994",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "movassaghi-2019",
+      "locator": "Operative technique",
+      "support": "direct"
+    },
+    {
+      "sourceId": "lorenz-2013",
+      "locator": "Introduction; Patients and methods",
+      "support": "direct"
+    },
+    {
+      "sourceId": "aggarwal-2021",
+      "locator": "Abstract",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Cosmetic satisfaction score, facelift minus Blair incision",
+      "value": 1.66,
+      "unit": "points",
+      "ci": [
+        0.87,
+        2.46
+      ],
+      "population": "Adults having open parotidectomy for presumed benign tumours, 7 studies",
+      "design": "Systematic review and meta-analysis (mean difference; the scales differ between studies)",
+      "sourceId": "lee-2021"
+    },
+    {
+      "label": "Frey syndrome, facelift minus Blair incision (risk difference)",
+      "value": -18,
+      "unit": "%",
+      "ci": [
+        -27,
+        -10
+      ],
+      "population": "Adults having open parotidectomy for presumed benign tumours, 7 studies",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "lee-2021"
+    }
+  ],
+  "limitations": "Observational comparisons: the facelift incision went to smaller, more benign tumours in surgeons who chose it. A narrative review notes that well-designed prospective studies are lacking and that these incisions remain largely with experienced surgeons at high-volume centres. The path drawn in the model is one representative facelift-type incision.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

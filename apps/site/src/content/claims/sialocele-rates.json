@@ -1,0 +1,60 @@
+{
+  "id": "sialocele-rates",
+  "statement": {
+    "essentials": "A collection of saliva under the skin flap (a sialocele) or a leak of saliva through the wound is one of the commoner early problems; in one large series it affected roughly one patient in eleven, mostly within a month, and all settled.",
+    "anatomy": "In one series a sialocele or fistula was more likely after an inferior or middle superficial parotidectomy than after other extents of dissection.",
+    "clinical": "At one university centre, 70 of 771 patients (9.1%) over 1994 to 2013 developed a sialocele or salivary fistula; 67 (96%) did so within a month and all had resolved by 6 months. Inferior and middle superficial parotidectomy had a significantly higher rate than other extents; age, sex, pathology, body mass index and specimen volume did not differ. In the Cochrane review, acellular dermal matrix made little or no difference to seromas or sialoceles (risk ratio 2.33, 95% CI 0.66 to 8.23; 64 participants, low-certainty) but may raise wound infection."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "britt-2017",
+      "locator": "Abstract, Results and Conclusion",
+      "support": "direct"
+    },
+    {
+      "sourceId": "ye-2019",
+      "locator": "Abstract, Main results",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Sialocele or salivary fistula after parotidectomy",
+      "value": 9.1,
+      "unit": "%",
+      "n": "70 of 771",
+      "population": "All patients having parotidectomy at one university hospital, 1994 to 2013",
+      "design": "Single-centre retrospective cohort",
+      "sourceId": "britt-2017"
+    },
+    {
+      "label": "Sialocele or fistula appearing within a month",
+      "value": 96,
+      "unit": "%",
+      "n": "67 of 70",
+      "population": "Patients who developed a sialocele or salivary fistula",
+      "design": "Single-centre retrospective cohort",
+      "sourceId": "britt-2017"
+    },
+    {
+      "label": "Seroma or sialocele with acellular dermal matrix versus no graft (risk ratio)",
+      "value": 2.33,
+      "unit": "RR",
+      "ci": [
+        0.66,
+        8.23
+      ],
+      "n": "64 participants",
+      "population": "Adults undergoing superficial parotidectomy, mostly for benign lesions, in randomised trials",
+      "design": "Cochrane systematic review, low-certainty evidence",
+      "sourceId": "ye-2019"
+    }
+  ],
+  "limitations": "A single-centre series spanning two decades, so techniques changed over the period; the abstract does not say how the diagnosis was made or whether mild collections were counted. Results from one centre do not give the rate for another, and the figure is for sialocele together with salivary fistula. The schematic pocket drawn in the atlas is an illustration of the idea, not a measured shape.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

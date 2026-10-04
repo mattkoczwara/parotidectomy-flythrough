@@ -1,0 +1,30 @@
+{
+  "id": "facial_nerve",
+  "names": {
+    "plain": "The facial nerve",
+    "anatomical": "Facial nerve (cranial nerve VII)",
+    "latin": "Nervus facialis"
+  },
+  "gloss": "The nerve that moves the muscles of the face: the trunk, its two divisions and all the branches shown.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "members": [
+    "facial_nerve_trunk",
+    "facial_nerve_temporofacial",
+    "facial_nerve_cervicofacial",
+    "facial_nerve_temporal",
+    "facial_nerve_zygomatic",
+    "facial_nerve_buccal",
+    "facial_nerve_marginal_mandibular",
+    "facial_nerve_cervical",
+    "facial_nerve_posterior_auricular",
+    "facial_nerve_digastric_branch"
+  ],
+  "claims": [
+    "fn-five-branch-groups"
+  ],
+  "anchors": [],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

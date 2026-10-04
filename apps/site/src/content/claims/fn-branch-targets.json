@@ -1,0 +1,28 @@
+{
+  "id": "fn-branch-targets",
+  "statement": {
+    "essentials": "Each group moves a different part of the face: the temporal and zygomatic branches the forehead and eyelids, the buccal branch the cheek and upper lip, and the marginal mandibular branch the lower lip.",
+    "anatomy": "Monitoring electrodes are placed over the frontalis (temporal branch), the orbicularis oculi (temporal and zygomatic), the orbicularis oris at the upper lip (buccal) and the mentalis at the lower lip (marginal mandibular). Marginal mandibular weakness shows as a lower lip and corner of the mouth that does not pull down.",
+    "clinical": "The marginal mandibular branch is the one most often affected after parotidectomy."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "cristofaro-2024",
+      "locator": "Methods, monitoring",
+      "support": "direct"
+    },
+    {
+      "sourceId": "otanez-2024",
+      "locator": "Introduction",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "Described from the placement of monitoring electrodes and one centre’s introduction, not from a mapping study; branches overlap and share muscles, and the cervical branch is not covered by these sources.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,37 @@
+---
+id: pseudocapsule
+chapter: tumour
+order: 12
+title: The tumour's edge, magnified
+delta:
+  camera: { azimuth: -10, elevation: 6, zoom: 1.1, frame: [pleomorphic_adenoma] }
+  gauge: 3
+  structures:
+      pleomorphic_adenoma_deep: { presence: 0 }
+      pleomorphic_adenoma_tail: { presence: 0 }
+      pleomorphic_adenoma_accessory: { presence: 0 }
+      parotid_accessory_lobe: { presence: 0 }
+      skin: { mode: ghost, opacity: 0.1, emphasis: context }
+      parotid_superficial_lobe: { mode: ghost, opacity: 0.4, emphasis: context }
+      parotid_deep_lobe: { mode: ghost, opacity: 0.4, emphasis: context }
+      pleomorphic_adenoma: { emphasis: focus }
+  labels:
+      - { structureId: pleomorphic_adenoma }
+transition: { camera: [0, 0.6], structures: [0.2, 0.8] }
+sceneDescription: "A close view of the tumour inside the see-through gland. Beside it, a magnified line drawing of the tumour's edge shows a thin capsule that stops in places, a finger-like extension through it, and small satellite nodules in the gland beyond."
+claims: [pa-capsule-features]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+
+<Claim id="pa-capsule-features">Most of these tumours have at least one flaw in their outer covering: it may be incomplete, the tumour may push through it, and finger-like extensions or small satellite nodules may lie beyond it.</Claim>
+
+<Inset title="The edge of the tumour" kind="schematic" caption="A drawing of the features, not a section of a real tumour: a capsule that stops in places, a finger-like pseudopodium, and satellite nodules in the normal gland.">
+<PseudocapsuleInset mode="features" />
+</Inset>
+
+<Framed claim="pa-capsule-features" title="How often, in 218 removed tumours" />

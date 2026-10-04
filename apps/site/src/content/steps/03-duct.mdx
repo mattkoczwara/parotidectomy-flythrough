@@ -1,0 +1,38 @@
+---
+id: duct
+chapter: orientation
+order: 3
+title: What the gland does
+delta:
+  camera: { azimuth: -6, elevation: 6, zoom: 1.0, frame: [parotid_gland, parotid_duct, parotid_accessory_lobe] }
+  structures:
+      skin: { mode: ghost, opacity: 0.12, emphasis: context }
+      parotid_superficial_lobe: { mode: solid, opacity: 1, emphasis: focus }
+      parotid_deep_lobe: { mode: ghost, opacity: 0.5, emphasis: context }
+      parotid_duct: { presence: 1, emphasis: focus }
+      parotid_accessory_lobe: { presence: 1, emphasis: focus }
+      masseter_r: { emphasis: context }
+  labels:
+      - { structureId: parotid_superficial_lobe }
+      - { structureId: parotid_duct }
+      - { structureId: parotid_accessory_lobe }
+      - { structureId: masseter_r }
+transition: { camera: [0, 0.5], structures: [0.3, 1] }
+sceneDescription: "The skin is a faint outline. A thin pale tube, the duct, leaves the front of the gland and runs forward across the chewing muscle. A small separate nodule of gland tissue lies just above the duct, in front of the main gland."
+claims: [parotid-saliva, parotid-duct-course, accessory-parotid-prevalence]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+
+<Claim id="parotid-saliva">The parotid makes saliva, a thin watery fluid, and sends it to the mouth through a duct.</Claim> <Claim id="parotid-duct-course">The duct leaves the front of the gland, runs forward across the chewing muscle, goes through the cheek muscle and opens in the mouth beside the second upper molar.</Claim>
+
+<Claim id="accessory-parotid-prevalence">Some people have a small separate piece of gland tissue in front of the main parotid, resting on the duct.</Claim>
+
+<Note title="How common, and where the duct runs">
+<Framed claim="accessory-parotid-prevalence" source="rosa-2020" title="Accessory parotid gland" />
+<Framed claim="parotid-duct-course" title="Course of the duct in cadavers" />
+</Note>

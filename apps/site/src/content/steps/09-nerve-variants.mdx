@@ -1,0 +1,38 @@
+---
+id: nerve-variants
+chapter: nerve
+order: 9
+title: The pattern varies
+delta:
+  camera: { azimuth: -12, elevation: 8, zoom: 1.0, frame: [facial_nerve_branches] }
+  gauge: 4
+  variants: { nervePattern: type-iii }
+  structures:
+      facial_nerve_ic_buccal_a: { emphasis: focus }
+      facial_nerve_ic_buccal_b: { emphasis: focus }
+      facial_nerve_ic_divisions: { emphasis: focus }
+      facial_nerve_branches: { emphasis: context }
+      facial_nerve_trunk: { emphasis: context }
+  labels:
+      - { structureId: facial_nerve_ic_buccal_a }
+      - { structureId: facial_nerve_zygomatic }
+      - { structureId: facial_nerve_buccal }
+transition: { camera: [0, 0.5], structures: [0.2, 0.8], op: [0.2, 1] }
+sceneDescription: "The same branches with one extra twig drawn in, joining the cheek branch to the eyelid branch where they leave the gland. It is one of the commonest of many possible cross-links between the branches, shown here as a single small loop."
+claims: [fn-branching-variation, branching-surgical-awareness, fn-bifurcation]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+
+<Claim id="fn-branching-variation">The branches often join each other in small loops, and the patterns have been classified more than once without any classification capturing the variation.</Claim> <Claim id="fn-bifurcation">The first split into two is far steadier than the branching beyond it.</Claim> <Claim id="branching-surgical-awareness">Because of this, surgeons look for the pattern early in the dissection.</Claim>
+
+<Note title="How common each pattern is">
+<Framed claim="fn-branching-variation" source="katz-catalano-1987" title="One surgical series (Katz and Catalano)" />
+<Framed claim="fn-branching-variation" source="poutoglidis-2022" title="Systematic review (Davis' classification)" />
+</Note>
+
+<Model>The Explore chapter lets you switch the pattern.</Model>

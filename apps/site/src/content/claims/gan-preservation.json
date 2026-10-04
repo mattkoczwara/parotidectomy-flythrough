@@ -1,0 +1,44 @@
+{
+  "id": "gan-preservation",
+  "statement": {
+    "essentials": "The nerve that gives feeling to the earlobe can often be kept; when it is cut, the numbness can last a long time.",
+    "anatomy": "In a prospective trial the posterior branches of the great auricular nerve could be preserved in most patients without compromising the tumour clearance; their sensation recovered, while after division a measurable loss persisted for up to two years.",
+    "clinical": "Hui 2003 (81 patients): preservation was achievable in 69%, the deficit was transient when preserved, and preservation took about ten minutes longer. Vieira 2002 (30 patients randomised): tactile sensitivity returned to the preoperative level by six months in the preservation group and recovered only partly in the sacrifice group. Other series have found no significant difference."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "hui-2003",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "vieira-2002",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "lorenz-2013",
+      "locator": "Discussion",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Great auricular nerve branches preserved",
+      "value": 69,
+      "unit": "%",
+      "n": "of 81 patients",
+      "population": "Patients having parotidectomy at one university department",
+      "design": "Prospective controlled double-blind trial",
+      "sourceId": "hui-2003"
+    }
+  ],
+  "limitations": "Small trials; the branches were preserved only when tumour clearance was not compromised. Lorenz 2013 reports that two other studies found no significant difference between preservation and division, so the benefit is not universal.",
+  "disagreement": "Some studies report no significant difference in sensation between preserving and dividing the nerve (as summarised in Lorenz 2013).",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

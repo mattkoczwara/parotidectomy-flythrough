@@ -1,25 +1,32 @@
 {
   "id": "fn-exits-stylomastoid-foramen",
   "statement": {
-    "essentials": "The facial nerve leaves the skull through a small opening behind the ear, between two bony points, and passes straight into the parotid gland.",
-    "anatomy": "The extratemporal facial nerve exits the stylomastoid foramen, between the styloid and mastoid processes, and enters the posteromedial surface of the parotid gland."
+    "essentials": "The facial nerve leaves the skull through a small opening just behind the jaw and ear, and passes straight into the gland.",
+    "anatomy": "The trunk of the facial nerve invariably emerges from the base of the skull through the stylomastoid foramen and, in most specimens, enters the parotid gland before it divides.",
+    "clinical": "In 23 formalin-fixed cadavers the nerve emerged through the stylomastoid foramen in every dissection, and divided within the gland in 85% and before entering it in 15%."
   },
   "evidenceClass": "established-anatomy",
   "sources": [
     {
-      "sourceId": "statpearls-parotidectomy",
-      "support": "direct",
-      "locator": "Anatomy"
-    },
-    {
-      "sourceId": "kochhar-2016",
+      "sourceId": "salame-2002",
+      "locator": "Abstract",
       "support": "direct"
     }
   ],
-  "limitations": "Wording taken from narrative and reference sources; not a measurement.",
-  "numbers": [],
-  "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "numbers": [
+    {
+      "label": "Trunk divides within the gland",
+      "value": 85,
+      "unit": "%",
+      "n": "23 cadavers",
+      "population": "Formalin-fixed human cadavers, bilateral dissection",
+      "design": "Cadaveric microdissection study",
+      "sourceId": "salame-2002"
+    }
+  ],
+  "limitations": "One cadaver series; the point of division varies between people.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

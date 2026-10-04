@@ -1,23 +1,20 @@
 {
   "id": "parotid-location",
   "statement": {
-    "essentials": "The parotid gland sits in front of and below the ear, wrapped around the back edge of the jaw and lying over the chewing muscle.",
-    "anatomy": "The parotid occupies the retromandibular region, overlying the posterior masseter and the ramus, anterior to the ear and the sternocleidomastoid."
+    "essentials": "The parotid gland sits in front of and below the ear, wrapped around the back edge of the jaw.",
+    "anatomy": "The gland lies behind and lateral to the ramus of the mandible and in front of the sternocleidomastoid, enclosed in the parotid fascia, with the posterior belly of the digastric and the stylohyoid deep to it."
   },
   "evidenceClass": "established-anatomy",
   "sources": [
     {
-      "sourceId": "statpearls-parotidectomy",
-      "support": "direct"
-    },
-    {
-      "sourceId": "kochhar-2016",
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Pertinent anatomy",
       "support": "direct"
     }
   ],
   "numbers": [],
-  "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

@@ -1,0 +1,27 @@
+{
+  "id": "layers-over-gland",
+  "statement": {
+    "essentials": "Over the gland lie, from outside in, the skin, a layer of fat, a thin fibrous sheet called the SMAS, and the gland's own tough capsule.",
+    "anatomy": "The gland is enclosed in parotid fascia. Over it lie subcutaneous fat and the superficial musculoaponeurotic system (SMAS), the fibromuscular layer of the face that can be raised and sutured back as a flap."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Pertinent anatomy; incision and flap elevation",
+      "support": "direct"
+    },
+    {
+      "sourceId": "dulguerov-2016",
+      "locator": "Abstract",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [],
+  "limitations": "Thicknesses of the layers differ with age, body habit and site; the model uses constant-depth bands fitted under the skin, not segmented layers.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

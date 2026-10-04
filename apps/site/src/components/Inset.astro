@@ -1,0 +1,21 @@
+---
+/**
+ * An inset: a figure inside its plate (plan §3: schematic magnified drawings, tables, timelines). It stays in the
+ * text lane in every layout so it is always in reading order for assistive technology, in portrait and in the
+ * static tier. Schematic drawings use the line grammar (plan §2): ink strokes, no tissue colour.
+ */
+interface Props {
+  title: string;
+  /** What kind of content: schematic drawings are labelled as simplifications. */
+  kind?: 'schematic' | 'table' | 'figure';
+  /** Text equivalent for a drawing (also shown as the caption). */
+  caption?: string;
+}
+const { title, kind = 'figure', caption } = Astro.props;
+---
+
+<figure class="inset" data-kind={kind}>
+  <figcaption class="inset-title">{title}{kind === 'schematic' && <span class="inset-tag"> · schematic, not to scale</span>}</figcaption>
+  <div class="inset-body"><slot /></div>
+  {caption && <p class="inset-caption">{caption}</p>}
+</figure>

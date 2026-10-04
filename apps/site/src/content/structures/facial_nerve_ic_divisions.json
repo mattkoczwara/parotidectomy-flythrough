@@ -1,0 +1,21 @@
+{
+  "id": "facial_nerve_ic_divisions",
+  "names": {
+    "plain": "Linking twig between the divisions",
+    "anatomical": "Interconnection between the temporofacial and cervicofacial divisions"
+  },
+  "gloss": "A small branch that joins the upper and lower divisions of the nerve just after the first split.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "claims": [
+    "fn-branching-variation"
+  ],
+  "anchors": [
+    "anchor__facial_nerve_ic_divisions"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

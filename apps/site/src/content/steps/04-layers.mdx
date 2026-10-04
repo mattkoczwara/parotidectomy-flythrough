@@ -1,0 +1,35 @@
+---
+id: layers
+chapter: layers
+order: 4
+title: The layers over the gland
+delta:
+  camera: { azimuth: -14, elevation: 6, zoom: 1.35, frame: [parotid_superficial_lobe, parotid_deep_lobe] }
+  gauge: 2
+  structures:
+      skin: { mode: solid, opacity: 1, emphasis: context }
+      subcutaneous_fat: { presence: 1, emphasis: focus }
+      smas: { presence: 1, emphasis: focus }
+      parotid_fascia: { presence: 1, emphasis: focus }
+      parotid_superficial_lobe: { mode: solid, opacity: 1, emphasis: context }
+      parotid_deep_lobe: { mode: solid, opacity: 1, emphasis: context }
+      parotid_duct: { presence: 0 }
+      eyes: { presence: 1 }
+  op: { cut_skin: 1, cut_fat: 1, cut_smas: 1, cut_fascia: 0 }
+  labels:
+      - { structureId: skin }
+      - { structureId: subcutaneous_fat }
+      - { structureId: smas }
+      - { structureId: parotid_fascia }
+transition: { structures: [0, 0.4], op: [0.3, 1] }
+sceneDescription: "A stepped window is cut through the side of the face. From outside in, the rims show the skin, the yellow fat beneath it, a thin fibrous sheet (the SMAS), and the pale capsule covering the gland."
+claims: [layers-over-gland, flap-plane]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+
+<Model>A stepped window opens the layers one by one.</Model> <Claim id="layers-over-gland">From outside in they are the skin, the fat beneath it, a thin supporting sheet (the SMAS), and the tough capsule around the gland.</Claim> <Claim id="flap-plane">In surgery the skin is lifted in the layer just outside that capsule.</Claim>

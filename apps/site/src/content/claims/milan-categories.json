@@ -1,0 +1,80 @@
+{
+  "id": "milan-categories",
+  "statement": {
+    "essentials": "Needle-test results are sorted into standard tiers, and each tier carries its own chance of cancer: low when the result is a benign tumour, high when it is suspicious or malignant.",
+    "anatomy": "The Milan System for Reporting Salivary Gland Cytopathology puts every needle result in a diagnostic category. The proportion of tumours in each category that proved malignant on histology is its risk of malignancy.",
+    "clinical": "In 35 studies of salivary gland aspirates reported with the Milan system, the risk of malignancy was 11.4% for nondiagnostic, 10.9% for nonneoplastic, 30.5% for atypia of undetermined significance, 2.8% for neoplasm-benign, 37.7% for salivary gland neoplasm of uncertain malignant potential, 83.8% for suspicious for malignancy and 97.7% for malignant. The suspicious-for-malignancy value was significantly higher than the reference value."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "wang-2022",
+      "locator": "Abstract, Results and Conclusions",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Risk of malignancy, nondiagnostic",
+      "value": 11.4,
+      "unit": "%",
+      "population": "Salivary gland aspirates with histologic follow-up (7,168 of 10,706), all salivary glands",
+      "design": "Systematic review and meta-analysis of 35 cohort studies",
+      "sourceId": "wang-2022"
+    },
+    {
+      "label": "Risk of malignancy, nonneoplastic",
+      "value": 10.9,
+      "unit": "%",
+      "population": "Salivary gland aspirates with histologic follow-up (7,168 of 10,706), all salivary glands",
+      "design": "Systematic review and meta-analysis of 35 cohort studies",
+      "sourceId": "wang-2022"
+    },
+    {
+      "label": "Risk of malignancy, atypia of undetermined significance",
+      "value": 30.5,
+      "unit": "%",
+      "population": "Salivary gland aspirates with histologic follow-up (7,168 of 10,706), all salivary glands",
+      "design": "Systematic review and meta-analysis of 35 cohort studies",
+      "sourceId": "wang-2022"
+    },
+    {
+      "label": "Risk of malignancy, neoplasm-benign",
+      "value": 2.8,
+      "unit": "%",
+      "population": "Salivary gland aspirates with histologic follow-up (7,168 of 10,706), all salivary glands",
+      "design": "Systematic review and meta-analysis of 35 cohort studies",
+      "sourceId": "wang-2022"
+    },
+    {
+      "label": "Risk of malignancy, salivary gland neoplasm of uncertain malignant potential",
+      "value": 37.7,
+      "unit": "%",
+      "population": "Salivary gland aspirates with histologic follow-up (7,168 of 10,706), all salivary glands",
+      "design": "Systematic review and meta-analysis of 35 cohort studies",
+      "sourceId": "wang-2022"
+    },
+    {
+      "label": "Risk of malignancy, suspicious for malignancy",
+      "value": 83.8,
+      "unit": "%",
+      "population": "Salivary gland aspirates with histologic follow-up (7,168 of 10,706), all salivary glands",
+      "design": "Systematic review and meta-analysis of 35 cohort studies",
+      "sourceId": "wang-2022"
+    },
+    {
+      "label": "Risk of malignancy, malignant",
+      "value": 97.7,
+      "unit": "%",
+      "population": "Salivary gland aspirates with histologic follow-up (7,168 of 10,706), all salivary glands",
+      "design": "Systematic review and meta-analysis of 35 cohort studies",
+      "sourceId": "wang-2022"
+    }
+  ],
+  "limitations": "The pooled figures describe all salivary glands, not the parotid alone, and only aspirates that went on to surgery have histology, which tilts the sample toward lesions the surgeon already suspected. The abstract does not give confidence intervals for the individual categories.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

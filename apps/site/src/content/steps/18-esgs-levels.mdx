@@ -1,0 +1,55 @@
+---
+id: esgs-levels
+chapter: choosing
+order: 18
+title: Five parts of the gland
+delta:
+  camera: { azimuth: -42, elevation: 16, zoom: 1.15, frame: [parotid_gland, parotid_accessory_lobe] }
+  gauge: 3
+  light: { preset: studio, exposure: 1.0 }
+  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, ink: 0, flap: 0, peel: 0, out: 0, deep: 0, mobilise: 0, section: 0, explode: 1, ink_plane: 1, ink_cranial: 1, ink_cuff: 0 }
+  variants: { resection: none }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.1, emphasis: context }
+      eyes: { presence: 0 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      nerve_plane: { presence: 0 }
+      pleomorphic_adenoma: { presence: 0 }
+      parotid_superficial_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      parotid_accessory_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      parotid_duct: { presence: 1, mode: solid, emphasis: context }
+      facial_nerve: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      retromandibular_veins: { presence: 1, mode: solid, emphasis: context }
+      external_carotid_artery: { emphasis: context }
+      masseter_r: { presence: 1, mode: ghost, opacity: 0.4, emphasis: context }
+      mandible: { presence: 1, mode: solid, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: ghost, opacity: 0.4, emphasis: context }
+      digastric_posterior_belly: { presence: 1, emphasis: context }
+      styloid_process: { emphasis: context }
+  labels:
+      - { structureId: parotid_level_1 }
+      - { structureId: parotid_level_2 }
+      - { structureId: parotid_level_3 }
+      - { structureId: parotid_level_4 }
+      - { structureId: parotid_accessory_lobe }
+transition: { camera: [0, 0.5], structures: [0.2, 0.8] }
+sceneDescription: "The skin is a faint outline and the gland is see-through, seen from behind and to the side. Violet ink lines divide it into an upper and a lower part along the line where the nerve divides, and into an outer and an inner part along the plane of the nerve. The lower outer part is the largest. A small separate nodule of gland lies in front on the chewing muscle, above the duct."
+claims: [esgs-five-levels, esgs-level-weights, accessory-parotid-prevalence]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="esgs-five-levels">Surgeons divide the gland into five parts, called levels, so that an operation can be described by what it removes.</Claim> <Claim id="esgs-five-levels">The plane of the facial nerve separates outer from inner, and the point where the trunk divides separates upper from lower.</Claim> <Claim id="accessory-parotid-prevalence">A fifth, small separate lobe sits in front of the gland in about a third of people.</Claim>
+
+<Claim id="esgs-level-weights">The lower outer part, level II, is the largest.</Claim> <Model>The violet lines mark the boundaries as a surgeon might ink them on the gland.</Model>
+
+<Note title="How the levels are cut in this model">
+<Claim id="esgs-five-levels">The boundary between upper and lower follows the territories of the two divisions of the nerve.</Claim> <Model>In this model it passes through the cheek branch. The model's levels hold different shares of the gland from the published weights, which are reported rather than adjusted:</Model>
+
+<Framed claim="esgs-level-weights" title="Share of gland weight in dissected glands" />
+</Note>

@@ -1,0 +1,152 @@
+{
+  "id": "ecd-vs-superficial-outcomes",
+  "statement": {
+    "essentials": "For small, mobile tumours in the outer lobe, studies find similar recurrence after the smaller operation, with less temporary facial weakness and less Frey syndrome.",
+    "anatomy": "In pooled analyses of pleomorphic adenoma, recurrence was similar after extracapsular dissection and superficial parotidectomy; temporary facial weakness and Frey syndrome were less frequent after extracapsular dissection, and permanent weakness was similar.",
+    "clinical": "Single-arm pooled rates in 2,507 patients: recurrence 3% after extracapsular dissection and 4% after superficial parotidectomy; temporary facial weakness 5% and 26%; permanent weakness 3% and 4%; Frey syndrome 4% and 13%. An earlier meta-analysis of benign parotid tumours found temporary weakness in 8.0% and 20.4% and Frey syndrome in 4.5% and 26.1%."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "salzano-2025",
+      "locator": "Section 3.3; Section 4",
+      "support": "direct"
+    },
+    {
+      "sourceId": "albergotti-2012",
+      "locator": "Abstract",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Recurrence after extracapsular dissection",
+      "value": 3,
+      "unit": "%",
+      "ci": [
+        2,
+        9
+      ],
+      "n": "37 of 1,359",
+      "population": "Patients with a pathological diagnosis of pleomorphic adenoma, 21 mostly retrospective studies",
+      "design": "Systematic review, single-arm pooled proportions",
+      "sourceId": "salzano-2025"
+    },
+    {
+      "label": "Recurrence after superficial parotidectomy",
+      "value": 4,
+      "unit": "%",
+      "ci": [
+        3,
+        6
+      ],
+      "n": "26 of 1,032",
+      "population": "Patients with a pathological diagnosis of pleomorphic adenoma, 21 mostly retrospective studies",
+      "design": "Systematic review, single-arm pooled proportions",
+      "sourceId": "salzano-2025"
+    },
+    {
+      "label": "Temporary facial weakness after extracapsular dissection",
+      "value": 5,
+      "unit": "%",
+      "ci": [
+        3,
+        8
+      ],
+      "n": "70 of 1,208",
+      "population": "Patients with a pathological diagnosis of pleomorphic adenoma, 21 mostly retrospective studies",
+      "design": "Systematic review, single-arm pooled proportions",
+      "sourceId": "salzano-2025"
+    },
+    {
+      "label": "Temporary facial weakness after superficial parotidectomy",
+      "value": 26,
+      "unit": "%",
+      "ci": [
+        17,
+        37
+      ],
+      "n": "256 of 785",
+      "population": "Patients with a pathological diagnosis of pleomorphic adenoma, 21 mostly retrospective studies",
+      "design": "Systematic review, single-arm pooled proportions",
+      "sourceId": "salzano-2025"
+    },
+    {
+      "label": "Permanent facial weakness after extracapsular dissection",
+      "value": 3,
+      "unit": "%",
+      "ci": [
+        2,
+        4
+      ],
+      "n": "24 of 1,316",
+      "population": "Patients with a pathological diagnosis of pleomorphic adenoma, 21 mostly retrospective studies",
+      "design": "Systematic review, single-arm pooled proportions",
+      "sourceId": "salzano-2025"
+    },
+    {
+      "label": "Permanent facial weakness after superficial parotidectomy",
+      "value": 4,
+      "unit": "%",
+      "ci": [
+        2,
+        5
+      ],
+      "n": "19 of 782",
+      "population": "Patients with a pathological diagnosis of pleomorphic adenoma, 21 mostly retrospective studies",
+      "design": "Systematic review, single-arm pooled proportions",
+      "sourceId": "salzano-2025"
+    },
+    {
+      "label": "Frey syndrome after extracapsular dissection",
+      "value": 4,
+      "unit": "%",
+      "ci": [
+        3,
+        6
+      ],
+      "n": "25 of 941",
+      "population": "Patients with a pathological diagnosis of pleomorphic adenoma, 21 mostly retrospective studies",
+      "design": "Systematic review, single-arm pooled proportions",
+      "sourceId": "salzano-2025"
+    },
+    {
+      "label": "Frey syndrome after superficial parotidectomy",
+      "value": 13,
+      "unit": "%",
+      "ci": [
+        7,
+        25
+      ],
+      "n": "77 of 462",
+      "population": "Patients with a pathological diagnosis of pleomorphic adenoma, 21 mostly retrospective studies",
+      "design": "Systematic review, single-arm pooled proportions",
+      "sourceId": "salzano-2025"
+    },
+    {
+      "label": "Temporary facial weakness after extracapsular dissection",
+      "value": 8,
+      "unit": "%",
+      "n": "59 of 741",
+      "population": "Solitary benign parotid tumours of mixed histology, 9 studies",
+      "design": "Systematic review with meta-analysis",
+      "sourceId": "albergotti-2012"
+    },
+    {
+      "label": "Temporary facial weakness after superficial parotidectomy",
+      "value": 20.4,
+      "unit": "%",
+      "n": "81 of 397",
+      "population": "Solitary benign parotid tumours of mixed histology, 9 studies",
+      "design": "Systematic review with meta-analysis",
+      "sourceId": "albergotti-2012"
+    }
+  ],
+  "limitations": "The studies compared two groups chosen by surgeons, not randomised ones: the smaller operation went to smaller, more mobile, more superficial tumours. Salzano’s pooling treats each operation as its own single arm, found substantial heterogeneity and likely publication bias for some outcomes, and no included study stated how the operation was chosen. Some intervals in that paper do not contain their point estimates (for example intraoperative capsular rupture); only outcomes that are internally consistent are shown. These numbers do not apply to deep-lobe, large, recurrent or malignant tumours.",
+  "disagreement": "Albergotti 2012 pooled mixed benign tumours and reports different rates from Salzano 2025, which pooled pleomorphic adenoma alone.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

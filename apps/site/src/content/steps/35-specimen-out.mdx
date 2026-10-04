@@ -1,0 +1,27 @@
+---
+id: specimen-out
+chapter: operation
+order: 35
+title: The specimen leaves the field
+delta:
+  camera: { azimuth: -20, elevation: 12, zoom: 0.95, frame: [specimen, parotid_deep_lobe, facial_nerve_branches] }
+  op: { peel: 1, out: 1 }
+  structures:
+      facial_nerve_branches: { emphasis: focus }
+      parotid_deep_lobe: { emphasis: context }
+      pleomorphic_adenoma: { emphasis: focus }
+  labels:
+      - { structureId: pleomorphic_adenoma }
+      - { structureId: facial_nerve_trunk }
+      - { structureId: facial_nerve_marginal_mandibular }
+      - { structureId: parotid_deep_lobe }
+transition: { camera: [0, 0.4], op: [0.3, 1] }
+sceneDescription: "The outer part of the gland, with the tumour inside it, is lifted out of the wound and held above the field. Below, the nerve lies in its bed on the inner part of the gland, intact from the trunk to the edge."
+claims: [specimen-handling]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="specimen-handling">The removed tissue is marked so the pathologist knows which way it lay, and a small piece may be examined while the operation continues.</Claim>

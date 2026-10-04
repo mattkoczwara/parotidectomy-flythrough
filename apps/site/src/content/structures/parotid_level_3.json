@@ -1,0 +1,20 @@
+{
+  "id": "parotid_level_3",
+  "names": {
+    "plain": "Lower inner part of the gland (level III)",
+    "anatomical": "ESGS level III (deep inferior)"
+  },
+  "gloss": "The lower part of the gland on the inner side of the facial nerve, around the retromandibular vein.",
+  "tissue": "gland",
+  "depth": "deep-lobe",
+  "claims": [
+    "esgs-five-levels",
+    "esgs-level-weights"
+  ],
+  "anchors": [
+    "anchor__parotid_level_3"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

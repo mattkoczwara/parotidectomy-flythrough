@@ -1,0 +1,23 @@
+{
+  "id": "terris-1994",
+  "citation": {
+    "authors": [
+      "Terris DJ",
+      "Tuffo KM",
+      "Fee WE"
+    ],
+    "title": "Modified facelift incision for parotidectomy",
+    "container": "J Laryngol Otol",
+    "year": 1994,
+    "volume": "108",
+    "pages": "574-8"
+  },
+  "publicationType": "case-series",
+  "pmid": "7930893",
+  "doi": "10.1017/s002221510012746x",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/7930893/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-10-04",
+  "notes": "18 modified facelift vs 15 modified Blair parotidectomies."
+}

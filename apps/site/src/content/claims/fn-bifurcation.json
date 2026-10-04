@@ -1,50 +1,55 @@
 {
   "id": "fn-bifurcation",
   "statement": {
-    "essentials": "Inside the gland the nerve usually splits into an upper and a lower division.",
-    "anatomy": "At the pes anserinus the trunk usually bifurcates into temporofacial and cervicofacial divisions; trifurcation also occurs."
+    "essentials": "Inside the gland the trunk usually splits into an upper and a lower division.",
+    "anatomy": "At the pes anserinus the trunk usually divides into two, a temporofacial (upper) and a cervicofacial (lower) division; division into three is uncommon.",
+    "clinical": "Pooled prevalence of a bifurcated trunk was 94.1% in a meta-analysis of 2,453 nerves and 96.4% (trifurcation 3.2%) in a systematic review of 1,497 cases."
   },
   "evidenceClass": "established-anatomy",
   "sources": [
     {
       "sourceId": "triantafyllou-2024",
+      "locator": "Abstract",
       "support": "direct"
     },
     {
       "sourceId": "poutoglidis-2022",
+      "locator": "Abstract",
       "support": "direct"
     }
   ],
   "numbers": [
     {
-      "label": "Trunk bifurcates",
+      "label": "Trunk divides in two (bifurcation)",
       "value": 94.1,
       "unit": "%",
-      "population": "Cadaveric and intraoperative nerves, mostly Asian series",
-      "design": "Systematic review and meta-analysis",
-      "sourceId": "triantafyllou-2024",
       "n": "19 studies, 2,453 nerves",
-      "ci": [
-        88.9,
-        97.9
-      ]
+      "population": "Cadaveric and operative series",
+      "design": "Systematic review with meta-analysis",
+      "sourceId": "triantafyllou-2024"
     },
     {
-      "label": "Trunk trifurcates",
-      "value": 12.0,
+      "label": "Trunk divides in two (bifurcation)",
+      "value": 96.4,
       "unit": "%",
-      "population": "Cadaveric and intraoperative nerves, mostly Asian series",
-      "design": "Systematic review and meta-analysis (pooled separately from bifurcation)",
-      "sourceId": "triantafyllou-2024",
-      "ci": [
-        6.8,
-        18.2
-      ]
+      "n": "21 studies, 1,497 cases",
+      "population": "Cadaveric and operative series",
+      "design": "Systematic review",
+      "sourceId": "poutoglidis-2022"
+    },
+    {
+      "label": "Trunk divides in three (trifurcation)",
+      "value": 3.2,
+      "unit": "%",
+      "n": "21 studies, 1,497 cases",
+      "population": "Cadaveric and operative series",
+      "design": "Systematic review",
+      "sourceId": "poutoglidis-2022"
     }
   ],
-  "disagreement": "Poutoglidis 2022 reports 3.2% trifurcation; pooled estimates are not mutually exclusive.",
-  "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "limitations": "Studies classify the pattern differently; the authors note that the bifurcation is far more constant than the distal branching.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

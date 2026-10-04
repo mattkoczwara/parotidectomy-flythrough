@@ -1,0 +1,21 @@
+{
+  "id": "parotid-saliva",
+  "statement": {
+    "essentials": "The parotid makes saliva, a thin watery fluid, and sends it to the mouth through a duct.",
+    "anatomy": "The parotid is a serous-secreting salivary gland. Its saliva-making (parasympathetic) fibres come from the otic ganglion through the auriculotemporal nerve."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Pertinent anatomy",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

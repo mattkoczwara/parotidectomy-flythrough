@@ -1,0 +1,66 @@
+{
+  "id": "pa-positions",
+  "statement": {
+    "essentials": "Most of these tumours grow in the outer part of the gland; some grow in the inner part, in the lower tail, or in the small separate lobe in front.",
+    "anatomy": "Pleomorphic adenomas mostly lie in the superficial portion of the parotid, only a minority in the deep lobe. Tumours also arise in the tail of the gland and in accessory parotid tissue along the duct.",
+    "clinical": "A narrative review states that about 10% of pleomorphic adenomas lie in the deep lobe, whereas a tertiary-centre surgical series had 147 deep-lobe and 222 superficial-lobe cases. A systematic review of accessory parotid gland neoplasms covered 187 patients, 61.5% with benign tumours."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "zanghi-2024",
+      "locator": "Introduction",
+      "support": "direct"
+    },
+    {
+      "sourceId": "levyn-2024",
+      "locator": "Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "pasick-2020",
+      "locator": "Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Pertinent anatomy; facial nerve dissection",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Pleomorphic adenomas in the deep lobe",
+      "value": 10,
+      "unit": "%",
+      "population": "Pleomorphic adenomas, as stated in a narrative review (original series not re-checked)",
+      "design": "Narrative review statement",
+      "sourceId": "zanghi-2024"
+    },
+    {
+      "label": "Deep-lobe pleomorphic adenomas in one surgical series",
+      "value": 147,
+      "unit": "count",
+      "n": "of 369 (222 superficial)",
+      "population": "Previously untreated parotid pleomorphic adenoma, one tertiary centre, 1990–2015",
+      "design": "Retrospective chart review",
+      "sourceId": "levyn-2024"
+    },
+    {
+      "label": "Benign among accessory parotid gland neoplasms",
+      "value": 61.5,
+      "unit": "%",
+      "n": "187 patients, 15 studies",
+      "population": "Patients with accessory parotid gland neoplasms",
+      "design": "Systematic review",
+      "sourceId": "pasick-2020"
+    }
+  ],
+  "limitations": "The shares differ widely because referral centres see more deep-lobe tumours and imaging finds more of them; they say nothing about an individual tumour. Accessory-gland tumours of all histologies are pooled in the last figure.",
+  "disagreement": "About 10% deep-lobe in a narrative review against 40% (147 of 369) in a tertiary-centre series.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

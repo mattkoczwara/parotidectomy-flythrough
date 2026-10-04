@@ -1,0 +1,22 @@
+{
+  "id": "stimulator-technique",
+  "statement": {
+    "essentials": "During the operation the surgeon can touch a tissue with a small stimulator: if it is the nerve, the face twitches. The patient is kept from being paralysed so this can be seen.",
+    "anatomy": "A hand-held stimulator or a monitor helps localise the nerve by the facial movement it causes; muscle relaxants are reversed beforehand, and local anaesthetic is kept away from the nerve because it may block it."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Preoperative preparation; Facial nerve identification",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "One institution’s protocol; the same protocol notes that monitoring has become routine and is most useful for recurrent tumours or difficult dissections.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

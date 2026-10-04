@@ -28,7 +28,7 @@ SEG = WORK / "seg"
 SPECS = ROOT / "pipeline/specs"
 OUT = WORK / "meshes"
 QC = ROOT / "docs/qc/m1-anatomy"
-RING = {"nerve": 12, "vein": 16, "artery": 16, "muscle": 20, "bone": 12}
+RING = {"nerve": 12, "vein": 16, "artery": 16, "muscle": 20, "bone": 12, "duct": 14, "instrument": 10}
 
 
 # ── Signed distance fields ────────────────────────────────────────────────────────────────
@@ -179,7 +179,15 @@ def main() -> int:
     for s in spec["segments"]:
         centre = catmull_rom(np.array([nodes[n] for n in s["path"]]))
         pos, nor, idx, radii = tube(centre, s["radius"][0], s["radius"][1], RING[s["kind"]])
-        np.savez_compressed(OUT / f"{s['id']}.npz", positions=pos, normals=nor, indices=idx, centre=centre, radii=radii, kind=s["kind"])
+        extra = {}
+        if s["id"].startswith("facial_nerve") and s["id"] not in ("facial_nerve_trunk", "facial_nerve_posterior_auricular", "facial_nerve_digastric_branch"):
+            # Nerve mobilisation (total parotidectomy): the branches are lifted off the deep lobe and retracted while it is
+            # delivered from beneath. The weight is 0 at the first division and 1 from `mob_full_mm` out along the branches,
+            # so the trunk stays fixed and each branch swings from its root.
+            d = np.linalg.norm(pos.astype(np.float64) - nodes["pes"], axis=1)
+            t = np.clip((d - spec["mobilisation"]["start_mm"]) / (spec["mobilisation"]["full_mm"] - spec["mobilisation"]["start_mm"]), 0, 1)
+            extra["mob"] = (t * t * (3 - 2 * t)).astype(np.float32)
+        np.savez_compressed(OUT / f"{s['id']}.npz", positions=pos, normals=nor, indices=idx, centre=centre, radii=radii, kind=s["kind"], **extra)
         built[s["id"]] = {"centre": centre, "radii": radii, "kind": s["kind"], "path": s["path"]}
 
     results = run_checks(spec, nodes, built, landmarks)
@@ -300,6 +308,14 @@ def run_checks(spec, nodes, built, landmarks):
     any_ok = all(any(v["within"].values()) for v in ld.values() if v["asserted"])
     R["landmark_distances"] = {"pass": any_ok, "detail": ld, "summary": "; ".join(f"{k} {v['distance_mm']} mm in {[s for s, ok in v['within'].items() if ok] or 'no study range'}{'' if v['asserted'] else ' (reported only)'}" for k, v in ld.items())}
 
+    if "duct_course" in c:
+        dc = c["duct_course"]
+        ce, rr = built[dc["segment"]]["centre"], built[dc["segment"]]["radii"]
+        outside_m = field(dc["masseter"]).at(ce) - rr  # clearance from the masseter surface (positive = outside the muscle)
+        arch = field(dc["skull_mask"]).at(ce) - rr
+        ok = bool((outside_m > 0).all() and arch.min() >= dc["min_below_arch_mm"])
+        R["duct_course"] = {"pass": ok, "min_clearance_from_masseter_mm": round(float(outside_m.min()), 2), "min_clearance_from_skull_mm": round(float(arch.min()), 1), "summary": f"duct outside the masseter throughout (min {outside_m.min():.1f} mm), {arch.min():.0f} mm from the skull at closest"}
+
     allow = {frozenset(pair) for pair in c.get("no_tube_contacts", {}).get("allow", [])}
     touching = contacts(built, allow)
     R["no_tube_contacts"] = {"pass": not touching, "contacts": touching, "summary": "no unintended contacts between authored structures" if not touching else json.dumps(touching)}
@@ -318,7 +334,7 @@ def run_checks(spec, nodes, built, landmarks):
 
 
 # ── QC renders ────────────────────────────────────────────────────────────────────────────
-COL = {"nerve": "#f3e7a8", "vein": "#6c86c4", "artery": "#e0484d", "muscle": "#c77dff", "bone": "#ffffff"}
+COL = {"nerve": "#f3e7a8", "vein": "#6c86c4", "artery": "#e0484d", "muscle": "#c77dff", "bone": "#ffffff", "duct": "#7fd1c4", "instrument": "#9aa5b4"}
 
 
 def render(built, nodes):

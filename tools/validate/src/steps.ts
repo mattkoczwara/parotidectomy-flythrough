@@ -50,7 +50,7 @@ export function checkSteps(dir: string, refs: StepRefs): { errors: string[]; ste
     need(s.chapter, refs.chapters, 'chapter');
     for (const id of Object.keys(s.delta.structures ?? {})) need(id, refs.structures, 'structure');
     for (const l of s.delta.labels ?? []) need(l.structureId, refs.structures, 'label structure');
-    for (const id of s.delta.camera?.frame ?? []) need(id, refs.structures, 'camera frame structure');
+    for (const id of s.delta.camera?.frame ?? []) if (!/^specimen(@[0-9.]+)?$/.test(id)) need(id, refs.structures, 'camera frame structure');
     for (const c of s.claims) need(c, refs.claims, 'claim');
     for (const [, id] of m[2]!.matchAll(/<Claim\s+id="([^"]+)"/g)) need(id!, refs.claims, 'inline claim');
     if (!/<Claim\s/.test(m[2]!)) errors.push(`${where}: the plate text cites no claims`);

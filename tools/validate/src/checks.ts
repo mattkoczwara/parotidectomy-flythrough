@@ -44,7 +44,7 @@ export function checkContent(content: Content): string[] {
       }
       if (n.ci && n.ci[0] > n.ci[1]) errors.push(`claims/${c.id}: number "${n.label}" has an inverted CI`);
       if (n.range && n.range[0] > n.range[1]) errors.push(`claims/${c.id}: number "${n.label}" has an inverted range`);
-      if (n.ci && (n.value < n.ci[0] || n.value > n.ci[1])) {
+      if (n.ci && n.value !== undefined && (n.value < n.ci[0] || n.value > n.ci[1])) {
         errors.push(`claims/${c.id}: number "${n.label}" point estimate lies outside its CI`);
       }
     }

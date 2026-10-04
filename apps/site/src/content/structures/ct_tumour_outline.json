@@ -1,0 +1,21 @@
+{
+  "id": "ct_tumour_outline",
+  "names": {
+    "plain": "Outline of where the tumour would lie",
+    "anatomical": "Tumour outline on the registered CT slice (schematic)"
+  },
+  "gloss": "The CT slice is real anatomy from a donor without a tumour. The tumour in this atlas is drawn on it as a dashed hatched outline, never as an image.",
+  "tissue": "tumour",
+  "depth": "superficial-lobe",
+  "schematic": true,
+  "claims": [
+    "imaging-role"
+  ],
+  "anchors": [
+    "anchor__ct_tumour_outline"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": []
+}

@@ -1,0 +1,28 @@
+{
+  "id": "partial-superficial-definition",
+  "statement": {
+    "essentials": "A partial superficial parotidectomy removes the tumour with a wider cuff of normal gland than extracapsular dissection, but not the whole outer lobe.",
+    "anatomy": "Partial superficial parotidectomy removes the tumour with a greater cuff of healthy parotid tissue than extracapsular dissection, and far less than a formal superficial parotidectomy; the facial nerve branches near the tumour are dissected.",
+    "clinical": "One review would use it for tumours of the caudal part of the gland (ESGS level II) that touch the main trunk, and for large (over 4 cm) caudal tumours that also touch the cervicofacial branch. Removing less healthy tissue than a formal parotidectomy may limit facial nerve dysfunction and Frey syndrome."
+  },
+  "evidenceClass": "varies-by-surgeon",
+  "sources": [
+    {
+      "sourceId": "zbaren-2013",
+      "locator": "Conclusions",
+      "support": "direct"
+    },
+    {
+      "sourceId": "zanghi-2024",
+      "locator": "Section 2",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "Indications are an author’s recommendation from case series, not trial results; surgeons differ on where partial superficial parotidectomy ends and superficial parotidectomy begins.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

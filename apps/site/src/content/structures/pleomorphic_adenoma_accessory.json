@@ -1,0 +1,19 @@
+{
+  "id": "pleomorphic_adenoma_accessory",
+  "names": {
+    "plain": "The tumour, if it lay in the small separate lobe",
+    "anatomical": "Pleomorphic adenoma, accessory-lobe position"
+  },
+  "gloss": "The same kind of tumour placed in the accessory lobe in front of the gland.",
+  "tissue": "tumour",
+  "depth": "superficial-lobe",
+  "claims": [],
+  "anchors": [
+    "anchor__pleomorphic_adenoma_accessory"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

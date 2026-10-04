@@ -1,0 +1,21 @@
+{
+  "id": "scm_flap",
+  "names": {
+    "plain": "Strip of neck muscle",
+    "anatomical": "Sternocleidomastoid flap"
+  },
+  "gloss": "A strip cut from the front of the neck muscle, still attached at its upper end, that can be turned up to fill the space left by the gland.",
+  "tissue": "muscle",
+  "depth": "subcutaneous",
+  "claims": [
+    "barrier-options"
+  ],
+  "anchors": [
+    "anchor__scm_flap"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

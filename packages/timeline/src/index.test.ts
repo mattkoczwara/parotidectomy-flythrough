@@ -87,6 +87,43 @@ describe('evaluate', () => {
   });
 });
 
+describe('variants and groups', () => {
+  const variantTrack = compile([
+    { id: 'a', delta: { variants: { resection: 'ecd' }, op: { peel: 0 } } },
+    { id: 'b', delta: { variants: { resection: 'partial' }, op: { peel: 1 } }, transition: { op: [0.2, 0.8], opKeys: { variants: [0, 1] } } },
+  ]);
+  it('cross-fades variants as weights that always sum to one', () => {
+    expect(evaluate(variantTrack, 0).variantMix).toEqual({ resection: { ecd: 1 } });
+    expect(evaluate(variantTrack, 1).variantMix).toEqual({ resection: { partial: 1 } });
+    const mid = evaluate(variantTrack, 0.5);
+    expect(mid.variantMix['resection']).toEqual({ ecd: 0.5, partial: 0.5 });
+    expect(mid.variants['resection']).toBe('partial');
+    for (const t of [0.1, 0.33, 0.9]) {
+      const w = Object.values(evaluate(variantTrack, t).variantMix['resection']!);
+      expect(w.reduce((x, y) => x + y, 0)).toBeCloseTo(1);
+    }
+  });
+  it('keeps the variant mix a pure function of t', () => {
+    const ts = [0.9, 0.5, 0.1];
+    expect(ts.map((t) => evaluate(variantTrack, t)).reverse()).toEqual([0.1, 0.5, 0.9].map((t) => evaluate(variantTrack, t)));
+  });
+  it('expands a group patch onto its members, a named member winning', () => {
+    const grouped = compile(
+      [
+        { id: 'a', delta: { structures: { lobe: { emphasis: 'focus', opacity: 0.4 }, level2: { opacity: 0.9 } } } },
+        { id: 'b', delta: { structures: { lobe: { presence: 0 } } } },
+      ],
+      undefined,
+      { groups: { lobe: ['level1', 'level2'], gland: ['lobe', 'deep'] } },
+    );
+    expect(grouped.plates[0]!.structures['level1']).toMatchObject({ emphasis: 'focus', opacity: 0.4 });
+    expect(grouped.plates[0]!.structures['level2']).toMatchObject({ emphasis: 'focus', opacity: 0.9 });
+    expect(grouped.plates[1]!.structures['level2']).toMatchObject({ presence: 0, opacity: 0.9 });
+    const nested = compile([{ id: 'a', delta: { structures: { gland: { presence: 0.5 } } } }], undefined, { groups: { lobe: ['level1'], gland: ['lobe', 'deep'] } });
+    expect(Object.keys(nested.plates[0]!.structures).sort()).toEqual(['deep', 'level1']);
+  });
+});
+
 describe('shouldDissolve', () => {
   it('dissolves long jumps and always under reduced motion', () => {
     expect(shouldDissolve(1, 2, false)).toBe(false);

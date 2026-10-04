@@ -2,28 +2,53 @@
   "id": "parotid-size",
   "statement": {
     "essentials": "The parotid is the largest salivary gland, weighing about 18 g.",
-    "anatomy": "Mean gland dimensions about 66 × 47 mm and weight about 18 g."
+    "anatomy": "In dissected glands the mean height and width were about 66 and 47 mm and the weight about 18 g."
   },
   "evidenceClass": "established-anatomy",
   "sources": [
     {
       "sourceId": "pujol-olmo-2020",
+      "locator": "Results",
+      "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Pertinent anatomy",
       "support": "direct"
     }
   ],
   "numbers": [
     {
       "label": "Mean gland weight",
-      "value": 18.1,
+      "value": 18.13,
       "unit": "g",
-      "population": "Adult anatomical specimens",
+      "n": "19 specimens",
+      "population": "Human anatomical specimens",
       "design": "Anatomical dissection study",
-      "sourceId": "pujol-olmo-2020",
-      "n": "19 specimens"
+      "sourceId": "pujol-olmo-2020"
+    },
+    {
+      "label": "Mean gland height",
+      "value": 66.37,
+      "unit": "mm",
+      "n": "19 specimens",
+      "population": "Human anatomical specimens",
+      "design": "Anatomical dissection study",
+      "sourceId": "pujol-olmo-2020"
+    },
+    {
+      "label": "Mean gland width",
+      "value": 46.84,
+      "unit": "mm",
+      "n": "19 specimens",
+      "population": "Human anatomical specimens",
+      "design": "Anatomical dissection study",
+      "sourceId": "pujol-olmo-2020"
     }
   ],
-  "lastChecked": "2026-09-28",
-  "verification": "to-verify",
+  "limitations": "Nineteen specimens; the segmented gland in the model measures 18.2 mL in the scan.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
   "clinicalReview": {
     "status": "pending"
   }

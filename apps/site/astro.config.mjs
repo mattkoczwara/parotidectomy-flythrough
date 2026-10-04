@@ -30,5 +30,8 @@ export default defineConfig({
   vite: {
     // three.js WebGPU build uses top-level await in examples; target modern browsers.
     build: { target: 'es2023' },
+    // File edits made by other tools (the plate generators, the pipeline) are not always seen by native watchers on
+    // Windows; polling keeps the dev server's content in step.
+    server: { watch: { usePolling: true, interval: 400 } },
   },
 });

@@ -1,0 +1,20 @@
+{
+  "id": "parotid_duct",
+  "names": {
+    "plain": "Saliva duct",
+    "anatomical": "Parotid duct (Stensen duct)",
+    "latin": "Ductus parotideus"
+  },
+  "gloss": "The tube that carries saliva from the gland across the cheek into the mouth.",
+  "tissue": "duct",
+  "depth": "superficial-lobe",
+  "claims": [
+    "parotid-duct-course"
+  ],
+  "anchors": [
+    "anchor__parotid_duct"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

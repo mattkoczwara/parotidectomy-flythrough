@@ -1,0 +1,19 @@
+{
+  "id": "parotid_ecd_cuff",
+  "names": {
+    "plain": "Tumour with a rim of normal gland",
+    "anatomical": "Extracapsular dissection specimen (tumour and cuff)"
+  },
+  "gloss": "The tumour and a thin cuff of normal gland tissue around it, on the outer side of the facial nerve: the piece removed in extracapsular dissection. The width of the cuff is illustrative.",
+  "tissue": "gland",
+  "depth": "superficial-lobe",
+  "claims": [
+    "esgs-five-levels"
+  ],
+  "anchors": [
+    "anchor__parotid_ecd_cuff"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

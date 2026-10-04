@@ -1,0 +1,50 @@
+{
+  "id": "enucleation-recurrence",
+  "statement": {
+    "essentials": "Shelling a tumour out of its capsule leaves behind the tiny extensions that reach beyond it, and the tumour tends to come back.",
+    "anatomy": "The most important cause of recurrence is enucleation with rupture and incomplete excision. Incomplete pseudocapsule, extracapsular extension, pseudopodia and satellite tumours beyond the capsule are also linked to recurrence; surgical risk factors are positive margins and tumour spillage.",
+    "clinical": "Early twentieth-century enucleation had recurrence rates of the order of 20–40% in series cited in a recent paper."
+  },
+  "evidenceClass": "comparative-evidence",
+  "sources": [
+    {
+      "sourceId": "witt-2015",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "dulguerov-2017",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "cristofaro-2024",
+      "locator": "Introduction",
+      "support": "indirect"
+    },
+    {
+      "sourceId": "zanghi-2024",
+      "locator": "Introduction",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Recurrence after intracapsular enucleation",
+      "unit": "%",
+      "range": [
+        20,
+        40
+      ],
+      "population": "Historical series of enucleation, as cited in a 2024 introduction (original series not re-checked)",
+      "design": "Citation of earlier series",
+      "sourceId": "cristofaro-2024"
+    }
+  ],
+  "limitations": "The recurrence range is a secondary citation; the systematic reviews cited here establish the causes of recurrence, not its rate after enucleation. Extracapsular dissection, which also stays close to the tumour, has recurrence similar to larger operations in selected tumours (chapter 6).",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

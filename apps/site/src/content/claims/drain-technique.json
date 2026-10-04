@@ -1,0 +1,40 @@
+{
+  "id": "drain-technique",
+  "statement": {
+    "essentials": "Many surgeons leave a thin soft tube, a drain, in the wound for a day or more to draw off blood and saliva. In one hospital's routine it comes out through a separate small cut in the neck, away from the nerve.",
+    "anatomy": "The drain lies in the space left by the gland and leaves through a stab incision in the neck so that it does not rest directly on the facial nerve.",
+    "clinical": "The University of Iowa protocol places a fully perforated flat Jackson-Pratt drain (size 10) through a stab incision in the neck, away from direct contact with the facial nerve. The suction drain stays at least 36 hours, longer if the output remains high; it is removed after three consecutive 8-hour shifts with under 30 mL (30 cc) in total. A Penrose drain with a tighter pressure dressing is the alternative the protocol describes."
+  },
+  "evidenceClass": "representative-technique",
+  "sources": [
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Closure; Postoperative care; Suction drain management",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Minimum time the suction drain stays in",
+      "value": 36,
+      "unit": "hours",
+      "population": "Patients after parotidectomy with facial nerve dissection at one department",
+      "design": "Institutional protocol (no outcome data)",
+      "sourceId": "iowa-parotidectomy-protocol"
+    },
+    {
+      "label": "Total output under which the drain is removed (three consecutive 8-hour shifts)",
+      "value": 30,
+      "unit": "mL",
+      "population": "Patients after parotidectomy with facial nerve dissection at one department",
+      "design": "Institutional protocol (no outcome data)",
+      "sourceId": "iowa-parotidectomy-protocol"
+    }
+  ],
+  "limitations": "One institution's routine, not a standard. The protocol does not argue that a drain is needed, and surgeons differ in whether, how long and how they drain; the protocol's own complication percentages are unsourced and are not used here.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,27 @@
+---
+id: lobe-lifts
+chapter: operation
+order: 34
+title: The outer lobe comes away
+delta:
+  camera: { azimuth: -30, elevation: 12, zoom: 1.15, frame: [parotid_gland, facial_nerve_branches, parotid_superficial_lobe] }
+  op: { peel: 1 }
+  structures:
+      facial_nerve_branches: { emphasis: focus }
+  labels:
+      - { structureId: facial_nerve_trunk }
+      - { structureId: facial_nerve_marginal_mandibular }
+      - { structureId: parotid_deep_lobe }
+      - { structureId: pleomorphic_adenoma }
+transition: { camera: [0, 0.4], op: [0.3, 1] }
+sceneDescription: "The outer part of the gland has been folded right over and is held clear of the field, with the tumour inside it. Every branch of the nerve, from the trunk to the edge of the gland, lies on the inner part of the gland, untouched."
+claims: [superficial-parotidectomy-definition, cuff-sufficient-view]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="superficial-parotidectomy-definition">The whole outer lobe comes off the nerve, which now lies bare along the face of the inner part of the gland.</Claim>
+
+<Claim id="cuff-sufficient-view">Some surgeons would take less: one protocol holds that a cuff of normal gland around a benign tumour is all that is necessary, so how much to remove is a judgement.</Claim>

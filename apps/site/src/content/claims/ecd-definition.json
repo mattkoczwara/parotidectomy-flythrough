@@ -1,0 +1,33 @@
+{
+  "id": "ecd-definition",
+  "statement": {
+    "essentials": "Extracapsular dissection takes out the tumour with a thin rim of normal gland, without searching for the facial nerve.",
+    "anatomy": "Extracapsular dissection is classed apart from formal parotidectomy: the facial nerve is not dissected, and less than one level of the gland is removed.",
+    "clinical": "In the ESGS classification extracapsular dissection avoids facial nerve dissection and removes less than one level, so level I or II is recorded only to show where the tumour lay. It has been described as a minimal-margin operation."
+  },
+  "evidenceClass": "standard-principle",
+  "sources": [
+    {
+      "sourceId": "quer-2016",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "zanghi-2024",
+      "locator": "Section 2",
+      "support": "direct"
+    },
+    {
+      "sourceId": "zbaren-2013",
+      "locator": "Conclusions",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "Definitions follow the ESGS classification; individual surgeons use the term more or less strictly, and the width of the rim is not standardised (the cuff drawn here is illustrative).",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

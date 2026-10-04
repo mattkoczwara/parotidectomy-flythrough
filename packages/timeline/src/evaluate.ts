@@ -65,6 +65,17 @@ export function evaluate(track: Track, t: number): SceneState {
     op[key] = lerp(a.op[key] ?? 0, b.op[key] ?? 0, tr.opKeys[key] ? windowed(f, tr.opKeys[key]) : wo);
   }
 
+  // Variants cross-fade as weights over the operative window (or an `opKeys.variants` window) so pieces move
+  // continuously between variant plates; the discrete variant in force switches at that window's midpoint.
+  const wv = tr.opKeys['variants'] ? windowed(f, tr.opKeys['variants']) : wo;
+  const variantMix: Record<string, Record<string, number>> = {};
+  for (const key of new Set([...Object.keys(a.variantMix), ...Object.keys(b.variantMix)])) {
+    const mix: Record<string, number> = {};
+    for (const [name, w] of Object.entries(a.variantMix[key] ?? {})) mix[name] = (mix[name] ?? 0) + w * (1 - wv);
+    for (const [name, w] of Object.entries(b.variantMix[key] ?? {})) mix[name] = (mix[name] ?? 0) + w * wv;
+    variantMix[key] = mix;
+  }
+
   const labels: LabelState[] = [];
   const inB = new Map(b.labels.map((l) => [l.structureId, l]));
   const inA = new Map(a.labels.map((l) => [l.structureId, l]));
@@ -81,7 +92,8 @@ export function evaluate(track: Track, t: number): SceneState {
     structures,
     gauge: lerp(a.gauge, b.gauge, ws),
     op,
-    variants: wo < 0.5 ? a.variants : b.variants,
+    variants: wv < 0.5 ? a.variants : b.variants,
+    variantMix,
     labels: labels.filter((l) => l.weight > 0),
     light: { preset: wc < 0.5 ? a.light.preset : b.light.preset, exposure: lerp(a.light.exposure, b.light.exposure, wc) },
   };

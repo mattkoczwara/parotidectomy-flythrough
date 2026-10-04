@@ -1,0 +1,34 @@
+---
+id: peel
+chapter: operation
+order: 33
+title: Lifting the outer gland off the nerve
+delta:
+  camera: { azimuth: -32, elevation: 10, zoom: 1.3, frame: [parotid_gland, facial_nerve_buccal] }
+  op: { peel: 0.72 }
+  structures:
+      parotid_superficial_lobe: { mode: solid, opacity: 1, emphasis: context }
+      pleomorphic_adenoma: { mode: solid, opacity: 1, emphasis: context }
+      parotid_deep_lobe: { mode: solid, opacity: 1, emphasis: context }
+      facial_nerve_branches: { emphasis: focus }
+      facial_nerve_temporofacial: { emphasis: context }
+      digastric_posterior_belly: { emphasis: context }
+      sternocleidomastoid_r: { mode: solid, opacity: 1, emphasis: context }
+  labels:
+      - { structureId: pes_anserinus }
+      - { structureId: facial_nerve_buccal }
+      - { structureId: facial_nerve_marginal_mandibular }
+      - { structureId: parotid_superficial_lobe }
+      - { structureId: parotid_deep_lobe }
+transition: { camera: [0, 0.4], structures: [0.1, 0.5], op: [0.4, 1] }
+sceneDescription: "From behind and to the side, with the skin still faded, the outer part of the gland is folded forward off the nerve, carrying the tumour with it. The nerve's divisions and branches lie exposed on the inner part of the gland, which stays in place."
+claims: [antegrade-dissection, parotid-lobes-surgical]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="antegrade-dissection">Following the nerve forward from its trunk, the surgeon lifts the outer gland off it branch by branch.</Claim> The tumour comes away inside the outer gland, with a margin of normal tissue, while the nerve stays in place on the deeper tissue.
+
+<Claim id="choice-factors">This is one representative operation; which operation is right depends on the tumour and the surgeon.</Claim>

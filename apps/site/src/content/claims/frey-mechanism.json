@@ -1,0 +1,28 @@
+{
+  "id": "frey-mechanism",
+  "statement": {
+    "essentials": "After injury, the nerve fibres that should make saliva can grow into the sweat glands of the skin, so that eating makes the skin over the gland sweat.",
+    "anatomy": "Frey syndrome, sweating when eating, is thought to result from abnormal reinnervation after injury to the auriculotemporal nerve: its parasympathetic fibres normally stimulate saliva and its sympathetic fibres supply the sweat glands of the face and scalp.",
+    "clinical": "Frey syndrome is a recognised complication of parotid surgery; one review reports tumour size and mass volume as the only statistically significant predictors. A thicker skin flap, or a barrier such as a SMAS or temporoparietal fascia flap, has been used to prevent it."
+  },
+  "evidenceClass": "standard-principle",
+  "sources": [
+    {
+      "sourceId": "zanghi-2024",
+      "locator": "Section 3, Complications",
+      "support": "direct"
+    },
+    {
+      "sourceId": "kadrie-2025",
+      "locator": "Conclusions",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [],
+  "limitations": "The reinnervation explanation is the accepted mechanism rather than something observed in individual patients; the regrowth drawn in the model is a schematic of that idea, not a measured structure. Predictors come from one review’s account of a single series.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

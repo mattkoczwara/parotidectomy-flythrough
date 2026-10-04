@@ -1,0 +1,42 @@
+{
+  "id": "imaging-role",
+  "statement": {
+    "essentials": "A CT or MRI scan is used when the lump may reach the deep part of the gland or when cancer is suspected, to show how far it goes and what it touches.",
+    "anatomy": "Imaging defines whether a mass is inside the gland or outside it, looks for features of cancer, and checks for spread. For deep-lobe lesions MRI and CT are the modalities of choice. On MRI, a dark signal on T2-weighted pictures and poorly outlined margins point toward malignancy.",
+    "clinical": "In 84 consecutive patients with parotid tumours who had MRI before surgery (57 benign, 27 malignant), T2 hypointensity, ill-defined margins, diffuse growth, infiltration of subcutaneous tissue and lymph node enlargement were each associated with malignant histology (P between .001 and .048)."
+  },
+  "evidenceClass": "standard-principle",
+  "sources": [
+    {
+      "sourceId": "lee-yy-2008",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "christe-2011",
+      "locator": "Abstract, Results and Conclusions",
+      "support": "direct"
+    },
+    {
+      "sourceId": "brennan-2012",
+      "locator": "Abstract",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Patients with parotid tumours who had MRI before surgery",
+      "value": 84,
+      "unit": "count",
+      "population": "Consecutive patients with parotid gland tumours at one university hospital (median age 56 years, range 9 to 85); 29 pleomorphic adenomas, 17 Warthin tumours, 27 malignant tumours",
+      "design": "Prospectively included, retrospectively analysed single-centre series",
+      "sourceId": "christe-2011"
+    }
+  ],
+  "limitations": "The MRI series is a single centre with a mixed set of tumour types, of which 29 of 84 were pleomorphic adenomas; its P values show association with malignancy, not predictive accuracy for an individual patient. The cross-section drawn in the atlas is the donor's own normal CT, with the tumour added as an outline: it shows where such a scan cuts, not what a tumour looks like on it.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

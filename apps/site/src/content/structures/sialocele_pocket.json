@@ -1,0 +1,21 @@
+{
+  "id": "sialocele_pocket",
+  "names": {
+    "plain": "Collection of saliva (schematic)",
+    "anatomical": "Sialocele (schematic)"
+  },
+  "gloss": "A pocket of saliva that gathers under the skin flap after the operation. Drawn as an outline: an illustration of the idea, not a measured shape.",
+  "tissue": "duct",
+  "depth": "subcutaneous",
+  "schematic": true,
+  "claims": [
+    "sialocele-rates"
+  ],
+  "anchors": [
+    "anchor__sialocele_pocket"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": []
+}

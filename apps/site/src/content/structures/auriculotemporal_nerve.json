@@ -1,0 +1,24 @@
+{
+  "id": "auriculotemporal_nerve",
+  "names": {
+    "plain": "Nerve in front of the ear",
+    "anatomical": "Auriculotemporal nerve",
+    "latin": "Nervus auriculotemporalis"
+  },
+  "gloss": "A branch of the jaw nerve (trigeminal) that gives feeling to the skin in front of the ear and temple and carries the signal that makes the parotid produce saliva.",
+  "tissue": "nerve",
+  "depth": "superficial-lobe",
+  "claims": [
+    "auriculotemporal-course"
+  ],
+  "role": "Carries the gland's saliva-making signal and the feeling of the temple skin.",
+  "matters": "Its injury and regrowth are the cause of Frey syndrome.",
+  "anchors": [
+    "anchor__auriculotemporal_nerve"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

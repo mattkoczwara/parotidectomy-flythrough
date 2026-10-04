@@ -1,0 +1,28 @@
+{
+  "id": "lee-2021",
+  "citation": {
+    "authors": [
+      "Lee YC",
+      "Liao WC",
+      "Yang SW",
+      "Luo CM",
+      "Tsai YT",
+      "Tsai MS",
+      "Lee YH",
+      "Hsin LJ"
+    ],
+    "title": "Systematic review and meta-analysis of modified facelift incision versus modified Blair incision in parotidectomy",
+    "container": "Sci Rep",
+    "year": 2021,
+    "volume": "11",
+    "pages": "24106"
+  },
+  "publicationType": "meta-analysis",
+  "pmid": "34916561",
+  "doi": "10.1038/s41598-021-03483-6",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/34916561/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-10-04",
+  "notes": "7 studies; modified facelift vs modified Blair incision."
+}

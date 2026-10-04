@@ -1,0 +1,52 @@
+{
+  "id": "accessory-parotid-prevalence",
+  "statement": {
+    "essentials": "Some people have a small separate piece of gland tissue in front of the main parotid, resting on the duct.",
+    "anatomy": "An accessory parotid gland, separate from the main gland, is a common variant. When present it can complicate parotidectomy and can be the site of tumours.",
+    "clinical": "Pooled prevalence of an accessory parotid gland was 32.1% (95% CI 21.2–44.0), higher in cadaveric studies (35.8%) than on CT (21.5%); when present it was mostly unilateral (77.8%). In 19 dissected glands it formed ESGS level V in 9 and under 5% of the gland’s weight."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "rosa-2020",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "pujol-olmo-2020",
+      "locator": "Abstract",
+      "support": "direct"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Pooled prevalence of an accessory parotid gland",
+      "value": 32.1,
+      "unit": "%",
+      "ci": [
+        21.2,
+        44
+      ],
+      "n": "13 articles, 3115 subjects",
+      "population": "Cadaveric and CT studies from several regions (more from Asia than North America)",
+      "design": "Systematic review and meta-analysis",
+      "sourceId": "rosa-2020"
+    },
+    {
+      "label": "Level V (accessory) found in dissection",
+      "value": 47.5,
+      "unit": "%",
+      "n": "9 of 19 glands",
+      "population": "Human anatomical specimens",
+      "design": "Anatomical dissection study",
+      "sourceId": "pujol-olmo-2020"
+    }
+  ],
+  "limitations": "The authors note a wide discrepancy in the literature on prevalence; imaging finds fewer than dissection. The accessory lobule in the model is authored from these figures, not segmented from the scan.",
+  "disagreement": "Cadaveric studies pooled to 35.8% and CT studies to 21.5%.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,38 @@
+---
+id: branch-groups
+chapter: nerve
+order: 7
+title: Five groups, five jobs
+delta:
+  camera: { azimuth: -8, elevation: 6, zoom: 1.1, frame: [facial_nerve_branches] }
+  gauge: 4
+  structures:
+      skin: { mode: ghost, opacity: 0.1, emphasis: context }
+      parotid_superficial_lobe: { mode: ghost, opacity: 0.16, emphasis: context }
+      parotid_deep_lobe: { mode: ghost, opacity: 0.2, emphasis: context }
+      facial_nerve_trunk: { emphasis: context }
+      facial_nerve_branches: { emphasis: focus }
+      facial_nerve_posterior_auricular: { emphasis: context }
+      facial_nerve_digastric_branch: { emphasis: context }
+      masseter_r: { mode: ghost, opacity: 0.3, emphasis: context }
+      mandible: { mode: ghost, opacity: 0.5, emphasis: context }
+  labels:
+      - { structureId: facial_nerve_temporal }
+      - { structureId: facial_nerve_zygomatic }
+      - { structureId: facial_nerve_buccal }
+      - { structureId: facial_nerve_marginal_mandibular }
+      - { structureId: facial_nerve_cervical }
+transition: { camera: [0, 0.6], structures: [0.3, 1] }
+sceneDescription: "Seen from the side, the five groups of branches leave the front of the gland like the fingers of a hand: one rises to the forehead, one runs to the eyelids, one crosses the cheek, one follows the lower edge of the jaw toward the lower lip, and one runs down into the neck."
+claims: [fn-five-branch-groups, fn-branch-targets]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+
+<Claim id="fn-five-branch-groups">There are five groups of branches: temporal, zygomatic, buccal, marginal mandibular and cervical.</Claim> <Claim id="fn-branch-targets">They move different parts of the face: the forehead and brow and the eyelids, the cheek and upper lip, and the lower lip.</Claim> <Claim id="fn-branch-targets">The branch to the lower lip is the one most often weakened after the operation.</Claim>
+
+<Model>In the model each group is drawn as a single branch; in people a group is often several.</Model>

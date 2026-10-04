@@ -1,0 +1,22 @@
+{
+  "id": "stimulator_probe",
+  "names": {
+    "plain": "Nerve stimulator",
+    "anatomical": "Facial nerve stimulator probe"
+  },
+  "gloss": "A hand-held probe that gives a tiny electrical pulse; when it touches the facial nerve the face twitches. An instrument, not anatomy.",
+  "tissue": "instrument",
+  "depth": "nerve-plane",
+  "anchors": [
+    "anchor__stimulator_probe"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "stimulator-technique"
+  ],
+  "members": [],
+  "schematic": false,
+  "role": "Tells the surgeon whether tissue is the nerve, and that it still works."
+}

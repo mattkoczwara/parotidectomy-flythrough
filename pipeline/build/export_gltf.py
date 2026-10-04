@@ -25,17 +25,20 @@ SPECS = ROOT / "pipeline/specs"
 # Structures in the M1 slice, in nesting/render order (outer tissue first).
 SCENE = [
     "skin", "eyes", "subcutaneous_fat", "smas", "parotid_fascia",
-    "parotid_superficial_lobe", "pleomorphic_adenoma", "parotid_deep_lobe",
+    # the superficial and deep lobes are groups of ESGS-level pieces (pieces.py); the tumour travels with level II
+    "parotid_level_1", "parotid_level_2", "parotid_ecd_cuff", "pleomorphic_adenoma", "pleomorphic_adenoma_deep", "pleomorphic_adenoma_tail", "pleomorphic_adenoma_accessory", "parotid_level_3", "parotid_level_4", "parotid_accessory_lobe",
     "facial_nerve_trunk", "facial_nerve_temporofacial", "facial_nerve_cervicofacial", "facial_nerve_temporal",
     "facial_nerve_zygomatic", "facial_nerve_buccal", "facial_nerve_marginal_mandibular", "facial_nerve_cervical",
     "facial_nerve_posterior_auricular", "facial_nerve_digastric_branch",
+    "facial_nerve_ic_buccal_a", "facial_nerve_ic_buccal_b", "facial_nerve_ic_divisions", "auriculotemporal_nerve", "frey_regrowth",
     "great_auricular_nerve", "great_auricular_nerve_anterior", "great_auricular_nerve_posterior",
+    "parotid_duct",
     "retromandibular_vein", "retromandibular_vein_anterior", "retromandibular_vein_posterior", "external_jugular_vein",
     "external_carotid_artery", "maxillary_artery", "superficial_temporal_artery",
-    "masseter_r", "temporalis_r", "sternocleidomastoid_r", "digastric_posterior_belly", "submandibular_gland_r",
+    "masseter_r", "temporalis_r", "sternocleidomastoid_main", "scm_flap", "digastric_posterior_belly", "stimulator_probe", "smas_flap", "barrier_graft", "sialocele_pocket", "needle", "us_probe", "us_plane", "ct_tumour_outline", "drain_tube", "submandibular_gland_r",
     "internal_jugular_vein_r", "mandible", "skull", "styloid_process", "nerve_plane",
 ]
-ATTRS = {"peel_order": "_PEEL", "cut": "_CUT", "cut_s": "_CUTS", "flap_w": "_FLAPW"}
+ATTRS = {"peel_order": "_PEEL", "cut": "_CUT", "cut_s": "_CUTS", "flap_w": "_FLAPW", "cutface": "_CUTFACE", "ink": "_INK", "mob": "_MOB", "cut2": "_CUT2", "cut_s2": "_CUTS2", "foldw": "_FOLDW"}
 
 
 def to_gltf(p: np.ndarray, origin: np.ndarray) -> np.ndarray:
@@ -84,7 +87,8 @@ def main() -> None:
         attrs = {"POSITION": add_accessor(pos, "VEC3", g.ARRAY_BUFFER, True), "NORMAL": add_accessor(nrm, "VEC3", g.ARRAY_BUFFER)}
         for key, name in ATTRS.items():
             if key in d.files:
-                attrs[name] = add_accessor(d[key].astype(np.float32), "SCALAR", g.ARRAY_BUFFER)
+                a = d[key].astype(np.float32)
+                attrs[name] = add_accessor(a, "VEC3" if a.ndim == 2 else "SCALAR", g.ARRAY_BUFFER)
         prim = g.Primitive(attributes=g.Attributes(**attrs), indices=add_accessor(idx, "SCALAR", g.ELEMENT_ARRAY_BUFFER), material=0)
         gltf.meshes.append(g.Mesh(name=sid, primitives=[prim]))
         gltf.nodes.append(g.Node(name=sid, mesh=len(gltf.meshes) - 1))
@@ -102,7 +106,19 @@ def main() -> None:
     def mid(sid):
         c = np.load(MESHES / f"{sid}.npz")["centre"]
         return c[len(c) // 2]
+    def outer_point(sid, toward=(1.0, 0.0, 0.0), k=40):
+        """Mean of the k vertices of a mesh that lie furthest along `toward` (a point on its visible face)."""
+        p = np.load(MESHES / f"{sid}.npz")["positions"]
+        order = np.argsort(p @ np.asarray(toward))[-k:]
+        return p[order].mean(0)
     anchors = {
+        "parotid_level_1": outer_point("parotid_level_1"),
+        "parotid_level_2": outer_point("parotid_level_2"),
+        "parotid_ecd_cuff": outer_point("parotid_ecd_cuff"),
+        "parotid_level_3": outer_point("parotid_level_3"),
+        "parotid_level_4": outer_point("parotid_level_4"),
+        "parotid_accessory_lobe": outer_point("parotid_accessory_lobe", k=12),
+        "parotid_duct": np.load(MESHES / "parotid_duct.npz")["centre"][int(len(np.load(MESHES / "parotid_duct.npz")["centre"]) * 0.45)],
         "parotid_superficial_lobe": np.array(landmarks["parotid_lateral"]["xyz"]) + [1, 0, 3],  # on the lateral surface
         "pleomorphic_adenoma": np.array(json.loads((SPECS / "tumour.resolved.json").read_text())["center"]) if (SPECS / "tumour.resolved.json").exists() else np.array(landmarks["parotid_centroid"]["xyz"]),
         "facial_nerve_trunk": mid("facial_nerve_trunk"),
@@ -118,6 +134,29 @@ def main() -> None:
         "great_auricular_nerve": np.load(MESHES / "great_auricular_nerve.npz")["centre"][-3],
         "external_jugular_vein": np.load(MESHES / "external_jugular_vein.npz")["centre"][1],
         "digastric_posterior_belly": mid("digastric_posterior_belly"),
+        "smas_flap": np.load(MESHES / "smas_flap.npz")["positions"][::8].mean(0),
+        "barrier_graft": np.load(MESHES / "barrier_graft.npz")["positions"][::8].mean(0),
+        "sialocele_pocket": np.load(MESHES / "sialocele_pocket.npz")["positions"].mean(0),
+        "scm_flap": np.load(MESHES / "scm_flap.npz")["positions"][::20].mean(0),
+        "needle": np.load(MESHES / "needle.npz")["positions"][::4].mean(0),
+        "us_probe": np.load(MESHES / "us_probe.npz")["positions"][::6].mean(0),
+        "us_plane": np.load(MESHES / "us_plane.npz")["positions"][:4].mean(0),
+        "ct_tumour_outline": np.load(MESHES / "ct_tumour_outline.npz")["positions"][::10].mean(0),
+        "drain_tube": np.array(json.loads((ROOT / "pipeline/segment/work/drain.json").read_text())["nodes_mm"][4]),
+        "needle": np.load(MESHES / "needle.npz")["positions"][::4].mean(0),
+        "us_probe": np.load(MESHES / "us_probe.npz")["positions"][::6].mean(0),
+        "us_plane": np.load(MESHES / "us_plane.npz")["positions"][:4].mean(0),
+        "ct_tumour_outline": np.load(MESHES / "ct_tumour_outline.npz")["positions"][::10].mean(0),
+        "drain_tube": np.array(json.loads((ROOT / "pipeline/segment/work/drain.json").read_text())["nodes_mm"][4]),
+        "auriculotemporal_nerve": np.load(MESHES / "auriculotemporal_nerve.npz")["centre"][-12],
+        "facial_nerve_ic_buccal_a": mid("facial_nerve_ic_buccal_a"),
+        "facial_nerve_ic_buccal_b": mid("facial_nerve_ic_buccal_b"),
+        "facial_nerve_ic_divisions": mid("facial_nerve_ic_divisions"),
+        "frey_regrowth": np.load(MESHES / "frey_regrowth.npz")["positions"][::20].mean(0),
+        "pleomorphic_adenoma_deep": np.array(json.loads((SPECS / "tumour_alternates.resolved.json").read_text())["deep"]["centre_mm"]),
+        "pleomorphic_adenoma_tail": np.array(json.loads((SPECS / "tumour_alternates.resolved.json").read_text())["tail"]["centre_mm"]),
+        "pleomorphic_adenoma_accessory": np.array(json.loads((SPECS / "tumour_alternates.resolved.json").read_text())["accessory"]["centre_mm"]),
+        "stimulator_probe": np.load(MESHES / "stimulator_probe.npz")["centre"][-6],
         "styloid_process": mid("styloid_process"),
         "stylomastoid_foramen": np.array(landmarks["stylomastoid_foramen"]["xyz"]),
         "tragal_pointer": np.array(landmarks["tragal_pointer"]["xyz"]),
@@ -147,6 +186,34 @@ def main() -> None:
     for sid in SCENE:
         pos = to_gltf(np.load(MESHES / f"{sid}.npz")["positions"].astype(np.float64), origin)
         bounds[sid] = {"min": pos.min(0).round(5).tolist(), "max": pos.max(0).round(5).tolist()}
+    # Named boxes for camera framing (structure records without a mesh): RAS mm corners (x lateral, y anterior, z up).
+    for rid, (lo, hi) in {"incision_field": ([38, 30, 168], [105, 125, 298])}.items():
+        corners = np.array([[x, y, z] for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])], float)
+        gp = to_gltf(corners, origin)
+        bounds[rid] = {"min": gp.min(0).round(5).tolist(), "max": gp.max(0).round(5).tolist()}
+    # Groups (structure records with `members`) stand for several meshes: bounds are the union of the members'.
+    groups = {}
+    for f in sorted((ROOT / "apps/site/src/content/structures").glob("*.json")):
+        rec = json.loads(f.read_text(encoding="utf-8"))
+        if rec.get("members"):
+            groups[rec["id"]] = rec["members"]
+    def leaves(sid):
+        return [m for c in groups[sid] for m in (leaves(c) if c in groups else [c])]
+    for gid in groups:
+        mem = [bounds[m] for m in leaves(gid) if m in bounds]
+        bounds[gid] = {"min": np.min([b["min"] for b in mem], 0).round(5).tolist(), "max": np.max([b["max"] for b in mem], 0).round(5).tolist()}
+    # Complication territories on the skin: ellipsoids in glTF metres (anatomy.yaml `zones`).
+    import yaml
+    zspec = yaml.safe_load((SPECS / "anatomy.yaml").read_text(encoding="utf-8")).get("zones", {})
+    skin_p = np.load(MESHES / "skin.npz")["positions"]
+    zones = []
+    for key, z in zspec.items():
+        cx, cy, cz = z["centre"]
+        if z.get("lateral"):
+            near = skin_p[(np.abs(skin_p[:, 1] - cy) < 3) & (np.abs(skin_p[:, 2] - cz) < 3) & (skin_p[:, 0] > 20)]
+            cx = float(near[:, 0].max()) - 1.0
+        c = to_gltf(np.array([[cx, cy, cz]], float), origin)[0]
+        zones.append({"key": key, "weight": z["weight"], "centre": c.round(6).tolist(), "radii": [z["radii"][0] * 0.001, z["radii"][2] * 0.001, z["radii"][1] * 0.001]})
     frame = {
         "description": "glTF = [-(x-ox), (z-oz), (y-oy)] * 0.001 from CT RAS mm (ADR-0002)",
         "origin_ras_mm": origin.tolist(),
@@ -157,6 +224,12 @@ def main() -> None:
         # attributes are stored as signed mm / cut_scale_mm.
         "flap": {"axis_point": to_gltf(np.array([flap["axis_point"]]), origin)[0].round(6).tolist(), "axis_dir": [0.0, flap["axis_dir"][2], flap["axis_dir"][1]], "max_angle": flap["max_angle_rad"], "cut_scale_mm": flap["cut_scale_mm"]},
         "bounds": bounds,
+        "groups": groups,
+        "zones": zones,
+        "barriers": {"smas_hinge": [-(json.loads((ROOT / "pipeline/segment/work/barriers.json").read_text())["smas"]["hinge_x_mm"] - origin[0]) * 0.001, (json.loads((ROOT / "pipeline/segment/work/barriers.json").read_text())["smas"]["hinge_y_mm"] - origin[1]) * 0.001], "scm_pivot": to_gltf(np.array([json.loads((ROOT / "pipeline/segment/work/barriers.json").read_text())["scm"]["pivot_mm"]], float), origin)[0].round(6).tolist()},
+        "imaging": {**json.loads((ROOT / "pipeline/segment/work/imaging.json").read_text()), "origin_ras_mm": origin.tolist()},
+        "imaging": {**json.loads((ROOT / "pipeline/segment/work/imaging.json").read_text()), "origin_ras_mm": origin.tolist()},
+
         "structures": summary,
         "triangles_total": int(sum(v["triangles"] for v in summary.values())),
     }

@@ -1,0 +1,53 @@
+{
+  "id": "auriculotemporal-course",
+  "statement": {
+    "essentials": "A nerve in front of the ear, the auriculotemporal nerve, gives feeling to the temple skin and carries the signal that makes the parotid gland produce saliva.",
+    "anatomy": "The auriculotemporal nerve is a branch of the trigeminal nerve. It runs behind the jaw joint, gives branches to the joint, the ear canal and the parotid, and climbs in front of the ear, usually crossing the superficial temporal artery. The gland receives its saliva-making (parasympathetic) fibres through it.",
+    "clinical": "In a review of the published anatomy its parotid branches arose 2–16 mm from the tragus, its branches crossed the superficial temporal artery in 73% of cases, and it communicated with the facial nerve in over 90%."
+  },
+  "evidenceClass": "established-anatomy",
+  "sources": [
+    {
+      "sourceId": "kadrie-2025",
+      "locator": "Abstract",
+      "support": "direct"
+    },
+    {
+      "sourceId": "iowa-parotidectomy-protocol",
+      "locator": "Pertinent anatomy",
+      "support": "direct"
+    },
+    {
+      "sourceId": "gulekon-2005",
+      "locator": "Abstract",
+      "support": "indirect"
+    }
+  ],
+  "numbers": [
+    {
+      "label": "Origin of parotid branches from the tragus",
+      "unit": "mm",
+      "range": [
+        2,
+        16
+      ],
+      "population": "Published anatomical studies, pooled narratively",
+      "design": "Systematic review with three cadaveric dissections",
+      "sourceId": "kadrie-2025"
+    },
+    {
+      "label": "Branches crossing the superficial temporal artery",
+      "value": 73,
+      "unit": "%",
+      "population": "Published anatomical studies, pooled narratively",
+      "design": "Systematic review with three cadaveric dissections",
+      "sourceId": "kadrie-2025"
+    }
+  ],
+  "limitations": "The nerve has one to five roots and varies in its branching; the course drawn in the model is one schematic arrangement authored from this description, not traced on the scan.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

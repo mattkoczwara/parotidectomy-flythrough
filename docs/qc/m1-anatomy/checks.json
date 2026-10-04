@@ -102,6 +102,12 @@
     },
     "summary": "tympanomastoid_dropoff 3.2 mm in ['witt-2005', 'rea-2010']; digastric_origin 10.3 mm in ['witt-2005', 'pather-osman-2006']; styloid_base 9.2 mm in ['pather-osman-2006']; tragal_pointer 18.9 mm in no study range (reported only)"
   },
+  "duct_course": {
+    "pass": true,
+    "min_clearance_from_masseter_mm": 0.19,
+    "min_clearance_from_skull_mm": 20.2,
+    "summary": "duct outside the masseter throughout (min 0.2 mm), 20 mm from the skull at closest"
+  },
   "no_tube_contacts": {
     "pass": true,
     "contacts": {},
@@ -110,13 +116,19 @@
   "graph_connected_single_root": {
     "pass": true,
     "orphans": [],
-    "summary": "10 facial-nerve segments, all descend from the foramen"
+    "summary": "13 facial-nerve segments, all descend from the foramen"
   },
   "deep_lobe_completion": {
     "pass": true,
     "method": "authored region (anatomical bounds; CT does not resolve the deep-lobe boundary)",
     "added_ml": 7.72,
     "summary": "authored retromandibular portion adds 7.7 mL to the 18.0 mL segmented gland"
+  },
+  "deep_lobe_muscle_overlap": {
+    "pass": true,
+    "value": 0.006,
+    "limit": 0.2,
+    "summary": "1% of deep-lobe voxels within 4 mm of the posterior digastric are muscle-density (>= 20 HU)"
   },
   "superficial_fraction": {
     "pass": true,
@@ -139,6 +151,60 @@
     "fraction_within_gland": 1.0,
     "max_diameter_mm": 18.6,
     "summary": "19 mm, 100% superficial to the nerve plane, 100% within the gland, nerve clearance 1.6 mm"
+  },
+  "esgs_levels": {
+    "pass": true,
+    "volume_ml": {
+      "1": 2.18,
+      "2": 13.2,
+      "3": 7.76,
+      "4": 2.71
+    },
+    "fraction_of_body": {
+      "1": 0.084,
+      "2": 0.511,
+      "3": 0.3,
+      "4": 0.105
+    },
+    "literature_fraction_of_weight": {
+      "1": [
+        0.2,
+        0.22
+      ],
+      "2": [
+        0.41,
+        0.47
+      ],
+      "3": [
+        0.2,
+        0.22
+      ],
+      "4": [
+        0.08,
+        0.1
+      ]
+    },
+    "within_literature_plus_minus_3pp": {
+      "1": false,
+      "2": false,
+      "3": false,
+      "4": true
+    },
+    "summary": "levels I\u2013IV hold 1: 8%, 2: 51%, 3: 30%, 4: 10% of the body of the gland (Pujol-Olmo 2020, 19 specimens: I 20\u201322%, II 41\u201347%, III 20\u201322%, IV 8\u201310%; reported, not tuned)"
+  },
+  "ecd_cuff": {
+    "pass": true,
+    "volume_ml": 4.87,
+    "levels_it_is_carved_from": {
+      "2": 8381
+    },
+    "summary": "cuff 4.9 mL, lateral to the nerve plane only; carved from level(s) [2] (illustrative 3.0 mm margin)"
+  },
+  "accessory_lobe": {
+    "pass": true,
+    "volume_ml": 0.43,
+    "share_of_gland": 0.017,
+    "summary": "accessory lobule 0.43 mL, 1.7% of the gland (Pujol-Olmo 2020: under 5% when present)"
   },
   "face_fit": {
     "pass": true,
@@ -174,6 +240,7 @@
     "high_residual_count": 0,
     "conformed_count": 704,
     "min_depth_below_skin_mm": {
+      "auriculotemporal_nerve": 13.26,
       "digastric_posterior_belly": 25.6,
       "external_carotid_artery": 16.05,
       "external_jugular_vein": 4.07,
@@ -181,6 +248,9 @@
       "facial_nerve_cervical": 11.18,
       "facial_nerve_cervicofacial": 17.86,
       "facial_nerve_digastric_branch": 28.03,
+      "facial_nerve_ic_buccal_a": 13.52,
+      "facial_nerve_ic_buccal_b": 10.34,
+      "facial_nerve_ic_divisions": 14.82,
       "facial_nerve_marginal_mandibular": 16.06,
       "facial_nerve_posterior_auricular": 16.73,
       "facial_nerve_temporal": 10.84,
@@ -194,9 +264,16 @@
       "mandible": 11.46,
       "masseter_r": 7.57,
       "maxillary_artery": 27.31,
+      "parotid_accessory_lobe": 4.58,
       "parotid_deep_lobe": 11.67,
+      "parotid_duct": 6.42,
+      "parotid_ecd_cuff": 2.17,
       "parotid_fascia": 2.38,
       "parotid_gland_r_complete": 3.37,
+      "parotid_level_1": 5.27,
+      "parotid_level_2": 3.25,
+      "parotid_level_3": 11.55,
+      "parotid_level_4": 13.05,
       "parotid_superficial_lobe": 3.37,
       "pleomorphic_adenoma": 2.98,
       "retromandibular_vein": 17.04,
@@ -209,27 +286,95 @@
       "superficial_temporal_artery": 10.6,
       "temporalis_r": 4.19
     },
-    "min_depth_soft_tissue_mm": 2.38,
+    "min_depth_soft_tissue_mm": 2.17,
     "min_depth_bone_mm": 1.76,
-    "summary": "conform-region residual median 0.66 mm (p95 2.05); shallowest soft tissue 2.38 mm and bone 1.76 mm below the skin; 14% of head vertices conformed"
+    "summary": "conform-region residual median 0.66 mm (p95 2.05); shallowest soft tissue 2.17 mm and bone 1.76 mm below the skin; 14% of head vertices conformed"
   },
-  "deep_lobe_muscle_overlap": {
+  "tumour_alternates": {
     "pass": true,
-    "value": 0.006,
-    "limit": 0.2,
-    "summary": "1% of deep-lobe voxels within 4 mm of the posterior digastric are muscle-density (>= 20 HU)"
+    "placements": {
+      "deep": {
+        "centre_mm": [
+          54.0,
+          70.0,
+          231.0
+        ],
+        "max_diameter_mm": 12.0,
+        "nerve_clearance_mm": 6.29,
+        "vessel_clearance_mm": 1.34,
+        "fraction_in": {
+          "gland": 0.84,
+          "deep": 0.79,
+          "lateral": 0.0
+        }
+      },
+      "tail": {
+        "centre_mm": [
+          70.0,
+          90.5,
+          207.0
+        ],
+        "max_diameter_mm": 17.8,
+        "nerve_clearance_mm": 1.9,
+        "vessel_clearance_mm": 4.69,
+        "fraction_in": {
+          "gland": 0.49,
+          "deep": 0.0,
+          "lateral": 0.39
+        }
+      },
+      "accessory": {
+        "centre_mm": [
+          71.5,
+          112.0,
+          243.0
+        ],
+        "max_diameter_mm": 10.9,
+        "nerve_clearance_mm": 5.13,
+        "vessel_clearance_mm": 28.81,
+        "fraction_in": {
+          "gland": 0.0,
+          "deep": 0.0,
+          "lateral": 0.0
+        }
+      }
+    },
+    "summary": "alternate placements of the adenoma, clear of nerve, vessels, bone and muscle: deep 12 mm, nerve 6.3 mm; tail 18 mm, nerve 1.9 mm; accessory 11 mm, nerve 5.1 mm"
+  },
+  "frey_regrowth": {
+    "pass": true,
+    "fibres": 18,
+    "summary": "18 schematic regrowth fibres from the auriculotemporal nerve to the skin of the flap region (drawn in the line grammar)"
   },
   "incision_flap": {
     "pass": true,
     "incision_length_mm": 162.3,
     "skin": {
-      "flap_vertices": 22836,
-      "auricle_vertices_excluded": 1741
+      "flap_vertices": 22884,
+      "auricle_vertices_excluded": 4871
     },
     "subcutaneous_fat": {
-      "flap_vertices": 21729,
-      "auricle_vertices_excluded": 710
+      "flap_vertices": 21791,
+      "auricle_vertices_excluded": 2369
     },
     "summary": "modified Blair incision 162 mm (projected); flap fields baked on skin and subcutaneous fat; auricle excluded"
+  },
+  "barriers": {
+    "pass": true,
+    "summary": "SMAS flap sheet, graft sheet, SCM strip 17.4 mL (75 mm long, hinged at its upper end), sialocele pocket",
+    "smas": {
+      "hinge_y_mm": 101.41763749620745,
+      "free_y_mm": 60.94060325156977,
+      "hinge_x_mm": 80.36432837595812
+    },
+    "scm": {
+      "pivot_mm": [
+        62.38696172248804,
+        56.88456937799043,
+        240.0
+      ],
+      "strip_ml": 17.4,
+      "length_mm": 75.0
+    }
   }
 }

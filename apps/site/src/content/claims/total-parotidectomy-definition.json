@@ -1,0 +1,23 @@
+{
+  "id": "total-parotidectomy-definition",
+  "statement": {
+    "essentials": "A total parotidectomy removes both the outer and the inner parts of the gland while the nerve is kept; in benign disease it is kept for tumours that reach the inner part.",
+    "anatomy": "Total parotidectomy removes the superficial and deep lobes with the facial nerve preserved. In benign disease it is usually kept for deep-lobe tumours that contact the nerve, dumbbell tumours beneath the nerve, tumours of the superficial lobe that extend into the deep lobe, and multiple tumours.",
+    "clinical": "Its main downsides are more temporary and permanent facial nerve palsy, Frey syndrome and contour deformity. It is indicated for malignant tumours."
+  },
+  "evidenceClass": "standard-principle",
+  "sources": [
+    {
+      "sourceId": "zanghi-2024",
+      "locator": "Section 2",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "A narrative review’s account of indications, not a measurement. In this atlas the delivery of the deep lobe from beneath the nerve is drawn schematically.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

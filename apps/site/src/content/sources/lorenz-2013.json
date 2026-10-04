@@ -1,0 +1,24 @@
+{
+  "id": "lorenz-2013",
+  "citation": {
+    "authors": [
+      "Lorenz KJ",
+      "Behringer PA",
+      "Höcherl D",
+      "Wilde F"
+    ],
+    "title": "Improving the quality of life of parotid surgery patients through a modified facelift incision and great auricular nerve preservation",
+    "container": "GMS Interdiscip Plast Reconstr Surg DGPW",
+    "year": 2013,
+    "volume": "2",
+    "pages": "Doc20"
+  },
+  "publicationType": "case-series",
+  "pmid": "26504711",
+  "doi": "10.3205/iprs000040",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/26504711/",
+  "status": "active",
+  "verification": "full-text",
+  "checkedDate": "2026-10-04",
+  "notes": "Open access (PMC4582489): 32 facelift and 182 Blair incisions; great auricular nerve preservation (37 preserved, 99 historical controls)."
+}

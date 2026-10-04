@@ -1,0 +1,22 @@
+{
+  "id": "stylomastoid_foramen",
+  "names": {
+    "plain": "Where the nerve leaves the skull",
+    "anatomical": "Stylomastoid foramen",
+    "latin": "Foramen stylomastoideum"
+  },
+  "gloss": "The small opening in the base of the skull, behind the jaw and in front of the mastoid bone, through which the facial nerve emerges.",
+  "tissue": "bone",
+  "depth": "skeletal",
+  "anchors": [
+    "anchor__stylomastoid_foramen"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [
+    "fn-exits-stylomastoid-foramen"
+  ],
+  "members": [],
+  "schematic": false
+}

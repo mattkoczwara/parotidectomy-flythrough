@@ -1,0 +1,24 @@
+{
+  "id": "lee-yy-2008",
+  "citation": {
+    "authors": [
+      "Lee YY",
+      "Wong KT",
+      "King AD",
+      "Ahuja AT"
+    ],
+    "title": "Imaging of salivary gland tumours",
+    "container": "Eur J Radiol",
+    "year": 2008,
+    "volume": "66",
+    "pages": "419-36"
+  },
+  "publicationType": "narrative-review",
+  "pmid": "18337041",
+  "doi": "10.1016/j.ejrad.2008.01.027",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/18337041/",
+  "status": "active",
+  "verification": "abstract",
+  "checkedDate": "2026-10-04",
+  "notes": "Imaging review; role of ultrasound, CT and MRI"
+}

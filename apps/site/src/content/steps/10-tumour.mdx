@@ -1,0 +1,36 @@
+---
+id: tumour
+chapter: tumour
+order: 10
+title: The tumour in the outer part of the gland
+delta:
+  camera: { azimuth: -10, elevation: 6, zoom: 1.25, frame: [pleomorphic_adenoma, parotid_superficial_lobe] }
+  gauge: 3
+  op: { cut_skin: 1, cut_fat: 1, cut_smas: 1, cut_fascia: 1 }
+  structures:
+      skin: { mode: solid, opacity: 1, emphasis: context }
+      subcutaneous_fat: { presence: 1, emphasis: context }
+      smas: { presence: 1, emphasis: context }
+      parotid_fascia: { presence: 1, emphasis: context }
+      parotid_superficial_lobe: { mode: ghost, opacity: 0.5, emphasis: context }
+      parotid_deep_lobe: { mode: ghost, opacity: 0.5, emphasis: context }
+      pleomorphic_adenoma: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      facial_nerve: { emphasis: context }
+      nerve_plane: { presence: 0 }
+      retromandibular_veins: { emphasis: context }
+  labels:
+      - { structureId: pleomorphic_adenoma }
+      - { structureId: parotid_superficial_lobe }
+      - { structureId: facial_nerve_trunk }
+transition: { op: [0, 0.5], structures: [0.4, 1], camera: [0, 0.6] }
+sceneDescription: "The gland capsule is opened. Within the outer part of the gland, partly see-through, a pale lobulated mass about 2 cm across sits just under the gland surface, on the outer side of the nerve."
+claims: [pa-capsule-features, pa-most-common]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+
+<Model>The tumour shown is about 2 cm across, in the outer part of the gland, on the outer side of the nerve.</Model> <Claim id="pa-capsule-features">Its covering is often thin or incomplete, and small extensions can reach beyond it — one reason surgeons remove a cuff of normal gland around the tumour rather than shelling it out.</Claim>

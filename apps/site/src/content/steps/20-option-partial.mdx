@@ -1,0 +1,31 @@
+---
+id: option-partial
+chapter: choosing
+order: 20
+title: Partial superficial parotidectomy
+delta:
+  camera: { azimuth: -20, elevation: 10, zoom: 0.95, frame: [parotid_level_2, parotid_level_1, specimen@0.45] }
+  gauge: 3
+  op: { out: 0.45, ink_plane: 1, ink_cranial: 1, ink_cuff: 0 }
+  variants: { resection: partial }
+  structures:
+      parotid_ecd_cuff: { emphasis: focus }
+      parotid_level_2: { emphasis: focus }
+      parotid_level_1: { emphasis: context }
+  labels:
+      - { structureId: parotid_level_2 }
+      - { structureId: facial_nerve_cervicofacial }
+      - { structureId: parotid_level_1 }
+      - { structureId: parotid_level_3 }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7], op: [0.3, 1] }
+sceneDescription: "The lower outer part of the gland, with the tumour inside it, has been lifted clear. Where it lay, the branches of the nerve's lower division are exposed on the inner part of the gland. The upper outer part of the gland has been left in place, and the violet lines show the edges of the piece that comes out."
+claims: [partial-superficial-definition]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="partial-superficial-definition">A partial superficial parotidectomy takes the tumour with a wider cuff of normal gland — here the whole lower outer level — and dissects the nerve branches near it, but leaves the rest of the outer lobe.</Claim>
+
+<Model>In this model the tumour lies in level II, so level II is the piece shown lifted.</Model> <Claim id="partial-superficial-definition">One review would use it for tumours of the lower part of the gland that touch the main trunk.</Claim>

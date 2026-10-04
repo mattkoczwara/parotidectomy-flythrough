@@ -1,0 +1,21 @@
+{
+  "id": "parotid_accessory_lobe",
+  "names": {
+    "plain": "Small separate piece of gland",
+    "anatomical": "Accessory parotid gland (ESGS level V)",
+    "latin": "Glandula parotidea accessoria"
+  },
+  "gloss": "A separate nodule of parotid tissue in front of the main gland, lying on the chewing muscle above the duct. Present in about a third of people.",
+  "tissue": "gland",
+  "depth": "superficial-lobe",
+  "claims": [
+    "accessory-parotid-prevalence",
+    "esgs-five-levels"
+  ],
+  "anchors": [
+    "anchor__parotid_accessory_lobe"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ]
+}

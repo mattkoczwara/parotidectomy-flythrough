@@ -5,30 +5,34 @@ order: 5
 title: The nerve that runs through the gland
 delta:
   camera: { zoom: 1.4, frame: [parotid_superficial_lobe, facial_nerve_trunk] }
+  gauge: 4
+  op: { cut_skin: 1, cut_fat: 1, cut_smas: 1, cut_fascia: 1 }
   structures:
-    parotid_superficial_lobe: { opacity: 0.22 }
-    pleomorphic_adenoma: { mode: ghost, opacity: 0.5, emphasis: context }
-    facial_nerve_trunk: { emphasis: focus }
-    facial_nerve_temporofacial: { emphasis: focus }
-    facial_nerve_cervicofacial: { emphasis: focus }
-    facial_nerve_temporal: { emphasis: focus }
-    facial_nerve_zygomatic: { emphasis: focus }
-    facial_nerve_buccal: { emphasis: focus }
-    facial_nerve_marginal_mandibular: { emphasis: focus }
-    facial_nerve_cervical: { emphasis: focus }
+      parotid_superficial_lobe: { mode: ghost, opacity: 0.22, emphasis: context }
+      parotid_deep_lobe: { mode: ghost, opacity: 0.3, emphasis: context }
+      pleomorphic_adenoma: { presence: 0 }
+      facial_nerve: { presence: 1, emphasis: focus }
+      subcutaneous_fat: { emphasis: context }
+      smas: { emphasis: context }
+      parotid_fascia: { emphasis: context }
   labels:
-    - { structureId: facial_nerve_trunk }
-    - { structureId: facial_nerve_temporal }
-    - { structureId: facial_nerve_zygomatic }
-    - { structureId: facial_nerve_buccal }
-    - { structureId: facial_nerve_marginal_mandibular }
-    - { structureId: facial_nerve_cervical }
+      - { structureId: facial_nerve_trunk }
+      - { structureId: facial_nerve_temporal }
+      - { structureId: facial_nerve_zygomatic }
+      - { structureId: facial_nerve_buccal }
+      - { structureId: facial_nerve_marginal_mandibular }
+      - { structureId: facial_nerve_cervical }
 transition: { structures: [0, 0.6], camera: [0.3, 1] }
-sceneDescription: The outer gland is nearly transparent. An ivory nerve, about 2–3 mm thick, leaves the skull behind the jaw, enters the gland, divides in two, and fans forward into five groups of branches toward the forehead, eyelids, cheek, lower lip and neck.
-claims: [fn-five-branch-groups, fn-branching-variation]
+sceneDescription: "The gland is nearly transparent. An ivory nerve, about 2–3 mm thick, leaves the skull behind the jaw, enters the gland, divides in two, and fans forward into five groups of branches toward the forehead, eyelids, cheek, lower lip and neck."
+claims: [fn-exits-stylomastoid-foramen, fn-trunk-length, fn-five-branch-groups, fn-branching-variation]
 ---
 import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
 
-<Claim id="fn-exits-stylomastoid-foramen">The facial nerve — the nerve that moves the face — leaves the skull just behind the jaw and passes straight into the gland.</Claim> <Claim id="fn-trunk-length">Its main trunk runs only about 1.5 cm before dividing,</Claim> <Claim id="fn-five-branch-groups">and its branches fan out to the forehead, eyelids, cheek, lower lip and neck.</Claim>
+<Claim id="fn-exits-stylomastoid-foramen">The facial nerve, the nerve that moves the face, leaves the skull just behind the jaw and passes straight into the gland.</Claim> <Claim id="fn-trunk-length">Its main trunk runs only about a centimetre and a half before dividing,</Claim> <Claim id="fn-five-branch-groups">and its branches fan out to the forehead, eyelids, cheek, lower lip and neck.</Claim>
 
-<Claim id="fn-branching-variation">The branching pattern differs between people; this is one common arrangement.</Claim>
+<Claim id="fn-branching-variation">The branching differs between people; the pattern shown first is the simplest.</Claim>

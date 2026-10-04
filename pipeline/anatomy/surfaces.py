@@ -39,9 +39,9 @@ SEGMENTED = {
 }
 
 
-def mesh_from_mask(mask: np.ndarray, affine: np.ndarray, budget: int, sigma: float = 1.0, smooth_iter: int = 8) -> trimesh.Trimesh:
+def mesh_from_mask(mask: np.ndarray, affine: np.ndarray, budget: int, sigma: float = 1.0, smooth_iter: int = 8, level: float = 0.5) -> trimesh.Trimesh:
     vol = ndimage.gaussian_filter(np.pad(mask.astype(np.float32), 2), sigma)
-    verts, faces, _, _ = measure.marching_cubes(vol, 0.5)
+    verts, faces, _, _ = measure.marching_cubes(vol, level)
     verts -= 2
     m = trimesh.Trimesh(nib.affines.apply_affine(affine, verts), faces[:, ::-1] if np.linalg.det(affine[:3, :3]) < 0 else faces, process=True)
     trimesh.smoothing.filter_taubin(m, iterations=smooth_iter)
@@ -213,6 +213,8 @@ def main() -> None:
     frac_in = float(ndimage.binary_dilation(parotid, iterations=1)[tuple(ijk_r.T)].mean())
     checks["vessels_within_gland"] = {"pass": frac_in >= 0.8, "rmv_fraction_in_gland": round(frac_in, 2), "summary": f"{frac_in:.0%} of the retromandibular vein centreline within the gland between its entry and lower pole"}
 
+    # Inputs for pieces.py (ESGS levels, extracapsular cuff): the completed gland, its two parts and the nerve-plane fit.
+    np.savez_compressed(WORK / "gland_masks.npz", gland=parotid, superficial=superficial, deep=deep, affine=aff, nerve_pts=pts)
     sup_mesh = mesh_from_mask(superficial, aff, 16000, sigma=0.8, smooth_iter=6)
     deep_mesh = mesh_from_mask(deep, aff, 12000, sigma=0.8, smooth_iter=6)
     # Plane sheet for display and the plane gauge: sample the height field over the gland footprint.

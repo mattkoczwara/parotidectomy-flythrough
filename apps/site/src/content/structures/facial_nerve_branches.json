@@ -1,0 +1,24 @@
+{
+  "id": "facial_nerve_branches",
+  "names": {
+    "plain": "The nerve’s branches",
+    "anatomical": "Facial nerve divisions and terminal branches"
+  },
+  "gloss": "The two divisions and the five groups of terminal branches, without the trunk.",
+  "tissue": "nerve",
+  "depth": "nerve-plane",
+  "members": [
+    "facial_nerve_temporofacial",
+    "facial_nerve_cervicofacial",
+    "facial_nerve_temporal",
+    "facial_nerve_zygomatic",
+    "facial_nerve_buccal",
+    "facial_nerve_marginal_mandibular",
+    "facial_nerve_cervical"
+  ],
+  "anchors": [],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": []
+}

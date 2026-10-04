@@ -1,0 +1,28 @@
+{
+  "id": "superficial-parotidectomy-definition",
+  "statement": {
+    "essentials": "A superficial parotidectomy removes the whole outer lobe of the gland, the part that lies outside the facial nerve.",
+    "anatomy": "Superficial parotidectomy is excision of the entire lateral segment of the gland, superficial to the facial nerve (ESGS levels I and II), with the nerve dissected throughout.",
+    "clinical": "It is typically reserved for medium-sized tumours that contact both main divisions, and for large tumours of the cranial part (level I) that contact the temporal branch and reach the main trunk. It can also be used for any benign tumour of the superficial lobe when extracapsular dissection would not ensure complete excision."
+  },
+  "evidenceClass": "standard-principle",
+  "sources": [
+    {
+      "sourceId": "zanghi-2024",
+      "locator": "Introduction; Section 2",
+      "support": "direct"
+    },
+    {
+      "sourceId": "quer-2016",
+      "locator": "Abstract",
+      "support": "direct"
+    }
+  ],
+  "numbers": [],
+  "limitations": "Indications are from one review’s description of practice; the choice depends on the tumour and the surgeon.",
+  "lastChecked": "2026-10-04",
+  "verification": "checked",
+  "clinicalReview": {
+    "status": "pending"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "drain_tube",
+  "names": {
+    "plain": "Drain",
+    "anatomical": "Closed-suction drain"
+  },
+  "gloss": "A thin soft tube left in the wound for a few days to draw off blood and saliva. An instrument, not anatomy.",
+  "tissue": "instrument",
+  "depth": "subcutaneous",
+  "claims": [
+    "drain-technique"
+  ],
+  "anchors": [
+    "anchor__drain_tube"
+  ],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "members": [],
+  "schematic": false
+}

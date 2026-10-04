@@ -1,0 +1,38 @@
+---
+id: no-shelling
+chapter: tumour
+order: 13
+title: Why it is not simply shelled out
+delta:
+  camera: { azimuth: -14, elevation: 8, zoom: 1.05, frame: [parotid_ecd_cuff, parotid_level_2] }
+  gauge: 3
+  op: { ink_cuff: 1 }
+  variants: { resection: ecd }
+  structures:
+      parotid_superficial_lobe: { mode: solid, opacity: 1, emphasis: context }
+      parotid_deep_lobe: { mode: solid, opacity: 1, emphasis: context }
+      parotid_ecd_cuff: { emphasis: focus }
+      pleomorphic_adenoma: { mode: ghost, opacity: 0.6, emphasis: focus }
+      skin: { mode: ghost, opacity: 0.08, emphasis: context }
+      facial_nerve: { emphasis: context }
+  labels:
+      - { structureId: pleomorphic_adenoma }
+      - { structureId: parotid_ecd_cuff }
+transition: { camera: [0, 0.5], op: [0.3, 1], structures: [0.2, 0.7] }
+sceneDescription: "On the surface of the gland a violet line rings the tumour a little way out from its edge: the rim of normal gland that is taken with it. Beside the scene, a drawing contrasts cutting along the capsule with cutting through that rim."
+claims: [enucleation-recurrence, pa-capsule-features]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
+
+<Claim id="enucleation-recurrence">Shelling a tumour out of its capsule leaves behind the tiny extensions that reach beyond it, and the tumour tends to come back: the commonest cause of recurrence is enucleation with rupture and incomplete removal.</Claim> <Claim id="pa-capsule-features">That is why even the smallest standard operation takes a rim of normal gland with the tumour.</Claim>
+
+<Inset title="Two ways of cutting" kind="schematic" caption="Dashed: cutting along the capsule leaves the finger-like extension and the nodules in the gland. Violet: cutting through a rim of normal gland takes them with the tumour.">
+<PseudocapsuleInset mode="cuts" />
+</Inset>
+
+<Model>On the model the violet line is the margin of the rim; the width shown is illustrative.</Model>

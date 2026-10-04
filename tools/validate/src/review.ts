@@ -23,7 +23,7 @@ interface Claim {
   statement: { essentials: string; anatomy?: string; clinical?: string };
   evidenceClass: string;
   sources: { sourceId: string; locator?: string; support: string }[];
-  numbers: { label: string; value: number; unit: string; ci?: [number, number]; range?: [number, number]; n?: string; population: string; design: string; sourceId: string }[];
+  numbers: { label: string; value?: number; unit: string; ci?: [number, number]; range?: [number, number]; n?: string; population: string; design: string; sourceId: string }[];
   limitations?: string;
   disagreement?: string;
   verification: string;
@@ -96,7 +96,7 @@ const claimBlock = (id: string) => {
     <p><b>Essentials:</b> ${esc(c.statement.essentials)}</p>
     ${c.statement.anatomy ? `<p><b>Anatomy:</b> ${esc(c.statement.anatomy)}</p>` : ''}
     ${c.statement.clinical ? `<p><b>Clinical:</b> ${esc(c.statement.clinical)}</p>` : ''}
-    ${c.numbers.map((n) => `<p class="num">${esc(n.label)}: <b>${esc(n.value)} ${esc(n.unit)}</b>${n.ci ? ` (95% CI ${n.ci.join('–')})` : ''}${n.range ? ` (range ${n.range.join('–')})` : ''}; ${esc(n.population)}${n.n ? `, ${esc(n.n)}` : ''}; ${esc(n.design)}</p>`).join('')}
+    ${c.numbers.map((n) => `<p class="num">${esc(n.label)}: <b>${n.value !== undefined ? `${esc(n.value)} ` : ''}${esc(n.unit)}</b>${n.ci ? ` (95% CI ${n.ci.join('–')})` : ''}${n.range ? ` (range ${n.range.join('–')})` : ''}; ${esc(n.population)}${n.n ? `, ${esc(n.n)}` : ''}; ${esc(n.design)}</p>`).join('')}
     ${c.disagreement ? `<p class="caveat">Disagreement: ${esc(c.disagreement)}</p>` : ''}
     ${c.limitations ? `<p class="caveat">Limitations: ${esc(c.limitations)}</p>` : ''}
     <ol class="sources">${c.sources.map((s) => source(s.sourceId, s.support, s.locator)).join('')}</ol>

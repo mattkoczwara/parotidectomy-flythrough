@@ -1,0 +1,29 @@
+---
+id: upper-division
+chapter: operation
+order: 32
+title: Following the upper branches
+delta:
+  camera: { azimuth: -28, elevation: 8, zoom: 1.1, frame: [facial_nerve_temporofacial, facial_nerve_temporal, facial_nerve_zygomatic, pleomorphic_adenoma] }
+  gauge: 4
+  op: { peel: 0.58 }
+  structures:
+      facial_nerve_temporofacial: { emphasis: focus }
+      facial_nerve_temporal: { emphasis: focus }
+      facial_nerve_zygomatic: { emphasis: focus }
+      facial_nerve_cervicofacial: { emphasis: context }
+      facial_nerve_trunk: { emphasis: context }
+  labels:
+      - { structureId: facial_nerve_temporofacial }
+      - { structureId: facial_nerve_temporal }
+      - { structureId: facial_nerve_zygomatic }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7], op: [0.3, 1] }
+sceneDescription: "The folded-forward gland now reaches the tumour. The upper division and its two branches, one to the forehead and one to the eyelids, lie bare on the inner part of the gland, which stays in place."
+claims: [antegrade-dissection, fn-five-branch-groups]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+
+<Claim id="antegrade-dissection">Following the nerve forward from its trunk, the surgeon lifts the gland off it branch by branch.</Claim> <Claim id="fn-five-branch-groups">The upper division gives the branches that lift the brow and close the eyes.</Claim>
