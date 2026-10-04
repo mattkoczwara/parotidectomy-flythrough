@@ -83,6 +83,11 @@ export function checkContent(content: Content): string[] {
       errors.push(`glossary/${g.id}: unknown structure "${g.structureId}"`);
     }
     for (const c of g.claims) if (!claimIds.has(c)) errors.push(`glossary/${g.id}: unknown claim "${c}"`);
+    // A definition is a claim's own wording, so it cannot drift from the evidence: it must equal one level of the first claim.
+    const first = content.claims.find((c) => c.id === g.claims[0]);
+    if (first && ![first.statement.essentials, first.statement.anatomy, first.statement.clinical].includes(g.definition)) {
+      errors.push(`glossary/${g.id}: definition does not match any level of claim "${first.id}" (regenerate it from the claim)`);
+    }
   }
 
   return errors;

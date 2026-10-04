@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { compile, evaluate, positionAt, restingY, scrollYAt, shouldDissolve, type PlateSpec } from './index.ts';
+import { compile, evaluate, GLAND_PIECES, positionAt, RESECTION_EXTENT, restingY, scrollYAt, shouldDissolve, type PlateSpec } from './index.ts';
 
 const specs: PlateSpec[] = [
   {
@@ -150,5 +150,21 @@ describe('scroll mapping', () => {
   it('rests inside the plateau', () => {
     expect(positionAt(restingY(1, bands), bands)).toBe(1);
     for (const t of [0, 0.25, 0.5, 1, 1.5, 1.9, 2]) expect(positionAt(scrollYAt(t, bands), bands)).toBeCloseTo(t);
+  });
+});
+
+describe('resection extents', () => {
+  it('nest: each operation takes at least what the smaller one takes, and the total adds the inner levels', () => {
+    const take = (op: keyof typeof RESECTION_EXTENT) => new Set([...RESECTION_EXTENT[op].out, ...RESECTION_EXTENT[op].deep]);
+    const within = (a: Set<string>, b: Set<string>) => [...a].every((x) => b.has(x));
+    expect(within(take('ecd'), take('partial'))).toBe(true);
+    expect(within(take('partial'), take('superficial'))).toBe(true);
+    expect(within(take('superficial'), take('total'))).toBe(true);
+    expect(RESECTION_EXTENT.total.deep).toEqual(['parotid_level_3', 'parotid_level_4']);
+    expect(RESECTION_EXTENT.superficial.deep).toEqual([]);
+  });
+  it('every piece named is a gland piece or the tumour', () => {
+    const known = new Set<string>([...GLAND_PIECES, 'pleomorphic_adenoma']);
+    for (const e of Object.values(RESECTION_EXTENT)) for (const id of [...e.out, ...e.deep]) expect(known.has(id)).toBe(true);
   });
 });

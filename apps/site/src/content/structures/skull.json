@@ -14,5 +14,7 @@
   "assetIds": [
     "anatomy-slice-glb"
   ],
-  "claims": []
+  "claims": [],
+  "baseEmphasis": "dim",
+  "hidden": true
 }

@@ -38,6 +38,7 @@ function ratio(a: PNG, b: PNG, name: string): number {
 }
 
 test('static fallback figure for every plate', async ({ page }) => {
+  test.setTimeout(30 * 60_000); // one cold load per plate
   const ids = await plateIds(page);
   for (const [i, id] of ids.entries()) {
     await page.goto(`/?capture=1&cold=${i}#${id}`); // a fresh load, not a same-document hash change
@@ -47,7 +48,7 @@ test('static fallback figure for every plate', async ({ page }) => {
 });
 
 test('plates are deterministic: cold load vs forward and backward scroll arrival', async ({ page }) => {
-  test.setTimeout(15 * 60_000); // three arrivals per plate, ten plates (the criterion itself is unchanged)
+  test.setTimeout(90 * 60_000); // 54 cold loads and two sequential passes (the criterion itself is unchanged)
   const ids = await plateIds(page);
   const results: Record<string, { forward: number; backward: number }> = {};
   const scrollToPlate = async (id: string) => {
@@ -57,37 +58,45 @@ test('plates are deterministic: cold load vs forward and backward scroll arrival
       scrollTo({ top: el.getBoundingClientRect().top + scrollY - line + 24, behavior: 'auto' });
     }, id);
   };
+  // Cold: a fresh load straight onto each plate.
+  const cold: PNG[] = [];
   for (const [i, id] of ids.entries()) {
     await page.goto(`/?capture=1&cold=${i}#${id}`); // a fresh load, not a same-document hash change
     await waitConverged(page, i);
-    const cold = await stageShot(page);
-
-    await page.goto(`/?capture=1&from=first-${i}#${ids[0]}`);
-    await waitConverged(page, 0);
-    for (let k = 1; k <= i; k++) {
-      await scrollToPlate(ids[k]!);
-      await page.waitForTimeout(250);
-    }
-    await waitConverged(page, i);
-    const forward = await stageShot(page);
-
-    await page.goto(`/?capture=1&from=last-${i}#${ids[ids.length - 1]}`);
-    await waitConverged(page, ids.length - 1);
-    for (let k = ids.length - 2; k >= i; k--) {
-      await scrollToPlate(ids[k]!);
-      await page.waitForTimeout(250);
-    }
-    await waitConverged(page, i);
-    const backward = await stageShot(page);
-    results[id] = { forward: ratio(cold, forward, `${id}-forward`), backward: ratio(cold, backward, `${id}-backward`) };
+    cold.push(await stageShot(page));
+  }
+  // Forward: one pass from the first plate to the last, arriving at each by scrolling from the one before.
+  const forward: PNG[] = [];
+  await page.goto(`/?capture=1&pass=forward#${ids[0]}`);
+  await waitConverged(page, 0);
+  forward.push(await stageShot(page));
+  for (let k = 1; k < ids.length; k++) {
+    await scrollToPlate(ids[k]!);
+    await page.waitForTimeout(250);
+    await waitConverged(page, k);
+    forward.push(await stageShot(page));
+  }
+  // Backward: one pass from the last plate to the first.
+  const backward: PNG[] = new Array(ids.length);
+  await page.goto(`/?capture=1&pass=backward#${ids[ids.length - 1]}`);
+  await waitConverged(page, ids.length - 1);
+  backward[ids.length - 1] = await stageShot(page);
+  for (let k = ids.length - 2; k >= 0; k--) {
+    await scrollToPlate(ids[k]!);
+    await page.waitForTimeout(250);
+    await waitConverged(page, k);
+    backward[k] = await stageShot(page);
+  }
+  for (const [i, id] of ids.entries()) {
+    results[id] = { forward: ratio(cold[i]!, forward[i]!, `${id}-forward`), backward: ratio(cold[i]!, backward[i]!, `${id}-backward`) };
     if (results[id]!.forward > 0.005 || results[id]!.backward > 0.005) {
-      for (const [n, img] of [['cold', cold], ['forward', forward], ['backward', backward]] as const) writeFileSync(join(out, `${id}-${n}.png`), PNG.sync.write(img));
+      for (const [n, img] of [['cold', cold[i]!], ['forward', forward[i]!], ['backward', backward[i]!]] as const) writeFileSync(join(out, `${id}-${n}.png`), PNG.sync.write(img));
     }
   }
   writeFileSync(join(out, 'determinism.json'), JSON.stringify(results, null, 2));
-  for (const r of Object.values(results)) {
-    expect(r.forward).toBeLessThan(0.005);
-    expect(r.backward).toBeLessThan(0.005);
+  for (const [id, r] of Object.entries(results)) {
+    expect.soft(r.forward, `${id}: forward arrival`).toBeLessThan(0.005);
+    expect.soft(r.backward, `${id}: backward arrival`).toBeLessThan(0.005);
   }
 });
 

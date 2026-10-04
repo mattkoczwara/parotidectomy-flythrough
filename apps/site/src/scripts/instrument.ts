@@ -10,6 +10,7 @@
  */
 import type { SceneState } from '@atlas/timeline';
 import type { Stage } from '@atlas/stage';
+import { applyOperation, type OperationControls } from './operation.ts';
 
 type Depth = 'essentials' | 'anatomy' | 'clinical';
 
@@ -85,11 +86,10 @@ const BARRIERS: ReadonlyArray<{ id: string; label: string }> = [
   { id: 'graft', label: 'Graft sheet' },
 ];
 
-const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 const ORBIT_STEP = 12;
 
 export function mountInstrument(ctx: InstrumentContext): Instrument {
-  const ops = { active: false, resection: 'superficial', incision: 'blair', barrier: 'none', progress: 0 };
+  const ops: OperationControls = { active: false, resection: 'superficial', incision: 'blair', barrier: 'none', progress: 0 };
   let exploring = false;
   let selected: string | null = null;
 
@@ -312,34 +312,8 @@ export function mountInstrument(ctx: InstrumentContext): Instrument {
     }
   }
 
-  // ── The operation as scene state ──────────────────────────────────────────────────────
-  function override(state: SceneState): SceneState {
-    if (!ops.active) return state;
-    const p = ops.progress / 100;
-    const res = ops.resection;
-    const s = state;
-    s.variants = { ...s.variants, resection: res };
-    s.variantMix = { ...s.variantMix, resection: { [res]: 1 } };
-    const op = (s.op = { ...s.op });
-    const facelift = ops.incision === 'facelift';
-    op['ink'] = facelift ? 0 : clamp01(p / 0.05);
-    op['ink_facelift'] = facelift ? clamp01(p / 0.05) : 0;
-    op['flap'] = clamp01((p - 0.05) / 0.1);
-    // Extracapsular dissection has no fold: the tumour and its cuff are lifted straight out of the raised field.
-    op['peel'] = res === 'ecd' || res === 'none' ? 0 : clamp01((p - 0.16) / 0.5);
-    op['out'] = res === 'none' ? 0 : res === 'ecd' ? clamp01((p - 0.16) / 0.5) : clamp01((p - 0.66) / 0.14);
-    op['mobilise'] = res === 'total' ? clamp01((p - 0.8) / 0.06) : 0;
-    op['deep'] = res === 'total' ? clamp01((p - 0.84) / 0.12) : 0;
-    const b = res === 'none' ? 0 : clamp01((p - 0.9) / 0.1);
-    op['smas'] = ops.barrier === 'smas' ? 1 - b : 1;
-    op['scm'] = ops.barrier === 'scm' ? b : 0;
-    const setPresence = (id: string, v: number) => {
-      s.structures = { ...s.structures, [id]: { ...(s.structures[id] ?? { presence: 0, opacity: 1, mode: 'solid', emphasis: 'context' }), presence: v } };
-    };
-    setPresence('smas_flap', ops.barrier === 'smas' ? b : 0);
-    setPresence('barrier_graft', ops.barrier === 'graft' ? b : 0);
-    return s;
-  }
+  // ── The operation as scene state (operation.ts) ───────────────────────────────────────
+  const override = (state: SceneState): SceneState => applyOperation(state, ops);
 
   return {
     isOpen: () => !panel.hidden,

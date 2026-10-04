@@ -2,7 +2,7 @@
   "id": "tympanomastoid-suture",
   "term": "Tympanomastoid suture",
   "plain": "A seam in the bone below the ear canal that the nerve trunk lies just deep to",
-  "definition": "The tympanomastoid suture points to the trunk, which lies a few millimetres deep to its medial end; reported distances vary with the reference point used.",
+  "definition": "The tympanomastoid suture is a bony landmark for the trunk: in cadavers and live patients the closest distance was about 2 mm, and one protocol places the nerve approximately 2 mm inferior to the suture. Reported distances vary with the reference point used.",
   "claims": [
     "landmark-tympanomastoid-suture"
   ],

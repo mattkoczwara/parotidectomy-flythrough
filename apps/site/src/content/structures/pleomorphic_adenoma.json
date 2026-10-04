@@ -13,5 +13,8 @@
   "assetIds": [
     "anatomy-slice-glb"
   ],
-  "claims": []
+  "claims": [
+    "pa-most-common",
+    "pa-capsule-features"
+  ]
 }

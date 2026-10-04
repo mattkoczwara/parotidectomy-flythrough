@@ -5,7 +5,7 @@ Private educational atlas of parotid tumours and parotidectomy, with pleomorphic
 ## Project orientation
 
 - Read `docs/STATUS.md` for the current milestone, next work and open questions. Follow the approved `docs/plan.md` for product scope and acceptance criteria; record consequential technical decisions in `docs/adr/`.
-- `apps/site` contains the Astro site, narrative and accessible content. `packages/schema` defines shared content contracts; `packages/timeline` evaluates the narrative state; `packages/stage` renders it. `pipeline` generates anatomical assets from source data and authored specifications. `tools/validate` checks content, evidence and provenance.
+- `apps/site` contains the Astro site, narrative and accessible content: the 54 plates are the MDX files in `src/content/steps` (the source of truth), `src/scripts/director.ts` drives scroll and labels, `src/scripts/instrument.ts` the depth dial, view buttons, structure cards and Explore controls; `/method/`, `/credits/` and `/glossary/` are reference pages. `packages/schema` defines shared content contracts; `packages/timeline` evaluates the narrative state; `packages/stage` renders it. `pipeline` generates anatomical assets from source data and authored specifications. `tools/validate` checks content, evidence and provenance.
 - npm workspaces consume package TypeScript source directly; there is no separate package build step.
 
 ## Commands
@@ -16,7 +16,8 @@ Private educational atlas of parotid tumours and parotidectomy, with pleomorphic
 - `npm run typecheck` — check workspaces; use `npm run typecheck -w @atlas/timeline` for that workspace alone.
 - `npm run validate` — check content, evidence and asset provenance.
 - `npm run check` — typecheck, test, validate and build. Run it before checkpoint commits.
-- `npm run capture` — Playwright on the production build (real Chrome, WebGPU): static figures, determinism, focus/announcements, reduced motion, static tier, label legibility. `npm run perf` measures frame pacing and load; `npm run review` regenerates the clinical review packet; `npm run anatomy` rebuilds the anatomy asset.
+- `npm run capture` — figures first (`npm run figures`: build, then one static figure per plate), a rebuild so the figures are linked, then Playwright on the production build (real Chrome, WebGPU): determinism, focus/announcements, reduced motion, static tier, label legibility, the instrument, the reference pages and print. `npm run perf` measures frame pacing and load; `npm run review` regenerates the clinical review packet; `npm run anatomy` rebuilds the anatomy asset and refreshes asset checksums.
+- `npm run validate:public` / `build:public` — the public gate: refuses claims still `to-verify` or not clinically approved. The private build only reports them.
 
 ## Project invariants
 
@@ -25,6 +26,8 @@ Private educational atlas of parotid tumours and parotidectomy, with pleomorphic
 - Generate anatomical geometry reproducibly from documented sources and editable specifications. Validate clinically important topology and relationships visually against source anatomy as well as with automated measurements.
 - Ground substantive medical and anatomical claims in traceable evidence. Preserve source status, uncertainty, disagreement and the population behind numerical claims. Distinguish a representative operation from universal practice; do not invent anatomy, clinical claims or patient imaging.
 - Record each external asset's source, actual license or legal basis and obligations, attribution, checksum and transformations. Do not infer that all usable sources share the same license terms.
+- Every paragraph of a plate carries a `<Claim>` or is a `<Model>` statement about how the atlas draws things (the validator enforces it). A claim is `verification: checked` only after its wording and numbers were compared with the fetched source text; that is not clinical review, and every claim stays `clinicalReview: pending` until a clinician approves it.
+- Schematic content is drawn in the line/hatch grammar; ochre is for the Complications chapter only; violet is ink only. See ADR-0004.
 - Preserve a meaningful semantic/static experience and reduced-motion path. Passive scrolling must not move keyboard focus; announce settled authored plates rather than every scrub frame.
 
 ## Milestone gates

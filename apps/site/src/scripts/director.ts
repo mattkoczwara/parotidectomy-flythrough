@@ -13,7 +13,7 @@ type Depth = 'essentials' | 'anatomy' | 'clinical';
 
 interface ClientData {
   plates: Array<PlateSpec & { title: string; chapter: string; sceneDescription: string }>;
-  structures: Array<StructureRecord & { depth: string; schematic?: boolean; hidden?: boolean }>;
+  structures: Array<StructureRecord & { depth: string; schematic?: boolean; hidden?: boolean; baseEmphasis?: 'context' | 'dim' }>;
   claims: Record<string, ClaimRecord>;
   sources: Record<string, SourceRecord>;
   planes: readonly string[];
@@ -43,6 +43,7 @@ const LONG_JUMP = 1.5;
 const SETTLE_MS = 220;
 const LABEL_GAP = 30;
 const LABEL_WIDTH = 230; // px reserved for the margin label column
+const LABEL_TOP = 152; // px: the instrument button, reset button and orientation glyph occupy the top right
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 export function start(): void {
@@ -57,7 +58,7 @@ export function start(): void {
   const groups = Object.fromEntries(data.structures.filter((s) => s.members?.length).map((s) => [s.id, s.members!]));
   // Every content mesh starts present, in context; plates record only what changes.
   const initialStructures: Record<string, StructureState> = {};
-  for (const s of data.structures) if (!groups[s.id]) initialStructures[s.id] = { ...defaultStructure, presence: s.hidden ? 0 : 1 };
+  for (const s of data.structures) if (!groups[s.id]) initialStructures[s.id] = { ...defaultStructure, presence: s.hidden ? 0 : 1, emphasis: s.baseEmphasis ?? 'context' };
   const initialState: SceneState = {
     camera: { azimuth: 0, elevation: 0, zoom: 1, frames: [] },
     structures: initialStructures,
@@ -412,7 +413,7 @@ export function start(): void {
       const left = !!box && box.right > columnX - 12 && box.left - LABEL_WIDTH - 36 > textRight;
       if (left) columnX = box!.left - LABEL_WIDTH - 36;
       proj.sort((a, b) => a.y - b.y);
-      let bottom = 56 - LABEL_GAP; // first label no higher than just below the masthead
+      let bottom = LABEL_TOP - LABEL_GAP; // first label below the controls at the top right (instrument, reset, orientation glyph)
       for (const p of proj.filter((q) => (left ? q.x > columnX + LABEL_WIDTH + 16 : q.x < columnX - 16))) {
         const li = labelItem(p.id, state.structures[p.id]?.emphasis ?? 'context');
         if (left) li.style.right = `${r.width - columnX - LABEL_WIDTH}px`; // right-aligned against the focus side

@@ -183,6 +183,8 @@ export const structure = z.strictObject({
   schematic: z.boolean().default(false),
   /** Absent from the opening scene (props, imaging, alternatives and barriers): a plate has to bring it in. */
   hidden: z.boolean().default(false),
+  /** How the structure is drawn until a plate says otherwise: 'dim' for large context that would otherwise compete with the subject (the skull). */
+  baseEmphasis: z.enum(['context', 'dim']).default('context'),
 });
 export type Structure = z.infer<typeof structure>;
 

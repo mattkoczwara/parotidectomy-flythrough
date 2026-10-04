@@ -79,6 +79,8 @@ const VARIANT_PARTS: Readonly<Record<string, Readonly<Record<string, readonly st
   },
 };
 const VARIANT_PART_IDS: ReadonlySet<string> = new Set(Object.values(VARIANT_PARTS).flatMap((v) => Object.values(v).flat()));
+/** Large pale context that would otherwise outshine the subject (the skull is the brightest, largest surface in most views). */
+const EXTRA_DIM: Readonly<Record<string, number>> = { skull: 0.22 };
 /** Schematic content that belongs to the Complications chapter: drawn in the single ochre (plan §5), never in the pale line colour. */
 const COMPLICATION: ReadonlySet<string> = new Set(['sialocele_pocket', 'frey_regrowth', 'recurrence_nodules']);
 /** Schematic planes that lie inside tissue and are drawn on top of it. */
@@ -475,7 +477,7 @@ export class Stage {
         mesh.material = mat.material;
         setOpacity(mesh, twin, Math.min(opacity, 1));
       }
-      mat.dim.value = s?.emphasis === 'dim' ? 0.75 : s?.emphasis === 'context' ? 0.18 : 0;
+      mat.dim.value = Math.min(1, (s?.emphasis === 'dim' ? 0.75 : s?.emphasis === 'context' ? 0.18 : 0) + (EXTRA_DIM[id] ?? 0));
       if (mesh.visible && s?.emphasis === 'focus') focus.push(mesh);
       if (mat.piece) this.applyPiece(id, part, state, weights, peelP, outP, deepP);
       const flap = this.flaps.get(id);

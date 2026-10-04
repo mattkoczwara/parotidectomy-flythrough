@@ -71,7 +71,13 @@ const steps = readdirSync(join(content, 'steps'))
       .replace(/<Claim id="([^"]+)">([\s\S]*?)<\/Claim>/g, (_, id: string, t: string) => {
         cited.push(id);
         return `${t} <sup class="ref">[${id}]</sup>`;
-      });
+      })
+      // Statements about how the atlas draws things carry no claim; components stand for their data.
+      .replace(/<Model>([\s\S]*?)<\/Model>/g, '<span class="model">$1</span>')
+      .replace(/<Framed claim="([^"]+)"[^>]*\/>/g, '<em>[framed figures, claim $1]</em>')
+      .replace(/<Inset title="([^"]+)"[^>]*>/g, '<em>[inset: $1]</em>')
+      .replace(/<\/?(Inset|Note)\b[^>]*>/g, ' ')
+      .replace(/<(PseudocapsuleInset|ChoiceTable|CompareExtents|HealingTimeline)\b[^>]*\/>/g, '<em>[$1]</em>');
     return { ...front, body, cited: [...new Set([...cited, ...(front.claims ?? [])])] };
   })
   .sort((a, b) => a.order - b.order);
@@ -137,7 +143,7 @@ table{border-collapse:collapse;width:100%;font:13px/1.4 system-ui,sans-serif;mar
 .claim{border-left:3px solid #bbb;padding:.2rem .8rem;margin:.8rem 0;font-size:14px}.claim h4{margin:.2rem 0}
 .tag{font:500 11px system-ui,sans-serif;background:#eee;padding:.05rem .35rem;border-radius:2px;margin-left:.3rem}.tag.todo{background:#f6e7c8}.tag.ok{background:#d9eed9}
 .caveat{color:#7a5a12}.num{font-family:system-ui,sans-serif;font-size:13px}.ref{color:#666;font-size:.7em}.scene{font-size:14px;color:#333}
-.st-pass{background:#eef7ee}.st-limit{background:#fbf3e2}.st-open{background:#fbe6e2}.missing{color:#a00}
+.st-pass{background:#eef7ee}.st-limit{background:#fbf3e2}.st-open{background:#fbe6e2}.missing{color:#a00}.model{font-style:italic;color:#555}
 </style></head><body>
 <h1>Parotid Atlas: clinical review packet</h1>
 <p>Generated ${esc(new Date().toISOString().slice(0, 10))} from the content, the QC checks and the self-review checklist (<code>npm run review</code>). Clinical review happens after implementation (owner decision); nothing here is clinically signed off. Limits and open items are recorded in <a href="${rel('docs/qc/QC_LOG.md')}">docs/qc/QC_LOG.md</a> and <a href="${rel('docs/STATUS.md')}">docs/STATUS.md</a>.</p>

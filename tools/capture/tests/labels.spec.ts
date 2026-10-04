@@ -147,6 +147,7 @@ for (const layout of [
   { name: 'portrait', viewport: { width: 390, height: 844 }, max: 4 },
 ]) {
   test(`labels are legible and within limits (${layout.name})`, async ({ page }) => {
+    test.setTimeout(30 * 60_000); // every plate, cold
     await page.setViewportSize(layout.viewport);
     await page.addInitScript(() => localStorage.setItem('atlas.depth', 'clinical')); // the most labels
     const ids = await plateIds(page);

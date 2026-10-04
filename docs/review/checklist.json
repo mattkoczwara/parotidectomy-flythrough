@@ -4,119 +4,383 @@
     {
       "id": "gland-position",
       "area": "Parotid gland",
-      "plates": ["where-parotid", "layers"],
+      "plates": [
+        "where-parotid",
+        "layers"
+      ],
       "statement": "The gland lies in front of and below the ear, over the posterior masseter, wrapping behind the ramus, in front of the sternocleidomastoid.",
       "reference": "Source CT with TotalSegmentator masks; Visible Human cryosections a_vm1160/1175/1190; standard atlas lateral view",
-      "evidence": ["docs/qc/m0-registration/ct_axial_1149.png", "docs/qc/m1-cryo/cryo_1175.jpg"],
-      "self": { "status": "pass", "note": "Segmented from the donor CT; lateral boundary matches the photographed gland edge within about 3 mm." }
+      "evidence": [
+        "docs/qc/m0-registration/ct_axial_1149.png",
+        "docs/qc/m1-cryo/cryo_1175.jpg"
+      ],
+      "self": {
+        "status": "pass",
+        "note": "Segmented from the donor CT; lateral boundary matches the photographed gland edge within about 3 mm."
+      }
     },
     {
       "id": "lobe-split",
       "area": "Parotid gland",
-      "plates": ["nerve-plane"],
+      "plates": [
+        "nerve-plane"
+      ],
       "statement": "Superficial and deep 'lobes' are defined by the facial-nerve plane (a surgical construct, not true lobes).",
       "reference": "Pujol-Olmo 2020 (61-69% superficial by weight, 19 specimens)",
-      "evidence": ["docs/qc/m1-anatomy/lobe_split_axial.png", "docs/qc/m1-anatomy/checks.json"],
-      "self": { "status": "limit", "note": "59% superficial in this model (reported, not tuned); the plane is a smooth surface through the authored nerve." }
+      "evidence": [
+        "docs/qc/m1-anatomy/lobe_split_axial.png",
+        "docs/qc/m1-anatomy/checks.json"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "59% superficial in this model (reported, not tuned); the plane is a smooth surface through the authored nerve."
+      }
     },
     {
       "id": "deep-portion",
       "area": "Parotid gland",
-      "plates": ["nerve-plane", "landmarks", "peel"],
+      "plates": [
+        "nerve-plane",
+        "landmarks",
+        "peel"
+      ],
       "statement": "The retromandibular (deep) portion is authored within anatomical bounds because the CT does not resolve it; muscle-density tissue beside the posterior digastric is excluded.",
       "reference": "CT density; cryosection a_vm1175",
-      "evidence": ["docs/qc/m1-anatomy/deep_lobe_digastric.png", "docs/qc/m1-cryo/cryo_1175.jpg"],
-      "self": { "status": "limit", "note": "Authored region (7.7 mL); the stylomandibular-tunnel extension is not modelled; the cryosection overlay still suggests about 3 mm overlap with muscle at z 231, within registration uncertainty." }
+      "evidence": [
+        "docs/qc/m1-anatomy/deep_lobe_digastric.png",
+        "docs/qc/m1-cryo/cryo_1175.jpg"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "Authored region (7.7 mL); the stylomandibular-tunnel extension is not modelled; the cryosection overlay still suggests about 3 mm overlap with muscle at z 231, within registration uncertainty."
+      }
     },
     {
       "id": "facial-nerve-course",
       "area": "Facial nerve",
-      "plates": ["nerve-within", "landmarks", "peel"],
+      "plates": [
+        "nerve-within",
+        "landmarks",
+        "peel"
+      ],
       "statement": "The trunk leaves the stylomastoid foramen, runs about 1.5 cm, enters the gland, divides at the pes and fans into five branch groups.",
       "reference": "Cited trunk-length range 8.6-22.8 mm; landmark picks on CT",
-      "evidence": ["docs/qc/m1-anatomy/authored_views.png", "docs/qc/m1-anatomy/checks.json"],
-      "self": { "status": "limit", "note": "Trunk 17.2 mm. One common pattern without interconnections; not verified against cryosections (the nerve is not resolvable at 0.33 mm/px)." }
+      "evidence": [
+        "docs/qc/m1-anatomy/authored_views.png",
+        "docs/qc/m1-anatomy/checks.json"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "Trunk 17.2 mm. One common pattern without interconnections; not verified against cryosections (the nerve is not resolvable at 0.33 mm/px)."
+      }
     },
     {
       "id": "nerve-vein",
       "area": "Facial nerve and vessels",
-      "plates": ["nerve-plane"],
+      "plates": [
+        "nerve-plane"
+      ],
       "statement": "Within the gland the nerve lies lateral (superficial) to the retromandibular vein; the external carotid lies deep to the vein.",
       "reference": "Relationship checks on CT; cryosection overlays at three levels",
-      "evidence": ["docs/qc/m1-anatomy/checks.json", "docs/qc/m1-cryo/cryo_1160.jpg", "docs/qc/m1-cryo/cryo_1190.jpg"],
-      "self": { "status": "pass", "note": "Relationships hold; the authored vessels lie 1-5 mm from the photographed vessels, within registration uncertainty." }
+      "evidence": [
+        "docs/qc/m1-anatomy/checks.json",
+        "docs/qc/m1-cryo/cryo_1160.jpg",
+        "docs/qc/m1-cryo/cryo_1190.jpg"
+      ],
+      "self": {
+        "status": "pass",
+        "note": "Relationships hold; the authored vessels lie 1-5 mm from the photographed vessels, within registration uncertainty."
+      }
     },
     {
       "id": "landmarks",
       "area": "Surgical landmarks",
-      "plates": ["landmarks"],
+      "plates": [
+        "landmarks"
+      ],
       "statement": "Tympanomastoid suture, posterior belly of the digastric, tragal pointer and styloid relate to the trunk as described.",
       "reference": "Witt 2005, Rea 2010, Pather 2006, Cannon 2004 (measured distances disagree)",
-      "evidence": ["docs/qc/m1-landmarks/stylomastoid_search.png", "docs/qc/m1-anatomy/checks.json"],
-      "self": { "status": "limit", "note": "The tragal-pointer distance (19.7 mm) is outside both study ranges; the claim is marked uncertain and the distance is reported, not asserted." }
+      "evidence": [
+        "docs/qc/m1-landmarks/stylomastoid_search.png",
+        "docs/qc/m1-anatomy/checks.json"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "The tragal-pointer distance (19.7 mm) is outside both study ranges; the claim is marked uncertain and the distance is reported, not asserted."
+      }
     },
     {
       "id": "gan",
       "area": "Great auricular nerve",
-      "plates": ["flap"],
+      "plates": [
+        "flap"
+      ],
       "statement": "The great auricular nerve ascends over the sternocleidomastoid toward the lobule, dividing near the lower pole of the gland.",
       "reference": "StatPearls; relationship to the SCM surface",
-      "evidence": ["pipeline/specs/anatomy.yaml"],
-      "self": { "status": "limit", "note": "Authored from the spec on the SCM surface; not traced on cryosections." }
+      "evidence": [
+        "pipeline/specs/anatomy.yaml"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "Authored from the spec on the SCM surface; not traced on cryosections."
+      }
     },
     {
       "id": "tumour",
       "area": "Pleomorphic adenoma",
-      "plates": ["face", "tumour", "nerve-plane", "peel"],
+      "plates": [
+        "face",
+        "tumour",
+        "nerve-plane",
+        "peel"
+      ],
       "statement": "A 2 cm pleomorphic adenoma in the superficial lobe, clear of the nerve.",
       "reference": "Authored for teaching (size and position), not taken from imaging",
-      "evidence": ["docs/qc/m1-anatomy/lobe_split_axial.png"],
-      "self": { "status": "pass", "note": "19 mm, entirely lateral to the nerve plane, 1.6 mm from the nearest branch; the skin fullness over it is authored (up to 2.2 mm)." }
+      "evidence": [
+        "docs/qc/m1-anatomy/lobe_split_axial.png"
+      ],
+      "self": {
+        "status": "pass",
+        "note": "19 mm, entirely lateral to the nerve plane, 1.6 mm from the nearest branch; the skin fullness over it is authored (up to 2.2 mm)."
+      }
     },
     {
       "id": "layers",
       "area": "Tissue layers",
-      "plates": ["layers", "flap"],
+      "plates": [
+        "layers",
+        "flap"
+      ],
       "statement": "Skin, subcutaneous fat, SMAS and the gland capsule, in that order from outside.",
       "reference": "Depth bands under the fitted skin",
-      "evidence": ["pipeline/anatomy/layers.py", "docs/qc/m1-anatomy/checks.json"],
-      "self": { "status": "limit", "note": "Layers are constant-depth bands (fat to 7 mm, SMAS 1.3 mm, capsule 1 mm), not segmented; the capsule is thin because the gland lies 3.9 mm under the skin at the lower pole in the source CT." }
+      "evidence": [
+        "pipeline/anatomy/layers.py",
+        "docs/qc/m1-anatomy/checks.json"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "Layers are constant-depth bands (fat to 7 mm, SMAS 1.3 mm, capsule 1 mm), not segmented; the capsule is thin because the gland lies 3.9 mm under the skin at the lower pole in the source CT."
+      }
     },
     {
       "id": "incision",
       "area": "Operation",
-      "plates": ["incision"],
+      "plates": [
+        "incision"
+      ],
       "statement": "A modified Blair incision: preauricular crease, around the lobule, into a neck crease below the angle.",
       "reference": "Iowa protocol; StatPearls (representative technique)",
-      "evidence": ["docs/qc/m1-anatomy/incision_flap.png"],
-      "self": { "status": "pass", "note": "Representative, not universal; the facelift variant is out of M1 scope." }
+      "evidence": [
+        "docs/qc/m1-anatomy/incision_flap.png"
+      ],
+      "self": {
+        "status": "pass",
+        "note": "Representative, not universal; the facelift variant is out of M1 scope."
+      }
     },
     {
       "id": "flap",
       "area": "Operation",
-      "plates": ["flap", "landmarks", "peel"],
+      "plates": [
+        "flap",
+        "landmarks",
+        "peel"
+      ],
       "statement": "The skin flap is raised superficial to the parotid fascia and held forward.",
       "reference": "Iowa protocol; StatPearls",
-      "evidence": ["docs/qc/m1-anatomy/incision_flap.png"],
-      "self": { "status": "limit", "note": "Skin and fat fold forward as one curl; the neck part is subplatysmal in practice but there is no platysma mesh, so the operative plates hide the SMAS outside the capsule." }
+      "evidence": [
+        "docs/qc/m1-anatomy/incision_flap.png"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "Skin and fat fold forward as one curl; the neck part is subplatysmal in practice but there is no platysma mesh, so the operative plates hide the SMAS outside the capsule."
+      }
     },
     {
       "id": "peel",
       "area": "Operation",
-      "plates": ["peel"],
+      "plates": [
+        "peel"
+      ],
       "statement": "Antegrade dissection lifts the superficial lobe off the nerve branches with the tumour inside it.",
       "reference": "Representative superficial parotidectomy",
-      "evidence": ["pipeline/anatomy/surfaces.py"],
-      "self": { "status": "limit", "note": "The peel is a fold driven by an antegrade order field; it shows the principle, not tissue mechanics." }
+      "evidence": [
+        "pipeline/anatomy/surfaces.py"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "The peel is a fold driven by an antegrade order field; it shows the principle, not tissue mechanics."
+      }
     },
     {
       "id": "face",
       "area": "Model",
-      "plates": ["face", "incision"],
+      "plates": [
+        "face",
+        "incision"
+      ],
       "statement": "The face is generic (MPFB, CC0), not the donor's.",
       "reference": "Face fit report",
-      "evidence": ["docs/qc/m1-anatomy/face_fit.png"],
-      "self": { "status": "pass", "note": "Conformed to the CT only over the dissection field; the central face is unconformed MPFB." }
+      "evidence": [
+        "docs/qc/m1-anatomy/face_fit.png"
+      ],
+      "self": {
+        "status": "pass",
+        "note": "Conformed to the CT only over the dissection field; the central face is unconformed MPFB."
+      }
+    },
+    {
+      "id": "esgs-levels",
+      "area": "Choosing",
+      "plates": [
+        "esgs-levels",
+        "option-ecd",
+        "option-partial",
+        "option-superficial",
+        "option-total",
+        "compare"
+      ],
+      "statement": "The gland is divided into the five ESGS levels (I-IV of the body and the accessory lobule) with the extracapsular cuff around the tumour, and each operation takes the pieces its definition names.",
+      "reference": "Quer 2016 (ESGS classification; full text unavailable); Pujol-Olmo 2020 level weights; Zanghì 2024 definitions",
+      "evidence": [
+        "docs/qc/m1-anatomy/esgs_levels.png",
+        "docs/qc/m1-anatomy/checks.json"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "Level boundaries follow the nerve plane and a surface through the buccal branch, so the level shares (I 8%, II 51%, III 30%, IV 10%) differ from the published ones. Reported, not tuned."
+      }
+    },
+    {
+      "id": "nerve-patterns",
+      "area": "Facial nerve",
+      "plates": [
+        "nerve-variants"
+      ],
+      "statement": "Branching patterns follow the Katz-Catalano types with their pooled prevalence, drawn on the same model.",
+      "reference": "Katz and Catalano 1987; Triantafyllou 2024",
+      "evidence": [
+        "docs/qc/m1-anatomy/checks.json"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "The interconnecting twigs are schematic in position: the sources give patterns and prevalence, not coordinates. The default pattern has no interconnections."
+      }
+    },
+    {
+      "id": "tumour-positions",
+      "area": "Tumour",
+      "plates": [
+        "tumour-positions"
+      ],
+      "statement": "A pleomorphic adenoma can lie in the outer lobe, the inner lobe, the tail or the accessory lobule.",
+      "reference": "Placement checks (clear of nerve, vessels, bone, muscle)",
+      "evidence": [
+        "docs/qc/m1-anatomy/checks.json"
+      ],
+      "self": {
+        "status": "pass",
+        "note": "Alternate placements are authored for teaching; sizes and positions are not taken from imaging."
+      }
+    },
+    {
+      "id": "imaging",
+      "area": "Finding out",
+      "plates": [
+        "ultrasound",
+        "cross-section",
+        "needle",
+        "milan"
+      ],
+      "statement": "Imaging is represented by the donor's normal CT slice with the tumour drawn as an outline, an ultrasound probe with its imaging plane as an outline, and a needle; no scan of a tumour is shown.",
+      "reference": "Lee 2008; Martino 2020; Brennan 2012; Christe 2011; Liu 2016; Wang 2022; Kim 2018",
+      "evidence": [
+        "apps/site/public/assets/imaging/ct-axial.png"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "The abstracts give rates and roles, not technique; the instruments are placed for illustration. No ultrasound or MRI picture is drawn."
+      }
+    },
+    {
+      "id": "closure",
+      "area": "Closure",
+      "plates": [
+        "bed",
+        "barrier-smas",
+        "barrier-scm",
+        "barrier-graft",
+        "drain",
+        "closed"
+      ],
+      "statement": "Closure options (SMAS flap, neck-muscle strip, graft sheet), a drain through a separate neck exit, and layered skin closure.",
+      "reference": "De Virgilio 2021; Dulguerov 2016; Ye 2019; Iowa protocol",
+      "evidence": [
+        "docs/qc/m1-anatomy/checks.json"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "The SMAS sheet is a hinged fold that does not drape onto the bed; the strip is a rigid turn; the graft is a plain sheet. The evidence compares options only indirectly and is of low certainty; the plates do not recommend one."
+      }
+    },
+    {
+      "id": "afterwards",
+      "area": "Afterwards",
+      "plates": [
+        "after-anatomy",
+        "contour",
+        "pathology",
+        "healing"
+      ],
+      "statement": "What is removed and what remains, the contour change, the specimen opened on the bench, and one hospital's routine day by day.",
+      "reference": "Lambiel 2021; Bovenzi 2019; Zbaren and Stauffer 2007; Iowa protocol",
+      "evidence": [
+        "docs/qc/QC_LOG.md"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "The hollow is drawn at an illustrative depth; the healing timeline is one institution's practice, not evidence; the specimen is a model of the pieces taken, not a section of a real tumour."
+      }
+    },
+    {
+      "id": "complications",
+      "area": "Complications",
+      "plates": [
+        "compl-map",
+        "weakness",
+        "numbness",
+        "frey",
+        "first-bite",
+        "sialocele",
+        "recurrence"
+      ],
+      "statement": "Each complication is mapped to the structure responsible and to the skin where it is felt, with every rate shown with its population.",
+      "reference": "Jin 2019; Bron and O'Brien 1997; Mortensen 2024; Lambiel 2021; Choi 2013; Linkov 2012; Lammek 2021; Britt 2017; Dulguerov 2017; Hintze 2021",
+      "evidence": [
+        "docs/qc/m1-anatomy/checks.json"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "Territories are ellipsoids, not measured boundaries; Frey regrowth, the saliva collection and the returning nodules are schematic. Rates differ several-fold between series and are shown, not reconciled."
+      }
+    },
+    {
+      "id": "explore",
+      "area": "Explore",
+      "plates": [
+        "explore",
+        "compare"
+      ],
+      "statement": "The viewer can handle the model: a depth dial per tissue family, orbit and zoom, structure cards, and the four resections carried out step by step; the comparison shows what each takes from the same gland.",
+      "reference": "The model's own pieces (frame.json)",
+      "evidence": [
+        "apps/site/public/compare/ecd.png",
+        "apps/site/public/compare/total.png"
+      ],
+      "self": {
+        "status": "limit",
+        "note": "The facelift incision is a planned line only (the flap is cut along the Blair path). Volumes are properties of this one gland."
+      }
     }
   ]
 }
