@@ -1,0 +1,56 @@
+---
+id: cross-section
+chapter: finding-out
+order: 15
+title: "A cross-section: CT and MRI"
+delta:
+  camera: { azimuth: -90, elevation: 78, zoom: 4.5, frame: [ct_tumour_outline] }
+  gauge: 2
+  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, peel: 0, out: 0, deep: 0, mobilise: 0, explode: 0, section: 0, ink_plane: 0, ink_cranial: 0, ink_cuff: 0, ink: 0, flap: 0, ct_clip: 1 }
+  variants: { resection: superficial, incision: blair }
+  structures:
+      skin: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      eyes: { presence: 1 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      parotid_superficial_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      pleomorphic_adenoma: { presence: 0 }
+      pleomorphic_adenoma_deep: { presence: 0 }
+      pleomorphic_adenoma_tail: { presence: 0 }
+      pleomorphic_adenoma_accessory: { presence: 0 }
+      parotid_duct: { presence: 0 }
+      parotid_accessory_lobe: { presence: 0 }
+      facial_nerve: { presence: 0 }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      needle: { presence: 0 }
+      us_probe: { presence: 0 }
+      us_plane: { presence: 0 }
+      ct_slice: { presence: 1, emphasis: focus }
+      ct_tumour_outline: { presence: 1, emphasis: focus }
+  labels:
+      - { structureId: ct_tumour_outline }
+      - { structureId: mandible }
+      - { structureId: masseter_r }
+transition: { camera: [0, 0.7], structures: [0.2, 0.6], op: [0.2, 0.9] }
+sceneDescription: "Seen from above, the head is cut flat at the level of the tumour. On the cut, a grey picture of a real CT slice fills the right side of the face, with the jawbone bright white. A dashed, hatched outline marks where the tumour would lie, just in front of the ear on the outer part of the gland."
+claims: [imaging-role]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+
+<Claim id="imaging-role">A CT or MRI scan is used when the lump may reach the deep part of the gland or when cancer is suspected. It shows how far the lump goes and what it touches.</Claim> <Claim id="imaging-role">On MRI, a dark signal on the T2 pictures or poorly outlined edges point toward cancer.</Claim>
+
+<Model>The grey picture is a real CT slice from the donor this model is built from, at the level of the tumour. The donor had no tumour, so the tumour is drawn on the slice as a dashed outline, never as a scan. The rest of the cut is plain because the model holds only the structures around the parotid.</Model>
+
+<Note title="One MRI series">
+<Framed claim="imaging-role" title="MRI before surgery for parotid tumours" />
+</Note>

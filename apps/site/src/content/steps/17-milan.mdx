@@ -1,0 +1,54 @@
+---
+id: milan
+chapter: finding-out
+order: 17
+title: "Reading the result"
+delta:
+  camera: { azimuth: -4, elevation: 8, zoom: 1.4, frame: [pleomorphic_adenoma, parotid_superficial_lobe] }
+  gauge: 2
+  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, peel: 0, out: 0, deep: 0, mobilise: 0, explode: 0, section: 0, ink_plane: 0, ink_cranial: 0, ink_cuff: 0, ink: 0, flap: 0, ct_clip: 0 }
+  variants: { resection: superficial, incision: blair }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.12, emphasis: context }
+      eyes: { presence: 1 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      parotid_superficial_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      pleomorphic_adenoma: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      pleomorphic_adenoma_deep: { presence: 0 }
+      pleomorphic_adenoma_tail: { presence: 0 }
+      pleomorphic_adenoma_accessory: { presence: 0 }
+      parotid_duct: { presence: 0 }
+      parotid_accessory_lobe: { presence: 0 }
+      facial_nerve: { presence: 1, mode: ghost, opacity: 0.35, emphasis: context }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      needle: { presence: 0 }
+      us_probe: { presence: 0 }
+      us_plane: { presence: 0 }
+      ct_slice: { presence: 0 }
+      ct_tumour_outline: { presence: 0 }
+  labels:
+      - { structureId: pleomorphic_adenoma }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7] }
+sceneDescription: "The needle is gone and the tumour sits in the outer part of the gland, as before. A table beside the text lists the standard result categories with the chance of cancer for each."
+claims: [milan-categories]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+
+<Claim id="milan-categories">Needle results are sorted into standard tiers, and each tier carries its own chance of cancer: low when the result is a benign tumour, high when it is suspicious or malignant.</Claim>
+
+<Inset title="Milan system: how often each result proved to be cancer" kind="table">
+<Framed claim="milan-categories" />
+</Inset>
+
+<Claim id="fna-accuracy">The needle test cannot name every tumour: a result may be nondiagnostic or indeterminate, which in one pooled review happened in about 5% and about 15% of aspirations.</Claim>

@@ -98,3 +98,14 @@ Every plate sentence resolves to a claim; every number has its population; no re
 _(updated as work lands; **unverified** = built but not through the final verification pass)_
 
 - [ ] Plan and decisions recorded (this file)
+- [x] Barrier, prop and imaging geometry exported (SMAS flap, SCM strip, graft, drain, needle, probe, CT slice) — **unverified** renders
+- [x] Stage: SMAS fold, SCM turn, CT slice plane with global clip (`ct_clip`), overlay planes, `hidden` structures — **unverified**
+- [x] Claims written from fetched abstracts/protocol text (batches 08, 09): diagnosis, closure, afterwards, complications — all `clinicalReview: pending`
+- [x] Plates 1–35 present; operation plates 29–35 retuned to the dissection view; chapter 5 (plates 14–17) authored — **unverified** (needs a full visual pass)
+- [ ] Plates 36–54: closure (bed, SMAS, SCM, graft, drain, closed), afterwards (after-anatomy, contour, pathology, healing), complications (map, weakness, numbness, Frey, first-bite, sialocele, recurrence — needs a `recurrence_nodules` mesh in props.py), explore, compare
+- [ ] Instrument/explorer UI in the director (depth dial, orbit/zoom, picking → structure card, resection/incision selectors); comparison renders
+- [ ] Ochre hatch colour for sialocele_pocket / frey_regrowth in the stage
+- [ ] Validator tightening (every paragraph claim- or Model-attributed), public-build gate, credits/glossary/method pages, print stylesheet
+- [ ] Capture suite, review packet and STATUS.md updated for 54 plates; final `npm run check`, `npm run capture`, `npm run perf`, Firefox run
+
+Dev note: after regenerating step files, touch them (or restart the dev server) — the content watcher can miss a second write made seconds after the first.

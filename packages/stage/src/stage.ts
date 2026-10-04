@@ -79,6 +79,8 @@ const VARIANT_PARTS: Readonly<Record<string, Readonly<Record<string, readonly st
   },
 };
 const VARIANT_PART_IDS: ReadonlySet<string> = new Set(Object.values(VARIANT_PARTS).flatMap((v) => Object.values(v).flat()));
+/** Schematic planes that lie inside tissue and are drawn on top of it. */
+const OVERLAY: ReadonlySet<string> = new Set(['us_plane']);
 /** Layers that sink with the contour change after resection. */
 const HOLLOWED = new Set(['skin', 'subcutaneous_fat', 'smas']);
 /** Layers cut by the incision and raised as the flap (skin and subcutaneous fat; plan §8). */
@@ -284,7 +286,7 @@ export class Stage {
     const m = new THREE.MeshBasicNodeMaterial({ map: tex, transparent: true, side: THREE.DoubleSide, depthWrite: false });
     const mesh = new THREE.Mesh(g, m);
     mesh.name = 'ct_slice';
-    mesh.renderOrder = 1000;
+    mesh.renderOrder = -1; // drawn first among the transparent layers so the tumour outline and instruments lie over the picture
     mesh.visible = false;
     this.scene.add(mesh);
     this.ctPlane = { mesh, top: (this.frame.bounds['skin']?.max[1] ?? 0.12) + 0.001, plane: y };
@@ -453,7 +455,14 @@ export class Stage {
       const ghostOpacity = s?.mode === 'ghost' || s?.mode === 'hatch' ? (s.opacity ?? 1) : 1;
       const opacity = presence * Math.min(ghostOpacity, dial);
       if (wantsHatch) {
-        part.hatch ??= hatch(LINE_COLOUR);
+        if (!part.hatch) {
+          part.hatch = hatch(LINE_COLOUR);
+          // An imaging plane is drawn over the tissue it passes through (it lies inside the head), not hidden by it.
+          if (OVERLAY.has(id)) {
+            part.hatch.material.depthTest = false;
+            mesh.renderOrder = 900;
+          }
+        }
         mesh.material = part.hatch.material;
         part.hatch.strength.value = Math.min(opacity, 1);
         twin.visible = false;

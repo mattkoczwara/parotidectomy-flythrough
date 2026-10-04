@@ -1,0 +1,56 @@
+---
+id: needle
+chapter: finding-out
+order: 16
+title: "A sample: the needle test"
+delta:
+  camera: { azimuth: -4, elevation: 8, zoom: 1.1, frame: [needle, pleomorphic_adenoma, parotid_superficial_lobe] }
+  gauge: 1
+  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, peel: 0, out: 0, deep: 0, mobilise: 0, explode: 0, section: 0, ink_plane: 0, ink_cranial: 0, ink_cuff: 0, ink: 0, flap: 0, ct_clip: 0 }
+  variants: { resection: superficial, incision: blair }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.2, emphasis: context }
+      eyes: { presence: 1 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      parotid_superficial_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      pleomorphic_adenoma: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      pleomorphic_adenoma_deep: { presence: 0 }
+      pleomorphic_adenoma_tail: { presence: 0 }
+      pleomorphic_adenoma_accessory: { presence: 0 }
+      parotid_duct: { presence: 0 }
+      parotid_accessory_lobe: { presence: 0 }
+      facial_nerve: { presence: 1, mode: ghost, opacity: 0.35, emphasis: context }
+      masseter_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      needle: { presence: 1, emphasis: focus }
+      us_probe: { presence: 0 }
+      us_plane: { presence: 0 }
+      ct_slice: { presence: 0 }
+      ct_tumour_outline: { presence: 0 }
+  labels:
+      - { structureId: needle }
+      - { structureId: pleomorphic_adenoma }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7] }
+sceneDescription: "The skin is faded to an outline. A thin needle on a syringe passes through the cheek into the tumour, ending just inside it."
+claims: [fna-accuracy]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+
+<Claim id="fna-accuracy">A thin needle passed into the lump draws out a few cells for a pathologist; ultrasound can guide it. A wider needle can take a small core of tissue instead.</Claim> <Claim id="fna-accuracy">The result usually separates cancer from non-cancer, but it is not perfect: it misses some cancers and sometimes cannot give an answer.</Claim>
+
+<Model>The needle and syringe are drawn as instruments, in grey, and are not to scale for a real procedure.</Model>
+
+<Note title="How accurate the needle test is">
+<Framed claim="fna-accuracy" source="liu-2016" title="Fine-needle aspiration, prospective studies" />
+<Framed claim="fna-accuracy" source="kim-kim-2018" title="Ultrasound-guided core needle biopsy" />
+</Note>

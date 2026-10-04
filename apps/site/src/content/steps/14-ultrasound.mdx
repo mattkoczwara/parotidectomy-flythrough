@@ -1,0 +1,58 @@
+---
+id: ultrasound
+chapter: finding-out
+order: 14
+title: "A first look: ultrasound"
+delta:
+  camera: { azimuth: 55, elevation: 10, zoom: 0.9, frame: [us_probe, us_plane, pleomorphic_adenoma, parotid_superficial_lobe] }
+  gauge: 1
+  light: { preset: studio, exposure: 1.0 }
+  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, peel: 0, out: 0, deep: 0, mobilise: 0, explode: 0, section: 0, ink_plane: 0, ink_cranial: 0, ink_cuff: 0, ink: 0, flap: 0, ct_clip: 0 }
+  variants: { resection: superficial, incision: blair }
+  structures:
+      skin: { presence: 1, mode: ghost, opacity: 0.2, emphasis: context }
+      eyes: { presence: 1 }
+      skull: { presence: 0 }
+      temporalis_r: { presence: 0 }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
+      parotid_fascia: { presence: 0 }
+      parotid_superficial_lobe: { presence: 1, mode: ghost, opacity: 0.5, emphasis: context }
+      parotid_deep_lobe: { presence: 1, mode: ghost, opacity: 0.35, emphasis: context }
+      pleomorphic_adenoma: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
+      pleomorphic_adenoma_deep: { presence: 0 }
+      pleomorphic_adenoma_tail: { presence: 0 }
+      pleomorphic_adenoma_accessory: { presence: 0 }
+      parotid_duct: { presence: 0 }
+      parotid_accessory_lobe: { presence: 0 }
+      facial_nerve: { presence: 1, mode: ghost, opacity: 0.35, emphasis: context }
+      masseter_r: { presence: 1, mode: ghost, opacity: 0.5, emphasis: context }
+      mandible: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      sternocleidomastoid_r: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      needle: { presence: 0 }
+      us_probe: { presence: 1, emphasis: focus }
+      us_plane: { presence: 1, emphasis: focus }
+      ct_slice: { presence: 0 }
+      ct_tumour_outline: { presence: 0 }
+  labels:
+      - { structureId: us_probe }
+      - { structureId: us_plane }
+      - { structureId: pleomorphic_adenoma }
+      - { structureId: parotid_superficial_lobe }
+transition: { camera: [0, 0.5], structures: [0.2, 0.7] }
+sceneDescription: "The skin is faded to an outline. A small hand-held probe rests on the cheek over the tumour, and a thin, flat, outlined slice of tissue extends down from it through the skin, the outer part of the gland and the tumour, which it cuts across."
+claims: [ultrasound-role]
+---
+import Claim from '../../components/Claim.astro';
+import Model from '../../components/Model.astro';
+import Note from '../../components/Note.astro';
+import Framed from '../../components/Framed.astro';
+import Inset from '../../components/Inset.astro';
+
+<Claim id="ultrasound-role">The first scan is usually ultrasound: a hand-held probe pressed on the skin that shows a thin slice of the tissue beneath it as it moves. It works in real time and uses no radiation.</Claim> <Claim id="ultrasound-role">It shows a lump in the outer part of the gland well, but the deep part of the gland lies under the jawbone and is hard to see.</Claim>
+
+<Model>The probe is drawn as an instrument, in grey. The outlined slice is the plane the probe looks along; it is drawn as an outline because the atlas does not show an ultrasound picture.</Model>
+
+<Note title="One small series">
+<Framed claim="ultrasound-role" title="Ultrasound against CT or MRI for benign tumours confirmed by needle" />
+</Note>
