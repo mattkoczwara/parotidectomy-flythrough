@@ -83,7 +83,7 @@ The M0 spike (plan §0) must pass on both WebGPU and forced WebGL2:
    - Khronos Neutral tone mapping's toe crushes the dark field, so the field colour is pre-compensated.
    - `renderOutput()` into FXAA produced zero alpha, so the output is forced opaque.
    - `RenderPipeline.renderAsync()` is deprecated: `await renderer.init()`, then call `render()`.
-   - TRAA settles deterministically when captures start at jitter phase 0 and render 64 frames.
+   - TRAA settles deterministically when captures start at jitter phase 0 and render 64 frames. **Each of those frames must be its own animation frame** (found in the integrated review, 2026-10-04): the scene passes, the AO and the TRAA resolve are per-frame nodes, which three r186 updates once per `requestAnimationFrame` tick (`nodeFrame.frameId`, advanced by the renderer's own animation loop). A loop of 64 `render()` calls in one task is therefore one accumulation step, and the picture then depends on how many live frames preceded it (0.5-0.9% of pixels on the edge-heavy plates, and an unanti-aliased picture after the first interaction). `Stage.settle` now renders one frame per animation tick and is cancellable.
    - Vertex-shader deformation produces no motion vectors, so TRAA can trail slightly during a peel scrub. This is not visible at rest.
 
 **Not yet proven (carried into M1):**

@@ -64,6 +64,8 @@ const WINDOW_LAYERS: Record<string, { key: string; inset: number }> = {
   parotid_fascia: { key: 'cut_fascia', inset: 0.009 },
 };
 /** How far an exploded view pulls the pieces apart, as a multiple of each piece's offset from the gland's centre. */
+/** Animation frames of TRAA accumulation after the reseed: two full jitter cycles of 32 (see `settle`). */
+const SETTLE_FRAMES = 64;
 const EXPLODE_GAIN = 0.5;
 const EXPLODE_OUTER = 0.016;
 const EXPLODE_DEEP = 0.006;
@@ -639,20 +641,34 @@ export class Stage {
     this.pipeline.render();
   }
 
-  /** Render until the TRAA jitter returns to phase 0, then two full cycles: a deterministic settled frame. */
-  async settle() {
+  /**
+   * A deterministic settled picture: render until the TRAA jitter returns to phase 0, reseed the history from that
+   * state, then accumulate two full jitter cycles. The scene passes, the AO and the TRAA resolve are per-frame nodes
+   * that three updates once per animation frame, so every step has to be a frame of its own; renders issued in one
+   * task would collapse into a single accumulation step and the picture would depend on how many live frames preceded it.
+   * Resolves true when the picture is settled, false when `token.cancelled` ended it early (the scene changed again).
+   */
+  async settle(token: { cancelled: boolean } = { cancelled: false }): Promise<boolean> {
     // Every visible material's pipeline must exist before the history is reseeded: on a cold load a variant still
     // compiling would be missing from the seed frame and a trace of its absence would survive accumulation.
     await (this.renderer as unknown as { compileAsync?: (s: THREE.Object3D, c: THREE.Camera) => Promise<void> }).compileAsync?.(this.scene, this.camera);
-    for (let i = 0; i < 4; i++) this.render();
+    const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    const step = async () => {
+      await nextFrame();
+      if (token.cancelled) return false;
+      this.render();
+      return true;
+    };
+    if (!this.traaNode) return step(); // no history to accumulate (Mid tier)
     let guard = 0;
-    do this.render();
-    while ((this.traaNode?._jitterIndex ?? 0) !== 0 && ++guard < 64);
+    do if (!(await step())) return false;
+    while ((this.traaNode._jitterIndex ?? 0) !== 0 && ++guard < 64);
     // Reseed the history from this state: transparent layers are not in the depth prepass, so disocclusion alone
     // does not reject the previous plate's ghosts and a settled frame would depend on the path to it.
     // A size mismatch makes TRAANode restart its history from the current beauty buffer (three r186).
-    this.traaNode?._historyRenderTarget.setSize(1, 1);
-    for (let i = 0; i < 64; i++) this.render();
+    this.traaNode._historyRenderTarget.setSize(1, 1);
+    for (let i = 0; i < SETTLE_FRAMES; i++) if (!(await step())) return false;
+    return true;
   }
 
   /** Where an anchor is now: label anchors on a removable piece follow its fold and specimen pose. */

@@ -217,6 +217,8 @@ export function start(): void {
   let stillSince = 0;
   let pendingFocus: number | null = null;
   let converging = false;
+  /** The settle in progress (one animation frame per accumulation step); cancelled when the scene changes again. */
+  let settleToken: { cancelled: boolean } | null = null;
   let dirty = true;
 
   // ── The instrument: depth dial, view buttons, structure card, operation controls (Explore) ──
@@ -530,6 +532,8 @@ export function start(): void {
     }
 
     if (stage && (dirty || current !== lastApplied)) {
+      if (settleToken) settleToken.cancelled = true;
+      settleToken = null;
       const state = held ?? instrument.override(evaluate(track, current));
       // A change made on a settled plate (the instrument) means the picture has to converge again before it is still.
       if (settledPlate >= 0 && Math.abs(current - lastApplied) < 1e-9) delete document.body.dataset.converged;
@@ -545,10 +549,16 @@ export function start(): void {
       converging = settledPlate >= 0;
     } else if (stage && converging && performance.now() >= fadeUntil) {
       converging = false;
-      await stage.settle();
-      layoutLabels();
-      document.body.dataset.converged = String(settledPlate); // readiness signal for tests and captures
-      if (!performance.getEntriesByName('atlas:converged').length) performance.mark('atlas:converged');
+      // Accumulates over about a hundred animation frames, so it runs beside the loop and gives way to any change.
+      const token = { cancelled: false };
+      settleToken = token;
+      void stage.settle(token).then((done) => {
+        if (settleToken === token) settleToken = null;
+        if (!done || token.cancelled || settledPlate < 0) return;
+        layoutLabels();
+        document.body.dataset.converged = String(settledPlate); // readiness signal for tests and captures
+        if (!performance.getEntriesByName('atlas:converged').length) performance.mark('atlas:converged');
+      });
     }
   };
 
