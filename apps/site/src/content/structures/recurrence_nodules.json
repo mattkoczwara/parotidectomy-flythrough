@@ -10,7 +10,8 @@
   "schematic": true,
   "hidden": true,
   "claims": [
-    "recurrence-factors"
+    "recurrence-factors",
+    "recurrent-pa-management"
   ],
   "anchors": [
     "anchor__recurrence_nodules"
@@ -18,5 +19,7 @@
   "assetIds": [
     "anatomy-slice-glb"
   ],
-  "members": []
+  "members": [],
+  "role": "When a pleomorphic adenoma comes back, the most important cause named in one review is an operation that cut into the tumour and left some behind; a thin or incomplete capsule, finger-like extensions and satellite nodules make that more likely.",
+  "matters": "When a pleomorphic adenoma comes back it is harder to treat, and a second recurrence is not rare. Radiotherapy after the repeat operation is linked with fewer further recurrences."
 }

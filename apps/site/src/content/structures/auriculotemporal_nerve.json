@@ -9,10 +9,11 @@
   "tissue": "nerve",
   "depth": "superficial-lobe",
   "claims": [
-    "auriculotemporal-course"
+    "auriculotemporal-course",
+    "frey-mechanism"
   ],
-  "role": "Carries the gland's saliva-making signal and the feeling of the temple skin.",
-  "matters": "Its injury and regrowth are the cause of Frey syndrome.",
+  "role": "A nerve in front of the ear, the auriculotemporal nerve, gives feeling to the temple skin and carries the signal that makes the parotid gland produce saliva.",
+  "matters": "After injury, the nerve fibres that should make saliva can grow into the sweat glands of the skin, so that eating makes the skin over the gland sweat.",
   "anchors": [
     "anchor__auriculotemporal_nerve"
   ],

@@ -531,6 +531,8 @@ export function start(): void {
 
     if (stage && (dirty || current !== lastApplied)) {
       const state = held ?? instrument.override(evaluate(track, current));
+      // A change made on a settled plate (the instrument) means the picture has to converge again before it is still.
+      if (settledPlate >= 0 && Math.abs(current - lastApplied) < 1e-9) delete document.body.dataset.converged;
       stage.apply(state);
       stage.render();
       tiers?.frame(now);

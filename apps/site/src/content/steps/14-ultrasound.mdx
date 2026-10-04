@@ -37,7 +37,6 @@ delta:
   labels:
       - { structureId: us_probe }
       - { structureId: us_plane }
-      - { structureId: pleomorphic_adenoma }
       - { structureId: parotid_superficial_lobe }
 transition: { camera: [0, 0.5], structures: [0.2, 0.7] }
 sceneDescription: "The skin is faded to an outline. A small hand-held probe rests on the cheek over the tumour, and a thin, flat, outlined slice of tissue extends down from it through the skin, the outer part of the gland and the tumour, which it cuts across."
@@ -56,6 +55,8 @@ import CompareExtents from '../../components/CompareExtents.astro';
 <Claim id="ultrasound-role">The first scan is usually ultrasound: a hand-held probe pressed on the skin that shows a thin slice of the tissue beneath it as it moves. It works in real time and uses no radiation.</Claim> <Claim id="ultrasound-role">It shows a lump in the outer part of the gland well, but the deep part of the gland lies under the jawbone and is hard to see.</Claim>
 
 <Model>The probe is drawn as an instrument, in grey. The outlined slice is the plane the probe looks along; it is drawn as an outline because the atlas does not show an ultrasound picture.</Model>
+
+<Model>The view is from in front of the cheek and a little to the side, so that the outlined slice can be seen face-on.</Model>
 
 <Note title="One small series">
 <Framed claim="ultrasound-role" title="Ultrasound against CT or MRI for benign tumours confirmed by needle" />

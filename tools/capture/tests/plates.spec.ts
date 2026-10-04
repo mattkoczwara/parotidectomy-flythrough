@@ -3,10 +3,11 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
+import sharp from 'sharp';
 
 /*
  * Plate capture and behaviour checks against the production build (plan §14, owner refinements):
- * - static fallback figures (apps/site/public/plates/<id>.png) from settled, converged plates;
+ * - static fallback figures (apps/site/public/plates/<id>.webp) from settled, converged plates;
  * - determinism: cold deep link vs forward vs backward scroll arrival (< 0.5% pixels differ);
  * - passive scrolling never moves focus; only settled plates are announced; explicit navigation focuses the heading.
  */
@@ -43,7 +44,8 @@ test('static fallback figure for every plate', async ({ page }) => {
   for (const [i, id] of ids.entries()) {
     await page.goto(`/?capture=1&cold=${i}#${id}`); // a fresh load, not a same-document hash change
     await waitConverged(page, i);
-    writeFileSync(join(plates, `${id}.png`), await page.locator('.stage').screenshot());
+    // WebP at high quality: the static tier and print load every figure, so size matters (a PNG is about 600 KB, this about 90 KB).
+    await sharp(await page.locator('.stage').screenshot()).webp({ quality: 88 }).toFile(join(plates, `${id}.webp`));
   }
 });
 

@@ -54,9 +54,11 @@ async function checkPlate(page: Page, id: string, index: number, query: string):
   await page.waitForFunction((i) => document.body.dataset.converged === String(i), index, { timeout: 90_000 });
   const info = await page.evaluate(() => {
     const stage = document.querySelector('.stage')!.getBoundingClientRect();
+    // Schematic content is drawn in pale or ochre line colour, so a patch sampled beside its anchor measures the tissue behind it, not the drawing.
+    const schematic = new Set((JSON.parse(document.getElementById('atlas-data')!.textContent!) as { structures: { id: string; schematic?: boolean }[] }).structures.filter((s) => s.schematic).map((s) => s.id));
     const labels = [...document.querySelectorAll<HTMLElement>('.labels li')].map((li) => {
       const r = li.getBoundingClientRect();
-      return { x: r.left - stage.left, y: r.top - stage.top, w: r.width, h: r.height, emphasis: li.dataset.emphasis };
+      return { x: r.left - stage.left, y: r.top - stage.top, w: r.width, h: r.height, emphasis: li.dataset.emphasis, schematic: schematic.has(li.dataset.structure ?? '') };
     });
     const halos = [...document.querySelectorAll<SVGLineElement>('.leaders line.halo')].map((l) => ['x1', 'y1', 'x2', 'y2'].map((k) => Number(l.getAttribute(k))));
     const dots = [...document.querySelectorAll<SVGCircleElement>('.leaders circle')].map((c) => [Number(c.getAttribute('cx')), Number(c.getAttribute('cy'))]);
@@ -122,7 +124,7 @@ async function checkPlate(page: Page, id: string, index: number, query: string):
   }
   // Luminance rule at focus anchors: median L* of a 7x7 patch beside the leader dot.
   const fieldL = lstar(parse(info.field));
-  const focusDots = info.labels.map((l, k) => ({ l, d: info.dots[k] })).filter((e) => e.l.emphasis === 'focus' && e.d);
+  const focusDots = info.labels.map((l, k) => ({ l, d: info.dots[k] })).filter((e) => e.l.emphasis === 'focus' && !e.l.schematic && e.d);
   let focusAbove: number | null = null;
   for (const { d } of focusDots) {
     const vals: number[] = [];

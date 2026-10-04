@@ -13,5 +13,10 @@
   "assetIds": [
     "anatomy-slice-glb"
   ],
-  "claims": []
+  "claims": [
+    "layers-over-gland",
+    "barrier-options"
+  ],
+  "role": "Over the gland lie, from outside in, the skin, a layer of fat, a thin fibrous sheet called the SMAS, and the gland's own tough capsule.",
+  "matters": "To lower the chance of Frey syndrome, surgeons can put a layer between the skin flap and the bed left by the gland: the thin fibrous sheet (SMAS) sewn back, a strip of neck muscle, a graft or a manufactured sheet. Each has some support in studies, none of it strong."
 }

@@ -10,7 +10,7 @@ import '../styles/print.css';
 
 // Static fallback figures are captured from the running scene (tools/capture); link only those that exist.
 // Resolved from the site root (the build's working directory): import.meta.url points into the compiled output.
-const hasFigure = (id: string) => existsSync(resolve('public/plates', `${id}.png`));
+const hasFigure = (id: string) => existsSync(resolve('public/plates', `${id}.webp`));
 
 const chapters = (await getCollection('chapters')).map((c) => c.data).sort((a, b) => a.order - b.order);
 const stepEntries = (await getCollection('steps')).sort((a, b) => a.data.order - b.data.order);
@@ -46,6 +46,7 @@ const planeLabel: Record<string, string> = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Parotid Atlas</title>
     <meta name="description" content="An interactive anatomical atlas of parotid tumours and parotidectomy, following a pleomorphic adenoma from anatomy to operation." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <Font cssVariable="--font-serif" preload />
     <Font cssVariable="--font-sans" preload />
   </head>
@@ -101,7 +102,7 @@ const planeLabel: Record<string, string> = {
               <h3 tabindex="-1">{data.title}</h3>
               <div class="plate-body"><Content /></div>
               <figure class="plate-figure">
-                {hasFigure(data.id) && <img src={`/plates/${data.id}.png`} alt="" loading="lazy" width="1280" height="800" />}
+                {hasFigure(data.id) && <img src={`/plates/${data.id}.webp`} alt="" loading="lazy" width="1280" height="800" />}
                 <figcaption><span class="visually-hidden-when-3d">In the model: </span>{data.sceneDescription}</figcaption>
               </figure>
             </article>

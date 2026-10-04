@@ -16,5 +16,7 @@
   ],
   "claims": [
     "landmark-tympanomastoid-suture"
-  ]
+  ],
+  "role": "Surgeons find the nerve trunk a few millimetres below a seam in the bone below the ear canal.",
+  "matters": "The tympanomastoid suture is a bony landmark for the trunk: in cadavers and live patients the closest distance was about 2 mm, and one protocol places the nerve approximately 2 mm inferior to the suture. Reported distances vary with the reference point used."
 }

@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 /*
@@ -21,6 +21,12 @@ async function audit(page: Page, name: string, exclude: string[] = []) {
   let builder = new AxeBuilder({ page }).withTags(tags);
   for (const e of exclude) builder = builder.exclude(e);
   const result = await builder.analyze();
+  // A failed test restarts the worker, so earlier results are read back before this one is added.
+  try {
+    Object.assign(findings, JSON.parse(readFileSync(join(out, 'a11y.json'), 'utf8')));
+  } catch {
+    /* first result */
+  }
   findings[name] = result.violations.map((v) => ({ id: v.id, impact: v.impact, help: v.help, nodes: v.nodes.length, sample: v.nodes[0]?.target.join(' ') ?? '' }));
   writeFileSync(join(out, 'a11y.json'), JSON.stringify(findings, null, 2));
   return result.violations;

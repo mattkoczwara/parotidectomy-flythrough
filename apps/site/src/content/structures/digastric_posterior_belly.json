@@ -15,6 +15,9 @@
     "anatomy-slice-glb"
   ],
   "claims": [
-    "landmark-posterior-belly-digastric"
-  ]
+    "landmark-posterior-belly-digastric",
+    "antegrade-dissection"
+  ],
+  "role": "A small neck muscle points to the nerve: the trunk lies just above its upper edge.",
+  "matters": "Surgeons usually find the main trunk of the nerve first, then follow it forward, spreading the gland tissue over the nerve and dividing it as they go."
 }

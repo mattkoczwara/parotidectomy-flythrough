@@ -141,7 +141,7 @@ body.doc-page {
 .az {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 0.8rem;
+  gap: 0.2rem 0.2rem;
   margin: 1rem 0 0.5rem;
   font: 600 0.9rem var(--font-sans), system-ui, sans-serif;
 }
@@ -171,4 +171,14 @@ body.doc-page {
 }
 .gloss dd.plain {
   color: var(--ink-soft);
+}
+.az a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  min-height: 2rem;
+}
+.glossary dl {
+  margin: 0;
 }

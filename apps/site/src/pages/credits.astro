@@ -13,6 +13,7 @@ const kindLabel: Record<string, string> = {
   texture: 'Texture',
   font: 'Typeface',
   image: 'Image',
+  software: 'Software that runs in the page',
 };
 const groups = Object.entries(
   assets.reduce<Record<string, typeof assets>>((acc, a) => ((acc[a.kind] ??= []).push(a), acc), {}),

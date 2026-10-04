@@ -14,9 +14,14 @@
   "assetIds": [
     "anatomy-slice-glb"
   ],
-  "claims": [],
+  "claims": [
+    "neck-muscle-exposure",
+    "barrier-options"
+  ],
   "members": [
     "sternocleidomastoid_main",
     "scm_flap"
-  ]
+  ],
+  "role": "The surgeon frees the front edge of the large neck muscle and finds the small muscle under the jaw (the digastric), then follows it toward the bony knob behind the ear.",
+  "matters": "Barriers used between the raised skin flap and the parotid bed are the SMAS flap sutured back, a sternocleidomastoid muscle flap turned up from the neck, a temporoparietal fascia flap, a free fat graft and an acellular dermal matrix sheet."
 }

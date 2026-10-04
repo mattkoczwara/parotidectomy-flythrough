@@ -14,5 +14,10 @@
   "assetIds": [
     "anatomy-slice-glb"
   ],
-  "claims": []
+  "claims": [
+    "layers-over-gland",
+    "flap-plane"
+  ],
+  "role": "Over the gland lie, from outside in, the skin, a layer of fat, a thin fibrous sheet called the SMAS, and the gland's own tough capsule.",
+  "matters": "The skin is lifted forward in the layer just outside the gland’s capsule."
 }

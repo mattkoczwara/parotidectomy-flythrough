@@ -16,5 +16,7 @@
   "claims": [
     "pa-most-common",
     "pa-capsule-features"
-  ]
+  ],
+  "role": "Most lumps that grow in the parotid are benign, and the most common is a pleomorphic adenoma.",
+  "matters": "A pleomorphic adenoma’s outer layer is often thin or incomplete, and small finger-like extensions can reach beyond it, which is why surgeons take a cuff of normal gland rather than shelling the tumour out."
 }

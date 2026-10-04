@@ -18,5 +18,7 @@
   ],
   "members": [],
   "schematic": false,
-  "hidden": true
+  "hidden": true,
+  "role": "Ultrasound is usually the first scan for a lump in the outer part of the parotid. It works in real time, uses no radiation and can guide the needle, but it sees the deep part of the gland poorly.",
+  "matters": "For lesions in the superficial parotid, ultrasound is described as an ideal tool for initial assessment. The deep lobe is only partly visible because the jawbone lies over it, so a mass whose deep edge cannot be seen on ultrasound raises the question of deep-lobe extension."
 }

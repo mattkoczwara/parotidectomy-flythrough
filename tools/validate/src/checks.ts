@@ -59,6 +59,14 @@ export function checkContent(content: Content): string[] {
   for (const s of content.structures) {
     for (const a of s.assetIds) if (!assetIds.has(a)) errors.push(`structures/${s.id}: unknown asset "${a}"`);
     for (const c of s.claims) if (!claimIds.has(c)) errors.push(`structures/${s.id}: unknown claim "${c}"`);
+    // A card says no more than the evidence: its role and its reason it matters are claim wording, verbatim.
+    const levels = s.claims.flatMap((id) => {
+      const c = content.claims.find((x) => x.id === id);
+      return c ? [c.statement.essentials, c.statement.anatomy, c.statement.clinical] : [];
+    });
+    for (const [field, text] of [['role', s.role], ['matters', s.matters]] as const) {
+      if (text && !levels.includes(text)) errors.push(`structures/${s.id}: ${field} is not the wording of any claim the structure cites`);
+    }
   }
 
   const allowed: readonly string[] = allowedLicences;
@@ -67,8 +75,8 @@ export function checkContent(content: Content): string[] {
       errors.push(`assets/${a.id}: licence "${a.licence.id}" is outside the allow-list and has no ADR exception`);
     }
     // Source data and weights are checksummed in pipeline/sources manifests; fonts are fetched, subset and
-    // content-hashed per file by the Astro Fonts API at build time.
-    if (a.kind !== 'source-data' && a.kind !== 'model-weights' && a.kind !== 'font' && !a.sha256) {
+    // content-hashed per file by the Astro Fonts API at build time; libraries are pinned by the lockfile.
+    if (a.kind !== 'source-data' && a.kind !== 'model-weights' && a.kind !== 'font' && a.kind !== 'software' && !a.sha256) {
       errors.push(`assets/${a.id}: shipped asset needs a sha256`);
     }
     if (a.kind === 'derived-mesh' && a.derivedFrom.length === 0) {

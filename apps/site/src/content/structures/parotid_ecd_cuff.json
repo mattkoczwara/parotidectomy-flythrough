@@ -8,12 +8,16 @@
   "tissue": "gland",
   "depth": "superficial-lobe",
   "claims": [
-    "esgs-five-levels"
+    "esgs-five-levels",
+    "ecd-definition",
+    "cuff-sufficient-view"
   ],
   "anchors": [
     "anchor__parotid_ecd_cuff"
   ],
   "assetIds": [
     "anatomy-slice-glb"
-  ]
+  ],
+  "role": "Extracapsular dissection takes out the tumour with a thin rim of normal gland, without searching for the facial nerve.",
+  "matters": "Some surgeons argue that for a benign tumour a cuff of normal gland, not the whole outer lobe, is all that is needed, so the extent is a judgement."
 }

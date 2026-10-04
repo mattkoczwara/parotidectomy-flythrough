@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 /*
- * Performance measurement on the real slice (plan §9, §14), run with `npm run perf` (not part of `capture`).
+ * Performance measurement on the assembled atlas (54 plates) (plan §9, §14), run with `npm run perf` (not part of `capture`).
  * - frame pacing while scrolling through every transition: High (WebGPU) at 2560x1440 and 1600x1000, Mid
  *   (WebGL2) with the CPU throttled 4x; the scene renders every frame while it moves;
  * - cold-load payload (bytes transferred) and time to an interactive scene on a 50 Mbps link.
@@ -84,6 +84,6 @@ test('cold-load payload and time to interactive on 50 Mbps', async ({ page }) =>
 
 test.afterAll(() => {
   mkdirSync(join(root, 'docs/perf'), { recursive: true });
-  writeFileSync(join(root, 'docs/perf/m1-report.json'), JSON.stringify(report, null, 2) + '\n');
+  writeFileSync(join(root, 'docs/perf/m5-report.json'), JSON.stringify(report, null, 2) + '\n');
   expect(true).toBe(true);
 });

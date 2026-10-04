@@ -192,7 +192,7 @@ export type Structure = z.infer<typeof structure>;
 
 export const asset = z.strictObject({
   id,
-  kind: z.enum(['source-data', 'derived-mesh', 'texture', 'font', 'image', 'model-weights']),
+  kind: z.enum(['source-data', 'derived-mesh', 'texture', 'font', 'image', 'model-weights', 'software']),
   source: z.strictObject({
     name: nonEmpty,
     url: z.url(),

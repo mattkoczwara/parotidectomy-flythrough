@@ -256,7 +256,7 @@ incision_facelift:
 # the CT skin only over the anatomy of the dissection (right preauricular, parotid, cheek and upper neck) so the
 # tissue layers stay consistent; the central face keeps MPFB's generic features.
 face:
-  depth_check_exclude: [stimulator_probe, frey_regrowth, needle, us_probe, us_plane, ct_tumour_outline, drain_tube, smas_flap, barrier_graft, sialocele_pocket, recurrence_nodules]   # instruments and schematic overlays (props.py, extras.py)
+  depth_check_exclude: [stimulator_probe, frey_regrowth, needle, us_probe, us_plane, ct_tumour_outline, drain_tube, smas_flap, barrier_graft, sialocele_pocket, recurrence_nodules, pleomorphic_adenoma_accessory]   # instruments and schematic overlays (props.py, extras.py)
   mpfb_neck_cut_dm: 5.3          # keep MPFB vertices above this height (decimetres); low enough that the z=150 mm scene cut is a closed loop
   neck_cut_z: 140                # CT-frame lower limit used for fitting (mm)
   ct_vertex_gap_mm: 11           # the CT starts at slice 1012, about 11 mm below the VHP vertex reference
@@ -326,8 +326,10 @@ mobilisation:
 # clear of the facial nerve and vessels, off bone and muscle, and (deep, tail) inside that part of the gland. Placement
 # only; how common each position is comes from the literature. Targets in RAS mm.
 tumour_alternates:
-  deep: { target: [54, 70, 231], radii: [4.5, 5.5, 5.5], seed: 41, need: deep, min_fraction: 0.5, search_mm: 6, min_nerve_clearance_mm: 1.2, min_vessel_clearance_mm: 0.8, min_bone_muscle_clearance_mm: 0.4 }
-  tail: { target: [67, 92, 207], radii: [6.0, 7.0, 7.5], seed: 43, need: tail, min_fraction: 0.45, search_mm: 12, min_nerve_clearance_mm: 1.2, min_vessel_clearance_mm: 0.8, min_bone_muscle_clearance_mm: 0.4 }
+  deep: { target: [54, 70, 231], radii: [4.5, 5.5, 5.5], seed: 41, need: deep, min_fraction: 0.5, search_mm: 6, min_nerve_clearance_mm: 1.2, min_vessel_clearance_mm: 0.8, min_bone_muscle_clearance_mm: 0.4, min_skin_cover_mm: 2.3 }
+  tail: { target: [67, 92, 207], radii: [5.4, 6.3, 6.7], seed: 43, need: tail, min_fraction: 0.45, search_mm: 14, min_nerve_clearance_mm: 1.2, min_vessel_clearance_mm: 0.8, min_bone_muscle_clearance_mm: 0.4, min_skin_cover_mm: 2.2 }
+  # The accessory lobule lies only 4.6 mm under the skin, so a tumour of this size class cannot keep the 2 mm cover the face-fit rule asks
+  # of other structures (it sits about 1.4 mm under the skin of the voxel body mask and is not constrained by the fitted face): it is excluded from that depth check (face.depth_check_exclude).
   accessory: { target: [70.5, 111, 242], radii: [4.2, 5.2, 4.6], seed: 47, need: accessory, min_fraction: 0.0, search_mm: 8, min_nerve_clearance_mm: 0.8, min_vessel_clearance_mm: 0.8, min_bone_muscle_clearance_mm: 0.3 }
 
 # Frey-syndrome regrowth schematic (extras.py): thin fibres from the cut auriculotemporal nerve to the skin over the former

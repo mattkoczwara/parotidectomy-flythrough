@@ -14,10 +14,14 @@
   ],
   "claims": [
     "parotid-size",
-    "parotid-location"
+    "parotid-location",
+    "parotid-saliva",
+    "pa-most-common"
   ],
   "anchors": [],
   "assetIds": [
     "anatomy-slice-glb"
-  ]
+  ],
+  "role": "The parotid makes saliva, a thin watery fluid, and sends it to the mouth through a duct.",
+  "matters": "Most lumps that grow in the parotid are benign, and the most common is a pleomorphic adenoma."
 }

@@ -15,6 +15,8 @@ $PY pipeline/anatomy/extras.py
 $PY pipeline/anatomy/props.py
 (cd pipeline/anatomy && "../../$PY" layers.py && "../../$PY" flap.py)
 $PY pipeline/anatomy/barriers.py
+# Nothing is exported while an anatomy check is failing.
+$PY pipeline/build/check_all.py
 $PY pipeline/build/export_gltf.py
 npx gltf-transform meshopt pipeline/build/out/slice.raw.glb apps/site/public/assets/anatomy/slice.glb --level medium
 cp pipeline/build/out/frame.json apps/site/public/assets/anatomy/frame.json

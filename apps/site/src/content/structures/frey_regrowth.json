@@ -8,7 +8,8 @@
   "tissue": "nerve",
   "depth": "subcutaneous",
   "claims": [
-    "frey-mechanism"
+    "frey-mechanism",
+    "frey-incidence"
   ],
   "schematic": true,
   "anchors": [
@@ -18,5 +19,7 @@
     "anatomy-slice-glb"
   ],
   "members": [],
-  "hidden": true
+  "hidden": true,
+  "role": "After injury, the nerve fibres that should make saliva can grow into the sweat glands of the skin, so that eating makes the skin over the gland sweat.",
+  "matters": "Sweating and flushing over the cheek when eating is common after parotid surgery if you test for it, but fewer people notice it themselves."
 }

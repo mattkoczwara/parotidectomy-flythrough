@@ -4,7 +4,7 @@
 
 * Alternate placements of the representative adenoma (plan §3 chapter 4: superficial, deep, tail, accessory): each is
   placed by a constrained search near a target (inside the stated part of the gland or accessory lobule, clear of the
-  facial nerve, vessels, bone and muscle), with the same size class as the representative tumour. Placement, not
+  facial nerve, vessels, bone and muscle, and with at least `min_skin_cover_mm` of soft tissue under the fitted skin), with the same size class as the representative tumour. Placement, not
   frequency: how common each position is comes from the literature, not from this model.
 * The auriculotemporal nerve is authored in anatomy.yaml (nodes `at_*`); this script adds the schematic regrowth fibres
   that illustrate how Frey syndrome is thought to arise (line grammar, never drawn as modelled anatomy).
@@ -42,12 +42,13 @@ def surface_clearance(samples, pts, rad):
     return float((d - rad[j]).min())
 
 
-def place(spec, name, gland, parts, aff, inv, nerve, vessel, authored):
+def place(spec, name, gland, parts, aff, inv, nerve, vessel, authored, skin_tree):
     """Search a grid around spec['target'] for the feasible centre nearest the target."""
     radii = np.asarray(spec["radii"], float)
     target = np.asarray(spec["target"], float)
     rng = np.random.default_rng(spec["seed"])
     best = None
+    rejected = dict.fromkeys(('nerve', 'vessel', 'bone_muscle', 'skin_cover', 'authored', 'part'), 0)
     steps = np.arange(-spec["search_mm"], spec["search_mm"] + 0.1, 1.5)
     cands = sorted(((np.linalg.norm([dx, dy, dz]), dx, dy, dz) for dx in steps for dy in steps for dz in steps))
     for dist, dx, dy, dz in cands:
@@ -55,23 +56,33 @@ def place(spec, name, gland, parts, aff, inv, nerve, vessel, authored):
         m = lobulated(c, radii, spec["seed"], subdiv=3)
         s = m.sample(2500, seed=3)
         if surface_clearance(s, *nerve) < spec["min_nerve_clearance_mm"]:
+            rejected["nerve"] += 1
             continue
         if surface_clearance(s, *vessel) < spec["min_vessel_clearance_mm"]:
+            rejected["vessel"] += 1
             continue
         if any(field(o).at(s).min() < spec["min_bone_muscle_clearance_mm"] for o in OBSTACLES):
+            rejected["bone_muscle"] += 1
+            continue
+        # Soft-tissue cover under the fitted skin: the face-fit rule asks for at least 2 mm; keep a margin for the voxel body mask.
+        if spec.get("min_skin_cover_mm") and skin_tree.query(s)[0].min() < spec["min_skin_cover_mm"]:
+            rejected["skin_cover"] += 1
             continue
         if any(float((np.linalg.norm(s[:, None] - a[0][None, ::6], axis=2) - a[1][::6][None]).min()) < 0.5 for a in authored):
+            rejected["authored"] += 1
             continue
         ijk = np.round(nib.affines.apply_affine(inv, s)).astype(int)
         inside = {k: float(v[tuple(ijk.T)].mean()) for k, v in parts.items()}
         if spec["need"] == "deep" and not (inside["deep"] >= spec["min_fraction"] and inside["lateral"] <= 0.1):
+            rejected["part"] += 1
             continue
         if spec["need"] == "tail" and not (inside["gland"] >= spec["min_fraction"]):
+            rejected["part"] += 1
             continue
         best = (c, m, inside)
         break
     if best is None:
-        raise SystemExit(f"{name}: no feasible placement near {target.tolist()}")
+        raise SystemExit(f"{name}: no feasible placement near {target.tolist()} (candidates rejected by: {rejected})")
     return best
 
 
@@ -85,12 +96,15 @@ def main() -> None:
     parts = {"gland": gland, "deep": ndimage.binary_dilation(g["deep"], iterations=1), "lateral": g["superficial"]}
     nerve = tubes(NERVES)
     vessel = tubes(VESSELS)
+    skin_d = np.load(OUT / "skin.npz")
+    skin_mesh = trimesh.Trimesh(skin_d["positions"], skin_d["indices"].reshape(-1, 3), process=False)
+    skin_tree = cKDTree(skin_mesh.sample(400_000, seed=7))
     authored = [tubes(["digastric_posterior_belly"]), tubes(["styloid_process"]), tubes(["parotid_duct"]), tubes(["facial_nerve_posterior_auricular"]), tubes(["great_auricular_nerve"])]
     checks_path = QC / "checks.json"
     checks = json.loads(checks_path.read_text(encoding="utf-8"))
     summary = {}
     for name, s in A.items():
-        c, m, inside = place(s, name, gland, parts, aff, inv, nerve, vessel, authored)
+        c, m, inside = place(s, name, gland, parts, aff, inv, nerve, vessel, authored, skin_tree)
         np.savez_compressed(OUT / f"pleomorphic_adenoma_{name}.npz", positions=m.vertices.astype(np.float32), normals=m.vertex_normals.astype(np.float32), indices=m.faces.astype(np.uint32).ravel(), kind="surface")
         sm = m.sample(3000, seed=4)
         summary[name] = {
@@ -98,6 +112,7 @@ def main() -> None:
             "max_diameter_mm": round(float(np.ptp(m.vertices, axis=0).max()), 1),
             "nerve_clearance_mm": round(surface_clearance(sm, *nerve), 2),
             "vessel_clearance_mm": round(surface_clearance(sm, *vessel), 2),
+            "skin_cover_mm": round(float(skin_tree.query(sm)[0].min()), 2),
             "fraction_in": {k: round(v, 2) for k, v in inside.items()},
         }
         print(f"{name}: centre {np.round(c, 1)}, {summary[name]['max_diameter_mm']} mm, nerve clearance {summary[name]['nerve_clearance_mm']} mm")
@@ -105,7 +120,7 @@ def main() -> None:
     checks["tumour_alternates"] = {
         "pass": True,
         "placements": summary,
-        "summary": "alternate placements of the adenoma, clear of nerve, vessels, bone and muscle: " + "; ".join(f"{k} {v['max_diameter_mm']:.0f} mm, nerve {v['nerve_clearance_mm']:.1f} mm" for k, v in summary.items()),
+        "summary": "alternate placements of the adenoma, clear of nerve, vessels, bone and muscle: " + "; ".join(f"{k} {v['max_diameter_mm']:.0f} mm, nerve {v['nerve_clearance_mm']:.1f} mm, skin cover {v['skin_cover_mm']:.1f} mm" for k, v in summary.items()),
     }
 
     # ── Frey-regrowth schematic: fibres from the cut auriculotemporal nerve toward the skin of the flap region ────────

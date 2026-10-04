@@ -4,13 +4,10 @@ chapter: complications
 order: 48
 title: "A numb earlobe"
 delta:
-  camera: { azimuth: -24, elevation: 6, zoom: 1.2, frame: [great_auricular_nerves, external_jugular_vein, parotid_deep_lobe] }
-  op: { peel: 1, out: 1, flap: 0, ink: 0, suture: 1, scar: 1, hollow: 0, explode: 0, section: 0, deep: 0, mobilise: 0, ct_clip: 0, smas: 0, scm: 0, cut_skin: 1, cut_fat: 1, cut_smas: 1, cut_fascia: 1, zone_ear: 1, zone_lip: 0, zone_forehead: 0, zone_frey: 0, zone_bite: 0 }
+  camera: { azimuth: -24, elevation: 6, zoom: 1.5, frame: [great_auricular_nerves, parotid_deep_lobe] }
+  op: { peel: 1, out: 1, flap: 0, ink: 0, suture: 1, scar: 1, hollow: 0, explode: 0, section: 0, deep: 0, mobilise: 0, ct_clip: 0, smas: 0, scm: 0, cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, zone_ear: 1, zone_lip: 0, zone_forehead: 0, zone_frey: 0, zone_bite: 0 }
   structures:
-      skin: { presence: 1, mode: solid, opacity: 1, emphasis: context }
       eyes: { presence: 1 }
-      subcutaneous_fat: { presence: 1, mode: solid, opacity: 1, emphasis: context }
-      smas: { presence: 1, emphasis: context }
       parotid_fascia: { presence: 0 }
       skull: { presence: 0 }
       temporalis_r: { presence: 0 }
@@ -18,6 +15,9 @@ delta:
       pleomorphic_adenoma: { presence: 0 }
       parotid_duct: { presence: 0 }
       parotid_deep_lobe: { presence: 1, mode: solid, opacity: 1, emphasis: context }
+      skin: { presence: 1, mode: ghost, opacity: 0.5, emphasis: context }
+      subcutaneous_fat: { presence: 0 }
+      smas: { presence: 0 }
       facial_nerve: { presence: 1, mode: ghost, opacity: 0.4, emphasis: context }
       great_auricular_nerves: { presence: 1, emphasis: focus }
       retromandibular_veins: { presence: 1, emphasis: context }
@@ -39,7 +39,7 @@ delta:
       - { structureId: great_auricular_nerve_posterior }
       - { structureId: great_auricular_nerve_anterior }
 transition: { camera: [0, 0.5], structures: [0.1, 0.6], op: [0.2, 1] }
-sceneDescription: "Behind and below the gland a thin nerve climbs over the neck muscle and splits in two near the earlobe, one branch in front and one behind. Ochre patches mark the skin of the earlobe and the skin behind the ear that these branches supply."
+sceneDescription: "The skin is drawn see-through. Behind and below the gland a thin nerve climbs over the neck muscle and splits in two near the earlobe, one branch in front and one behind. Ochre patches mark the earlobe and the skin over the lower part of the gland, which these branches supply."
 claims: [great-auricular-nerve-course, gan-preservation, minor-complications]
 ---
 import Claim from '../../components/Claim.astro';

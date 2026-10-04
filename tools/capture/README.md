@@ -3,7 +3,7 @@
 A Playwright harness run against the production build (real Chrome with the GPU, WebGPU).
 
 - `npm run figures` builds the site and captures one static figure per plate into `apps/site/public/plates`; `npm run capture` runs that first, rebuilds so the figures are linked, then runs `tests/plates.spec.ts`, `labels.spec.ts`, `instrument.spec.ts` and `a11y.spec.ts`:
-  - **Static fallback figures** (`apps/site/public/plates/<id>.png`), captured centred in capture mode.
+  - **Static fallback figures** (`apps/site/public/plates/<id>.webp`), captured centred in capture mode.
   - **Determinism:** cold load vs forward and backward scroll arrival at every plateau (< 0.5% of pixels).
   - **Focus and announcements:**
     - passive scrolling never moves focus or announces transitions;
@@ -18,7 +18,7 @@ A Playwright harness run against the production build (real Chrome with the GPU,
     - no overlap; inside the scene;
     - text >= 4.5:1 and leaders >= 3:1 against the rendered pixels;
     - focus structures >= 15 L* above the field.
-- `npm run perf` measures and reports; it is not a check. It writes `docs/perf/m1-report.json` (`tests/perf.spec.ts`):
+- `npm run perf` measures and reports; it is not a check. It writes `docs/perf/m5-report.json` (`tests/perf.spec.ts`):
   - frame pacing on High (1600x1000 and a 2560x1440 canvas);
   - Mid on WebGL2 with the CPU throttled 4x;
   - cold-load payload and time to interactive on 50 Mbps.

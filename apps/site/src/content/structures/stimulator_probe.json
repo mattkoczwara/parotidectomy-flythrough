@@ -14,10 +14,12 @@
     "anatomy-slice-glb"
   ],
   "claims": [
-    "stimulator-technique"
+    "stimulator-technique",
+    "monitoring-evidence"
   ],
   "members": [],
   "schematic": false,
-  "role": "Tells the surgeon whether tissue is the nerve, and that it still works.",
-  "hidden": true
+  "role": "During the operation the surgeon can touch a tissue with a small stimulator: if it is the nerve, the face twitches. The patient is kept from being paralysed so this can be seen.",
+  "hidden": true,
+  "matters": "A monitor that signals when the nerve is touched lowers the chance of weakness straight after surgery; whether it changes lasting weakness is not shown."
 }

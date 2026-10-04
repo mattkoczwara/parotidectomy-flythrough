@@ -24,7 +24,9 @@ function differs(a: PNG, b: PNG): number {
   return n / (a.width * a.height);
 }
 async function settle(page: Page) {
-  await page.waitForTimeout(1200); // the dial and the view apply on the next frames; the scene then re-converges
+  // The change applies on the next frame, which withdraws `converged`; the scene then converges again (TRAA reseeded).
+  await page.waitForTimeout(400);
+  await page.waitForFunction(() => document.body.dataset.converged !== undefined, undefined, { timeout: 60_000 });
 }
 const plateIndex = (page: Page, id: string) => page.evaluate((pid) => [...document.querySelectorAll('[data-plate]')].findIndex((e) => e.id === pid), id);
 
@@ -83,7 +85,7 @@ test('a click asks about a structure, and a new plate returns the dial to the au
   await page.locator('input[name="dial-bone"][value="0"]').check();
   await expect(page.locator('input[name="dial-bone"][value="0"]')).toBeChecked();
   // Explicit navigation to the next plate puts the dial back.
-  await page.locator('body').click({ position: { x: 5, y: 5 } });
+  await page.keyboard.press('Escape'); // puts the instrument down; focus returns to its button, so the plate keys work
   await page.keyboard.press('j');
   await converged(page, (await plateIndex(page, 'where-parotid')) + 1);
   await expect(page.locator('input[name="dial-bone"][value="1"]')).toBeChecked();
@@ -113,9 +115,11 @@ test('the Explore chapter carries operation controls that drive the scene and re
   expect(differs(base, await shot(page)), 'reset restores the authored scene').toBeLessThan(0.005);
 
   // Leaving the chapter hides the operation controls.
-  await page.locator('body').click({ position: { x: 5, y: 5 } });
+  await page.keyboard.press('Escape');
   await page.keyboard.press('k');
   await converged(page, index - 1);
+  await page.locator('.instrument-toggle').click();
+  await expect(page.locator('.instrument')).toBeVisible();
   await expect(page.locator('.inst-op')).toBeHidden();
 });
 

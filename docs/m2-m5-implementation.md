@@ -95,17 +95,16 @@ Every plate sentence resolves to a claim; every number has its population; no re
 
 ## Progress checklist
 
-_(updated as work lands; **unverified** = built but not through the final verification pass)_
+_(**unverified** = built and looked at in focused render loops, but not yet through the final verification pass; see `docs/STATUS.md` for the measured state.)_
 
-- [ ] Plan and decisions recorded (this file)
-- [x] Barrier, prop and imaging geometry exported (SMAS flap, SCM strip, graft, drain, needle, probe, CT slice) — **unverified** renders
-- [x] Stage: SMAS fold, SCM turn, CT slice plane with global clip (`ct_clip`), overlay planes, `hidden` structures — **unverified**
-- [x] Claims written from fetched abstracts/protocol text (batches 08, 09): diagnosis, closure, afterwards, complications — all `clinicalReview: pending`
-- [x] Plates 1–35 present; operation plates 29–35 retuned to the dissection view; chapter 5 (plates 14–17) authored — **unverified** (needs a full visual pass)
-- [ ] Plates 36–54: closure (bed, SMAS, SCM, graft, drain, closed), afterwards (after-anatomy, contour, pathology, healing), complications (map, weakness, numbness, Frey, first-bite, sialocele, recurrence — needs a `recurrence_nodules` mesh in props.py), explore, compare
-- [ ] Instrument/explorer UI in the director (depth dial, orbit/zoom, picking → structure card, resection/incision selectors); comparison renders
-- [ ] Ochre hatch colour for sialocele_pocket / frey_regrowth in the stage
-- [ ] Validator tightening (every paragraph claim- or Model-attributed), public-build gate, credits/glossary/method pages, print stylesheet
-- [ ] Capture suite, review packet and STATUS.md updated for 54 plates; final `npm run check`, `npm run capture`, `npm run perf`, Firefox run
-
-Dev note: after regenerating step files, touch them (or restart the dev server) — the content watcher can miss a second write made seconds after the first.
+- [x] Plan and decisions recorded (this file, ADR-0004)
+- [x] Pieces, groups and continuous variants in the timeline and stage; shared `RESECTION_EXTENT`
+- [x] Geometry: ESGS pieces and cuff, duct and accessory lobe, alternate tumours, nerve-pattern twigs, auriculotemporal nerve and Frey regrowth, instruments, CT slice, SMAS flap, neck-muscle strip, graft, drain, saliva collection, recurrence nodules
+- [x] Stage: peel/out/deep, SMAS fold, neck-muscle turn, CT plane with global clip, overlay planes, risk territories, ochre schematics, picking, selection contour
+- [x] Plates 1-54 in 11 chapters; insets (pseudocapsule, Milan and other framed figures, choice table, healing timeline, comparison)
+- [x] Instrument on every plate; Explore operation controls; structure cards; comparison renders and volume table
+- [x] Evidence: 68 claims all compared with fetched source text; glossary of 41 terms drawn from the claims; credits generated from asset and source records
+- [x] Validators: paragraph attribution, glTF node and checksum checks, glossary drift, public gate
+- [x] Reference pages (method, credits and sources, glossary); print stylesheet
+- [x] Capture suite extended (instrument, pages, print, accessibility); sequential determinism passes
+- [ ] Final verification on the assembled application (see STATUS.md for results): `npm run check`, `capture`, `perf`, Firefox, review packet

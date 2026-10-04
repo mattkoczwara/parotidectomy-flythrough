@@ -112,7 +112,7 @@ const checklistRow = (c: Check) => `<tr><td>${esc(c.area)}</td><td>${esc(c.state
 
 const plates = steps
   .map((s, i) => {
-    const fig = `apps/site/public/plates/${s.id}.png`;
+    const fig = `apps/site/public/plates/${s.id}.webp`;
     const items = checklist.filter((c) => c.plates.includes(s.id));
     return `<section class="plate" id="${esc(s.id)}">
       <h2>${i + 1}. ${esc(s.title)} <span class="chapter">${esc(chapters.get(s.chapter)?.title ?? s.chapter)}</span></h2>

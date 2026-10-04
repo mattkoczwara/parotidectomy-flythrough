@@ -15,6 +15,10 @@
     "anatomy-slice-glb"
   ],
   "claims": [
-    "fn-five-branch-groups"
-  ]
+    "fn-five-branch-groups",
+    "fn-branch-targets",
+    "weakness-rates"
+  ],
+  "role": "Each group moves a different part of the face: the temporal and zygomatic branches the forehead and eyelids, the buccal branch the cheek and upper lip, and the marginal mandibular branch the lower lip.",
+  "matters": "Temporary weakness of part of the face is fairly common after parotid surgery and usually recovers; lasting weakness is much less common. The risk is higher with more extensive surgery, older age, a cancer, a repeat operation and a tumour in the deep part of the gland."
 }

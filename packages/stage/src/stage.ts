@@ -259,7 +259,7 @@ export class Stage {
     }
     this.scene.add(gltf.scene);
     this.prepareResections();
-    this.buildCtPlane();
+    await this.buildCtPlane();
 
     const pmrem = new THREE.PMREMGenerator(this.renderer);
     this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
@@ -272,7 +272,7 @@ export class Stage {
   }
 
   /** The registered CT slice as a textured quad in the axial plane at the tumour level (glTF: X = -(x - ox), Y = z - oz, Z = y - oy). */
-  private buildCtPlane() {
+  private async buildCtPlane() {
     const im = this.frame.imaging;
     if (!im) return;
     const [ox, oy, oz] = im.origin_ras_mm;
@@ -287,7 +287,8 @@ export class Stage {
     g.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 1, 1, 1, 1, 0, 0, 0]), 2));
     g.setAttribute('normal', new THREE.BufferAttribute(new Float32Array([0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0]), 3));
     g.setIndex([0, 1, 2, 0, 2, 3]);
-    const tex = new THREE.TextureLoader().load(im.image);
+    // Awaited: a plate that shows the slice must not converge before its picture has arrived.
+    const tex = await new THREE.TextureLoader().loadAsync(im.image);
     tex.colorSpace = THREE.SRGBColorSpace;
     tex.anisotropy = 4;
     const m = new THREE.MeshBasicNodeMaterial({ map: tex, transparent: true, side: THREE.DoubleSide, depthWrite: false });

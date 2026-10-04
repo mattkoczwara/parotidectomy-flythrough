@@ -18,5 +18,7 @@
   ],
   "members": [],
   "schematic": false,
-  "hidden": true
+  "hidden": true,
+  "role": "A fine needle can take a few cells from the lump. The result usually separates cancer from non-cancer, but it is not perfect: it misses some cancers and sometimes cannot give an answer.",
+  "matters": "In fine-needle aspiration a thin needle is passed through the skin into the lump and a few cells are drawn out for a pathologist; ultrasound can guide it. A wider needle can take a small core of tissue instead (core needle biopsy)."
 }

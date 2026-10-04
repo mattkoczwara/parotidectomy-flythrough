@@ -1,0 +1,18 @@
+{
+  "id": "software-astro",
+  "kind": "software",
+  "source": {
+    "name": "Astro 7 (static site generation and the Fonts API)",
+    "url": "https://astro.build"
+  },
+  "licence": {
+    "id": "MIT",
+    "url": "https://github.com/withastro/astro/blob/main/LICENSE",
+    "obligations": [
+      "Keep the copyright notice and licence text with copies of the software"
+    ]
+  },
+  "attribution": "Astro contributors, MIT licence.",
+  "transformations": [],
+  "specClaims": []
+}

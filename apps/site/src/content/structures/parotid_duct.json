@@ -9,7 +9,8 @@
   "tissue": "duct",
   "depth": "superficial-lobe",
   "claims": [
-    "parotid-duct-course"
+    "parotid-duct-course",
+    "accessory-parotid-prevalence"
   ],
   "anchors": [
     "anchor__parotid_duct"
@@ -17,5 +18,7 @@
   "assetIds": [
     "anatomy-slice-glb"
   ],
-  "hidden": true
+  "hidden": true,
+  "role": "Saliva leaves the gland through a duct that runs forward across the chewing muscle (masseter) and passes through the cheek muscle (buccinator) into the mouth.",
+  "matters": "Some people have a small separate piece of gland tissue in front of the main parotid, resting on the duct."
 }

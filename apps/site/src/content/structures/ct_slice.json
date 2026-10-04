@@ -16,5 +16,7 @@
     "imaging-ct-axial"
   ],
   "members": [],
-  "hidden": true
+  "hidden": true,
+  "role": "A CT or MRI scan is used when the lump may reach the deep part of the gland or when cancer is suspected, to show how far it goes and what it touches.",
+  "matters": "Imaging defines whether a mass is inside the gland or outside it, looks for features of cancer, and checks for spread. For deep-lobe lesions MRI and CT are the modalities of choice. On MRI, a dark signal on T2-weighted pictures and poorly outlined margins point toward malignancy."
 }

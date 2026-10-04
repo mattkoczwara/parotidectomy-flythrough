@@ -17,6 +17,10 @@
   "claims": [
     "fn-exits-stylomastoid-foramen",
     "fn-trunk-length",
-    "fn-trunk-diameter"
-  ]
+    "fn-trunk-diameter",
+    "fn-trunk-branches",
+    "antegrade-dissection"
+  ],
+  "role": "Before it enters the gland the trunk gives off two small branches: one to the skin behind the ear and one to a small muscle under the jaw.",
+  "matters": "Surgeons usually find the main trunk of the nerve first, then follow it forward, spreading the gland tissue over the nerve and dividing it as they go."
 }

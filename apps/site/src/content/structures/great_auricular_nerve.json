@@ -15,6 +15,9 @@
     "anatomy-slice-glb"
   ],
   "claims": [
-    "great-auricular-nerve-course"
-  ]
+    "great-auricular-nerve-course",
+    "gan-preservation"
+  ],
+  "role": "A skin nerve for the earlobe lies on the neck muscle below the gland and is often numbed by the operation; its back branches can usually be kept.",
+  "matters": "The nerve that gives feeling to the earlobe can often be kept; when it is cut, the numbness can last a long time."
 }

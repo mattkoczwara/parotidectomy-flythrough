@@ -16,11 +16,14 @@
   ],
   "claims": [
     "parotid-lobes-surgical",
-    "parotid-size"
+    "parotid-size",
+    "superficial-parotidectomy-definition"
   ],
   "members": [
     "parotid_level_1",
     "parotid_level_2",
     "parotid_ecd_cuff"
-  ]
+  ],
+  "role": "The “lobes” of the parotid are not separate parts: surgeons call the tissue on the outer side of the nerve “superficial” and the rest “deep”.",
+  "matters": "A superficial parotidectomy removes the whole outer lobe of the gland, the part that lies outside the facial nerve."
 }

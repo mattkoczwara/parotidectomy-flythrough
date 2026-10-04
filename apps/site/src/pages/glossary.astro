@@ -4,6 +4,9 @@ import Page from '../layouts/Page.astro';
 
 const entries = (await getCollection('glossary')).map((g) => g.data).sort((a, b) => a.term.localeCompare(b.term));
 const structures = new Map((await getCollection('structures')).map((s) => [s.data.id, s.data]));
+// Where each term's evidence is used: the first plate whose claims include one of the entry's.
+const plates = (await getCollection('steps')).map((p) => p.data).sort((a, b) => a.order - b.order);
+const where = (claims: readonly string[]) => plates.find((p) => claims.some((c) => p.claims.includes(c)));
 const letters = [...new Set(entries.map((e) => e.term[0]!.toUpperCase()))];
 ---
 
@@ -12,21 +15,23 @@ const letters = [...new Set(entries.map((e) => e.term[0]!.toUpperCase()))];
   <nav class="az" aria-label="Jump to a letter">
     {letters.map((l) => <a href={`#letter-${l}`}>{l}</a>)}
   </nav>
-  <dl class="glossary">
+  <div class="glossary">
     {letters.map((l) => (
-      <>
+      <section aria-labelledby={`letter-${l}`}>
         <h2 id={`letter-${l}`} class="az-letter">{l}</h2>
-        {entries.filter((e) => e.term[0]!.toUpperCase() === l).map((e) => {
-          const s = e.structureId ? structures.get(e.structureId) : undefined;
-          return (
-            <div id={e.id} class="gloss">
-              <dt>{e.term}{s?.names.latin ? <span class="latin"> · {s.names.latin}</span> : null}</dt>
-              <dd class="plain">{e.plain}.</dd>
-              <dd>{e.definition}</dd>
-            </div>
-          );
-        })}
-      </>
+        <dl>
+          {entries.filter((e) => e.term[0]!.toUpperCase() === l).map((e) => {
+            const s = e.structureId ? structures.get(e.structureId) : undefined;
+            return (
+              <div id={e.id} class="gloss">
+                <dt>{e.term}{s?.names.latin ? <span class="latin"> · {s.names.latin}</span> : null}</dt>
+                <dd class="plain">{e.plain}.</dd>
+                <dd>{e.definition}{where(e.claims) && <> <a href={`/#${where(e.claims)!.id}`}>In the atlas: {where(e.claims)!.title}</a></>}</dd>
+              </div>
+            );
+          })}
+        </dl>
+      </section>
     ))}
-  </dl>
+  </div>
 </Page>

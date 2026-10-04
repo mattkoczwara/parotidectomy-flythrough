@@ -15,10 +15,13 @@
     "anatomy-slice-glb"
   ],
   "claims": [
-    "parotid-lobes-surgical"
+    "parotid-lobes-surgical",
+    "total-parotidectomy-definition"
   ],
   "members": [
     "parotid_level_3",
     "parotid_level_4"
-  ]
+  ],
+  "role": "The superficial and deep lobes are a surgical division defined by the plane of the facial nerve; by weight about two-thirds of the gland lies superficial to it, and most tumours arise there.",
+  "matters": "A total parotidectomy removes both the outer and the inner parts of the gland while the nerve is kept; in benign disease it is kept for tumours that reach the inner part."
 }
