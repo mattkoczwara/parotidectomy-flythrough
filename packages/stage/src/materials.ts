@@ -25,8 +25,8 @@ interface Preset {
 /** Naturalistic tissue colours (sRGB) with restrained illustrator conventions: artery red, vein blue-grey, nerve ivory.
  *  Values were recalibrated in the final presentation pass under the neutral studio rig (ADR-0005). */
 const PRESETS: Record<TissueFamily, Preset> = {
-  skin: { base: 0xc9a592, cut: 0xe2c6b3, roughness: 0.5, sheen: 0.1, sss: 0x8e5a4a, sssScale: 0.55 },
-  fat: { base: 0xe8c38e, cut: 0xeed2a2, roughness: 0.34, clearcoat: 0.45 },
+  skin: { base: 0xc8a796, cut: 0xe2c6b3, roughness: 0.5, sheen: 0.1, clearcoat: 0.06, sss: 0x8a5e50, sssScale: 0.5 },
+  fat: { base: 0xe7bb8e, cut: 0xedcfa3, roughness: 0.34, clearcoat: 0.45 },
   fascia: { base: 0xd8cdbd, cut: 0xe3d8c8, roughness: 0.48, sheen: 0.45 },
   gland: { base: 0xcc9a7d, cut: 0xe0b59a, roughness: 0.5, clearcoat: 0.2, sss: 0x9a4a32, sssScale: 2.0 },
   duct: { base: 0xe6d7c4, cut: 0xe6d7c4, roughness: 0.42, clearcoat: 0.32 },
@@ -368,6 +368,8 @@ export interface TissueOptions {
   fadeBelow?: boolean;
   /** Fade into the field just above the scene cut (all anatomy; not the skin, which continues as the exterior body). */
   fadeCut?: boolean;
+  /** A gland piece with baked cut-face and ink fields (`_cutface`, `_ink`). */
+  pieceFields?: boolean;
   /** The skin carries the gland's footprint (`_foot`) for the localisation contour. */
   locate?: boolean;
   /** The eyes of the generic face (presentation only): centres of the two globes, glTF metres. */
@@ -438,6 +440,8 @@ export function tissue(o: TissueOptions): TissueMaterial {
       base = inner.select(rgb(PRESETS.fat.cut).mul(0.92), base);
     }
     const foot = o.locate ? attribute('_foot', 'float') : null;
+    // The inner shell seen through an opening (the ear canal, the lip seam) falls into shadow.
+    if (foot) base = mix(base, base.mul(0.12), foot.lessThan(-75).select(attribute('_tint', 'vec4').z, float(0)));
     if (foot) base = mix(base, base.mul(vec3(1.05, 0.9, 0.84)), smoothstep(-1.5, 3, foot).mul(U.locate).mul(0.3));
     m.roughnessNode = roughness;
     if (o.fadeBelow) m.opacityNode = materialOpacity.mul(smoothstep(U.cutY.sub(0.05), U.cutY.add(0.015), positionWorld.y));
@@ -457,11 +461,13 @@ export function tissue(o: TissueOptions): TissueMaterial {
       // The inner shell's normals face into the head; on the folded flap they must face out of the underside.
       return frontFacing.select(flapInner!.select(front.negate(), front), n.normalize().negate());
     };
-    if (piece) {
+    if (piece) cutColour = tone(cutColour);
+    // Only gland pieces carry cut-face and ink fields; for the tumour pieces the attributes would be missing and the
+    // shader would hold smoothstep() of constants, which Firefox's WGSL validator (Naga) rejects.
+    if (piece && o.pieceFields) {
       // Faces made by a cut between pieces (the bed left by a resection) are cut parenchyma, not the gland's outer
       // surface; the baked weight is 0 on the outer surface and 1 inside the gland.
       const cutface = attribute('_cutface', 'float');
-      cutColour = tone(cutColour);
       surface = mix(surface, cutColour, cutface.mul(0.92));
       // Marker ink at the ESGS level boundaries and the extracapsular outline, on the outer surface only. Each _ink
       // channel is a signed distance (mm / 8) whose zero crossing is the boundary, so the line is sub-triangle exact.
@@ -599,9 +605,13 @@ export function hairShells(): HairMaterial {
   const clump = n3(q.mul(1 / 1.7).add(vec3(4.2, 1.3, 7.7))).mul(0.5).add(0.5);
   const v = strand.mul(0.72).add(clump.mul(0.28));
   // Strands thin out toward their tips and where the hair is short (the hairline), and dissolve with `fade`.
-  const edge = smoothstep(0.2, 2.2, hmm);
+  // The hairline thins over several millimetres and its edge is broken by noise (never the triangles' polygon).
+  const ragged = hmm.mul(float(0.7).add(n3(P.mul(1 / 1.8)).mul(0.5).add(0.5).mul(0.6)));
+  // Density follows length: scalp hair thins from about 6 mm down (the short sides show some scalp, the hairline
+  // fades over several millimetres); brows use their own short range.
+  const edge = mix(smoothstep(0.2, 6.0, ragged), smoothstep(0.1, 1.5, ragged), kind);
   // Brows are sparser than the scalp (skin shows between the hairs).
-  const threshold = t.mul(0.5).add(0.22).add(edge.oneMinus().mul(0.45)).add(kind.mul(0.34)).add(fade.oneMinus().mul(1.2));
+  const threshold = t.mul(0.5).add(0.22).add(edge.oneMinus().mul(0.55)).add(kind.mul(0.2)).add(fade.oneMinus().mul(1.2));
   const grey = smoothstep(0.9, 0.93, n3(q.mul(pitch.mul(0.5)).add(vec3(3, 9, 1))).mul(0.5).add(0.5)).mul(kind.oneMinus());
   const shade = n3(q.mul(pitch.mul(0.35)).add(vec3(1.7, 5.1, 2.9))).mul(0.5).add(0.5);
   const colour = mix(mix(mix(rgb(0x30251e), rgb(0x56443a), clump), rgb(0x76604f), shade.mul(0.45)), rgb(0x9a928a), grey.mul(0.5));
@@ -615,7 +625,7 @@ export function hairShells(): HairMaterial {
   m.sheen = 0.2;
   m.sheenRoughness = 0.55;
   m.sheenColor = new THREE.Color(0x8a7462);
-  m.maskNode = v.greaterThan(threshold).and(hmm.greaterThan(0.05)).and(positionWorld.y.greaterThan(U.clipY).not());
+  m.maskNode = v.greaterThan(threshold).and(ragged.greaterThan(0.06)).and(positionWorld.y.greaterThan(U.clipY).not());
   return { material: m, fade };
 }
 

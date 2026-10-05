@@ -391,7 +391,7 @@
   "exterior": {
     "pass": true,
     "seam_vertices": 406,
-    "hair_vertices": 11083,
+    "hair_vertices": 10959,
     "hair_max_in_parotid_zone": 0.0,
     "hair_min_ear_clearance_mm": 5.6,
     "body_vertices": 3695,

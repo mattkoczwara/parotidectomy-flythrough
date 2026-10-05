@@ -128,7 +128,7 @@ type LookName = 'portrait' | 'studio' | 'operative' | 'specimen';
 const LOOKS: Readonly<Record<LookName, Look>> = {
   // Soft portrait light: a broad key high in front of the face sculpts ear, jaw, cheek and neck; a cool rim separates
   // the occiput and shoulders from the field.
-  portrait: { key: 2.9, keyColour: 0xfff3ea, keyDir: [-0.5, 0.7, 0.6], fill: 0.14, rim: 2.1, env: 0.2, hemi: 0.05 },
+  portrait: { key: 3.0, keyColour: 0xfff3ea, keyDir: [-0.38, 0.72, 0.78], fill: 0.12, rim: 2.3, env: 0.2, hemi: 0.05 },
   // Superficial anatomy: information first, more fill and a little more environment so no structure falls into shadow.
   studio: { key: 2.0, keyColour: 0xfff5ec, keyDir: [-0.75, 0.6, 0.45], fill: 0.62, rim: 0.85, env: 0.58, hemi: 0.28 },
   // Deep operative views: a higher, slightly cooler and more directional key for depth and plane separation.
@@ -262,6 +262,8 @@ export class Stage {
   private raycaster = new THREE.Raycaster();
   private key = new THREE.DirectionalLight(0xfff4e8, 2.1);
   private fill = new THREE.DirectionalLight(0xe8eef6, 0.4);
+  /** The framing centre of the last placed camera: the fill light is aimed along the view toward it. */
+  private fillTarget = new THREE.Vector3();
   private rim = new THREE.DirectionalLight(0xdfe8ff, 1.0);
   private hemi = new THREE.HemisphereLight(0xf3efe9, 0x322c28, 0.4);
   /** Cyclorama: the field colour at the edges, a soft lift behind the subject that follows the framing (screen UV). */
@@ -375,7 +377,7 @@ export class Stage {
       const window = w ? { window: { open: this.windowOpen[w.key]!, inset: w.inset } } : {};
       const flapped = FLAPPED.has(node.name);
       const eyes = node.name === 'eyes' ? eyeCentres(node.geometry) : undefined;
-      const mat = tissue({ family: s.tissue, ...window, ...(eyes ? { eyes } : {}), tint: node.name === 'skin' || node.name === 'exterior_body', fadeBelow: node.name === 'exterior_body', fadeCut: node.name !== 'skin' && node.name !== 'exterior_body' && node.name !== 'eyes', locate: node.name === 'skin' && !!node.geometry.getAttribute('_foot'), axis: !!node.geometry.getAttribute('_axis'), piece: REMOVABLE.has(node.name), mobilise: MOBILISED.test(node.name), hollow: HOLLOWED.has(node.name), zones: node.name === 'skin', ...(node.name === 'smas_flap' ? { turn: 'smas' as const } : node.name === 'scm_flap' ? { turn: 'scm' as const } : {}), ...(flapped ? { flap: 'rest' as const, ink: node.name === 'skin' } : {}) });
+      const mat = tissue({ family: s.tissue, ...window, ...(eyes ? { eyes } : {}), tint: node.name === 'skin' || node.name === 'exterior_body', fadeBelow: node.name === 'exterior_body', fadeCut: node.name !== 'skin' && node.name !== 'exterior_body' && node.name !== 'eyes', locate: node.name === 'skin' && !!node.geometry.getAttribute('_foot'), axis: !!node.geometry.getAttribute('_axis'), pieceFields: !!node.geometry.getAttribute('_ink') && !!node.geometry.getAttribute('_cutface'), piece: REMOVABLE.has(node.name), mobilise: MOBILISED.test(node.name), hollow: HOLLOWED.has(node.name), zones: node.name === 'skin', ...(node.name === 'smas_flap' ? { turn: 'smas' as const } : node.name === 'scm_flap' ? { turn: 'scm' as const } : {}), ...(flapped ? { flap: 'rest' as const, ink: node.name === 'skin' } : {}) });
       node.material = mat.material;
       node.renderOrder = order.length - order.indexOf(node.name);
       this.meshes.set(node.name, { mesh: node, twin: this.twinOf(node, mat), mat, tissue: s.tissue, schematic: !!('schematic' in s && s.schematic), ...(follows ? { follows } : {}) });
@@ -597,7 +599,8 @@ export class Stage {
       // The eyes sit in the skin: when the skin is ghosted they ghost with it (never a solid globe in a faded face).
       if (id === 'eyes') {
         const sk = state.structures['skin'];
-        if (sk?.mode === 'ghost') ghostOpacity = Math.min(ghostOpacity, sk.opacity ?? 1);
+        // (gone by the time the skin is half faded: a faint globe still catches a specular point)
+        if (sk?.mode === 'ghost') ghostOpacity = Math.min(ghostOpacity, THREE.MathUtils.smoothstep(sk.opacity ?? 1, 0.55, 0.95));
       }
       const opacity = presence * Math.min(ghostOpacity, dial);
       if (wantsHatch) {
@@ -664,8 +667,8 @@ export class Stage {
     U.scar.value = state.op['scar'] ?? 0;
     U.hollow.value = state.op['hollow'] ?? 0;
     for (const [k, z] of (this.frame.zones ?? []).entries()) if (k < ZONE_SLOTS) zoneWeight[k]!.value = state.op[`zone_${z.weight}`] ?? 0;
-    this.applyLight(state);
     this.placeCamera(state.camera);
+    this.applyLight(state);
     this.placeSection(state);
   }
 
@@ -691,6 +694,10 @@ export class Stage {
       colour.add(c.set(l.keyColour).multiplyScalar(k));
     }
     this.key.position.copy(dir.normalize());
+    // The fill comes from the viewer, a little below the eye line, like an operating light along the surgeon's view:
+    // surfaces turned toward the viewer (the raised flap's underside, the depth of the wound) are never black.
+    const toCamera = this.camera.position.clone().sub(this.fillTarget).normalize();
+    this.fill.position.copy(toCamera.add(new THREE.Vector3(0, -0.25, 0)).normalize());
     this.key.color.copy(colour);
     this.key.intensity = sum.key;
     this.fill.intensity = sum.fill;
@@ -787,6 +794,7 @@ export class Stage {
     const fit = Math.min(fov, 2 * Math.atan(Math.tan(fov / 2) * this.camera.aspect));
     const dist = (radius / Math.sin(fit / 2)) * cam.zoom * this.override.zoom;
     this.camera.position.copy(center).addScaledVector(dir, dist);
+    this.fillTarget.copy(center);
     this.camera.up.set(0, 1, 0);
     this.camera.lookAt(center);
     if (this.frameOffsetX) {

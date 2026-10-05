@@ -64,7 +64,7 @@
     "hair": {
       "min": [
         -0.01093,
-        -0.00894,
+        -0.0078,
         -0.11438
       ],
       "max": [
@@ -1126,8 +1126,8 @@
       "triangles": 6561
     },
     "hair": {
-      "vertices": 11083,
-      "triangles": 21536
+      "vertices": 10959,
+      "triangles": 21288
     },
     "subcutaneous_fat": {
       "vertices": 57885,
@@ -1370,5 +1370,5 @@
       "triangles": 3822
     }
   },
-  "triangles_total": 663141
+  "triangles_total": 662893
 }

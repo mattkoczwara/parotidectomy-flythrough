@@ -1,0 +1,6 @@
+{
+  "opening": { "plate": "face" },
+  "localisation": { "plate": "where-parotid" },
+  "nerve-operative": { "plate": "bed" },
+  "explore": { "plate": "explore" }
+}

@@ -426,20 +426,31 @@ export function start(): void {
       const left = !!box && box.right > columnX - 12 && box.left - LABEL_WIDTH - 36 > textRight;
       if (left) columnX = box!.left - LABEL_WIDTH - 36;
       proj.sort((a, b) => a.y - b.y);
+      // The right margin column ends above the depth gauge (bottom right); a column beside the text runs to the edge.
+      const gaugeEl = document.querySelector<HTMLElement>('.gauge');
+      const gaugeTop = gaugeEl && getComputedStyle(gaugeEl).display !== 'none' ? gaugeEl.getBoundingClientRect().top - r.top : r.height;
+      const limit = left ? r.height - 8 : Math.min(r.height - 8, gaugeTop - 10);
       let bottom = LABEL_TOP - LABEL_GAP; // first label below the controls at the top right (instrument, reset, orientation glyph)
+      const placed: { li: HTMLLIElement; p: (typeof proj)[number]; top: number; h: number }[] = [];
       for (const p of proj.filter((q) => (left ? q.x > columnX + LABEL_WIDTH + 16 : q.x < columnX - 16))) {
         const li = labelItem(p.id, state.structures[p.id]?.emphasis ?? 'context');
         if (left) li.style.right = `${r.width - columnX - LABEL_WIDTH}px`; // right-aligned against the focus side
         else li.style.left = `${columnX}px`;
         const h = li.offsetHeight; // two lines at Clinical depth (Latin name)
         const top = Math.max(p.y - 10, bottom + 6);
-        if (top + h > r.height - 8) {
-          li.remove();
-          break;
-        }
-        li.style.top = `${top}px`;
+        placed.push({ li, p, top, h });
         bottom = top + h;
-        leader(p.x, p.y, left ? columnX + LABEL_WIDTH + 4 : columnX - 4, top + 10);
+      }
+      // A stack that runs past the limit slides up as a whole (not above the top controls); only then are labels dropped.
+      const overflow = Math.min(bottom - limit, placed.length ? placed[0]!.top - LABEL_TOP : 0);
+      for (const it of placed) {
+        if (overflow > 0) it.top -= overflow;
+        if (it.top + it.h > limit) {
+          it.li.remove();
+          continue;
+        }
+        it.li.style.top = `${it.top}px`;
+        leader(it.p.x, it.p.y, left ? columnX + LABEL_WIDTH + 4 : columnX - 4, it.top + 10);
       }
     } else {
       // Rows of labels flowing left to right, stacked upward from the bottom edge of the scene.

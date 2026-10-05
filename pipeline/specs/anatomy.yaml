@@ -302,7 +302,7 @@ exterior:
     dz:  [-42, -38, -20, -2, 10, 16, 10, 8, 16, 30, 50, 66, 66]
     front_dz: 66          # the forehead hairline above the eye centre
     side_from_mm: [30, 50]   # |x| (mm from the midline) over which the front hairline gives way to the side one
-  hairline_soft_mm: 7
+  hairline_soft_mm: 11
   ear_clear_mm: [5, 9]        # hair fades out between these distances from the auricle
   parotid_clear_mm: 40        # no hair within this distance of the parotid region centre (face.conform_center)
   top_mm: 10                  # hair length on the crown; the sides are tapered

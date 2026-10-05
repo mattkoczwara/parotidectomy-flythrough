@@ -68,7 +68,10 @@ try {
 
   await send('browsingContext.navigate', { context, url: `http://localhost:${PORT}/`, wait: 'complete' });
   const ids = JSON.parse(await evaluate(`JSON.stringify([...document.querySelectorAll('[data-plate]')].map((e) => e.id))`));
+  // FF_PLATES=face,bed limits the pass to some plates (look development); the default is all of them.
+  const only = process.env.FF_PLATES ? new Set(process.env.FF_PLATES.split(',')) : null;
   for (const [i, id] of ids.entries()) {
+    if (only && !only.has(id)) continue;
     events.length = 0;
     await send('browsingContext.navigate', { context, url: `http://localhost:${PORT}/?capture=1&cold=${Date.now()}#${id}`, wait: 'complete' });
     const t0 = Date.now();
@@ -84,7 +87,7 @@ try {
     const state = JSON.parse(await evaluate(`JSON.stringify({ backend: document.body.dataset.backend ?? null, tier: document.body.dataset.tier ?? null, static: document.body.classList.contains('static'), gpu: 'gpu' in navigator, labels: document.querySelectorAll('.labels li').length })`));
     const shot = await send('browsingContext.captureScreenshot', { context });
     writeFileSync(join(out, `${id}.png`), Buffer.from(shot.data, 'base64'));
-    const errors = events.filter((e) => e.level === 'error').map((e) => e.text?.slice(0, 300));
+    const errors = events.filter((e) => e.level === 'error').map((e) => e.text?.slice(0, 4000));
     results.plates.push({ id, converged, ms: Date.now() - t0, ...state, errors });
     console.log(id, converged ? 'converged' : 'NOT converged', `${Date.now() - t0} ms`, JSON.stringify(state), errors.length ? `errors: ${errors.length}` : '');
   }
