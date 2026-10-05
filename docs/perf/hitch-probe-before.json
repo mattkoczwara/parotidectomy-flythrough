@@ -1,0 +1,2837 @@
+{
+  "date": "2026-10-05T19:31:39.580Z",
+  "query": "tier=high&probe",
+  "tier": "high",
+  "pipeline": "traa+ao",
+  "backend": "webgpu",
+  "runs": [
+    {
+      "totals": {
+        "frames": 9191,
+        "medianMs": 16.7,
+        "medianFps": 59.9,
+        "p95Ms": 16.8,
+        "maxMs": 817,
+        "over25": 115,
+        "over40": 59,
+        "longTasks": 54,
+        "longAnimationFrames": 71,
+        "transitionsWithStall": 35
+      },
+      "transitions": [
+        {
+          "transition": "face→where-parotid",
+          "frames": 201,
+          "maxMs": 50,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "where-parotid→duct",
+          "frames": 142,
+          "maxMs": 50,
+          "over25": 4,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "duct→layers",
+          "frames": 150,
+          "maxMs": 100,
+          "over25": 4,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "layers→nerve-within",
+          "frames": 147,
+          "maxMs": 117,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "frames": 140,
+          "maxMs": 67,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "frames": 152,
+          "maxMs": 167,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "branch-groups→nerve-plane",
+          "frames": 156,
+          "maxMs": 50,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-plane→nerve-variants",
+          "frames": 151,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "frames": 155,
+          "maxMs": 117,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "frames": 136,
+          "maxMs": 183,
+          "over25": 8,
+          "over40": 5,
+          "p95Ms": 33.4
+        },
+        {
+          "transition": "tumour-positions→pseudocapsule",
+          "frames": 161,
+          "maxMs": 50,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pseudocapsule→no-shelling",
+          "frames": 253,
+          "maxMs": 133,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "no-shelling→ultrasound",
+          "frames": 219,
+          "maxMs": 400,
+          "over25": 5,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "ultrasound→cross-section",
+          "frames": 178,
+          "maxMs": 217,
+          "over25": 4,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "cross-section→needle",
+          "frames": 180,
+          "maxMs": 83,
+          "over25": 5,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "needle→milan",
+          "frames": 158,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "milan→esgs-levels",
+          "frames": 223,
+          "maxMs": 317,
+          "over25": 2,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "esgs-levels→option-ecd",
+          "frames": 163,
+          "maxMs": 50,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-ecd→option-partial",
+          "frames": 155,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-partial→option-superficial",
+          "frames": 156,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-superficial→option-total",
+          "frames": 149,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-total→choosing",
+          "frames": 154,
+          "maxMs": 100,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "choosing→evidence-limits",
+          "frames": 235,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "frames": 255,
+          "maxMs": 250,
+          "over25": 5,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision→incision-facelift",
+          "frames": 148,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision-facelift→flap",
+          "frames": 169,
+          "maxMs": 34,
+          "over25": 2,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "flap→gan",
+          "frames": 145,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "gan→landmarks",
+          "frames": 150,
+          "maxMs": 317,
+          "over25": 4,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "landmarks→trunk",
+          "frames": 170,
+          "maxMs": 100,
+          "over25": 3,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk→pes-divisions",
+          "frames": 162,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pes-divisions→upper-division",
+          "frames": 139,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "upper-division→peel",
+          "frames": 156,
+          "maxMs": 100,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "peel→lobe-lifts",
+          "frames": 156,
+          "maxMs": 67,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "lobe-lifts→specimen-out",
+          "frames": 144,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "specimen-out→bed",
+          "frames": 159,
+          "maxMs": 167,
+          "over25": 5,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "bed→barrier-smas",
+          "frames": 153,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-smas→barrier-scm",
+          "frames": 157,
+          "maxMs": 183,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-scm→barrier-graft",
+          "frames": 159,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "frames": 158,
+          "maxMs": 84,
+          "over25": 4,
+          "over40": 3,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "drain→closed",
+          "frames": 154,
+          "maxMs": 83,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "closed→after-anatomy",
+          "frames": 155,
+          "maxMs": 50,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "after-anatomy→contour",
+          "frames": 156,
+          "maxMs": 50,
+          "over25": 4,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "contour→pathology",
+          "frames": 161,
+          "maxMs": 817,
+          "over25": 4,
+          "over40": 3,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pathology→healing",
+          "frames": 241,
+          "maxMs": 83,
+          "over25": 4,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "healing→compl-map",
+          "frames": 197,
+          "maxMs": 717,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "compl-map→weakness",
+          "frames": 160,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "weakness→numbness",
+          "frames": 181,
+          "maxMs": 350,
+          "over25": 5,
+          "over40": 4,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "numbness→frey",
+          "frames": 164,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "frey→first-bite",
+          "frames": 169,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "first-bite→sialocele",
+          "frames": 173,
+          "maxMs": 317,
+          "over25": 3,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "sialocele→recurrence",
+          "frames": 168,
+          "maxMs": 100,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "recurrence→explore",
+          "frames": 241,
+          "maxMs": 133,
+          "over25": 5,
+          "over40": 4,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "explore→compare",
+          "frames": 377,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        }
+      ],
+      "stalls": [
+        {
+          "transition": "face→where-parotid",
+          "from": 0,
+          "progress": 0.7,
+          "dt": 50,
+          "moving": true,
+          "at": 187015,
+          "loaf": {
+            "start": 186952,
+            "duration": 71.29999999981374,
+            "blocking": 7.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 57
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 56.5,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 1,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 2,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "where-parotid→duct",
+          "from": 1,
+          "progress": 0.7,
+          "dt": 50,
+          "moving": true,
+          "at": 189233,
+          "loaf": {
+            "start": 189170.2999999998,
+            "duration": 71.20000000018626,
+            "blocking": 8.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 57
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 57.1,
+            "flips": 2,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 1,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 2,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "duct→layers",
+          "from": 2,
+          "progress": 0.2,
+          "dt": 100,
+          "moving": true,
+          "at": 191033,
+          "loaf": {
+            "start": 190921.3999999999,
+            "duration": 117.39999999990687,
+            "blocking": 55.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 105
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.7,
+            "render": 104.1,
+            "flips": 5,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 6,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 9,
+              "ms": 0
+            },
+            "createShaderModule": {
+              "n": 2,
+              "ms": 0.2
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "duct→layers",
+          "from": 2,
+          "progress": 0.4,
+          "dt": 83,
+          "moving": true,
+          "at": 191517,
+          "loaf": {
+            "start": 191421.7000000002,
+            "duration": 96,
+            "blocking": 33.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 83
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.3,
+            "render": 82.5,
+            "flips": 5,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 8,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 12,
+              "ms": 0
+            },
+            "createShaderModule": {
+              "n": 8,
+              "ms": 0.6
+            },
+            "createRenderPipeline": {
+              "n": 4,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "layers→nerve-within",
+          "from": 3,
+          "progress": 0.3,
+          "dt": 117,
+          "moving": true,
+          "at": 193818,
+          "loaf": {
+            "start": 193689.2999999998,
+            "duration": 133.3000000002794,
+            "blocking": 71.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 121
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.3,
+            "render": 120.4,
+            "flips": 5,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 5,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 10,
+              "ms": 0.1
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "from": 4,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 196303,
+          "loaf": {
+            "start": 196241.1000000001,
+            "duration": 75.79999999981374,
+            "blocking": 14.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 63
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 63,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 4,
+              "ms": 0.1
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "from": 4,
+          "progress": 0.7,
+          "dt": 67,
+          "moving": true,
+          "at": 196970,
+          "loaf": {
+            "start": 196892,
+            "duration": 88.20000000018626,
+            "blocking": 26.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 76
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 75.5,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 4,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "from": 5,
+          "progress": 0,
+          "dt": 67,
+          "moving": false,
+          "at": 198203,
+          "loaf": {
+            "start": 198136.8999999999,
+            "duration": 75.20000000018626,
+            "blocking": 25.1,
+            "layout": 1,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 75
+              }
+            ]
+          },
+          "probe": null,
+          "gpu": {}
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "from": 5,
+          "progress": 0.7,
+          "dt": 167,
+          "moving": true,
+          "at": 199738,
+          "loaf": {
+            "start": 199575.5,
+            "duration": 180,
+            "blocking": 0,
+            "layout": 0,
+            "scripts": []
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 3.2,
+            "flips": 0,
+            "hatches": 0
+          },
+          "gpu": {}
+        },
+        {
+          "transition": "branch-groups→nerve-plane",
+          "from": 6,
+          "progress": 0.7,
+          "dt": 50,
+          "moving": true,
+          "at": 202372,
+          "loaf": {
+            "start": 202310.8999999999,
+            "duration": 63.200000000186265,
+            "blocking": 1.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 50
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0,
+            "render": 49.7,
+            "flips": 2,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 4,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 6,
+              "ms": 0
+            },
+            "createShaderModule": {
+              "n": 2,
+              "ms": 0.3
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "from": 8,
+          "progress": 0.7,
+          "dt": 117,
+          "moving": true,
+          "at": 207658,
+          "loaf": {
+            "start": 207529.6000000001,
+            "duration": 137.29999999981374,
+            "blocking": 75.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 125
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 124.4,
+            "flips": 6,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 7,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 11,
+              "ms": 0.1
+            },
+            "createShaderModule": {
+              "n": 6,
+              "ms": 0.8
+            },
+            "createRenderPipeline": {
+              "n": 3,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "from": 8,
+          "progress": 1,
+          "dt": 67,
+          "moving": true,
+          "at": 208375,
+          "loaf": {
+            "start": 208296.5,
+            "duration": 93.29999999981374,
+            "blocking": 31.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 81
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 80.4,
+            "flips": 5,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 6,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 9,
+              "ms": 0.1
+            },
+            "createShaderModule": {
+              "n": 6,
+              "ms": 0.2
+            },
+            "createRenderPipeline": {
+              "n": 3,
+              "ms": 0.2
+            }
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 209425,
+          "loaf": {
+            "start": 209363.5,
+            "duration": 75.70000000018626,
+            "blocking": 13.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 63
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.6,
+            "render": 62,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 4,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 0.7,
+          "dt": 100,
+          "moving": true,
+          "at": 210126,
+          "loaf": {
+            "start": 210014,
+            "duration": 117,
+            "blocking": 55.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 104
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 103.7,
+            "flips": 5,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 3,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 6,
+              "ms": 0.1
+            },
+            "createRenderPipeline": {
+              "n": 3,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 0.7,
+          "dt": 167,
+          "moving": true,
+          "at": 210292,
+          "loaf": {
+            "start": 210014,
+            "duration": 117,
+            "blocking": 55.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 104
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 2.6,
+            "flips": 0,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 1,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 2,
+              "ms": 0.1
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 1,
+          "dt": 50,
+          "moving": true,
+          "at": 211026,
+          "loaf": {
+            "start": 210964.7999999998,
+            "duration": 77.10000000009313,
+            "blocking": 15.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 65
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 64.5,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 4,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 6,
+              "ms": 0.1
+            },
+            "createShaderModule": {
+              "n": 2,
+              "ms": 0.2
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 1,
+          "dt": 183,
+          "moving": true,
+          "at": 211210,
+          "loaf": {
+            "start": 210964.7999999998,
+            "duration": 77.10000000009313,
+            "blocking": 15.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 65
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 7.4,
+            "flips": 0,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 3,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 5,
+              "ms": 0
+            },
+            "createSampler": {
+              "n": 1,
+              "ms": 0
+            },
+            "createBindGroupLayout": {
+              "n": 1,
+              "ms": 0
+            },
+            "createShaderModule": {
+              "n": 2,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "tumour-positions→pseudocapsule",
+          "from": 10,
+          "progress": 0.2,
+          "dt": 50,
+          "moving": true,
+          "at": 212227,
+          "loaf": {
+            "start": 212165.7999999998,
+            "duration": 75.70000000018626,
+            "blocking": 14.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 64
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 63.6,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 4,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "pseudocapsule→no-shelling",
+          "from": 11,
+          "progress": 0.5,
+          "dt": 133,
+          "moving": true,
+          "at": 217012,
+          "loaf": {
+            "start": 216867,
+            "duration": 153.79999999981374,
+            "blocking": 91.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 141
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 140.8,
+            "flips": 6,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 10,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 15,
+              "ms": 0.3
+            },
+            "createShaderModule": {
+              "n": 2,
+              "ms": 0.3
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "no-shelling→ultrasound",
+          "from": 12,
+          "progress": 0.5,
+          "dt": 400,
+          "moving": true,
+          "at": 221131,
+          "loaf": {
+            "start": 220719,
+            "duration": 418.79999999981374,
+            "blocking": 356.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 406
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 405.8,
+            "flips": 17,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 18,
+              "ms": 0.4
+            },
+            "createBindGroup": {
+              "n": 34,
+              "ms": 0.4
+            },
+            "createRenderPipeline": {
+              "n": 4,
+              "ms": 0
+            },
+            "createShaderModule": {
+              "n": 2,
+              "ms": 0.2
+            }
+          }
+        },
+        {
+          "transition": "ultrasound→cross-section",
+          "from": 13,
+          "progress": 0.4,
+          "dt": 217,
+          "moving": true,
+          "at": 224216,
+          "loaf": {
+            "start": 223987.7000000002,
+            "duration": 242.29999999981374,
+            "blocking": 180.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 230
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 229.3,
+            "flips": 10,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 16,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 24,
+              "ms": 0.3
+            },
+            "createShaderModule": {
+              "n": 6,
+              "ms": 0.3
+            },
+            "createRenderPipeline": {
+              "n": 3,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "cross-section→needle",
+          "from": 14,
+          "progress": 0,
+          "dt": 83,
+          "moving": false,
+          "at": 226050,
+          "loaf": {
+            "start": 225966.7000000002,
+            "duration": 88.79999999981374,
+            "blocking": 39,
+            "layout": 1.2,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 89
+              }
+            ]
+          },
+          "probe": null,
+          "gpu": {}
+        },
+        {
+          "transition": "cross-section→needle",
+          "from": 14,
+          "progress": 0.5,
+          "dt": 67,
+          "moving": true,
+          "at": 227551,
+          "loaf": {
+            "start": 227472.6000000001,
+            "duration": 88.1999999997206,
+            "blocking": 26.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 76
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 75.3,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 4,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0.2
+            }
+          }
+        },
+        {
+          "transition": "milan→esgs-levels",
+          "from": 16,
+          "progress": 0.5,
+          "dt": 317,
+          "moving": true,
+          "at": 234254,
+          "loaf": {
+            "start": 233925.5,
+            "duration": 338.10000000009313,
+            "blocking": 276.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 325
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 324.8,
+            "flips": 13,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 22,
+              "ms": 0.4
+            },
+            "createBindGroup": {
+              "n": 34,
+              "ms": 0.3
+            },
+            "createShaderModule": {
+              "n": 2,
+              "ms": 0.2
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "milan→esgs-levels",
+          "from": 16,
+          "progress": 0.8,
+          "dt": 50,
+          "moving": true,
+          "at": 234871,
+          "loaf": {
+            "start": 234808.3999999999,
+            "duration": 68.39999999990687,
+            "blocking": 5.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 55
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 55,
+            "flips": 2,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 3,
+              "ms": 0
+            },
+            "createShaderModule": {
+              "n": 1,
+              "ms": 0.3
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "esgs-levels→option-ecd",
+          "from": 17,
+          "progress": 0.9,
+          "dt": 50,
+          "moving": true,
+          "at": 237789,
+          "loaf": {
+            "start": 237745.8999999999,
+            "duration": 50.700000000186265,
+            "blocking": 0,
+            "layout": 0,
+            "scripts": []
+          },
+          "probe": {
+            "apply": 0.3,
+            "render": 4.6,
+            "flips": 0,
+            "hatches": 0
+          },
+          "gpu": {}
+        },
+        {
+          "transition": "option-total→choosing",
+          "from": 21,
+          "progress": 0.5,
+          "dt": 100,
+          "moving": true,
+          "at": 247327,
+          "loaf": {
+            "start": 247214.2000000002,
+            "duration": 127.6999999997206,
+            "blocking": 65.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 114
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 114.3,
+            "flips": 5,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 4,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 8,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "from": 23,
+          "progress": 0.4,
+          "dt": 250,
+          "moving": true,
+          "at": 255547,
+          "loaf": {
+            "start": 255284.7999999998,
+            "duration": 269,
+            "blocking": 206.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 256
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 255.3,
+            "flips": 11,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 18,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 27,
+              "ms": 0.3
+            },
+            "createShaderModule": {
+              "n": 6,
+              "ms": 0.5
+            },
+            "createRenderPipeline": {
+              "n": 3,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "from": 23,
+          "progress": 0.5,
+          "dt": 83,
+          "moving": true,
+          "at": 255997,
+          "loaf": {
+            "start": 255901,
+            "duration": 96.70000000018626,
+            "blocking": 33.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 83
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 82.9,
+            "flips": 5,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 8,
+              "ms": 0.2
+            },
+            "createBindGroup": {
+              "n": 12,
+              "ms": 0.1
+            },
+            "createShaderModule": {
+              "n": 8,
+              "ms": 0.6
+            },
+            "createRenderPipeline": {
+              "n": 3,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "gan→landmarks",
+          "from": 27,
+          "progress": 0.3,
+          "dt": 67,
+          "moving": true,
+          "at": 265885,
+          "loaf": {
+            "start": 265807.6000000001,
+            "duration": 88.29999999981374,
+            "blocking": 26.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 76
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 75.8,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 4,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "gan→landmarks",
+          "from": 27,
+          "progress": 0.7,
+          "dt": 317,
+          "moving": true,
+          "at": 266836,
+          "loaf": {
+            "start": 266509.2000000002,
+            "duration": 336.79999999981374,
+            "blocking": 276.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 325
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0,
+            "render": 325.1,
+            "flips": 13,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 12,
+              "ms": 0.3
+            },
+            "createBindGroup": {
+              "n": 24,
+              "ms": 0.2
+            },
+            "createRenderPipeline": {
+              "n": 5,
+              "ms": 0.2
+            }
+          }
+        },
+        {
+          "transition": "landmarks→trunk",
+          "from": 28,
+          "progress": 0.5,
+          "dt": 100,
+          "moving": true,
+          "at": 269403,
+          "loaf": {
+            "start": 269292.2999999998,
+            "duration": 116,
+            "blocking": 54.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 103
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 103.1,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 6,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 9,
+              "ms": 0.1
+            },
+            "createShaderModule": {
+              "n": 4,
+              "ms": 0.3
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "upper-division→peel",
+          "from": 31,
+          "progress": 0.3,
+          "dt": 100,
+          "moving": true,
+          "at": 276740,
+          "loaf": {
+            "start": 276628.3999999999,
+            "duration": 121.70000000018626,
+            "blocking": 59.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 109
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 108.4,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 6,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 9,
+              "ms": 0.1
+            },
+            "createShaderModule": {
+              "n": 2,
+              "ms": 0.2
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "peel→lobe-lifts",
+          "from": 32,
+          "progress": 0.5,
+          "dt": 67,
+          "moving": true,
+          "at": 279858,
+          "loaf": {
+            "start": 279779.6000000001,
+            "duration": 93.10000000009313,
+            "blocking": 30.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 80
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 79.6,
+            "flips": 2,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 1,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 2,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "specimen-out→bed",
+          "from": 34,
+          "progress": 0.2,
+          "dt": 133,
+          "moving": true,
+          "at": 284361,
+          "loaf": {
+            "start": 284217.7999999998,
+            "duration": 145.20000000018626,
+            "blocking": 85.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 134
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.8,
+            "render": 133.3,
+            "flips": 5,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 5,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 9,
+              "ms": 0.2
+            },
+            "createRenderPipeline": {
+              "n": 3,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "specimen-out→bed",
+          "from": 34,
+          "progress": 0.5,
+          "dt": 167,
+          "moving": true,
+          "at": 285061,
+          "loaf": {
+            "start": 284882.3999999999,
+            "duration": 194.20000000018626,
+            "blocking": 132.2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 181
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.5,
+            "render": 180.6,
+            "flips": 7,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 12,
+              "ms": 0.4
+            },
+            "createBindGroup": {
+              "n": 18,
+              "ms": 0.2
+            },
+            "createRenderPipeline": {
+              "n": 4,
+              "ms": 0.2
+            },
+            "createShaderModule": {
+              "n": 6,
+              "ms": 0.7
+            }
+          }
+        },
+        {
+          "transition": "barrier-smas→barrier-scm",
+          "from": 36,
+          "progress": 0,
+          "dt": 183,
+          "moving": false,
+          "at": 289496,
+          "loaf": {
+            "start": 289312.8999999999,
+            "duration": 187.70000000018626,
+            "blocking": 137.7,
+            "layout": 1,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 187
+              }
+            ]
+          },
+          "probe": null,
+          "gpu": {}
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "from": 38,
+          "progress": 0,
+          "dt": 84,
+          "moving": false,
+          "at": 294832,
+          "loaf": {
+            "start": 294732.5,
+            "duration": 109.29999999981374,
+            "blocking": 43.1,
+            "layout": 0.8,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 92
+              }
+            ]
+          },
+          "probe": null,
+          "gpu": {}
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "from": 38,
+          "progress": 0.2,
+          "dt": 50,
+          "moving": true,
+          "at": 295516,
+          "loaf": {
+            "start": 295454.3999999999,
+            "duration": 73.3000000002794,
+            "blocking": 11.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 61
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 60.8,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 4,
+              "ms": 0.1
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "from": 38,
+          "progress": 0.5,
+          "dt": 83,
+          "moving": true,
+          "at": 296016,
+          "loaf": {
+            "start": 295920.3999999999,
+            "duration": 102.89999999990687,
+            "blocking": 40.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 90
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 89.7,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 4,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "drain→closed",
+          "from": 39,
+          "progress": 0.3,
+          "dt": 83,
+          "moving": true,
+          "at": 298367,
+          "loaf": {
+            "start": 298271,
+            "duration": 102.10000000009313,
+            "blocking": 39.2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 88
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.5,
+            "render": 87.6,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 4,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 6,
+              "ms": 0
+            },
+            "createShaderModule": {
+              "n": 4,
+              "ms": 0.5
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "closed→after-anatomy",
+          "from": 40,
+          "progress": 0.8,
+          "dt": 50,
+          "moving": true,
+          "at": 301819,
+          "loaf": {
+            "start": 301757.7999999998,
+            "duration": 68.10000000009313,
+            "blocking": 7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 56
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 55.6,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 1,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 2,
+              "ms": 0.1
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "after-anatomy→contour",
+          "from": 41,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 303553,
+          "loaf": {
+            "start": 303492.7999999998,
+            "duration": 73.60000000009313,
+            "blocking": 12.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 62
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 61.3,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 3,
+              "ms": 0
+            },
+            "createShaderModule": {
+              "n": 2,
+              "ms": 0.5
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0,
+          "dt": 167,
+          "moving": false,
+          "at": 305687,
+          "loaf": {
+            "start": 305504.2000000002,
+            "duration": 188.39999999990687,
+            "blocking": 122.1,
+            "layout": 1.6,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 171
+              }
+            ]
+          },
+          "probe": null,
+          "gpu": {}
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0.2,
+          "dt": 817,
+          "moving": true,
+          "at": 307038,
+          "loaf": {
+            "start": 306208.8999999999,
+            "duration": 838.1000000000931,
+            "blocking": 775.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 825
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.4,
+            "render": 824.4,
+            "flips": 36,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 33,
+              "ms": 0.3
+            },
+            "createBindGroup": {
+              "n": 66,
+              "ms": 0.6
+            },
+            "createRenderPipeline": {
+              "n": 10,
+              "ms": 0.4
+            }
+          }
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0.5,
+          "dt": 83,
+          "moving": true,
+          "at": 307638,
+          "loaf": {
+            "start": 307544,
+            "duration": 106.29999999981374,
+            "blocking": 45.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 94
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.5,
+            "render": 93.7,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 6,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 9,
+              "ms": 0
+            },
+            "createShaderModule": {
+              "n": 4,
+              "ms": 0.3
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "pathology→healing",
+          "from": 43,
+          "progress": 0.1,
+          "dt": 83,
+          "moving": true,
+          "at": 310856,
+          "loaf": {
+            "start": 310760.8999999999,
+            "duration": 106.3000000002794,
+            "blocking": 44,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 93
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.7,
+            "render": 92.2,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 3,
+              "ms": 0.2
+            },
+            "createBindGroup": {
+              "n": 6,
+              "ms": 0.1
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "pathology→healing",
+          "from": 43,
+          "progress": 0.5,
+          "dt": 67,
+          "moving": true,
+          "at": 311723,
+          "loaf": {
+            "start": 311643.3999999999,
+            "duration": 89.8000000002794,
+            "blocking": 26.2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 76
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.9,
+            "render": 74.5,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 4,
+              "ms": 0.1
+            },
+            "createBindGroup": {
+              "n": 6,
+              "ms": 0.1
+            },
+            "createShaderModule": {
+              "n": 4,
+              "ms": 0.5
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "healing→compl-map",
+          "from": 44,
+          "progress": 0.6,
+          "dt": 717,
+          "moving": true,
+          "at": 316075,
+          "loaf": {
+            "start": 315345.7999999998,
+            "duration": 738.4000000003725,
+            "blocking": 675.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 725
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 724.7,
+            "flips": 28,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 52,
+              "ms": 0.5
+            },
+            "createBindGroup": {
+              "n": 78,
+              "ms": 0.5
+            },
+            "createShaderModule": {
+              "n": 17,
+              "ms": 1.9
+            },
+            "createRenderPipeline": {
+              "n": 9,
+              "ms": 0.3
+            }
+          }
+        },
+        {
+          "transition": "weakness→numbness",
+          "from": 46,
+          "progress": 0,
+          "dt": 133,
+          "moving": false,
+          "at": 320194,
+          "loaf": {
+            "start": 320044.3999999999,
+            "duration": 164.89999999990687,
+            "blocking": 98.4,
+            "layout": 1.1,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 148
+              }
+            ]
+          },
+          "probe": null,
+          "gpu": {}
+        },
+        {
+          "transition": "weakness→numbness",
+          "from": 46,
+          "progress": 0.1,
+          "dt": 50,
+          "moving": true,
+          "at": 320878,
+          "loaf": {
+            "start": 320833.7999999998,
+            "duration": 54.200000000186265,
+            "blocking": 0,
+            "layout": 0,
+            "scripts": []
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 3.5,
+            "flips": 0,
+            "hatches": 0
+          },
+          "gpu": {}
+        },
+        {
+          "transition": "weakness→numbness",
+          "from": 46,
+          "progress": 0.1,
+          "dt": 50,
+          "moving": true,
+          "at": 320961,
+          "loaf": {
+            "start": 320900.3999999999,
+            "duration": 65.20000000018626,
+            "blocking": 3.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 53
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 52.4,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 1,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 2,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "weakness→numbness",
+          "from": 46,
+          "progress": 0.4,
+          "dt": 350,
+          "moving": true,
+          "at": 321778,
+          "loaf": {
+            "start": 321416.6000000001,
+            "duration": 363.79999999981374,
+            "blocking": 301.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 351
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 350.5,
+            "flips": 14,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 13,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 26,
+              "ms": 0.4
+            },
+            "createRenderPipeline": {
+              "n": 4,
+              "ms": 0.5
+            }
+          }
+        },
+        {
+          "transition": "first-bite→sialocele",
+          "from": 49,
+          "progress": 0.4,
+          "dt": 317,
+          "moving": true,
+          "at": 330582,
+          "loaf": {
+            "start": 330253.8999999999,
+            "duration": 338.70000000018626,
+            "blocking": 277.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 326
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 326.1,
+            "flips": 14,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 24,
+              "ms": 0.5
+            },
+            "createBindGroup": {
+              "n": 36,
+              "ms": 0.2
+            },
+            "createShaderModule": {
+              "n": 6,
+              "ms": 0.8
+            },
+            "createRenderPipeline": {
+              "n": 3,
+              "ms": 0.2
+            }
+          }
+        },
+        {
+          "transition": "sialocele→recurrence",
+          "from": 50,
+          "progress": 0,
+          "dt": 100,
+          "moving": false,
+          "at": 332533,
+          "loaf": {
+            "start": 332416.7000000002,
+            "duration": 131.59999999962747,
+            "blocking": 65.1,
+            "layout": 1,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 115
+              }
+            ]
+          },
+          "probe": null,
+          "gpu": {}
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0,
+          "dt": 117,
+          "moving": false,
+          "at": 335451,
+          "loaf": {
+            "start": 335318,
+            "duration": 139.39999999990687,
+            "blocking": 72.9,
+            "layout": 1,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 123
+              }
+            ]
+          },
+          "probe": null,
+          "gpu": {}
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.1,
+          "dt": 50,
+          "moving": true,
+          "at": 337085,
+          "loaf": {
+            "start": 337023.7999999998,
+            "duration": 75.3000000002794,
+            "blocking": 13.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 63
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 62.4,
+            "flips": 4,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 2,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 4,
+              "ms": 0
+            },
+            "createRenderPipeline": {
+              "n": 2,
+              "ms": 0
+            }
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.4,
+          "dt": 50,
+          "moving": true,
+          "at": 337619,
+          "loaf": {
+            "start": 337557.2000000002,
+            "duration": 72.6999999997206,
+            "blocking": 10.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 59
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.2,
+            "render": 59,
+            "flips": 3,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 1,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 2,
+              "ms": 0.1
+            },
+            "createRenderPipeline": {
+              "n": 1,
+              "ms": 0.1
+            }
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.6,
+          "dt": 133,
+          "moving": true,
+          "at": 338236,
+          "loaf": {
+            "start": 338091,
+            "duration": 153.20000000018626,
+            "blocking": 91.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "ke",
+                "src": "index.astro_astro_type_script_index_0_lang.BUXxHsuG.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 141
+              }
+            ]
+          },
+          "probe": {
+            "apply": 0.1,
+            "render": 140.4,
+            "flips": 6,
+            "hatches": 0
+          },
+          "gpu": {
+            "createBuffer": {
+              "n": 10,
+              "ms": 0
+            },
+            "createBindGroup": {
+              "n": 15,
+              "ms": 0.3
+            },
+            "createShaderModule": {
+              "n": 5,
+              "ms": 0.6
+            },
+            "createRenderPipeline": {
+              "n": 3,
+              "ms": 0
+            }
+          }
+        }
+      ],
+      "probeTotals": {
+        "applyMedianMs": 0.2,
+        "renderMedianMs": 3.1,
+        "frameWorkP95": 4.5,
+        "gpuCreations": 1963
+      }
+    }
+  ],
+  "recurring": [],
+  "consoleErrors": []
+}

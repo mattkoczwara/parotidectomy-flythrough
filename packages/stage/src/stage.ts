@@ -7,6 +7,7 @@ import { outline } from 'three/addons/tsl/display/OutlineNode.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import type { SceneState } from '@atlas/timeline';
+import { anyHit } from './occlusion.ts';
 import { ZONE_SLOTS, hairGeometry, hairShells, type HairMaterial, cpuFold, cpuInFlap, cpuPeel, cpuWindowCut, FLAP_OPEN, hatch, OCHRE, setOpacity, tissue, U, zoneCentre, zoneRadii, zoneWeight, type FlapFrame, type HatchMaterial, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
 import { REMOVABLE, RESECTIONS, memberWeight, poseMatrix, resectionWeights, type Mechanic } from './resection.ts';
 
@@ -523,6 +524,13 @@ export class Stage {
     return this.tierNow;
   }
   private tierNow: Tier = 'high';
+  /** Incremented whenever the pipeline (and its tier-specific resources) is replaced; a settle in progress stops on a change. */
+  private pipelineRevision = 0;
+
+  /** The pipeline actually built (not the tier requested): what the UI and tests report. */
+  get pipelineInfo() {
+    return { tier: this.tierNow, temporal: !!this.traaNode, ao: !!this.traaNode, revision: this.pipelineRevision };
+  }
 
   /** Switch quality tier: rebuilds the post-processing pipeline (materials and geometry are shared). */
   setTier(tier: Tier) {
@@ -530,11 +538,11 @@ export class Stage {
     this.tierNow = tier;
     (this.pipeline as unknown as { dispose?: () => void } | undefined)?.dispose?.();
     this.traaNode = null;
-    this.tierNow = this.opts.tier;
     this.buildPipeline();
   }
 
   private buildPipeline() {
+    this.pipelineRevision++;
     this.pipeline = new THREE.RenderPipeline(this.renderer);
     const contour = vec3(0.93, 0.9, 0.78); // near nerve luminance: a line, not a glow
     const outlinePass = outline(this.scene, this.camera, { selectedObjects: this.outlineObjects, edgeThickness: float(1.0), edgeGlow: float(0) });
@@ -621,8 +629,7 @@ export class Stage {
         part.hatch.strength.value = Math.min(opacity, 1);
         twin.visible = false;
       } else {
-        mesh.material = mat.material;
-        setOpacity(mesh, twin, Math.min(opacity, 1));
+        setOpacity(mesh, twin, mat, Math.min(opacity, 1));
       }
       mat.dim.value = Math.min(1, (s?.emphasis === 'dim' ? 0.75 : s?.emphasis === 'context' ? 0.18 : 0) + (EXTRA_DIM[id] ?? 0));
       if (mesh.visible && s?.emphasis === 'focus' && !NO_CONTOUR.has(id)) focus.push(mesh);
@@ -630,7 +637,7 @@ export class Stage {
       const flap = this.flaps.get(id);
       if (flap) {
         flap.mesh.visible = mesh.visible && (state.op['flap'] ?? 0) > FLAP_OPEN;
-        setOpacity(flap.mesh, flap.twin, Math.min(opacity, 1));
+        setOpacity(flap.mesh, flap.twin, flap.mat, Math.min(opacity, 1));
         flap.mat.dim.value = mat.dim.value;
         if (flap.mesh.visible && s?.emphasis === 'focus' && !NO_CONTOUR.has(id)) focus.push(flap.mesh);
       }
@@ -842,20 +849,23 @@ export class Stage {
     // targets, so the same graphs are built again at the first real frame (about 3 s of extra main-thread work on a
     // cold load, measured); a pipeline missing from a frame is created synchronously by that frame, never skipped.
     const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    // A tier change replaces the pipeline (and its TRAA history) underneath a settle: it stops, and the new pipeline settles afresh.
+    const revision = this.pipelineRevision;
     const step = async () => {
       await nextFrame();
-      if (token.cancelled) return false;
+      if (token.cancelled || this.pipelineRevision !== revision) return false;
       this.render();
       return true;
     };
-    if (!this.traaNode) return step(); // no history to accumulate (Mid tier)
+    const traa = this.traaNode;
+    if (!traa) return step(); // no history to accumulate (Mid tier)
     let guard = 0;
     do if (!(await step())) return false;
-    while ((this.traaNode._jitterIndex ?? 0) !== 0 && ++guard < 64);
+    while ((traa._jitterIndex ?? 0) !== 0 && ++guard < 64);
     // Reseed the history from this state: transparent layers are not in the depth prepass, so disocclusion alone
     // does not reject the previous plate's ghosts and a settled frame would depend on the path to it.
     // A size mismatch makes TRAANode restart its history from the current beauty buffer (three r186).
-    this.traaNode._historyRenderTarget.setSize(1, 1);
+    traa._historyRenderTarget.setSize(1, 1);
     for (let i = 0; i < SETTLE_FRAMES; i++) if (!(await step())) return false;
     return true;
   }
@@ -928,7 +938,7 @@ export class Stage {
       let blocked = false;
       for (const o of occluders) {
         if (owns(id, o.as)) continue;
-        if (this.raycaster.intersectObject(o.mesh, false).some((hit) => !discarded(o, hit))) {
+        if (anyHit(o.mesh, this.raycaster, (hit) => !discarded(o, hit))) {
           blocked = true;
           break;
         }

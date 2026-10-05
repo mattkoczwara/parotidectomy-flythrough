@@ -339,7 +339,11 @@ export interface PieceUniforms {
 }
 
 export interface TissueMaterial {
+  /** Opaque (depth-writing) state. */
   material: THREE.MeshPhysicalNodeMaterial;
+  /** The same tissue in its ghost state (transparent, no depth write): a separate material, swapped in by setOpacity, so
+   *  crossing between the states never rebuilds a material (each rebuild regenerates every pass's shaders: a hitch). */
+  ghost: THREE.MeshPhysicalNodeMaterial;
   twin: THREE.MeshPhysicalNodeMaterial;
   dim: THREE.UniformNode<'float', number>;
   piece?: PieceUniforms;
@@ -581,11 +585,14 @@ export function tissue(o: TissueOptions): TissueMaterial {
     return m;
   };
   const material = make();
+  const ghost = make();
+  ghost.transparent = true;
+  ghost.depthWrite = false;
   const twin = make();
   twin.colorWrite = false;
   twin.transparent = true;
   twin.depthWrite = true;
-  return { material, twin, dim, ...(piece ? { piece } : {}) };
+  return { material, ghost, twin, dim, ...(piece ? { piece } : {}) };
 }
 
 /** Shell layers of the hair (exterior.py root surface): enough for a soft silhouette at portrait distance. */
@@ -740,14 +747,10 @@ export function cpuFold(p: THREE.Vector3, w: number): THREE.Vector3 {
 }
 
 /** Single-layer ghost: the depth-only twin draws first, then the tissue blends over the opaque interior. */
-export function setOpacity(mesh: THREE.Mesh, twin: THREE.Mesh, opacity: number) {
-  const m = mesh.material as THREE.MeshPhysicalNodeMaterial;
+export function setOpacity(mesh: THREE.Mesh, twin: THREE.Mesh, mat: TissueMaterial, opacity: number) {
   const ghost = opacity < 0.999;
+  const m = ghost ? mat.ghost : mat.material;
   m.opacity = opacity;
-  if (m.transparent !== ghost) {
-    m.transparent = ghost;
-    m.depthWrite = !ghost;
-    m.needsUpdate = true;
-  }
+  mesh.material = m;
   twin.visible = ghost && mesh.visible;
 }

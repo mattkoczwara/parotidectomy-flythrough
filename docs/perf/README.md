@@ -10,6 +10,8 @@ Measurements are kept so that a later run can be compared with an earlier one.
 | `firefox-m5.json` | The Firefox pass over all 54 plates (`node tools/capture/firefox.mjs`). |
 | `firefox-final.json` | The Firefox pass over all 54 plates after the final presentation pass (Firefox 157, WebGPU): every plate converges with no console errors. |
 | `uncapped.json` | Render headroom with vsync off (`node tools/capture/uncapped.mjs`): CPU interval per rendered frame and GPU throughput while its queue is saturated. See the last section. |
+| `hitch-before.json`, `hitch-after.json` | Plate-transition hitches over two warmed traversals each (`npm run hitch`), before and after the 2026-10-05 runtime fix. See the last section. |
+| `hitch-probe-before.json`, `hitch-probe-after.json` | The attribution runs behind that fix (WebGPU resource creation and app timings per stall). They perturb timing, so their frame numbers are not acceptance figures. |
 | `capture-m5.json` | What the capture suite measured on the same build: determinism, label legibility, accessibility, and which tests passed. |
 | `m1-report.json`, `firefox-m1.json` | The M1 slice (10 plates), kept for the record. |
 
@@ -92,3 +94,46 @@ How to read it:
   frames are covered by the vsync-paced p95 above.
 - One machine (RTX 3070) only. It says nothing about Mid-class GPUs, which cannot be emulated here.
 - A static page in the same session paced at 57 Hz (17.4 ms): the display was again running below 60 Hz.
+
+## Plate-transition hitches (runtime fix, 2026-10-05)
+
+`npm run hitch` (`tools/capture/tests/hitch.spec.ts`) is a lightweight detector. It uses the perf walk: High,
+1600×1000, 22 px wheel steps over all 54 plates. One traversal warms the page, then two are measured on the same page.
+It records each animation frame's interval with the rendered timeline position, plus long animation frames and long
+tasks. A stall is a frame over 40 ms. It is "recurring" when the other run stalls in the same transition and progress
+band (±0.1). With `HITCH_PROBE=1` it also counts WebGPU resource creation per stall. That run is for attribution only.
+
+**Before** (`hitch-before.json`; both runs were already warmed):
+- 59 and 52 frames over 40 ms; max 767 and 717 ms.
+- About 52 long tasks per run; 33 of 53 transitions had a stall.
+- The same transitions stalled at the same progress in both runs, for example contour→pathology at 0.2 (767/717 ms),
+  healing→compl-map at 0.6 (667/600 ms) and no-shelling→ultrasound at 0.5 (384/400 ms).
+
+**Causes found**
+1. **Mid-transition stalls: material rebuilds.** `setOpacity` toggled `transparent`/`depthWrite` and set
+   `needsUpdate` whenever a structure crossed opacity 0.999. three then rebuilt that node material for every pass,
+   with new WGSL, shader modules, pipelines and bind groups. It did so on every crossing, including states already
+   seen. The probe showed render time in the stall frame rising about 20–25 ms per flip (36 flips: 824 ms), with
+   `apply()` under 1 ms. There were 1,963 WebGPU creations in a warmed traversal.
+   **Fix:** each tissue has a prebuilt ghost twin of its material (same node graph and uniforms; transparent, no depth
+   write), and `setOpacity` swaps materials. Both keep their pipelines, so a crossing costs nothing. WebGPU creations
+   in a warmed traversal fell from 1,963 to 45 (the TRAA history reseed per settle).
+2. **Stalls at plate arrival: label occlusion raycasts.** `layoutLabels` → `projectAnchors` raycast every opaque
+   occluder's triangles for each label, up to 180 ms at a settled plate, twice per settle. **Fix:** `occlusion.ts`
+   `anyHit` uses the same triangle test, sidedness and near/far. It skips 256-triangle chunks whose cached bounds the
+   ray misses. Its hits are identical to `Mesh.raycast` (unit test on 2,400 random rays). Label layout now takes at
+   most 15 ms.
+
+**After** (`hitch-after.json`, two warmed runs):
+
+| | Run 1 | Run 2 |
+|---|---|---|
+| Frames | 9,064 | 9,441 |
+| Median / p95 | 16.7 / 16.8 ms | 16.7 / 16.8 ms |
+| Max frame | 33 ms | 17 ms |
+| Over 25 ms / over 40 ms | 1 / 0 | 0 / 0 |
+| Long tasks / long animation frames | 0 / 0 | 0 / 0 |
+| Transitions with a stall | 0 | 0 |
+
+Every transition's local p95 is 16.8 ms. The worst transition maximum is 33 ms (one frame, ultrasound→cross-section,
+run 1 only). The first visit to a state on a cold load still builds its pipelines once; that is outside this measure.

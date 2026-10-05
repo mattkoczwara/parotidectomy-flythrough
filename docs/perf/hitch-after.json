@@ -1,0 +1,893 @@
+{
+  "date": "2026-10-05T20:02:07.825Z",
+  "query": "tier=high",
+  "tier": "high",
+  "pipeline": "traa+ao",
+  "backend": "webgpu",
+  "runs": [
+    {
+      "totals": {
+        "frames": 9064,
+        "medianMs": 16.7,
+        "medianFps": 59.9,
+        "p95Ms": 16.8,
+        "maxMs": 33,
+        "over25": 1,
+        "over40": 0,
+        "longTasks": 0,
+        "longAnimationFrames": 0,
+        "transitionsWithStall": 0
+      },
+      "transitions": [
+        {
+          "transition": "face→where-parotid",
+          "frames": 201,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "where-parotid→duct",
+          "frames": 145,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "duct→layers",
+          "frames": 153,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "layers→nerve-within",
+          "frames": 149,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "frames": 145,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "frames": 151,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "branch-groups→nerve-plane",
+          "frames": 152,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-plane→nerve-variants",
+          "frames": 149,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "frames": 156,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "frames": 142,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "tumour-positions→pseudocapsule",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pseudocapsule→no-shelling",
+          "frames": 243,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "no-shelling→ultrasound",
+          "frames": 218,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "ultrasound→cross-section",
+          "frames": 179,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "cross-section→needle",
+          "frames": 181,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "needle→milan",
+          "frames": 152,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "milan→esgs-levels",
+          "frames": 210,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "esgs-levels→option-ecd",
+          "frames": 156,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-ecd→option-partial",
+          "frames": 152,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-partial→option-superficial",
+          "frames": 148,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-superficial→option-total",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-total→choosing",
+          "frames": 152,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "choosing→evidence-limits",
+          "frames": 223,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "frames": 247,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision→incision-facelift",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision-facelift→flap",
+          "frames": 158,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "flap→gan",
+          "frames": 147,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "gan→landmarks",
+          "frames": 147,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "landmarks→trunk",
+          "frames": 170,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk→pes-divisions",
+          "frames": 156,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pes-divisions→upper-division",
+          "frames": 131,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "upper-division→peel",
+          "frames": 142,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "peel→lobe-lifts",
+          "frames": 147,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "lobe-lifts→specimen-out",
+          "frames": 137,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "specimen-out→bed",
+          "frames": 151,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "bed→barrier-smas",
+          "frames": 153,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-smas→barrier-scm",
+          "frames": 157,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-scm→barrier-graft",
+          "frames": 147,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "frames": 156,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "drain→closed",
+          "frames": 151,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "closed→after-anatomy",
+          "frames": 153,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "after-anatomy→contour",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.7
+        },
+        {
+          "transition": "contour→pathology",
+          "frames": 155,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pathology→healing",
+          "frames": 245,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "healing→compl-map",
+          "frames": 213,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "compl-map→weakness",
+          "frames": 186,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "weakness→numbness",
+          "frames": 192,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "numbness→frey",
+          "frames": 158,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "frey→first-bite",
+          "frames": 167,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "first-bite→sialocele",
+          "frames": 161,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "sialocele→recurrence",
+          "frames": 189,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "recurrence→explore",
+          "frames": 242,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "explore→compare",
+          "frames": 365,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        }
+      ],
+      "stalls": []
+    },
+    {
+      "totals": {
+        "frames": 9441,
+        "medianMs": 16.7,
+        "medianFps": 59.9,
+        "p95Ms": 16.8,
+        "maxMs": 17,
+        "over25": 0,
+        "over40": 0,
+        "longTasks": 0,
+        "longAnimationFrames": 0,
+        "transitionsWithStall": 0
+      },
+      "transitions": [
+        {
+          "transition": "face→where-parotid",
+          "frames": 216,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "where-parotid→duct",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "duct→layers",
+          "frames": 158,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "layers→nerve-within",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "frames": 150,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "frames": 157,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "branch-groups→nerve-plane",
+          "frames": 157,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-plane→nerve-variants",
+          "frames": 151,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "frames": 159,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "frames": 143,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "tumour-positions→pseudocapsule",
+          "frames": 152,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pseudocapsule→no-shelling",
+          "frames": 247,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "no-shelling→ultrasound",
+          "frames": 221,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "ultrasound→cross-section",
+          "frames": 180,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "cross-section→needle",
+          "frames": 190,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "needle→milan",
+          "frames": 160,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "milan→esgs-levels",
+          "frames": 215,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "esgs-levels→option-ecd",
+          "frames": 163,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-ecd→option-partial",
+          "frames": 152,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-partial→option-superficial",
+          "frames": 154,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-superficial→option-total",
+          "frames": 147,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-total→choosing",
+          "frames": 149,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "choosing→evidence-limits",
+          "frames": 233,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "frames": 254,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision→incision-facelift",
+          "frames": 149,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision-facelift→flap",
+          "frames": 169,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "flap→gan",
+          "frames": 143,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "gan→landmarks",
+          "frames": 145,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "landmarks→trunk",
+          "frames": 171,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk→pes-divisions",
+          "frames": 165,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pes-divisions→upper-division",
+          "frames": 143,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "upper-division→peel",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "peel→lobe-lifts",
+          "frames": 154,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "lobe-lifts→specimen-out",
+          "frames": 141,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "specimen-out→bed",
+          "frames": 151,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "bed→barrier-smas",
+          "frames": 160,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-smas→barrier-scm",
+          "frames": 164,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-scm→barrier-graft",
+          "frames": 158,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "frames": 170,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "drain→closed",
+          "frames": 167,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "closed→after-anatomy",
+          "frames": 156,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "after-anatomy→contour",
+          "frames": 150,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "contour→pathology",
+          "frames": 164,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pathology→healing",
+          "frames": 255,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "healing→compl-map",
+          "frames": 220,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "compl-map→weakness",
+          "frames": 191,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "weakness→numbness",
+          "frames": 202,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "numbness→frey",
+          "frames": 178,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "frey→first-bite",
+          "frames": 185,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "first-bite→sialocele",
+          "frames": 179,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "sialocele→recurrence",
+          "frames": 198,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "recurrence→explore",
+          "frames": 268,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "explore→compare",
+          "frames": 399,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        }
+      ],
+      "stalls": []
+    }
+  ],
+  "recurring": [],
+  "consoleErrors": []
+}

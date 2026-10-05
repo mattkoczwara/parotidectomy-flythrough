@@ -3,7 +3,7 @@ import { defineConfig } from '@playwright/test';
 // Real Chrome with the GPU (WebGPU needs hardware); the production build served by `astro preview`.
 export default defineConfig({
   testDir: 'tests',
-  testIgnore: /perf\.spec\.ts$/, // measurement, not a check: npm run perf
+  testIgnore: /(perf|hitch)\.spec\.ts$/, // measurements, not checks: npm run perf, npm run hitch
   timeout: 240_000,
   workers: 1,
   reporter: [['list']],

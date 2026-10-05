@@ -8,7 +8,8 @@
     "typecheck": "tsc --noEmit -p .",
     "capture": "playwright test",
     "perf": "playwright test -c playwright.perf.config.ts",
-    "figures": "playwright test -g \"static fallback figure\""
+    "figures": "playwright test -g \"static fallback figure\"",
+    "hitch": "playwright test -c playwright.hitch.config.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

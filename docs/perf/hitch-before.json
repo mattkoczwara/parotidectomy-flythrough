@@ -1,0 +1,3354 @@
+{
+  "date": "2026-10-05T19:18:05.398Z",
+  "query": "tier=high",
+  "tier": "high",
+  "pipeline": "traa+ao",
+  "backend": "webgpu",
+  "runs": [
+    {
+      "totals": {
+        "frames": 9215,
+        "medianMs": 16.7,
+        "medianFps": 59.9,
+        "p95Ms": 16.8,
+        "maxMs": 767,
+        "over25": 104,
+        "over40": 59,
+        "longTasks": 52,
+        "longAnimationFrames": 70,
+        "transitionsWithStall": 33
+      },
+      "transitions": [
+        {
+          "transition": "face→where-parotid",
+          "frames": 201,
+          "maxMs": 50,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "where-parotid→duct",
+          "frames": 141,
+          "maxMs": 184,
+          "over25": 4,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "duct→layers",
+          "frames": 152,
+          "maxMs": 167,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "layers→nerve-within",
+          "frames": 148,
+          "maxMs": 133,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "frames": 146,
+          "maxMs": 67,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "frames": 156,
+          "maxMs": 150,
+          "over25": 4,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "branch-groups→nerve-plane",
+          "frames": 154,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-plane→nerve-variants",
+          "frames": 148,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "frames": 157,
+          "maxMs": 117,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "frames": 139,
+          "maxMs": 150,
+          "over25": 5,
+          "over40": 5,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "tumour-positions→pseudocapsule",
+          "frames": 161,
+          "maxMs": 67,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pseudocapsule→no-shelling",
+          "frames": 246,
+          "maxMs": 117,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "no-shelling→ultrasound",
+          "frames": 228,
+          "maxMs": 384,
+          "over25": 4,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "ultrasound→cross-section",
+          "frames": 172,
+          "maxMs": 200,
+          "over25": 4,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "cross-section→needle",
+          "frames": 182,
+          "maxMs": 83,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "needle→milan",
+          "frames": 158,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "milan→esgs-levels",
+          "frames": 216,
+          "maxMs": 300,
+          "over25": 3,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "esgs-levels→option-ecd",
+          "frames": 165,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-ecd→option-partial",
+          "frames": 155,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-partial→option-superficial",
+          "frames": 152,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.7
+        },
+        {
+          "transition": "option-superficial→option-total",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-total→choosing",
+          "frames": 150,
+          "maxMs": 100,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "choosing→evidence-limits",
+          "frames": 236,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "frames": 251,
+          "maxMs": 233,
+          "over25": 4,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision→incision-facelift",
+          "frames": 143,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision-facelift→flap",
+          "frames": 162,
+          "maxMs": 50,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "flap→gan",
+          "frames": 150,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "gan→landmarks",
+          "frames": 145,
+          "maxMs": 284,
+          "over25": 4,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "landmarks→trunk",
+          "frames": 173,
+          "maxMs": 83,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk→pes-divisions",
+          "frames": 163,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pes-divisions→upper-division",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "upper-division→peel",
+          "frames": 150,
+          "maxMs": 84,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "peel→lobe-lifts",
+          "frames": 158,
+          "maxMs": 33,
+          "over25": 2,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "lobe-lifts→specimen-out",
+          "frames": 143,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "specimen-out→bed",
+          "frames": 146,
+          "maxMs": 167,
+          "over25": 5,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "bed→barrier-smas",
+          "frames": 151,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-smas→barrier-scm",
+          "frames": 166,
+          "maxMs": 167,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-scm→barrier-graft",
+          "frames": 150,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "frames": 166,
+          "maxMs": 83,
+          "over25": 4,
+          "over40": 3,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "drain→closed",
+          "frames": 166,
+          "maxMs": 67,
+          "over25": 3,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "closed→after-anatomy",
+          "frames": 155,
+          "maxMs": 50,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "after-anatomy→contour",
+          "frames": 147,
+          "maxMs": 50,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "contour→pathology",
+          "frames": 157,
+          "maxMs": 767,
+          "over25": 5,
+          "over40": 4,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pathology→healing",
+          "frames": 254,
+          "maxMs": 84,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "healing→compl-map",
+          "frames": 205,
+          "maxMs": 667,
+          "over25": 2,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "compl-map→weakness",
+          "frames": 172,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "weakness→numbness",
+          "frames": 190,
+          "maxMs": 300,
+          "over25": 4,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "numbness→frey",
+          "frames": 162,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "frey→first-bite",
+          "frames": 168,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "first-bite→sialocele",
+          "frames": 173,
+          "maxMs": 300,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "sialocele→recurrence",
+          "frames": 178,
+          "maxMs": 133,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "recurrence→explore",
+          "frames": 242,
+          "maxMs": 117,
+          "over25": 6,
+          "over40": 6,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "explore→compare",
+          "frames": 374,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        }
+      ],
+      "stalls": [
+        {
+          "transition": "face→where-parotid",
+          "from": 0,
+          "progress": 0.7,
+          "dt": 50,
+          "moving": true,
+          "at": 185860,
+          "loaf": {
+            "start": 185796.3999999999,
+            "duration": 65.69999999995343,
+            "blocking": 2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 52
+              }
+            ]
+          }
+        },
+        {
+          "transition": "where-parotid→duct",
+          "from": 1,
+          "progress": 0.4,
+          "dt": 184,
+          "moving": true,
+          "at": 187711,
+          "loaf": {
+            "start": 187481.5,
+            "duration": 54.199999999953434,
+            "blocking": 0,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 41
+              }
+            ]
+          }
+        },
+        {
+          "transition": "duct→layers",
+          "from": 2,
+          "progress": 0.2,
+          "dt": 117,
+          "moving": true,
+          "at": 190112,
+          "loaf": {
+            "start": 189983.19999999995,
+            "duration": 137.5,
+            "blocking": 75.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 125
+              }
+            ]
+          }
+        },
+        {
+          "transition": "duct→layers",
+          "from": 2,
+          "progress": 0.4,
+          "dt": 167,
+          "moving": true,
+          "at": 190612,
+          "loaf": {
+            "start": 190435.3999999999,
+            "duration": 182.39999999990687,
+            "blocking": 121.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 171
+              }
+            ]
+          }
+        },
+        {
+          "transition": "layers→nerve-within",
+          "from": 3,
+          "progress": 0.3,
+          "dt": 133,
+          "moving": true,
+          "at": 192980,
+          "loaf": {
+            "start": 192834.59999999986,
+            "duration": 150.30000000004657,
+            "blocking": 88.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 138
+              }
+            ]
+          }
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "from": 4,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 195548,
+          "loaf": {
+            "start": 195486.09999999986,
+            "duration": 69.60000000009313,
+            "blocking": 7.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 57
+              }
+            ]
+          }
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "from": 4,
+          "progress": 0.7,
+          "dt": 67,
+          "moving": true,
+          "at": 196215,
+          "loaf": {
+            "start": 196136.19999999995,
+            "duration": 92.89999999990687,
+            "blocking": 30.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 80
+              }
+            ]
+          }
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "from": 5,
+          "progress": 0,
+          "dt": 67,
+          "moving": false,
+          "at": 197482,
+          "loaf": {
+            "start": 197415.5,
+            "duration": 77.69999999995343,
+            "blocking": 27.7,
+            "layout": 1.2,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 77
+              }
+            ]
+          }
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "from": 5,
+          "progress": 0.7,
+          "dt": 150,
+          "moving": true,
+          "at": 199066,
+          "loaf": {
+            "start": 198919.7999999998,
+            "duration": 155.4000000001397,
+            "blocking": 0,
+            "layout": 0,
+            "scripts": []
+          }
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "from": 8,
+          "progress": 0.7,
+          "dt": 117,
+          "moving": true,
+          "at": 206903,
+          "loaf": {
+            "start": 206773.8999999999,
+            "duration": 143.39999999990687,
+            "blocking": 80.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 130
+              }
+            ]
+          }
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "from": 8,
+          "progress": 1,
+          "dt": 67,
+          "moving": true,
+          "at": 207637,
+          "loaf": {
+            "start": 207557,
+            "duration": 95.5,
+            "blocking": 32.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 82
+              }
+            ]
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 208721,
+          "loaf": {
+            "start": 208658,
+            "duration": 77.5,
+            "blocking": 14.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 64
+              }
+            ]
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 0.7,
+          "dt": 100,
+          "moving": true,
+          "at": 209421,
+          "loaf": {
+            "start": 209308.8999999999,
+            "duration": 116.60000000009313,
+            "blocking": 54.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 104
+              }
+            ]
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 1,
+          "dt": 67,
+          "moving": true,
+          "at": 210238,
+          "loaf": {
+            "start": 210159.2999999998,
+            "duration": 81.5,
+            "blocking": 19.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 69
+              }
+            ]
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 1,
+          "dt": 150,
+          "moving": true,
+          "at": 210388,
+          "loaf": {
+            "start": 210159.2999999998,
+            "duration": 81.5,
+            "blocking": 19.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 69
+              }
+            ]
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 1,
+          "dt": 50,
+          "moving": true,
+          "at": 210438,
+          "loaf": {
+            "start": 210255.09999999986,
+            "duration": 152.60000000009313,
+            "blocking": 0,
+            "layout": 0,
+            "scripts": []
+          }
+        },
+        {
+          "transition": "tumour-positions→pseudocapsule",
+          "from": 10,
+          "progress": 0.2,
+          "dt": 67,
+          "moving": true,
+          "at": 211422,
+          "loaf": {
+            "start": 211343,
+            "duration": 81,
+            "blocking": 18.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 68
+              }
+            ]
+          }
+        },
+        {
+          "transition": "pseudocapsule→no-shelling",
+          "from": 11,
+          "progress": 0.5,
+          "dt": 117,
+          "moving": true,
+          "at": 216057,
+          "loaf": {
+            "start": 215928,
+            "duration": 141.19999999995343,
+            "blocking": 78.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 128
+              }
+            ]
+          }
+        },
+        {
+          "transition": "no-shelling→ultrasound",
+          "from": 12,
+          "progress": 0.5,
+          "dt": 384,
+          "moving": true,
+          "at": 220193,
+          "loaf": {
+            "start": 219797.09999999986,
+            "duration": 395.9000000001397,
+            "blocking": 333.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 383
+              }
+            ]
+          }
+        },
+        {
+          "transition": "ultrasound→cross-section",
+          "from": 13,
+          "progress": 0.4,
+          "dt": 200,
+          "moving": true,
+          "at": 223261,
+          "loaf": {
+            "start": 223048.69999999995,
+            "duration": 221.0999999998603,
+            "blocking": 158.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 208
+              }
+            ]
+          }
+        },
+        {
+          "transition": "cross-section→needle",
+          "from": 14,
+          "progress": 0,
+          "dt": 83,
+          "moving": false,
+          "at": 225062,
+          "loaf": {
+            "start": 224962,
+            "duration": 103.0999999998603,
+            "blocking": 36.7,
+            "layout": 1.1,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 86
+              }
+            ]
+          }
+        },
+        {
+          "transition": "cross-section→needle",
+          "from": 14,
+          "progress": 0.5,
+          "dt": 67,
+          "moving": true,
+          "at": 226562,
+          "loaf": {
+            "start": 226483.8999999999,
+            "duration": 83.39999999990687,
+            "blocking": 21.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 70
+              }
+            ]
+          }
+        },
+        {
+          "transition": "milan→esgs-levels",
+          "from": 16,
+          "progress": 0.5,
+          "dt": 300,
+          "moving": true,
+          "at": 233182,
+          "loaf": {
+            "start": 232869.7999999998,
+            "duration": 317.30000000004657,
+            "blocking": 255,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 304
+              }
+            ]
+          }
+        },
+        {
+          "transition": "option-total→choosing",
+          "from": 21,
+          "progress": 0.5,
+          "dt": 100,
+          "moving": true,
+          "at": 246038,
+          "loaf": {
+            "start": 245926,
+            "duration": 120.69999999995343,
+            "blocking": 58.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 108
+              }
+            ]
+          }
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "from": 23,
+          "progress": 0.4,
+          "dt": 233,
+          "moving": true,
+          "at": 254142,
+          "loaf": {
+            "start": 253896,
+            "duration": 251.89999999990687,
+            "blocking": 189.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 239
+              }
+            ]
+          }
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "from": 23,
+          "progress": 0.5,
+          "dt": 83,
+          "moving": true,
+          "at": 254609,
+          "loaf": {
+            "start": 254511.8999999999,
+            "duration": 97,
+            "blocking": 33.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 83
+              }
+            ]
+          }
+        },
+        {
+          "transition": "incision-facelift→flap",
+          "from": 25,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 259294,
+          "loaf": {
+            "start": 259231.59999999986,
+            "duration": 65,
+            "blocking": 2.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 52
+              }
+            ]
+          }
+        },
+        {
+          "transition": "gan→landmarks",
+          "from": 27,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 264297,
+          "loaf": {
+            "start": 264233.7999999998,
+            "duration": 70.9000000001397,
+            "blocking": 8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 58
+              }
+            ]
+          }
+        },
+        {
+          "transition": "gan→landmarks",
+          "from": 27,
+          "progress": 0.7,
+          "dt": 284,
+          "moving": true,
+          "at": 265230,
+          "loaf": {
+            "start": 264934.8999999999,
+            "duration": 306.10000000009313,
+            "blocking": 243.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 293
+              }
+            ]
+          }
+        },
+        {
+          "transition": "landmarks→trunk",
+          "from": 28,
+          "progress": 0.5,
+          "dt": 83,
+          "moving": true,
+          "at": 267748,
+          "loaf": {
+            "start": 267653.5,
+            "duration": 98,
+            "blocking": 36.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 86
+              }
+            ]
+          }
+        },
+        {
+          "transition": "upper-division→peel",
+          "from": 31,
+          "progress": 0.3,
+          "dt": 84,
+          "moving": true,
+          "at": 275185,
+          "loaf": {
+            "start": 275090.69999999995,
+            "duration": 106.30000000004657,
+            "blocking": 45,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 94
+              }
+            ]
+          }
+        },
+        {
+          "transition": "specimen-out→bed",
+          "from": 34,
+          "progress": 0.2,
+          "dt": 100,
+          "moving": true,
+          "at": 282689,
+          "loaf": {
+            "start": 282576.69999999995,
+            "duration": 118.39999999990687,
+            "blocking": 56.2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 106
+              }
+            ]
+          }
+        },
+        {
+          "transition": "specimen-out→bed",
+          "from": 34,
+          "progress": 0.5,
+          "dt": 167,
+          "moving": true,
+          "at": 283289,
+          "loaf": {
+            "start": 283109.7999999998,
+            "duration": 178.9000000001397,
+            "blocking": 116.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 165
+              }
+            ]
+          }
+        },
+        {
+          "transition": "barrier-smas→barrier-scm",
+          "from": 36,
+          "progress": 0,
+          "dt": 167,
+          "moving": false,
+          "at": 287608,
+          "loaf": {
+            "start": 287424.5,
+            "duration": 197.39999999990687,
+            "blocking": 130.9,
+            "layout": 0.9,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 181
+              }
+            ]
+          }
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "from": 38,
+          "progress": 0,
+          "dt": 83,
+          "moving": false,
+          "at": 292943,
+          "loaf": {
+            "start": 292860.2999999998,
+            "duration": 90.60000000009313,
+            "blocking": 40.7,
+            "layout": 0.6,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 90
+              }
+            ]
+          }
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "from": 38,
+          "progress": 0.2,
+          "dt": 50,
+          "moving": true,
+          "at": 293660,
+          "loaf": {
+            "start": 293597.8999999999,
+            "duration": 70.39999999990687,
+            "blocking": 7.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 57
+              }
+            ]
+          }
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "from": 38,
+          "progress": 0.5,
+          "dt": 67,
+          "moving": true,
+          "at": 294161,
+          "loaf": {
+            "start": 294081,
+            "duration": 95.5,
+            "blocking": 32.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 82
+              }
+            ]
+          }
+        },
+        {
+          "transition": "drain→closed",
+          "from": 39,
+          "progress": 0.3,
+          "dt": 67,
+          "moving": true,
+          "at": 296679,
+          "loaf": {
+            "start": 296599,
+            "duration": 93.89999999990687,
+            "blocking": 30.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 80
+              }
+            ]
+          }
+        },
+        {
+          "transition": "closed→after-anatomy",
+          "from": 40,
+          "progress": 0.8,
+          "dt": 50,
+          "moving": true,
+          "at": 300247,
+          "loaf": {
+            "start": 300184.2999999998,
+            "duration": 64.80000000004657,
+            "blocking": 2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 51
+              }
+            ]
+          }
+        },
+        {
+          "transition": "after-anatomy→contour",
+          "from": 41,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 301964,
+          "loaf": {
+            "start": 301901.5,
+            "duration": 66.5999999998603,
+            "blocking": 3.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 53
+              }
+            ]
+          }
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0,
+          "dt": 150,
+          "moving": false,
+          "at": 303949,
+          "loaf": {
+            "start": 303792.09999999986,
+            "duration": 172,
+            "blocking": 115.5,
+            "layout": 1.1,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 165
+              }
+            ]
+          }
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0.2,
+          "dt": 767,
+          "moving": true,
+          "at": 305266,
+          "loaf": {
+            "start": 304485.7999999998,
+            "duration": 789.3000000000466,
+            "blocking": 726.2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 776
+              }
+            ]
+          }
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0.5,
+          "dt": 83,
+          "moving": true,
+          "at": 305866,
+          "loaf": {
+            "start": 305770.8999999999,
+            "duration": 107.80000000004657,
+            "blocking": 45.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 95
+              }
+            ]
+          }
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0.5,
+          "dt": 50,
+          "moving": true,
+          "at": 305916,
+          "loaf": {
+            "start": 305770.8999999999,
+            "duration": 107.80000000004657,
+            "blocking": 45.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 95
+              }
+            ]
+          }
+        },
+        {
+          "transition": "pathology→healing",
+          "from": 43,
+          "progress": 0.1,
+          "dt": 84,
+          "moving": true,
+          "at": 309151,
+          "loaf": {
+            "start": 309054.3999999999,
+            "duration": 102.19999999995343,
+            "blocking": 38.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 88
+              }
+            ]
+          }
+        },
+        {
+          "transition": "pathology→healing",
+          "from": 43,
+          "progress": 0.5,
+          "dt": 67,
+          "moving": true,
+          "at": 310051,
+          "loaf": {
+            "start": 309970.69999999995,
+            "duration": 89.19999999995343,
+            "blocking": 25,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 75
+              }
+            ]
+          }
+        },
+        {
+          "transition": "healing→compl-map",
+          "from": 44,
+          "progress": 0.6,
+          "dt": 667,
+          "moving": true,
+          "at": 314520,
+          "loaf": {
+            "start": 313840.3999999999,
+            "duration": 692,
+            "blocking": 628.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 679
+              }
+            ]
+          }
+        },
+        {
+          "transition": "healing→compl-map",
+          "from": 44,
+          "progress": 0.6,
+          "dt": 200,
+          "moving": true,
+          "at": 314737,
+          "loaf": {
+            "start": 314543.19999999995,
+            "duration": 197.5,
+            "blocking": 0,
+            "layout": 0,
+            "scripts": []
+          }
+        },
+        {
+          "transition": "weakness→numbness",
+          "from": 46,
+          "progress": 0,
+          "dt": 117,
+          "moving": false,
+          "at": 319006,
+          "loaf": {
+            "start": 318889.19999999995,
+            "duration": 130,
+            "blocking": 80,
+            "layout": 0.8,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 130
+              }
+            ]
+          }
+        },
+        {
+          "transition": "weakness→numbness",
+          "from": 46,
+          "progress": 0.4,
+          "dt": 300,
+          "moving": true,
+          "at": 320656,
+          "loaf": {
+            "start": 320343.7999999998,
+            "duration": 317.80000000004657,
+            "blocking": 255.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 305
+              }
+            ]
+          }
+        },
+        {
+          "transition": "first-bite→sialocele",
+          "from": 49,
+          "progress": 0.4,
+          "dt": 300,
+          "moving": true,
+          "at": 329227,
+          "loaf": {
+            "start": 328914,
+            "duration": 320.5999999998603,
+            "blocking": 257.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 307
+              }
+            ]
+          }
+        },
+        {
+          "transition": "first-bite→sialocele",
+          "from": 49,
+          "progress": 0.6,
+          "dt": 50,
+          "moving": true,
+          "at": 329761,
+          "loaf": {
+            "start": 329697.7999999998,
+            "duration": 63.200000000186265,
+            "blocking": 0,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 50
+              }
+            ]
+          }
+        },
+        {
+          "transition": "sialocele→recurrence",
+          "from": 50,
+          "progress": 0,
+          "dt": 133,
+          "moving": false,
+          "at": 331328,
+          "loaf": {
+            "start": 331193.7999999998,
+            "duration": 137.4000000001397,
+            "blocking": 86.3,
+            "layout": 1,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 136
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0,
+          "dt": 117,
+          "moving": false,
+          "at": 334396,
+          "loaf": {
+            "start": 334263.19999999995,
+            "duration": 135.30000000004657,
+            "blocking": 68.9,
+            "layout": 0.8,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 119
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0,
+          "dt": 117,
+          "moving": false,
+          "at": 335647,
+          "loaf": {
+            "start": 335516.09999999986,
+            "duration": 134.5,
+            "blocking": 70.4,
+            "layout": 0.7,
+            "scripts": [
+              {
+                "fn": "",
+                "src": "src.DtG67u2x.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 120
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.1,
+          "dt": 50,
+          "moving": true,
+          "at": 336247,
+          "loaf": {
+            "start": 336184.3999999999,
+            "duration": 71.30000000004657,
+            "blocking": 8.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 58
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.4,
+          "dt": 50,
+          "moving": true,
+          "at": 336764,
+          "loaf": {
+            "start": 336702.3999999999,
+            "duration": 63.60000000009313,
+            "blocking": 1.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 51
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.6,
+          "dt": 117,
+          "moving": true,
+          "at": 337331,
+          "loaf": {
+            "start": 337201.3999999999,
+            "duration": 144.80000000004657,
+            "blocking": 81.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 131
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.6,
+          "dt": 50,
+          "moving": true,
+          "at": 337381,
+          "loaf": {
+            "start": 337201.3999999999,
+            "duration": 144.80000000004657,
+            "blocking": 81.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 131
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "totals": {
+        "frames": 9491,
+        "medianMs": 16.7,
+        "medianFps": 59.9,
+        "p95Ms": 16.8,
+        "maxMs": 717,
+        "over25": 103,
+        "over40": 52,
+        "longTasks": 51,
+        "longAnimationFrames": 67,
+        "transitionsWithStall": 32
+      },
+      "transitions": [
+        {
+          "transition": "face→where-parotid",
+          "frames": 214,
+          "maxMs": 50,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "where-parotid→duct",
+          "frames": 148,
+          "maxMs": 33,
+          "over25": 4,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "duct→layers",
+          "frames": 155,
+          "maxMs": 83,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "layers→nerve-within",
+          "frames": 149,
+          "maxMs": 100,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "frames": 147,
+          "maxMs": 67,
+          "over25": 2,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "frames": 160,
+          "maxMs": 67,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "branch-groups→nerve-plane",
+          "frames": 161,
+          "maxMs": 33,
+          "over25": 2,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-plane→nerve-variants",
+          "frames": 157,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "frames": 158,
+          "maxMs": 117,
+          "over25": 2,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "frames": 149,
+          "maxMs": 83,
+          "over25": 4,
+          "over40": 3,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "tumour-positions→pseudocapsule",
+          "frames": 153,
+          "maxMs": 50,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pseudocapsule→no-shelling",
+          "frames": 250,
+          "maxMs": 133,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "no-shelling→ultrasound",
+          "frames": 234,
+          "maxMs": 400,
+          "over25": 5,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "ultrasound→cross-section",
+          "frames": 181,
+          "maxMs": 217,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "cross-section→needle",
+          "frames": 182,
+          "maxMs": 83,
+          "over25": 4,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "needle→milan",
+          "frames": 158,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "milan→esgs-levels",
+          "frames": 218,
+          "maxMs": 300,
+          "over25": 3,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "esgs-levels→option-ecd",
+          "frames": 171,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-ecd→option-partial",
+          "frames": 150,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-partial→option-superficial",
+          "frames": 150,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-superficial→option-total",
+          "frames": 146,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "option-total→choosing",
+          "frames": 155,
+          "maxMs": 100,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "choosing→evidence-limits",
+          "frames": 235,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "frames": 265,
+          "maxMs": 217,
+          "over25": 4,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision→incision-facelift",
+          "frames": 153,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "incision-facelift→flap",
+          "frames": 171,
+          "maxMs": 83,
+          "over25": 4,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "flap→gan",
+          "frames": 152,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "gan→landmarks",
+          "frames": 153,
+          "maxMs": 300,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "landmarks→trunk",
+          "frames": 175,
+          "maxMs": 83,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "trunk→pes-divisions",
+          "frames": 179,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pes-divisions→upper-division",
+          "frames": 154,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "upper-division→peel",
+          "frames": 148,
+          "maxMs": 83,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "peel→lobe-lifts",
+          "frames": 156,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "lobe-lifts→specimen-out",
+          "frames": 141,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "specimen-out→bed",
+          "frames": 151,
+          "maxMs": 167,
+          "over25": 5,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "bed→barrier-smas",
+          "frames": 158,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-smas→barrier-scm",
+          "frames": 165,
+          "maxMs": 167,
+          "over25": 3,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-scm→barrier-graft",
+          "frames": 158,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "frames": 168,
+          "maxMs": 83,
+          "over25": 5,
+          "over40": 3,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "drain→closed",
+          "frames": 162,
+          "maxMs": 67,
+          "over25": 3,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "closed→after-anatomy",
+          "frames": 155,
+          "maxMs": 50,
+          "over25": 3,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "after-anatomy→contour",
+          "frames": 158,
+          "maxMs": 50,
+          "over25": 2,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "contour→pathology",
+          "frames": 168,
+          "maxMs": 717,
+          "over25": 5,
+          "over40": 3,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "pathology→healing",
+          "frames": 257,
+          "maxMs": 83,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "healing→compl-map",
+          "frames": 217,
+          "maxMs": 600,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "compl-map→weakness",
+          "frames": 184,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "weakness→numbness",
+          "frames": 198,
+          "maxMs": 300,
+          "over25": 3,
+          "over40": 2,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "numbness→frey",
+          "frames": 177,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "frey→first-bite",
+          "frames": 180,
+          "maxMs": 33,
+          "over25": 1,
+          "over40": 0,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "first-bite→sialocele",
+          "frames": 179,
+          "maxMs": 300,
+          "over25": 3,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "sialocele→recurrence",
+          "frames": 182,
+          "maxMs": 100,
+          "over25": 1,
+          "over40": 1,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "recurrence→explore",
+          "frames": 250,
+          "maxMs": 117,
+          "over25": 6,
+          "over40": 5,
+          "p95Ms": 16.8
+        },
+        {
+          "transition": "explore→compare",
+          "frames": 396,
+          "maxMs": 17,
+          "over25": 0,
+          "over40": 0,
+          "p95Ms": 16.8
+        }
+      ],
+      "stalls": [
+        {
+          "transition": "face→where-parotid",
+          "from": 0,
+          "progress": 0.7,
+          "dt": 50,
+          "moving": true,
+          "at": 350687,
+          "loaf": {
+            "start": 350623.8999999999,
+            "duration": 64.80000000004657,
+            "blocking": 1.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 51
+              }
+            ]
+          }
+        },
+        {
+          "transition": "duct→layers",
+          "from": 2,
+          "progress": 0.2,
+          "dt": 83,
+          "moving": true,
+          "at": 354906,
+          "loaf": {
+            "start": 354809.2999999998,
+            "duration": 108.10000000009313,
+            "blocking": 44.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 94
+              }
+            ]
+          }
+        },
+        {
+          "transition": "duct→layers",
+          "from": 2,
+          "progress": 0.4,
+          "dt": 67,
+          "moving": true,
+          "at": 355323,
+          "loaf": {
+            "start": 355243,
+            "duration": 89.5,
+            "blocking": 26.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 76
+              }
+            ]
+          }
+        },
+        {
+          "transition": "layers→nerve-within",
+          "from": 3,
+          "progress": 0.3,
+          "dt": 100,
+          "moving": true,
+          "at": 357674,
+          "loaf": {
+            "start": 357560.59999999986,
+            "duration": 123.80000000004657,
+            "blocking": 60.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 110
+              }
+            ]
+          }
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "from": 4,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 360258,
+          "loaf": {
+            "start": 360195.19999999995,
+            "duration": 70.30000000004657,
+            "blocking": 7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 56
+              }
+            ]
+          }
+        },
+        {
+          "transition": "nerve-within→trunk-pes",
+          "from": 4,
+          "progress": 0.7,
+          "dt": 67,
+          "moving": true,
+          "at": 360925,
+          "loaf": {
+            "start": 360845.69999999995,
+            "duration": 83.80000000004657,
+            "blocking": 20.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 70
+              }
+            ]
+          }
+        },
+        {
+          "transition": "trunk-pes→branch-groups",
+          "from": 5,
+          "progress": 0,
+          "dt": 67,
+          "moving": false,
+          "at": 362192,
+          "loaf": {
+            "start": 362109.7999999998,
+            "duration": 85.9000000001397,
+            "blocking": 19.7,
+            "layout": 0.9,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 69
+              }
+            ]
+          }
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "from": 8,
+          "progress": 0.7,
+          "dt": 117,
+          "moving": true,
+          "at": 371847,
+          "loaf": {
+            "start": 371717.7999999998,
+            "duration": 131.10000000009313,
+            "blocking": 68.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 118
+              }
+            ]
+          }
+        },
+        {
+          "transition": "nerve-variants→tumour",
+          "from": 8,
+          "progress": 1,
+          "dt": 67,
+          "moving": true,
+          "at": 372564,
+          "loaf": {
+            "start": 372485.09999999986,
+            "duration": 93.10000000009313,
+            "blocking": 30.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 80
+              }
+            ]
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 373648,
+          "loaf": {
+            "start": 373585.59999999986,
+            "duration": 72.10000000009313,
+            "blocking": 9.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 59
+              }
+            ]
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 0.7,
+          "dt": 83,
+          "moving": true,
+          "at": 374348,
+          "loaf": {
+            "start": 374253.2999999998,
+            "duration": 108.9000000001397,
+            "blocking": 47.2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 97
+              }
+            ]
+          }
+        },
+        {
+          "transition": "tumour→tumour-positions",
+          "from": 9,
+          "progress": 1,
+          "dt": 50,
+          "moving": true,
+          "at": 375165,
+          "loaf": {
+            "start": 375102.59999999986,
+            "duration": 75,
+            "blocking": 12.2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 61
+              }
+            ]
+          }
+        },
+        {
+          "transition": "tumour-positions→pseudocapsule",
+          "from": 10,
+          "progress": 0.2,
+          "dt": 50,
+          "moving": true,
+          "at": 376182,
+          "loaf": {
+            "start": 376120.8999999999,
+            "duration": 72.89999999990687,
+            "blocking": 11.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 61
+              }
+            ]
+          }
+        },
+        {
+          "transition": "pseudocapsule→no-shelling",
+          "from": 11,
+          "progress": 0.5,
+          "dt": 133,
+          "moving": true,
+          "at": 380851,
+          "loaf": {
+            "start": 380705.5,
+            "duration": 160.0999999998603,
+            "blocking": 97.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 147
+              }
+            ]
+          }
+        },
+        {
+          "transition": "no-shelling→ultrasound",
+          "from": 12,
+          "progress": 0.5,
+          "dt": 400,
+          "moving": true,
+          "at": 385120,
+          "loaf": {
+            "start": 384708.59999999986,
+            "duration": 421.19999999995343,
+            "blocking": 359.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 409
+              }
+            ]
+          }
+        },
+        {
+          "transition": "ultrasound→cross-section",
+          "from": 13,
+          "progress": 0.4,
+          "dt": 217,
+          "moving": true,
+          "at": 388371,
+          "loaf": {
+            "start": 388143.19999999995,
+            "duration": 243.0999999998603,
+            "blocking": 181.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 230
+              }
+            ]
+          }
+        },
+        {
+          "transition": "ultrasound→cross-section",
+          "from": 13,
+          "progress": 0.4,
+          "dt": 50,
+          "moving": true,
+          "at": 388438
+        },
+        {
+          "transition": "cross-section→needle",
+          "from": 14,
+          "progress": 0,
+          "dt": 83,
+          "moving": false,
+          "at": 390189,
+          "loaf": {
+            "start": 390089.19999999995,
+            "duration": 104.5999999998603,
+            "blocking": 38,
+            "layout": 0.9,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 88
+              }
+            ]
+          }
+        },
+        {
+          "transition": "cross-section→needle",
+          "from": 14,
+          "progress": 0.5,
+          "dt": 67,
+          "moving": true,
+          "at": 391656,
+          "loaf": {
+            "start": 391576.8999999999,
+            "duration": 88,
+            "blocking": 25.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 74
+              }
+            ]
+          }
+        },
+        {
+          "transition": "milan→esgs-levels",
+          "from": 16,
+          "progress": 0.5,
+          "dt": 300,
+          "moving": true,
+          "at": 398326,
+          "loaf": {
+            "start": 398014.3999999999,
+            "duration": 313.5,
+            "blocking": 251.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 301
+              }
+            ]
+          }
+        },
+        {
+          "transition": "option-total→choosing",
+          "from": 21,
+          "progress": 0.5,
+          "dt": 100,
+          "moving": true,
+          "at": 411232,
+          "loaf": {
+            "start": 411120.8999999999,
+            "duration": 122.69999999995343,
+            "blocking": 61.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 111
+              }
+            ]
+          }
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "from": 23,
+          "progress": 0.4,
+          "dt": 217,
+          "moving": true,
+          "at": 419553,
+          "loaf": {
+            "start": 419323.59999999986,
+            "duration": 245.30000000004657,
+            "blocking": 182.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 232
+              }
+            ]
+          }
+        },
+        {
+          "transition": "evidence-limits→incision",
+          "from": 23,
+          "progress": 0.6,
+          "dt": 67,
+          "moving": true,
+          "at": 420036,
+          "loaf": {
+            "start": 419955.8999999999,
+            "duration": 96.69999999995343,
+            "blocking": 32.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 82
+              }
+            ]
+          }
+        },
+        {
+          "transition": "incision-facelift→flap",
+          "from": 25,
+          "progress": 0.3,
+          "dt": 83,
+          "moving": true,
+          "at": 425072,
+          "loaf": {
+            "start": 424978.7999999998,
+            "duration": 101.60000000009313,
+            "blocking": 41,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 90
+              }
+            ]
+          }
+        },
+        {
+          "transition": "gan→landmarks",
+          "from": 27,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 430274,
+          "loaf": {
+            "start": 430213.19999999995,
+            "duration": 76.80000000004657,
+            "blocking": 15.3,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 65
+              }
+            ]
+          }
+        },
+        {
+          "transition": "gan→landmarks",
+          "from": 27,
+          "progress": 0.7,
+          "dt": 300,
+          "moving": true,
+          "at": 431208,
+          "loaf": {
+            "start": 430897.19999999995,
+            "duration": 316.39999999990687,
+            "blocking": 255.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 305
+              }
+            ]
+          }
+        },
+        {
+          "transition": "landmarks→trunk",
+          "from": 28,
+          "progress": 0.5,
+          "dt": 83,
+          "moving": true,
+          "at": 433826,
+          "loaf": {
+            "start": 433730.59999999986,
+            "duration": 98.5,
+            "blocking": 36.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 85
+              }
+            ]
+          }
+        },
+        {
+          "transition": "upper-division→peel",
+          "from": 31,
+          "progress": 0.3,
+          "dt": 83,
+          "moving": true,
+          "at": 441646,
+          "loaf": {
+            "start": 441550.8999999999,
+            "duration": 101.89999999990687,
+            "blocking": 39.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 89
+              }
+            ]
+          }
+        },
+        {
+          "transition": "specimen-out→bed",
+          "from": 34,
+          "progress": 0.2,
+          "dt": 100,
+          "moving": true,
+          "at": 448967,
+          "loaf": {
+            "start": 448853.59999999986,
+            "duration": 121,
+            "blocking": 57.8,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 107
+              }
+            ]
+          }
+        },
+        {
+          "transition": "specimen-out→bed",
+          "from": 34,
+          "progress": 0.5,
+          "dt": 167,
+          "moving": true,
+          "at": 449567,
+          "loaf": {
+            "start": 449387.8999999999,
+            "duration": 181.60000000009313,
+            "blocking": 119.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 169
+              }
+            ]
+          }
+        },
+        {
+          "transition": "barrier-smas→barrier-scm",
+          "from": 36,
+          "progress": 0,
+          "dt": 167,
+          "moving": false,
+          "at": 454086,
+          "loaf": {
+            "start": 453902.3999999999,
+            "duration": 198.10000000009313,
+            "blocking": 131.6,
+            "layout": 0.9,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 181
+              }
+            ]
+          }
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "from": 38,
+          "progress": 0,
+          "dt": 83,
+          "moving": false,
+          "at": 459571,
+          "loaf": {
+            "start": 459488.2999999998,
+            "duration": 91.60000000009313,
+            "blocking": 41.6,
+            "layout": 0.6,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 91
+              }
+            ]
+          }
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "from": 38,
+          "progress": 0.2,
+          "dt": 50,
+          "moving": true,
+          "at": 460339,
+          "loaf": {
+            "start": 460276.09999999986,
+            "duration": 72.4000000001397,
+            "blocking": 9.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 59
+              }
+            ]
+          }
+        },
+        {
+          "transition": "barrier-graft→drain",
+          "from": 38,
+          "progress": 0.5,
+          "dt": 67,
+          "moving": true,
+          "at": 460839,
+          "loaf": {
+            "start": 460759.19999999995,
+            "duration": 93.69999999995343,
+            "blocking": 30.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 80
+              }
+            ]
+          }
+        },
+        {
+          "transition": "drain→closed",
+          "from": 39,
+          "progress": 0.3,
+          "dt": 67,
+          "moving": true,
+          "at": 463373,
+          "loaf": {
+            "start": 463293.8999999999,
+            "duration": 93,
+            "blocking": 30.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 79
+              }
+            ]
+          }
+        },
+        {
+          "transition": "closed→after-anatomy",
+          "from": 40,
+          "progress": 0.8,
+          "dt": 50,
+          "moving": true,
+          "at": 466842,
+          "loaf": {
+            "start": 466779.1999999997,
+            "duration": 64.8000000002794,
+            "blocking": 2.2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 52
+              }
+            ]
+          }
+        },
+        {
+          "transition": "after-anatomy→contour",
+          "from": 41,
+          "progress": 0.3,
+          "dt": 50,
+          "moving": true,
+          "at": 468676,
+          "loaf": {
+            "start": 468613,
+            "duration": 65.5,
+            "blocking": 2.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 52
+              }
+            ]
+          }
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0,
+          "dt": 150,
+          "moving": false,
+          "at": 470743,
+          "loaf": {
+            "start": 470577,
+            "duration": 181.10000000009313,
+            "blocking": 114.7,
+            "layout": 1,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 164
+              }
+            ]
+          }
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0.2,
+          "dt": 717,
+          "moving": true,
+          "at": 472144,
+          "loaf": {
+            "start": 471414.6999999997,
+            "duration": 744.7000000001863,
+            "blocking": 682,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 731
+              }
+            ]
+          }
+        },
+        {
+          "transition": "contour→pathology",
+          "from": 42,
+          "progress": 0.5,
+          "dt": 84,
+          "moving": true,
+          "at": 472761,
+          "loaf": {
+            "start": 472665,
+            "duration": 99.29999999981374,
+            "blocking": 36.4,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 86
+              }
+            ]
+          }
+        },
+        {
+          "transition": "pathology→healing",
+          "from": 43,
+          "progress": 0.1,
+          "dt": 83,
+          "moving": true,
+          "at": 476096,
+          "loaf": {
+            "start": 475999.3999999999,
+            "duration": 97.29999999981374,
+            "blocking": 33.9,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 83
+              }
+            ]
+          }
+        },
+        {
+          "transition": "pathology→healing",
+          "from": 43,
+          "progress": 0.5,
+          "dt": 67,
+          "moving": true,
+          "at": 477030,
+          "loaf": {
+            "start": 476948.7999999998,
+            "duration": 84.89999999990687,
+            "blocking": 20.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 70
+              }
+            ]
+          }
+        },
+        {
+          "transition": "healing→compl-map",
+          "from": 44,
+          "progress": 0.6,
+          "dt": 600,
+          "moving": true,
+          "at": 481565,
+          "loaf": {
+            "start": 480951.7999999998,
+            "duration": 618.8999999999069,
+            "blocking": 555.7,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 605
+              }
+            ]
+          }
+        },
+        {
+          "transition": "weakness→numbness",
+          "from": 46,
+          "progress": 0,
+          "dt": 167,
+          "moving": false,
+          "at": 486184,
+          "loaf": {
+            "start": 486001,
+            "duration": 185.60000000009313,
+            "blocking": 119.2,
+            "layout": 0.8,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 169
+              }
+            ]
+          }
+        },
+        {
+          "transition": "weakness→numbness",
+          "from": 46,
+          "progress": 0.4,
+          "dt": 300,
+          "moving": true,
+          "at": 487935,
+          "loaf": {
+            "start": 487621.2999999998,
+            "duration": 317.60000000009313,
+            "blocking": 254.1,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 304
+              }
+            ]
+          }
+        },
+        {
+          "transition": "first-bite→sialocele",
+          "from": 49,
+          "progress": 0.4,
+          "dt": 300,
+          "moving": true,
+          "at": 497122,
+          "loaf": {
+            "start": 496809.5,
+            "duration": 329.10000000009313,
+            "blocking": 266.2,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 316
+              }
+            ]
+          }
+        },
+        {
+          "transition": "sialocele→recurrence",
+          "from": 50,
+          "progress": 0,
+          "dt": 100,
+          "moving": false,
+          "at": 499140,
+          "loaf": {
+            "start": 499023.6000000001,
+            "duration": 131,
+            "blocking": 64.6,
+            "layout": 0.9,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 114
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0,
+          "dt": 117,
+          "moving": false,
+          "at": 502292,
+          "loaf": {
+            "start": 502158.5,
+            "duration": 134.39999999990687,
+            "blocking": 68,
+            "layout": 0.9,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 117
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0,
+          "dt": 117,
+          "moving": false,
+          "at": 503559,
+          "loaf": {
+            "start": 503428.2999999998,
+            "duration": 134.20000000018626,
+            "blocking": 70.3,
+            "layout": 0.7,
+            "scripts": [
+              {
+                "fn": "",
+                "src": "src.DtG67u2x.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 120
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.1,
+          "dt": 50,
+          "moving": true,
+          "at": 504159,
+          "loaf": {
+            "start": 504096.2999999998,
+            "duration": 71.39999999990687,
+            "blocking": 8.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 58
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.4,
+          "dt": 50,
+          "moving": true,
+          "at": 504693,
+          "loaf": {
+            "start": 504631.1000000001,
+            "duration": 69.09999999962747,
+            "blocking": 7.5,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 57
+              }
+            ]
+          }
+        },
+        {
+          "transition": "recurrence→explore",
+          "from": 51,
+          "progress": 0.6,
+          "dt": 117,
+          "moving": true,
+          "at": 505276,
+          "loaf": {
+            "start": 505147,
+            "duration": 145.29999999981374,
+            "blocking": 82.6,
+            "layout": 0,
+            "scripts": [
+              {
+                "fn": "Oe",
+                "src": "index.astro_astro_type_script_index_0_lang.C_nWRcp2.js",
+                "invoker": "FrameRequestCallback",
+                "ms": 132
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "recurring": [
+    "after-anatomy→contour @0.3",
+    "barrier-graft→drain @0",
+    "barrier-graft→drain @0.2",
+    "barrier-graft→drain @0.5",
+    "barrier-smas→barrier-scm @0",
+    "closed→after-anatomy @0.8",
+    "contour→pathology @0",
+    "contour→pathology @0.2",
+    "contour→pathology @0.5",
+    "cross-section→needle @0",
+    "cross-section→needle @0.5",
+    "drain→closed @0.3",
+    "duct→layers @0.2",
+    "duct→layers @0.4",
+    "evidence-limits→incision @0.4",
+    "evidence-limits→incision @0.5",
+    "evidence-limits→incision @0.6",
+    "face→where-parotid @0.7",
+    "first-bite→sialocele @0.4",
+    "gan→landmarks @0.3",
+    "gan→landmarks @0.7",
+    "healing→compl-map @0.6",
+    "incision-facelift→flap @0.3",
+    "landmarks→trunk @0.5",
+    "layers→nerve-within @0.3",
+    "milan→esgs-levels @0.5",
+    "nerve-variants→tumour @0.7",
+    "nerve-variants→tumour @1",
+    "nerve-within→trunk-pes @0.3",
+    "nerve-within→trunk-pes @0.7",
+    "no-shelling→ultrasound @0.5",
+    "option-total→choosing @0.5",
+    "pathology→healing @0.1",
+    "pathology→healing @0.5",
+    "pseudocapsule→no-shelling @0.5",
+    "recurrence→explore @0",
+    "recurrence→explore @0.1",
+    "recurrence→explore @0.4",
+    "recurrence→explore @0.6",
+    "sialocele→recurrence @0",
+    "specimen-out→bed @0.2",
+    "specimen-out→bed @0.5",
+    "trunk-pes→branch-groups @0",
+    "tumour-positions→pseudocapsule @0.2",
+    "tumour→tumour-positions @0.3",
+    "tumour→tumour-positions @0.7",
+    "tumour→tumour-positions @1",
+    "ultrasound→cross-section @0.4",
+    "upper-division→peel @0.3",
+    "weakness→numbness @0",
+    "weakness→numbness @0.4"
+  ],
+  "consoleErrors": []
+}

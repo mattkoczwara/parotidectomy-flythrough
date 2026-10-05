@@ -24,6 +24,7 @@
     "capture": "npm run figures && npm run build && npm run capture -w @atlas/capture",
     "anatomy": "bash pipeline/build/build.sh",
     "perf": "npm run build && npm run perf -w @atlas/capture",
+    "hitch": "npm run build && npm run hitch -w @atlas/capture",
     "review": "tsx tools/validate/src/review.ts",
     "validate:public": "tsx tools/validate/src/index.ts --public",
     "build:public": "npm run validate:public && npm run build",

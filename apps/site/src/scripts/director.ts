@@ -246,6 +246,9 @@ export function start(): void {
   let converging = false;
   /** The tier warm-up renders every animation frame for two seconds; a settle waits until it is over so no frame is rendered twice (the TRAA jitter would advance twice). */
   let warmingUp = false;
+  /** Resolves when a plate first converges: the shaders it needs are built, so the tier warm-up measures steady state. */
+  let firstConverged!: () => void;
+  const converged = new Promise<void>((resolve) => (firstConverged = resolve));
   /** The settle in progress (one animation frame per accumulation step); cancelled when the scene changes again. */
   let settleToken: { cancelled: boolean } | null = null;
   let dirty = true;
@@ -298,14 +301,20 @@ export function start(): void {
         groups,
       });
       await s.load('/assets/anatomy/slice.glb', '/assets/anatomy/frame.json');
-      const tm = new TierManager(s, choice, forced, (tier, reason) => {
-        document.body.dataset.tier = tier;
+      // The tier and pipeline reported are read back from the stage: what it renders, not what was asked for.
+      const publishTier = () => {
+        const p = s.pipelineInfo;
+        document.body.dataset.tier = p.tier;
+        document.body.dataset.pipeline = p.temporal ? 'traa+ao' : 'fxaa';
+      };
+      const tm = new TierManager(s, choice, forced, (_tier, reason) => {
+        publishTier();
         document.body.dataset.tierReason = reason;
         dirty = true;
       });
       s.setTier(tm.initial());
       tiers = tm;
-      document.body.dataset.tier = s.tier;
+      publishTier();
       document.body.dataset.backend = s.backend;
       if (qualitySelect) {
         qualitySelect.value = choice;
@@ -322,11 +331,16 @@ export function start(): void {
       canvas.dataset.ready = '1';
       performance.mark('atlas:ready'); // the scene is interactive (performance harness)
       canvas.dispatchEvent(new Event('atlas:ready'));
-      warmingUp = true;
-      try {
-        await tm.warmUp();
-      } finally {
-        warmingUp = false;
+      await converged;
+      if (!forced && tm.choice === 'auto' && s.tier === 'high') {
+        warmingUp = true;
+        delete document.body.dataset.converged; // the warm-up's frames advance the TRAA history; the plate settles again after it
+        try {
+          await tm.warmUp();
+        } finally {
+          warmingUp = false;
+          dirty = true;
+        }
       }
     } catch (err) {
       console.error('3D scene unavailable; continuing with the text and static figures.', err);
@@ -610,6 +624,7 @@ export function start(): void {
         document.body.dataset.converged = String(settledPlate); // readiness signal for tests and captures
         dropPoster();
         if (!performance.getEntriesByName('atlas:converged').length) performance.mark('atlas:converged');
+        firstConverged();
       });
     }
   };
