@@ -1,6 +1,6 @@
 # Parotid Surgery Atlas
 
-Private educational atlas of parotid tumours and parotidectomy, with pleomorphic adenoma as the representative case. A continuous, reversible 3D dissection should make the tumour's relationship to the facial nerve and surgical plane intelligible at both lay and clinical depth. The anatomy is the primary interface; medical accuracy and spatial clarity take precedence over decorative presentation.
+Private educational atlas of parotid tumours and parotidectomy, with pleomorphic adenoma as the representative case. A continuous, reversible 3D dissection should make the tumour's relationship to the facial nerve and surgical plane intelligible at both lay and clinical depth. The anatomy is the primary interface; medical accuracy and presentation take precedence.
 
 ## Project orientation
 

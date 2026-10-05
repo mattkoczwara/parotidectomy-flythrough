@@ -1,39 +1,53 @@
 # Performance and browser reports
 
-M1 measurements on the real slice (533k triangles, GLB 3.6 MB).
+Measurements are kept so that a later run can be compared with an earlier one.
 
-- **Machine:** RTX 3070 8 GB, driver 617.14.
-- **Chrome:** via Playwright's `chrome` channel.
-- **Firefox:** 156.0.1, over WebDriver BiDi.
-- **Produced by:** `npm run perf` and `node tools/capture/firefox.mjs` (see `tools/capture/README.md`).
+| File | What it is |
+|---|---|
+| `baseline.json` | The reference run (M5, 54 plates). `npm run perf` compares each run with it. Replace it only on purpose: copy `m5-report.json` over it after a change that is meant to move the numbers, and say why in `STATUS.md`. |
+| `m5-report.json` | The latest `npm run perf` run, including a `vs_baseline` section (each watched measure, its change, and a flag when it got worse by more than its tolerance). |
+| `history/` | A copy of every run, named by its date. Never edited. |
+| `firefox-m5.json` | The Firefox pass over all 54 plates (`node tools/capture/firefox.mjs`). |
+| `capture-m5.json` | What the capture suite measured on the same build: determinism, label legibility, accessibility, and which tests passed. |
+| `m1-report.json`, `firefox-m1.json` | The M1 slice (10 plates), kept for the record. |
 
-**Frame pacing** (`m1-report.json`, 2026-09-29), scrolling through every transition with the scene rendering every frame:
+**To compare a future run.** Run `npm run perf`. It prints one line per watched measure (`ok` or `WORSE`, baseline, now, change) and stores the same comparison in `m5-report.json`. The watched measures and tolerances are in `tools/capture/tests/perf.spec.ts`: median fps (10% lower), p95 frame time (20% higher), payload (10% higher), scene-interactive time and first-plate-converged time (25% higher). The comparison flags a change and does not fail the run, because frame times depend on the machine: compare runs on the same machine, display and driver, and read the `gpu` and `date` fields.
 
-| Configuration | Median fps | p95 frame |
-|---|---|---|
-| High, WebGPU, 1600×1000 | 59.9 | 16.8 ms |
-| High, WebGPU, 2560×1440 canvas (device scale 1.5) | 59.9 | 16.8 ms |
-| Mid, WebGL2, CPU throttled 4× | 59.9 | 16.8 ms |
+## M5 baseline (54 plates)
 
-These are pinned at the 60 Hz display's vsync. They meet plan §14: at least 60 fps median with p95 under 20 ms on High, and at least 30 fps on Mid.
+- **Machine:** RTX 3070 8 GB, driver 617.14, a 60 Hz display, Chrome via Playwright's `chrome` channel.
+- **Scene:** 630k triangles, GLB 4.58 MB, 62 meshes.
+- **Produced by:** `npm run perf`, commit `6be1cf9`, 2026-10-04.
 
-The GPU cannot be throttled here, so Mid-class hardware (Iris Xe, iPhone 13, Pixel 7) is approximated by CPU throttling, not measured. Real low-end devices remain to be tested.
+**Frame pacing**, scrolling through every transition of all 54 plates with the scene rendering every frame while it moves:
 
-**Cold load on an emulated 50 Mbps / 20 ms link:**
+| Configuration | Frames | Median fps | p95 frame |
+|---|---|---|---|
+| High, WebGPU, 1600×1000 | 7,648 | 59.9 | 16.8 ms |
+| High, WebGPU, 2538×1440 canvas (device scale 1.5) | 7,452 | 59.9 | 16.8 ms |
+| Mid, WebGL2, CPU throttled 4× | 6,759 | 59.9 | **33.4 ms** |
+
+High is pinned at the display's vsync and meets plan §14 (at least 60 fps median, p95 under 20 ms). Mid meets "at least 30 fps" on the median; its p95 of 33.4 ms means the slowest 5% of frames are at the 30 fps line. In M1 (10 plates, a lighter scene) the same configuration measured 16.8 ms, so the Mid tier now has no margin under 4× CPU throttling. The GPU cannot be throttled here, so Mid-class hardware (Iris Xe, iPhone 13, Pixel 7) is approximated by CPU throttling, not measured.
+
+**Cold load on an emulated 50 Mbps / 20 ms link, cache disabled:**
 
 | Measure | Result | Budget |
 |---|---|---|
-| Transferred | 4.1 MB | 8 MB initial payload |
-| Text readable | 0.19 s | — |
-| Scene interactive | 1.25 s | under 3 s |
-| First plate converged | 3.2 s | — |
+| Transferred | 5.17 MB | 8 MB initial payload |
+| Text readable | 0.28 s | none |
+| Scene interactive | 1.63 s | under 3 s |
+| First plate converged | 8.4 s | none |
 
-The first plate converges after 64 anti-aliasing frames.
+The first plate is converged late because a cold load builds every shader of the scene and the post-processing chain once: two main-thread stalls of about 2 s and 3 s (measured in a trace of the frames), after which the picture accumulates for about 96 animation frames. The text is readable from 0.28 s. Removing the `compileAsync` pre-warm (it built the same shaders twice) took the first-plate time from 11.2 s to 8.4 s. Reducing the one-time build further (sharing material graphs between meshes of one tissue family) is not done.
 
-**Firefox 156** (`firefox-m1.json`): all 10 plates run on the WebGPU backend at High tier and converge, with labels and no console errors. Rendering matches Chrome visually.
+**Settled pictures.** The settled picture of a plate is identical (0 pixels differ at the capture threshold) whether it is reached by a cold load, forward scrolling or backward scrolling. This depends on `Stage.settle` rendering one frame per animation frame (ADR-0001, r186 gotchas).
 
-**Portrait (390×844):**
-- the scene is sticky at the top, and the text lane passes behind it;
-- labels sit in a band of up to 4, which passes the legibility checks.
+**Firefox 157** (`firefox-m5.json`, run 2026-10-04): all 54 plates converged on the WebGPU backend at High tier, but 33 plates report a WGSL validation error for one fragment shader and the tumour is not drawn (plate 12 shows the label with no tumour). This is an open defect, listed first under Next in `STATUS.md`; a future run of `node tools/capture/firefox.mjs` should be compared with this file and should report no errors.
+
+**Portrait (390×844):** the scene is sticky at the top and the text lane passes behind it; labels sit in a band of up to 4 (the label checks pass in landscape and portrait for all 54 plates).
 
 Safari and real mobile hardware are not available here.
+
+## M1 record (10 plates, 2026-09-29)
+
+High 59.9 fps with p95 16.8 ms at 1600×1000 and at 2560×1440; Mid WebGL2 with 4× CPU throttle 59.9 fps with p95 16.8 ms; cold load 4.1 MB, scene interactive in 1.25 s, first plate converged in 3.2 s; Firefox 156.0.1 ran all 10 plates on WebGPU at High.

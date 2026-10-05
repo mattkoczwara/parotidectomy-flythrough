@@ -107,4 +107,4 @@ _(**unverified** = built and looked at in focused render loops, but not yet thro
 - [x] Validators: paragraph attribution, glTF node and checksum checks, glossary drift, public gate
 - [x] Reference pages (method, credits and sources, glossary); print stylesheet
 - [x] Capture suite extended (instrument, pages, print, accessibility); sequential determinism passes
-- [ ] Final verification on the assembled application (see STATUS.md for results): `npm run check`, `capture`, `perf`, Firefox, review packet
+- [x] Final verification on the assembled application (see STATUS.md for results): `npm run check`, `capture`, `perf`, review packet; Firefox ran but found a shader defect that is open (STATUS.md, Next)

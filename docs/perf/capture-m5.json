@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-05T03:04:43.592Z",
+  "commit": "6be1cf9",
+  "note": "Capture suite on the M5 build (npm run capture): 25 of 25 tests passed. Chrome with WebGPU on one RTX 3070; Firefox is not part of this suite.",
+  "determinism": {
+    "plates": 54,
+    "maxFractionOfPixelsDifferent": 0,
+    "criterion": 0.005
+  },
+  "labelsLandscape": {
+    "plates": 54,
+    "maxLabels": 5,
+    "overlaps": 0,
+    "outside": 0,
+    "minTextContrast": 6.13,
+    "minLeaderContrast": 5.57,
+    "minFocusLstarAboveField": 18.2
+  },
+  "labelsPortrait": {
+    "plates": 54,
+    "maxLabels": 4,
+    "overlaps": 0,
+    "outside": 0,
+    "minTextContrast": 6.49,
+    "minLeaderContrast": 5.04,
+    "minFocusLstarAboveField": 17.9
+  },
+  "accessibilityAxeViolations": {
+    "/glossary/": 0,
+    "atlas": 0,
+    "instrument": 0,
+    "evidence": 0,
+    "static": 0,
+    "/method/": 0,
+    "/credits/": 0
+  },
+  "passiveScrollAnnouncements": 0
+}

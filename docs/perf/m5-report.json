@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-05T02:42:35.709Z",
+  "commit": "6be1cf9",
+  "note": "M5 baseline: 54 plates, 630k triangles, GLB 4.58 MB; one RTX 3070, 60 Hz display; Chrome via Playwright. Later runs are compared with this file (npm run perf).",
+  "gpu": "NVIDIA GeForce RTX 3070 (driver 617.14)",
+  "browser": "Chrome (Playwright channel \"chrome\")",
+  "high_1600x1000": {
+    "tier": "high",
+    "backend": "webgpu",
+    "frames": 7648,
+    "medianMs": 16.7,
+    "p95Ms": 16.8,
+    "medianFps": 59.9
+  },
+  "high_2560x1440_device_px": {
+    "tier": "high",
+    "backend": "webgpu",
+    "frames": 7452,
+    "medianMs": 16.7,
+    "p95Ms": 16.8,
+    "medianFps": 59.9,
+    "canvas": "2538x1440"
+  },
+  "mid_webgl2_cpu4x_1600x1000": {
+    "tier": "mid",
+    "backend": "webgl2",
+    "frames": 6759,
+    "medianMs": 16.7,
+    "p95Ms": 33.4,
+    "medianFps": 59.9
+  },
+  "cold_load_50mbps": {
+    "bytesTransferred": 5168401,
+    "megabytes": 5.17,
+    "sceneInteractiveMs": 1631,
+    "firstPlateConvergedMs": 8447,
+    "textReadableMs": 276
+  }
+}
