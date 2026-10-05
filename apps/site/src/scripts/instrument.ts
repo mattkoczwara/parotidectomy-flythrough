@@ -107,7 +107,7 @@ export function mountInstrument(ctx: InstrumentContext): Instrument {
   panel.setAttribute('aria-label', 'Instrument');
   panel.hidden = true;
   panel.innerHTML = `
-    <header><h2>Instrument</h2><button type="button" class="inst-close" aria-label="Close the instrument">×</button></header>
+    <header><h2 tabindex="-1">Instrument</h2><button type="button" class="inst-close" aria-label="Close the instrument">×</button></header>
     <section class="inst-card" aria-live="polite"><p class="inst-hint">Click or tap a structure in the picture to ask about it.</p></section>
     <fieldset class="inst-depth"><legend>Depth</legend></fieldset>
     <div class="inst-view" role="group" aria-label="View">
@@ -265,6 +265,8 @@ export function mountInstrument(ctx: InstrumentContext): Instrument {
     showCard(null);
     ctx.markDirty();
     refreshReset();
+    // The button hides itself now that nothing is changed; keep the keyboard inside the panel (Escape closes it from here).
+    panel.querySelector<HTMLElement>('h2')!.focus({ preventScroll: true });
   });
   refreshReset();
 

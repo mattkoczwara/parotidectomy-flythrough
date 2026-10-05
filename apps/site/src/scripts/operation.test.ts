@@ -13,6 +13,14 @@ describe('applyOperation', () => {
     expect(s.op['peel']).toBeUndefined();
   });
 
+  it('does not change the authored state it is given (the timeline caches it, and the reset returns to it)', () => {
+    const s = base();
+    const before = JSON.stringify(s);
+    const out = applyOperation(s, controls({ resection: 'total', barrier: 'smas', progress: 100 }));
+    expect(out).not.toBe(s);
+    expect(JSON.stringify(s)).toBe(before);
+  });
+
   it('selects the resection as a one-hot mix', () => {
     const s = applyOperation(base(), controls({ resection: 'partial' }));
     expect(s.variantMix['resection']).toEqual({ partial: 1 });

@@ -19,8 +19,15 @@ async function converged(page: Page, index: number) {
   await page.waitForFunction((i) => document.body.dataset.converged === String(i), index, { timeout: 90_000 });
 }
 const shot = async (page: Page) => PNG.sync.read(await page.locator('#stage-canvas').screenshot());
-function differs(a: PNG, b: PNG): number {
-  const n = pixelmatch(a.data, b.data, undefined, a.width, a.height, { threshold: 0.1 });
+function differs(a: PNG, b: PNG, name?: string): number {
+  const d = new PNG({ width: a.width, height: a.height });
+  const n = pixelmatch(a.data, b.data, d.data, a.width, a.height, { threshold: 0.1 });
+  // A comparison that is expected to match keeps its picture and a diff when it does not, for inspection.
+  if (name && n / (a.width * a.height) >= 0.005) {
+    writeFileSync(join(out, `instrument-${name}.diff.png`), PNG.sync.write(d));
+    writeFileSync(join(out, `instrument-${name}.before.png`), PNG.sync.write(a));
+    writeFileSync(join(out, `instrument-${name}.after.png`), PNG.sync.write(b));
+  }
   return n / (a.width * a.height);
 }
 async function settle(page: Page) {
@@ -56,12 +63,15 @@ test('the instrument opens by keyboard and its controls change and restore the p
   await page.getByRole('button', { name: 'Back to the authored scene' }).click();
   await settle(page);
   await expect(page.locator('.reset-view')).toBeHidden();
-  expect(differs(base, await shot(page)), 'reset restores the authored picture').toBeLessThan(0.005);
 
-  // Escape puts the instrument down and returns focus to its button.
+  // Escape puts the instrument down and returns focus to its button. The picture is compared with the instrument
+  // down (the open panel covers part of the stage) and without the focus ring on its button.
   await page.keyboard.press('Escape');
   await expect(page.locator('.instrument')).toBeHidden();
   await expect(toggle).toBeFocused();
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+  await settle(page);
+  expect(differs(base, await shot(page), 'reset-picture'), 'reset restores the authored picture').toBeLessThan(0.005);
 });
 
 test('a click asks about a structure, and a new plate returns the dial to the authored scene', async ({ page }) => {
@@ -112,10 +122,14 @@ test('the Explore chapter carries operation controls that drive the scene and re
 
   await page.getByRole('button', { name: 'Back to the authored scene' }).click();
   await settle(page);
-  expect(differs(base, await shot(page)), 'reset restores the authored scene').toBeLessThan(0.005);
+  // Compared with the instrument down: the open panel covers part of the stage.
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.instrument')).toBeHidden();
+  await settle(page);
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+  expect(differs(base, await shot(page), 'reset-scene'), 'reset restores the authored scene').toBeLessThan(0.005);
 
   // Leaving the chapter hides the operation controls.
-  await page.keyboard.press('Escape');
   await page.keyboard.press('k');
   await converged(page, index - 1);
   await page.locator('.instrument-toggle').click();

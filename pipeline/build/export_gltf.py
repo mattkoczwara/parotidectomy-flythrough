@@ -111,6 +111,14 @@ def main() -> None:
         p = np.load(MESHES / f"{sid}.npz")["positions"]
         order = np.argsort(p @ np.asarray(toward))[-k:]
         return p[order].mean(0)
+    def us_probe_face():
+        """The centre of the probe's lateral face (the body the viewer sees), not the mean of body and cable: a plane
+        x = f(y, z) is fitted through the lateral 14 mm of the probe and the point is placed on it."""
+        p = np.load(MESHES / "us_probe.npz")["positions"]
+        q = p[p[:, 0] > p[:, 0].max() - 14.0]
+        c = np.linalg.lstsq(np.c_[q[:, 1], q[:, 2], np.ones(len(q))], q[:, 0], rcond=None)[0]
+        y, z = q[:, 1].mean(), q[:, 2].mean()
+        return np.array([c[0] * y + c[1] * z + c[2], y, z])
     anchors = {
         "parotid_level_1": outer_point("parotid_level_1"),
         "parotid_level_2": outer_point("parotid_level_2"),
@@ -140,12 +148,7 @@ def main() -> None:
         "recurrence_nodules": outer_point("recurrence_nodules", k=30),
         "scm_flap": outer_point("scm_flap", k=40),
         "needle": np.load(MESHES / "needle.npz")["positions"][::4].mean(0),
-        "us_probe": np.load(MESHES / "us_probe.npz")["positions"][::6].mean(0),
-        "us_plane": np.load(MESHES / "us_plane.npz")["positions"][:4].mean(0),
-        "ct_tumour_outline": np.load(MESHES / "ct_tumour_outline.npz")["positions"][::10].mean(0),
-        "drain_tube": np.array(json.loads((ROOT / "pipeline/segment/work/drain.json").read_text())["nodes_mm"][4]),
-        "needle": np.load(MESHES / "needle.npz")["positions"][::4].mean(0),
-        "us_probe": np.load(MESHES / "us_probe.npz")["positions"][::6].mean(0),
+        "us_probe": us_probe_face(),
         "us_plane": np.load(MESHES / "us_plane.npz")["positions"][:4].mean(0),
         "ct_tumour_outline": np.load(MESHES / "ct_tumour_outline.npz")["positions"][::10].mean(0),
         "drain_tube": np.array(json.loads((ROOT / "pipeline/segment/work/drain.json").read_text())["nodes_mm"][4]),

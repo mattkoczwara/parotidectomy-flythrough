@@ -23,7 +23,7 @@ export function applyOperation(state: SceneState, ops: OperationControls): Scene
   if (!ops.active) return state;
   const p = clamp01(ops.progress / 100);
   const res = ops.resection;
-  const s = state;
+  const s: SceneState = { ...state }; // the authored state is cached by the timeline: copy it, replace the parts that change
   s.variants = { ...s.variants, resection: res };
   s.variantMix = { ...s.variantMix, resection: { [res]: 1 } };
   const op = (s.op = { ...s.op });

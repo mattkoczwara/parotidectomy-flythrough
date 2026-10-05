@@ -332,7 +332,11 @@ export function start(): void {
     resetBtn.hidden = true;
     dirty = true;
   };
-  resetBtn.addEventListener('click', resetOverride);
+  resetBtn.addEventListener('click', () => {
+    resetOverride();
+    // The button hides itself once the view is back; leave the keyboard on the control beside it, not on the page.
+    document.querySelector<HTMLElement>('.instrument-toggle')?.focus({ preventScroll: true });
+  });
 
   // ── Explicit navigation (moves focus once the destination has settled) ────────────────
   const go = (i: number) => {
