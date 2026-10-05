@@ -208,6 +208,33 @@ export function start(): void {
   // Static tier: no WebGPU or WebGL2, or asked for (?static): the captured figures carry the lesson.
   if ((!hasGPU && !hasWebGL2) || query.has('static')) document.body.classList.add('static');
 
+  // Poster: while the scene loads and builds its shaders (seconds on a cold load), the stage shows the plate's
+  // captured figure, shifted to the live framing; it fades once the first plate has converged, or on the first
+  // scroll (when it would no longer match). Never in capture mode or the static tier.
+  let poster: HTMLImageElement | null = null;
+  if (!query.has('capture') && !document.body.classList.contains('static')) {
+    const firstId = decodeURIComponent(location.hash.slice(1)) || document.querySelector<HTMLElement>('[data-plate]')?.id;
+    if (firstId && document.getElementById(firstId)?.querySelector('.plate-figure img')) {
+      poster = document.createElement('img');
+      poster.className = 'poster';
+      poster.alt = '';
+      poster.decoding = 'async';
+      poster.src = `/plates/${firstId}.webp`;
+      poster.addEventListener('error', () => dropPoster(true));
+      stageEl.querySelector('#stage-canvas')!.after(poster);
+      addEventListener('scroll', () => dropPoster(), { once: true, passive: true });
+    }
+  }
+  function dropPoster(now = false) {
+    const p = poster;
+    if (!p) return;
+    poster = null;
+    if (now || matchMedia('(prefers-reduced-motion: reduce)').matches) return p.remove();
+    p.classList.add('gone');
+    p.addEventListener('transitionend', () => p.remove(), { once: true });
+    setTimeout(() => p.remove(), 1200);
+  }
+
   let current = 0; // rendered t
   /** Development only: a state pinned by the look-development tools (tools/capture/snap.mjs --patch). */
   let held: SceneState | null = null;
@@ -248,6 +275,8 @@ export function start(): void {
     stage.resize(r.width, r.height);
     // Beside the text column the subject moves right; capture mode (figures, determinism) frames it centred.
     stage.frameOffsetX = r.width > r.height * 1.05 && !query.has('capture') ? 0.3 : 0;
+    // The poster (a centred capture) follows the same shift: a pan of 0.3 of the half-width is 15% of the width.
+    stageEl.style.setProperty('--poster-shift', `${stage.frameOffsetX * 50}%`);
     dirty = true;
   };
 
@@ -579,6 +608,7 @@ export function start(): void {
         if (!done || token.cancelled || settledPlate < 0) return;
         layoutLabels();
         document.body.dataset.converged = String(settledPlate); // readiness signal for tests and captures
+        dropPoster();
         if (!performance.getEntriesByName('atlas:converged').length) performance.mark('atlas:converged');
       });
     }

@@ -39,7 +39,7 @@ const PRESETS: Record<TissueFamily, Preset> = {
   'lymph-node': { base: 0xcdb7a4, cut: 0xd8c6b5, roughness: 0.5 },
   tumour: { base: 0xd9d3c6, cut: 0xcdc8ba, roughness: 0.36, clearcoat: 0.4 },
   // Manufactured objects: cool grey, not a tissue colour, so a probe or drain is never mistaken for anatomy.
-  instrument: { base: 0x8e98a6, cut: 0x8e98a6, roughness: 0.34, clearcoat: 0.35, metalness: 0.4 },
+  instrument: { base: 0x9ea8b6, cut: 0x9ea8b6, roughness: 0.32, clearcoat: 0.4, metalness: 0.12 },
 };
 
 export interface PeelFrame {

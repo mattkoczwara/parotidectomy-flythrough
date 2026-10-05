@@ -36,12 +36,30 @@ tissue through every fold and pose, and they are deterministic. The fibre direct
 centreline tangents for tubes, principal or fan axes for muscles. Colours were recalibrated under a neutral rig.
 Major tissues differ in form, roughness and relief, not only in hue.
 
+**Noise comes from a texture, not from shader code.** The first version used procedural Perlin and worley noise
+(MaterialX nodes), inlined at every call site. The tissue shaders became so large that compiling them in the GPU
+process held the first picture for about 15 s; first convergence went from 8.4 s to 19.7 s, and 1440p p95 doubled.
+All noise now samples one tileable 64³ RGBA volume, generated from a fixed seed at load (`packages/stage/src/
+noise.ts`): smooth noise, worley F1/F2 and a second independent noise. First convergence is back to about 9.4 s, and
+1440p p95 is 16.8 ms again.
+
+**Firefox.** Shaders must not hold `smoothstep()` of constants. Firefox's WGSL validator (Naga) rejects them, and they
+appear wherever a material reads an attribute its geometry lacks. Optional fields are switched on per geometry
+(`pieceFields`, `axis`, `locate`).
+
+**Kept placements.** The alternate tail tumour's search could move when the exterior skin changes, because skin
+cover is one of its constraints. It now keeps its validated centre while that centre stays feasible (`keep` in
+`anatomy.yaml`).
+
 ### Light
 
 The timeline now carries `light.mix`: the preset as continuous weights, cross-faded with the camera, so a change of
 shot never cuts the light. The stage blends four looks. `portrait` is derived, not authored: it is the studio look
 while the intact exterior is showing. The others are `studio`, `operative` and `specimen`. The environment is an
 authored studio (a dark sphere, a large soft key box, a cool fill, a rim strip and an overhead panel), not a room.
+The fill light is camera-relative, slightly below the view, like an operating light along the surgeon's view, so
+surfaces turned toward the viewer (the raised flap's underside, the depth of the wound) never go black. Context
+dimming moves toward a warm grey, because a neutral grey turned dimmed fat khaki.
 
 ### Field
 

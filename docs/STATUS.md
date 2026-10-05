@@ -1,16 +1,20 @@
 # Project status
 
-_Last updated: 2026-10-04 (M2–M5 implemented and verified in Chrome; Firefox follow-up and clinical review are next)_
+_Last updated: 2026-10-05 (final presentation pass; see `docs/FINAL_PASS_STATUS.md` and ADR-0005)_
 
 ## Current phase
 
-**M2–M5 implementation complete, verified in Chrome. One Firefox defect is open.** The owner authorised progression beyond M1 (2026-10-04) to an implementation-complete private-use application. That authorisation does not resolve M1's exceptions, answer the owner's comprehension questions or constitute clinical sign-off. **Clinical review remains after implementation; public launch is blocked on it.**
+**M2–M5 implementation complete; final presentation pass in progress (`docs/FINAL_PASS_STATUS.md`).** The Firefox tumour defect is fixed (five plates checked; the full pass is part of the final validation). The owner authorised progression beyond M1 (2026-10-04) to an implementation-complete private-use application. That authorisation does not resolve M1's exceptions, answer the owner's comprehension questions or constitute clinical sign-off. **Clinical review remains after implementation; public launch is blocked on it.**
 
 All 54 plates in 11 chapters are authored, rendered and reviewed as one sequence (contact sheets of the committed static figures, and the live site under the capture suite).
 
 ## Next, in order
 
-1. **Firefox: the tumour is not drawn.** Firefox 157 (WebGPU, High) converged on all 54 plates (`docs/perf/firefox-m5.json`, screenshots in `tools/capture/output/firefox/`), but 33 of the 54 plates report console errors: one fragment shader fails WGSL validation (`Entry point main at Fragment is invalid`, `fragment:666:1041`) and its pipeline (`MeshPhysicalNodeMaterial_40`) is invalid, so that surface is not drawn. The colour constants in the failing expression are those of the `tumour` tissue preset, and the tumour is visibly missing on plate 12 (`pseudocapsule`: the label "The tumour" points at empty tissue). Chrome (Tint) accepts the same shader. M1's Firefox pass (156.0.1, 10 plates) had no errors, so this came in with M2–M5 (the tumour material gained the global clip mask and the piece/variant options). The report truncates the validator's reason. To do: log the full message, find the construct Naga rejects in `packages/stage/src/materials.ts` (`tissue()`), fix it without changing Chrome's picture, rerun `node tools/capture/firefox.mjs`, and check the other Firefox plates by eye. Also run the forced-WebGL2 path (`?backend=webgl`) over all 54 plates; only the Mid-tier scroll run has exercised it.
+1. **Final presentation pass** (owner brief, 2026-10-04): an adult exterior (head, neck, shoulders, hair), tissue
+   mesostructure, authored light, a cyclorama field, editorial UI. Anatomy frozen; decisions in ADR-0005; approved
+   benchmarks in `docs/benchmarks/`. The Firefox tumour shader (Naga rejected `smoothstep()` of constants where the
+   tumour pieces lack ink fields) is fixed. Remaining: the full capture suite, the 54-plate Firefox pass and the
+   forced-WebGL2 pass on the new build.
 2. **Clinical review** of the 68 claims, the anatomy QC log and the review packet (`docs/review/index.html`, regenerated). Deferred by owner decision until implementation was complete.
 3. **Evidence items to verify before any public use** (see Open questions).
 

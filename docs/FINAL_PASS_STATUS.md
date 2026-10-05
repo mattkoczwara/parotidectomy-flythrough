@@ -1,25 +1,32 @@
 # Final presentation pass — status
 
-_Resume here. Backup of the pre-pass build: git tag `pre-final-pass`, built site in `.backup/pre-final-pass-dist/` (ignored)._
+_Resume here. Pre-pass backup: git tag `pre-final-pass`; built site in `.backup/pre-final-pass-dist/` (ignored).
+Decisions: ADR-0005. Benchmarks: `docs/benchmarks/` (`node tools/capture/benchmarks.mjs`)._
 
-## Completed phase
-1 Baseline (screenshots `tools/capture/output/baseline/`, perf baseline `docs/perf/baseline.json`).
+## Completed phases
+1 Baseline · 2 Exterior geometry (adult MPFB macro, exterior body, hair/brows, tint, footprint) · 3 Materials (baked
+noise volume, per-family mesostructure) · 4 Light and field (looks blended by `light.mix`, studio PMREM, cyclorama,
+camera-relative fill, scene-cut fade) · 5 Hero compositions · 7 UI chrome (editorial restyle, label column clears
+the gauge) · Firefox tumour shader (P0) fixed.
 
 ## Current phase
-2–4 Exterior geometry, materials, environment and lighting (in progress).
-- Exterior: MPFB adult-male macro (CC0) fitted as before; exterior body (neck, shoulders, chest) below the scene cut; short hair and brows as shells; regional skin tint (`pipeline/anatomy/exterior.py`, presentation only, checked: hair clear of the parotid region and the ear).
-- Materials: per-family mesostructure in `packages/stage/src/materials.ts` (`detail()`), fibre axis `_AXIS` baked at export.
-- Light: looks portrait/studio/operative/specimen blended by `light.mix` (timeline); studio PMREM; cyclorama background; field `#1d1f22` (ADR-0005 pending).
+6/8/9/10: motion check, performance re-measure, whole-atlas consistency, release validation (capture suite, figures,
+Firefox 54 plates, forced WebGL2).
 
-## Release blockers
-- P0 Firefox: tumour shader fails WGSL validation (STATUS.md Next 1) — recheck after the material rewrite.
-- P1 to verify: neck seam ridge, hairline quality, opening composition, localisation contour (not built yet).
+## Remaining release blockers
+- None known at P0. To confirm in the full capture suite: determinism, label legibility, accessibility after the CSS
+  and field change.
+- P1 watch: 1440p p95 (33.4 ms before the noise volume; re-measuring); cold load first picture ~9–10 s (baseline 8.4 s).
+- P2: raised flap underside darkish in `flap`/`barrier-*` plates; hairline crisp at close range; Mid tier p95 33.4 ms
+  under 4× CPU throttle (pre-existing).
 
 ## Approved visual benchmarks
-None yet (opening, localisation, nerve/operative hero, Explore).
+`opening` (face), `localisation` (where-parotid), `nerve-operative` (bed), `explore` (explore) — 2026-10-05.
 
-## Performance
-Baseline (pre-pass, RTX 3070, Chrome): High 59.9 fps median, p95 16.8 ms (1600×1000 and 2538×1440); Mid p95 33.4 ms; cold load 5.17 MB, first plate converged 8.4 s.
+## Performance (RTX 3070, Chrome, 1600×1000 unless noted)
+Pre-pass: High 59.9 fps / p95 16.8 ms (also at 1440p); Mid p95 33.4 ms; 5.17 MB; first plate converged 8.4 s.
+After materials with procedural noise: 1440p p95 33.4 ms, first plate 19.7 s → baked noise volume: first plate
+8.8–10.3 s (coldload.mjs).
 
 ## Next concrete action
-Check the rebuilt asset on plates face / where-parotid; fix the seam and hairline; then compose the opening shot.
+Read the perf run; then `npm run capture` (figures + suite) and the full Firefox pass; fix what they find.

@@ -62,9 +62,9 @@
       },
       "p95Ms": {
         "baseline": 16.8,
-        "now": 16.8,
-        "change": "+0.0%",
-        "flag": false
+        "now": 33.4,
+        "change": "+98.8%",
+        "flag": true
       }
     },
     "mid_webgl2_cpu4x_1600x1000": {
@@ -84,21 +84,21 @@
     "cold_load_50mbps": {
       "megabytes": {
         "baseline": 5.17,
-        "now": 5.57,
-        "change": "+7.7%",
+        "now": 5.52,
+        "change": "+6.8%",
         "flag": false
       },
       "sceneInteractiveMs": {
         "baseline": 1631,
-        "now": 2000,
-        "change": "+22.6%",
+        "now": 1897,
+        "change": "+16.3%",
         "flag": false
       },
       "firstPlateConvergedMs": {
         "baseline": 8447,
-        "now": 9350,
-        "change": "+10.7%",
-        "flag": false
+        "now": 19676,
+        "change": "+132.9%",
+        "flag": true
       }
     }
   }
