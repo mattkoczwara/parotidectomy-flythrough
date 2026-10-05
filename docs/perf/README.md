@@ -9,6 +9,7 @@ Measurements are kept so that a later run can be compared with an earlier one.
 | `history/` | A copy of every run, named by its date. Never edited. |
 | `firefox-m5.json` | The Firefox pass over all 54 plates (`node tools/capture/firefox.mjs`). |
 | `firefox-final.json` | The Firefox pass over all 54 plates after the final presentation pass (Firefox 157, WebGPU): every plate converges with no console errors. |
+| `uncapped.json` | Render headroom with vsync off (`node tools/capture/uncapped.mjs`): CPU interval per rendered frame and GPU throughput while its queue is saturated. See the last section. |
 | `capture-m5.json` | What the capture suite measured on the same build: determinism, label legibility, accessibility, and which tests passed. |
 | `m1-report.json`, `firefox-m1.json` | The M1 slice (10 plates), kept for the record. |
 
@@ -69,3 +70,25 @@ asset, the stage code of the earlier run, no loading poster) gave identical numb
 refresh rate; check a blank page's rAF interval first.
 History entries 2026-10-05T09-57, 10-01 and 10-04 are single-test bisect runs (the previous asset, no poster, the
 earlier stage code); `m5-report.json` is the last full run on the final code (2026-10-05T09-45).
+
+## Render headroom above the refresh rate (acceptance, 2026-10-05)
+
+The vsync-paced runs above show that the scene met every refresh interval. They cannot show how much of each interval
+was spare. `node tools/capture/uncapped.mjs` (one-off, `uncapped.json`) runs the same scroll through all 54 plates with
+Chrome's vsync and frame-rate limit off. It wraps `GPUQueue.submit` from the test page; no project code changes.
+
+| Configuration | CPU: interval between rendered frames (median, p95) | GPU: ms per frame while its queue is saturated (median) |
+|---|---|---|
+| High, WebGPU, 1585×1000 canvas | 4.1 ms, 8.5 ms | 4.5 ms |
+| High, WebGPU, 2538×1440 canvas | 3.8 ms, 14.5 ms | 6.9 ms |
+
+How to read it:
+- Uncapped, the page submits frames faster than the GPU finishes them, so GPU work queues up (submit-to-done p95 is
+  0.3–0.8 s of queueing, not render time). The rendered-frame interval is therefore the CPU's cost per frame.
+- The GPU figure counts frames completed per 250 ms in bins where at least three submitted frames were still
+  outstanding, so the GPU never waited for work. It is the GPU's throughput: about 220 frames per second at
+  1600×1000 and 145 at 1440p, roughly 3.7× and 2.4× a 16.7 ms frame.
+- It has no reliable p95: completion callbacks arrive in batches, and a shader compile stalls single bins. Tail
+  frames are covered by the vsync-paced p95 above.
+- One machine (RTX 3070) only. It says nothing about Mid-class GPUs, which cannot be emulated here.
+- A static page in the same session paced at 57 Hz (17.4 ms): the display was again running below 60 Hz.

@@ -260,6 +260,8 @@ face:
   mpfb_macro: { gender: male, age_old_weight: 0.23 }   # MakeHuman macro modifiers: an adult male of about 40 (young 25 → old 90), ancestry mixed equally (generic face)
   mpfb_body_cut_dm: 4.7          # keep MPFB vertices above this height (decimetres): the head, and below the scene cut the exterior body down to the upper chest
   body_fade_mm: 90               # the head-fit envelope fades out over this distance below the scene cut (exterior body only)
+  mouth_lining_mm: 8             # MPFB's mouth lining is kept within this depth of the face surface and capped (it otherwise reaches the deep lobe; acceptance audit 2026-10-05)
+  mouth_interior_mm: 3           # vertices deeper than this inside the head form the lining's connected region
   neck_cut_z: 140                # CT-frame lower limit used for fitting (mm)
   ct_vertex_gap_mm: 11           # the CT starts at slice 1012, about 11 mm below the VHP vertex reference
   conform_center: [66, 80, 218]  # right parotid region, centred low enough to cover the lower pole and upper neck

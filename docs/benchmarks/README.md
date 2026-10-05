@@ -16,3 +16,8 @@ Pictures are capture-mode renders at 1600×1000 (deterministic settled frame, ce
 - Compare the current build with the approved pictures (dev server running): `node tools/capture/benchmarks.mjs`.
   It prints the share of pixels that differ by more than 12/255 and the mean difference.
 - Approve after a deliberate change: `node tools/capture/benchmarks.mjs --approve <id>`. Say why in the commit.
+
+Re-approvals: `nerve-operative`, 2026-10-05 (acceptance audit). The generic mouth lining no longer shows as pale
+skin-coloured surfaces deep in the wound, and the flap's fold axis moved 2 mm onto the skin surface
+(`docs/qc/final-pass-clinical-manifest.md`, item 6). The other three benchmarks differ from approval by 0.3% of pixels
+or less.

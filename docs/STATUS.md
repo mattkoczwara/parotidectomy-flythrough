@@ -1,6 +1,6 @@
 # Project status
 
-_Last updated: 2026-10-05 (final presentation pass; see `docs/FINAL_PASS_STATUS.md` and ADR-0005)_
+_Last updated: 2026-10-05 (final presentation pass and acceptance pass; see `docs/FINAL_PASS_STATUS.md`, ADR-0005 and `docs/qc/final-pass-clinical-manifest.md`)_
 
 ## Current phase
 
@@ -13,7 +13,10 @@ All 54 plates in 11 chapters are authored, rendered and reviewed as one sequence
 1. **Final presentation pass: done** (2026-10-05). Adult exterior, tissue mesostructure, authored light, cyclorama
    field, editorial UI, the loading poster, the Firefox tumour fix; anatomy frozen (27/27 checks). Deferred P2 items
    are listed in `docs/FINAL_PASS_STATUS.md`.
-2. **Clinical review** of the 68 claims, the anatomy QC log and the review packet (`docs/review/index.html`, regenerated). Deferred by owner decision until implementation was complete.
+   **Acceptance pass: done** (2026-10-05). Clinical change audit (`docs/qc/final-pass-clinical-manifest.md`; one
+   defect fixed: the generic mouth lining no longer reaches the deep lobe), render headroom measured with vsync off
+   (`docs/perf/uncapped.json`), remaining visual issues classified (no P1).
+2. **Clinical review** of the 68 claims, the anatomy QC log, the final-pass manifest and the review packet (`docs/review/index.html`, regenerated). Deferred by owner decision until implementation was complete.
 3. **Evidence items to verify before any public use** (see Open questions).
 
 ## Where things are
@@ -64,6 +67,22 @@ Chrome with WebGPU on one RTX 3070, a 60 Hz display.
 See `/method/` for the reader-facing list. In short: the tragal-pointer distance (about 19 mm) is outside both published ranges (reported, not tuned); the facial nerve cannot be checked against the cryosections; the superficial share (59%) and the ESGS level shares (I 8%, II 51%, III 30%, IV 10% against published 20–22, 41–47, 20–22, 8–10) differ from published figures (reported, not tuned); layers are constant-depth bands; the flap is a fold; the facelift line is a planned line only (the flap is cut along the Blair path whichever is chosen); total parotidectomy's inner-lobe delivery, barrier flaps, contour depth, saliva collection, Frey regrowth and recurrent nodules are schematic or illustrative; imaging shows the donor's normal CT plus an outline, with no ultrasound or MRI picture. In the compare plate (and the exploded views generally) a label can only point at a piece's visible face.
 
 Hardware not tested: Safari, real phones and mid-class laptops (a CPU-throttled run stands in, and its p95 has no margin). Measured on one RTX 3070 with Chrome (full suite) and Firefox (convergence only, with the defect above).
+
+## Release status (acceptance pass, 2026-10-05)
+
+| Area | Status |
+|---|---|
+| Visual production | Frozen. Four approved benchmarks; no P0/P1 defects; P2 limits in `docs/FINAL_PASS_STATUS.md`. |
+| Anatomical validation | 27/27 automated checks; two clean builds byte-identical; QC limits in `docs/qc/QC_LOG.md`; final-pass geometry changes in the manifest. Fat/SMAS extent, flap fields, the skin outline and fibre directions have no automated check of their anatomical correctness. |
+| Clinical review | **Not started.** 68 claims `clinicalReview: pending`; the manifest lists the geometry to review. |
+| Safari | **Untested** (no Safari or Apple hardware here). |
+| Mobile | **Untested on real phones.** Portrait layout (390×844) and labels pass in Chrome emulation; the Mid tier is approximated by CPU throttling, and its p95 (33.4–36 ms) has no margin. |
+| Accessibility | axe WCAG 2.2 A/AA: 0 violations; focus, announcements, reduced motion, static tier and print pass (capture suite 25/25). No screen-reader user testing. |
+| Performance | RTX 3070, Chrome: High 59.9 fps, p95 16.8 ms; GPU about 4.5 ms (1600×1000) and 6.9 ms (1440p) per frame with vsync off; cold load 5.35 MB, interactive 2.0 s, first plate converged 9.8 s. Firefox 157: see `docs/perf/firefox-final.json`. |
+
+**Blockers to public release:** clinical review and sign-off of the claims and the reviewed geometry;
+the four evidence items under Open questions; Safari and real-phone validation (the plan's Mid tier targets an
+iPhone 13 and a Pixel 7 class device). The private build is complete for owner use.
 
 ## Open questions
 

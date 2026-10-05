@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-05T17:19:13.385Z",
+  "gpu": "NVIDIA GeForce RTX 3070",
+  "flags": "--disable-gpu-vsync --disable-frame-rate-limit",
+  "static_page_display_pacing": {
+    "frames": 212,
+    "medianMs": 17.5,
+    "p95Ms": 18.3,
+    "p99Ms": 18.3,
+    "medianFps": 57.1
+  },
+  "high_1600x1000": {
+    "renderedFrameInterval": {
+      "frames": 17631,
+      "medianMs": 4.1,
+      "p95Ms": 8.5,
+      "p99Ms": 22.9,
+      "medianFps": 243.9
+    },
+    "gpuSubmitToDone": {
+      "frames": 17632,
+      "medianMs": 8.3,
+      "p95Ms": 342.2,
+      "p99Ms": 764.9,
+      "medianFps": 120.5
+    },
+    "gpuSaturatedMsPerFrame": {
+      "bins": 118,
+      "median": 4.46,
+      "p95": 250
+    },
+    "canvas": "1585x1000",
+    "backend": "webgpu"
+  },
+  "high_2560x1440_device_px": {
+    "renderedFrameInterval": {
+      "frames": 15057,
+      "medianMs": 3.8,
+      "p95Ms": 14.5,
+      "p99Ms": 74.1,
+      "medianFps": 263.2
+    },
+    "gpuSubmitToDone": {
+      "frames": 15058,
+      "medianMs": 17.2,
+      "p95Ms": 795.3,
+      "p99Ms": 1225.4,
+      "medianFps": 58.1
+    },
+    "gpuSaturatedMsPerFrame": {
+      "bins": 269,
+      "median": 6.94,
+      "p95": 125
+    },
+    "canvas": "2538x1440",
+    "backend": "webgpu"
+  }
+}

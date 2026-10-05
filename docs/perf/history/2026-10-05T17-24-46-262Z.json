@@ -42,62 +42,62 @@
     "high_1600x1000": {
       "medianFps": {
         "baseline": 59.9,
-        "now": 59.9,
-        "change": "+0.0%",
+        "now": 56.2,
+        "change": "-6.2%",
         "flag": false
       },
       "p95Ms": {
         "baseline": 16.8,
-        "now": 16.8,
-        "change": "+0.0%",
+        "now": 18.1,
+        "change": "+7.7%",
         "flag": false
       }
     },
     "high_2560x1440_device_px": {
       "medianFps": {
         "baseline": 59.9,
-        "now": 59.9,
-        "change": "+0.0%",
+        "now": 55.6,
+        "change": "-7.2%",
         "flag": false
       },
       "p95Ms": {
         "baseline": 16.8,
-        "now": 16.8,
-        "change": "+0.0%",
+        "now": 18.1,
+        "change": "+7.7%",
         "flag": false
       }
     },
     "mid_webgl2_cpu4x_1600x1000": {
       "medianFps": {
         "baseline": 59.9,
-        "now": 59.9,
-        "change": "+0.0%",
+        "now": 55.6,
+        "change": "-7.2%",
         "flag": false
       },
       "p95Ms": {
         "baseline": 33.4,
-        "now": 33.4,
-        "change": "+0.0%",
+        "now": 36,
+        "change": "+7.8%",
         "flag": false
       }
     },
     "cold_load_50mbps": {
       "megabytes": {
         "baseline": 5.17,
-        "now": 5.35,
-        "change": "+3.5%",
+        "now": 5.61,
+        "change": "+8.5%",
         "flag": false
       },
       "sceneInteractiveMs": {
         "baseline": 1631,
-        "now": 2030,
-        "change": "+24.5%",
-        "flag": false
+        "now": 2138,
+        "change": "+31.1%",
+        "flag": true
       },
       "firstPlateConvergedMs": {
         "baseline": 8447,
-        "now": 9773,
-        "change": "+15.7%",
+        "now": 9591,
+        "change": "+13.5%",
         "flag": false
       }
     }

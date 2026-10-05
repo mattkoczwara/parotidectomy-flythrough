@@ -1,11 +1,11 @@
 {
-  "date": "2026-10-05T06:54:50.808Z",
+  "date": "2026-10-05T17:36:17.879Z",
   "browser": "firefox 157.0",
   "plates": [
     {
       "id": "face",
       "converged": true,
-      "ms": 9820,
+      "ms": 8513,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -16,7 +16,7 @@
     {
       "id": "where-parotid",
       "converged": true,
-      "ms": 8216,
+      "ms": 7681,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -27,7 +27,7 @@
     {
       "id": "duct",
       "converged": true,
-      "ms": 8611,
+      "ms": 8461,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -38,7 +38,7 @@
     {
       "id": "layers",
       "converged": true,
-      "ms": 9065,
+      "ms": 9798,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -49,7 +49,7 @@
     {
       "id": "nerve-within",
       "converged": true,
-      "ms": 8740,
+      "ms": 8163,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -60,7 +60,7 @@
     {
       "id": "trunk-pes",
       "converged": true,
-      "ms": 8276,
+      "ms": 8139,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -71,7 +71,7 @@
     {
       "id": "branch-groups",
       "converged": true,
-      "ms": 9013,
+      "ms": 8909,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -82,7 +82,7 @@
     {
       "id": "nerve-plane",
       "converged": true,
-      "ms": 9918,
+      "ms": 8846,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -93,7 +93,7 @@
     {
       "id": "nerve-variants",
       "converged": true,
-      "ms": 8755,
+      "ms": 8354,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -104,7 +104,7 @@
     {
       "id": "tumour",
       "converged": true,
-      "ms": 9069,
+      "ms": 10016,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -115,7 +115,7 @@
     {
       "id": "tumour-positions",
       "converged": true,
-      "ms": 9764,
+      "ms": 9583,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -126,7 +126,7 @@
     {
       "id": "pseudocapsule",
       "converged": true,
-      "ms": 8284,
+      "ms": 8209,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -137,7 +137,7 @@
     {
       "id": "no-shelling",
       "converged": true,
-      "ms": 8777,
+      "ms": 8631,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -148,7 +148,7 @@
     {
       "id": "ultrasound",
       "converged": true,
-      "ms": 11049,
+      "ms": 10482,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -159,18 +159,18 @@
     {
       "id": "cross-section",
       "converged": true,
-      "ms": 7544,
+      "ms": 7220,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
       "gpu": true,
-      "labels": 2,
+      "labels": 3,
       "errors": []
     },
     {
       "id": "needle",
       "converged": true,
-      "ms": 9284,
+      "ms": 10086,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -181,7 +181,7 @@
     {
       "id": "milan",
       "converged": true,
-      "ms": 9146,
+      "ms": 9167,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -192,7 +192,7 @@
     {
       "id": "esgs-levels",
       "converged": true,
-      "ms": 8598,
+      "ms": 8297,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -203,7 +203,7 @@
     {
       "id": "option-ecd",
       "converged": true,
-      "ms": 8639,
+      "ms": 8213,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -214,7 +214,7 @@
     {
       "id": "option-partial",
       "converged": true,
-      "ms": 8863,
+      "ms": 8362,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -225,7 +225,7 @@
     {
       "id": "option-superficial",
       "converged": true,
-      "ms": 8354,
+      "ms": 8218,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -236,7 +236,7 @@
     {
       "id": "option-total",
       "converged": true,
-      "ms": 8295,
+      "ms": 9043,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -247,7 +247,7 @@
     {
       "id": "choosing",
       "converged": true,
-      "ms": 8888,
+      "ms": 8857,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -258,7 +258,7 @@
     {
       "id": "evidence-limits",
       "converged": true,
-      "ms": 9002,
+      "ms": 8636,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -269,7 +269,7 @@
     {
       "id": "incision",
       "converged": true,
-      "ms": 10321,
+      "ms": 9773,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -280,7 +280,7 @@
     {
       "id": "incision-facelift",
       "converged": true,
-      "ms": 9351,
+      "ms": 9005,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -291,7 +291,7 @@
     {
       "id": "flap",
       "converged": true,
-      "ms": 9662,
+      "ms": 9605,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -302,7 +302,7 @@
     {
       "id": "gan",
       "converged": true,
-      "ms": 10002,
+      "ms": 9559,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -313,7 +313,7 @@
     {
       "id": "landmarks",
       "converged": true,
-      "ms": 10108,
+      "ms": 10153,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -324,7 +324,7 @@
     {
       "id": "trunk",
       "converged": true,
-      "ms": 9731,
+      "ms": 9524,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -335,7 +335,7 @@
     {
       "id": "pes-divisions",
       "converged": true,
-      "ms": 9935,
+      "ms": 9183,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -346,7 +346,7 @@
     {
       "id": "upper-division",
       "converged": true,
-      "ms": 9625,
+      "ms": 9170,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -357,7 +357,7 @@
     {
       "id": "peel",
       "converged": true,
-      "ms": 8784,
+      "ms": 9352,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -368,7 +368,7 @@
     {
       "id": "lobe-lifts",
       "converged": true,
-      "ms": 8897,
+      "ms": 8805,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -379,7 +379,7 @@
     {
       "id": "specimen-out",
       "converged": true,
-      "ms": 8905,
+      "ms": 9307,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -390,7 +390,7 @@
     {
       "id": "bed",
       "converged": true,
-      "ms": 9579,
+      "ms": 9539,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -401,7 +401,7 @@
     {
       "id": "barrier-smas",
       "converged": true,
-      "ms": 9581,
+      "ms": 8791,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -412,7 +412,7 @@
     {
       "id": "barrier-scm",
       "converged": true,
-      "ms": 8685,
+      "ms": 8363,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -423,7 +423,7 @@
     {
       "id": "barrier-graft",
       "converged": true,
-      "ms": 8775,
+      "ms": 9558,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -434,7 +434,7 @@
     {
       "id": "drain",
       "converged": true,
-      "ms": 9035,
+      "ms": 8539,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -445,7 +445,7 @@
     {
       "id": "closed",
       "converged": true,
-      "ms": 8210,
+      "ms": 8293,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -456,7 +456,7 @@
     {
       "id": "after-anatomy",
       "converged": true,
-      "ms": 8664,
+      "ms": 8225,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -467,7 +467,7 @@
     {
       "id": "contour",
       "converged": true,
-      "ms": 9063,
+      "ms": 8249,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -478,7 +478,7 @@
     {
       "id": "pathology",
       "converged": true,
-      "ms": 3595,
+      "ms": 3517,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -489,7 +489,7 @@
     {
       "id": "healing",
       "converged": true,
-      "ms": 3956,
+      "ms": 3931,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -500,7 +500,7 @@
     {
       "id": "compl-map",
       "converged": true,
-      "ms": 7525,
+      "ms": 7557,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -511,7 +511,7 @@
     {
       "id": "weakness",
       "converged": true,
-      "ms": 7505,
+      "ms": 7559,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -522,7 +522,7 @@
     {
       "id": "numbness",
       "converged": true,
-      "ms": 8983,
+      "ms": 8604,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -533,7 +533,7 @@
     {
       "id": "frey",
       "converged": true,
-      "ms": 8338,
+      "ms": 8110,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -544,7 +544,7 @@
     {
       "id": "first-bite",
       "converged": true,
-      "ms": 8748,
+      "ms": 7792,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -555,7 +555,7 @@
     {
       "id": "sialocele",
       "converged": true,
-      "ms": 7528,
+      "ms": 7431,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -566,7 +566,7 @@
     {
       "id": "recurrence",
       "converged": true,
-      "ms": 7455,
+      "ms": 7314,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -577,7 +577,7 @@
     {
       "id": "explore",
       "converged": true,
-      "ms": 7369,
+      "ms": 8535,
       "backend": "webgpu",
       "tier": "high",
       "static": false,
@@ -588,7 +588,7 @@
     {
       "id": "compare",
       "converged": true,
-      "ms": 7339,
+      "ms": 7278,
       "backend": "webgpu",
       "tier": "high",
       "static": false,

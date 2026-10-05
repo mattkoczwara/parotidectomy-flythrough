@@ -126,6 +126,63 @@ def smoothstep(e0, e1, x):
     return k * k * (3 - 2 * k)
 
 
+def trim_mouth(mesh, aff, zooms, shape, keep_mm, interior_mm):
+    """MPFB's mouth lining is a closed bag that runs back from the lips for several centimetres. After the head fit
+    it lies medial to the mandible and beside the deep lobe, and a plate that clips the head shows it across the
+    donor's anatomy. The atlas never opens the mouth: the lining is kept within `keep_mm` of the face surface and its
+    cut is capped, so the head stays closed. The outer surface is untouched. Returns the mesh and the count removed."""
+    from scipy import ndimage
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+
+    inv = np.linalg.inv(aff)
+    ijk = np.round(nib.affines.apply_affine(inv, mesh.sample(1_000_000, seed=11))).astype(int)
+    ok = np.all((ijk >= 0) & (ijk < np.array(shape)), axis=1)
+    m = np.zeros(shape, bool)
+    m[tuple(ijk[ok].T)] = True
+    m = ndimage.binary_dilation(m, iterations=1)
+    for k in range(shape[2]):
+        m[:, :, k] = ndimage.binary_fill_holes(m[:, :, k])
+    depth = ndimage.map_coordinates(ndimage.distance_transform_edt(m, sampling=zooms), nib.affines.apply_affine(inv, mesh.vertices).T, order=1, mode="nearest")
+    # the mouth lining: the largest connected region of vertices well inside the head (ear canals and nostrils are
+    # separate, shallow regions)
+    e = mesh.edges_unique
+    e = e[(depth[e] > interior_mm).all(1)]
+    n = len(mesh.vertices)
+    _, lab = connected_components(coo_matrix((np.ones(len(e)), (e[:, 0], e[:, 1])), shape=(n, n)), directed=False)
+    inner = depth > interior_mm
+    bag = inner & (lab == np.bincount(lab[inner]).argmax())
+    c = mesh.vertices[bag].mean(0)
+    assert abs(c[0]) < 15, f"mouth lining not found near the midline: {c}"
+    drop = bag & (depth > keep_mm)
+    faces = mesh.faces[~drop[mesh.faces].any(1)]
+    cut = trimesh.Trimesh(mesh.vertices, faces, process=False)
+    # keep the main surface (no stray islands of lining)
+    fc = trimesh.graph.connected_components(cut.face_adjacency, nodes=np.arange(len(faces)))
+    faces = faces[max(fc, key=len)]
+    # cap each new boundary loop with a fan about its centroid, wound against the edge it closes
+    def boundary(f):
+        d = np.r_[f[:, [0, 1]], f[:, [1, 2]], f[:, [2, 0]]]
+        key = np.sort(d, 1)
+        _, inv_k, cnt = np.unique(key, axis=0, return_inverse=True, return_counts=True)
+        return d[cnt[inv_k.ravel()] == 1]
+    before = {tuple(sorted(x)) for x in boundary(mesh.faces)}
+    nxt = {int(a): int(b) for a, b in boundary(faces) if tuple(sorted((a, b))) not in before}
+    V, caps = [mesh.vertices], []
+    while nxt:
+        start = next(iter(nxt))
+        loop, a = [start], nxt.pop(start)
+        while a != start:
+            loop.append(a)
+            a = nxt.pop(a)
+        ci = n + sum(len(v) for v in V[1:])
+        V.append(mesh.vertices[loop].mean(0)[None])
+        caps += [[b, a, ci] for a, b in zip(loop, loop[1:] + loop[:1])]
+    out = trimesh.Trimesh(np.vstack(V), np.vstack([faces, np.array(caps, dtype=faces.dtype).reshape(-1, 3)]), process=False)
+    out.remove_unreferenced_vertices()
+    return out, int(drop.sum())
+
+
 def main() -> None:
     spec = yaml.safe_load((ROOT / "pipeline/specs/anatomy.yaml").read_text(encoding="utf-8"))["face"]
     ct, aff, zooms = load_ct()
@@ -256,6 +313,7 @@ def main() -> None:
 
     full = trimesh.Trimesh(fitted, head.faces, process=False)
     full = full.subdivide_loop(iterations=1)
+    full, mouth_trimmed = trim_mouth(full, aff, zooms, body.shape, spec["mouth_lining_mm"], spec["mouth_interior_mm"])
     # a clean horizontal neck cut shared with the anatomy (surfaces.py crops at the same plane)
     outer = full.slice_plane([0, 0, spec["scene_cut_z"]], [0, 0, 1], cap=False)
     outer.remove_unreferenced_vertices()
@@ -285,6 +343,7 @@ def main() -> None:
         "high_residual_centroid": [round(float(v), 1) for v in outer.vertices[full & (resid > 6)].mean(0)] if (full & (resid > 6)).any() else None,
         "high_residual_count": int((full & (resid > 6)).sum()),
         "conformed_count": int(full.sum()),
+        "mouth_lining_vertices_trimmed": mouth_trimmed,
     }
 
     # 4) closed skin shell: outer surface, inner offset, walls along every boundary loop

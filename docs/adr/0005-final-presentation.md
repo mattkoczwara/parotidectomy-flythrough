@@ -58,6 +58,13 @@ all anatomy checks pass. These are the same constant-depth bands as before, now 
 cover is one of its constraints. It now keeps its validated centre while that centre stays feasible (`keep` in
 `anatomy.yaml`).
 
+**The mouth lining is trimmed (acceptance audit, 2026-10-05).** MakeHuman's face carries a closed mouth lining that runs
+several centimetres behind the lips. With the adult male base it reached 13 mm further back, touched the mandible and
+came within 6 mm of the deep lobe. In the plates that clip the head it drew a skin-coloured outline across the donor's
+CT (plate 15) and beside the deep lobe (plate 43). `face.py` now keeps the lining within 8 mm of the face surface and
+caps the cut. The outer skin is vertex-for-vertex unchanged. The audit of every geometry change in this pass is
+`docs/qc/final-pass-clinical-manifest.md`.
+
 ### Light
 
 The timeline now carries `light.mix`: the preset as continuous weights, cross-faded with the camera, so a change of
