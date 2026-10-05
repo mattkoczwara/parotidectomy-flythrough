@@ -34,7 +34,9 @@ def main() -> None:
     # ear (and nothing of the face), so the preauricular fat is kept and the raised flap has no hole in its fat.
     roi &= ndimage.binary_opening(head, iterations=L["thick_open_iter"])
     del w, idx
-    fat = roi & head & (depth >= L["skin_mm"]) & (depth < L["smas_depth_mm"]) & ~gland
+    # Where the superficial gland comes within the fat band's depth the fat thins to a sheet over it rather than ending:
+    # a hole there opened a window in the raised flap's fat (the flap's dark underside showed through it).
+    fat = roi & head & (depth >= L["skin_mm"]) & (depth < L["smas_depth_mm"]) & (~gland | (depth < L["skin_mm"] + L["fat_min_mm"]))
     smas = roi & head & (depth >= L["smas_depth_mm"]) & (depth < L["smas_depth_mm"] + L["smas_thickness_mm"]) & ~gland
     save("subcutaneous_fat", mesh_from_mask(fat, aff, 40000, sigma=0.8, smooth_iter=6))
     save("smas", mesh_from_mask(smas, aff, 30000, sigma=0.7, smooth_iter=6))

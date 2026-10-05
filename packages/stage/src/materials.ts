@@ -125,6 +125,8 @@ export const OCHRE = 0xc9a55a;
 
 /** Flap progress above which the incision is open (the flap copy shows and the resting layer is cut). */
 export const FLAP_OPEN = 0.0005;
+/** Underside of the raised skin flap (its subcutaneous fat): between the fat's cut colour and fascia, less saturated. */
+const FLAP_FAT = 0xeac7a0;
 /** Flap weight below which tissue counts as attached (stays with the resting layer). */
 export const FLAP_ATTACHED = 0.01;
 /** Marker ink: gentian violet, matte, the only violet in the atlas (plan §5). Half-width of the line in mm. */
@@ -391,6 +393,7 @@ export function tissue(o: TissueOptions): TissueMaterial {
   const p = PRESETS[o.family];
   const dim = uniform(0);
   const piece: PieceUniforms | undefined = o.piece ? { peel: uniform(0), pose: uniform(new THREE.Matrix4()), section: uniform(0) } : undefined;
+  const flapFat = o.flap === 'flap' && o.family === 'fat';
   const make = () => {
     const m = p.sss && !o.undersideFat ? new THREE.MeshSSSNodeMaterial() : new THREE.MeshPhysicalNodeMaterial();
     m.side = THREE.DoubleSide;
@@ -445,6 +448,13 @@ export function tissue(o: TissueOptions): TissueMaterial {
       m.clearcoatRoughness = 0.12;
       m.sheen = 0;
     }
+    if (flapFat) {
+      // The raised flap's fat is its underside, turned away from the key light: the gland-side fat's saturated tone and
+      // gloss read there as brown leather. A paler, restrained subcutaneous tone, nearly matte, with the lobules softer.
+      base = d ? d.tone(rgb(FLAP_FAT)) : rgb(FLAP_FAT);
+      roughness = roughness.add(0.2);
+      m.clearcoat = 0.1;
+    }
     if (o.undersideFat) {
       // The skin shell's inner surface faces the viewer once the flap is folded over: it is the flap's underside.
       const inner = innerShell();
@@ -467,10 +477,10 @@ export function tissue(o: TissueOptions): TissueMaterial {
     // (The raised flap's underside is tissue, not a cut: its back faces are shaded with the reversed normal.)
     const flapInner = o.undersideFat ? innerShell() : null;
     const shade = (n: THREE.Node<'vec3'>) => {
-      const front = d ? bump(n.normalize(), d.height) : n;
+      const front = d ? bump(n.normalize(), flapFat ? d.height.mul(0.5) : d.height) : n;
       if (!o.undersideFat) return frontFacing.select(front, vec3(0, 0, 1));
       // The inner shell's normals face into the head; on the folded flap they must face out of the underside.
-      return frontFacing.select(flapInner!.select(front.negate(), front), n.normalize().negate());
+      return flapInner!.select(n.normalize(), frontFacing.select(front, n.normalize().negate()));
     };
     if (piece) cutColour = tone(cutColour);
     // Only gland pieces carry cut-face and ink fields; for the tumour pieces the attributes would be missing and the

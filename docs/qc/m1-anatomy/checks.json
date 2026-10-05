@@ -366,7 +366,7 @@
       "auricle_vertices_excluded": 3594
     },
     "subcutaneous_fat": {
-      "flap_vertices": 22338,
+      "flap_vertices": 22563,
       "auricle_vertices_excluded": 1921
     },
     "summary": "modified Blair incision 162 mm (projected); flap fields baked on skin and subcutaneous fat; auricle excluded"

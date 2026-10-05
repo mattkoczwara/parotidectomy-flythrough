@@ -1130,8 +1130,8 @@
       "triangles": 21288
     },
     "subcutaneous_fat": {
-      "vertices": 59968,
-      "triangles": 119936
+      "vertices": 60169,
+      "triangles": 120334
     },
     "smas": {
       "vertices": 14862,
@@ -1370,5 +1370,5 @@
       "triangles": 3822
     }
   },
-  "triangles_total": 634887
+  "triangles_total": 635285
 }

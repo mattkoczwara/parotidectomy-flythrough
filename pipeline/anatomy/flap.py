@@ -292,6 +292,40 @@ def flap_weight(p2, path, inc):
     return w
 
 
+def transfer_from_skin(pos, sd_own, s_own, w_own, skin_fields, reach, tol_mm=6.0):
+    """Cut distance, path parameter and flap weight for the fat, interpolated (barycentric) at the closest point of
+    the flap-bearing skin within `reach`; elsewhere the fat keeps its own fields. A point whose interpolated cut
+    distance disagrees with its own projection by more than `tol_mm`, or lies across the incision from it, keeps the
+    nearest skin vertex's values instead (the skin it would otherwise map to is not the skin above it)."""
+    P, F, eligible, sd_k, s_k, w_k = skin_fields
+    Fe = F[eligible[F].all(1)]
+    T = P[Fe].astype(np.float64)
+    # candidate triangles by centroid (edges are at most 1.8 mm on the flap), then the exact closest point on each
+    _, cand = cKDTree(T.mean(1)).query(pos, k=12)
+    best = np.full(len(pos), np.inf)
+    closest = np.zeros((len(pos), 3))
+    tri = np.zeros(len(pos), int)
+    for j in range(cand.shape[1]):
+        c = trimesh.triangles.closest_point(T[cand[:, j]], pos)
+        d = np.linalg.norm(c - pos, axis=1)
+        better = d < best
+        best, tri = np.where(better, d, best), np.where(better, cand[:, j], tri)
+        closest[better] = c[better]
+    dist = best
+    bary = np.clip(trimesh.triangles.points_to_barycentric(T[tri], closest), 0, 1)
+    bary /= bary.sum(1, keepdims=True)
+    corners = Fe[tri]
+    lerp = lambda f: (f[corners] * bary).sum(1)
+    sd_i, s_i, w_i = lerp(sd_k), lerp(s_k), lerp(w_k)
+    near = dist < reach
+    across = (np.sign(sd_i) != np.sign(sd_own)) & (np.abs(sd_own) > 2.0)
+    bad = near & ((np.abs(sd_i - sd_own) > tol_mm) | across)
+    _, jn = cKDTree(P).query(pos)
+    print(f"  fat <- skin: {near.sum()} interpolated, {bad.sum()} kept the nearest vertex; max |interp - own| within tolerance {np.abs(sd_i - sd_own)[near & ~bad].max():.2f} mm")
+    pick = lambda fi, fk, own: np.where(bad, fk[jn], np.where(near, fi, own))
+    return pick(sd_i, sd_k, sd_own), pick(s_i, s_k, s_own), pick(w_i, w_k, w_own)
+
+
 def lump(pos, tumour, spec):
     """The palpable fullness over the tumour: skin, fat and SMAS pushed laterally together (so the layers stay
     stacked) by amplitude * exp(-(r / radius)^2), r measured in the sagittal plane from the tumour centre."""
@@ -328,13 +362,15 @@ def build():
             near2 = np.abs(signed_distance(c[:, 1:3], path2)[0]) < 6
         return np.where(lateral & ((np.abs(sd_c) < 6) | near2), inc["edge_mm"][0], np.where(lateral & in_flap, inc["edge_mm"][1], np.inf))
 
-    def lateral_factor(pos, nrm):
-        """1 on the outermost lateral skin (within a few mm of the most lateral surface at that (A, S), facing
-        laterally), 0 on skin that only shares the projection, such as the underside of the jaw."""
+    def lateral_factor(pos):
+        """1 on the outermost lateral skin (within a few mm of the most lateral surface at that (A, S)), 0 on skin
+        that only shares the projection, such as the underside of the jaw. Both faces of the 2 mm skin shell count.
+        Depth alone: a test on the normal's lateral component also caught the skin crease under the lobule, which
+        faces down and back while lying on the lateral surface, and held the flap's corner there below full weight
+        (a sheared fold); on the flap side it changed nothing else."""
         ia = np.clip(((pos[:, 1] - a0) / BIN).astype(int), 0, head.shape[1] - 1)
         js = np.clip(((pos[:, 2] - s0) / BIN).astype(int), 0, head.shape[0] - 1)
-        # both faces of the 2 mm skin shell count (the inner one faces inward); jaw-underside skin faces down
-        return smoothstep(-8, -4, pos[:, 0] - head[js, ia]) * smoothstep(0.1, 0.35, np.abs(nrm[:, 0]))
+        return smoothstep(-8, -4, pos[:, 0] - head[js, ia])
 
     skin_lat = None
     for mid in ("skin", "subcutaneous_fat"):
@@ -354,27 +390,37 @@ def build():
         F = d["indices"].reshape(-1, 3)
         aur = auricle_mask(pos, helix, inc["ear_radius_mm"], head, a0, s0, inc["auricle_lift_mm"])
         if mid == "skin":
-            keep = lateral_factor(pos, d["normals"]) * (~aur)
+            keep = lateral_factor(pos) * (~aur)
             keep = diffuse(keep, F, inc["smooth_passes"])
             # The fat takes its membership from skin that is not the auricle: the fat at the ear root lies nearer the
             # auricle's skin than the preauricular skin above it, and would otherwise stay behind as a hole in the flap.
             skin_lat = (cKDTree(pos[~aur]), keep[~aur])
+            eligible = ~aur & (keep > 0)
         else:  # the fat lies under the skin: take the factor of the nearest skin (its inner surface faces inward)
             dist, j = skin_lat[0].query(pos)
             keep = skin_lat[1][j] * (dist < inc["fat_reach_mm"])
             keep = diffuse(keep, F, inc["smooth_passes"])
         w = flap_weight(pos[:, 1:3], path, inc) * right * keep
         if mid == "skin":
-            skin_fields = (cKDTree(pos), sd, s, w)
+            skin_fields = (pos, F, eligible, sd, s, w)
         else:
             # The fat follows the skin directly above it: its own lateral projection would put the deep face of this
             # thick, curved slab across the fold and the incision at other places than the face under the skin, and
-            # open windows in the raised flap. Within reach it takes the nearest skin's cut distance and flap weight.
-            dist_s, js = skin_fields[0].query(pos)
-            near = dist_s < inc["fat_reach_mm"]
-            sd = np.where(near, skin_fields[1][js], sd)
-            s = np.where(near, skin_fields[2][js], s)
-            w = np.where(near, skin_fields[3][js], w)
+            # open windows in the raised flap. Within reach it takes the skin's cut distance and flap weight,
+            # interpolated at the closest point of the flap-bearing skin (lateral, not the auricle): a nearest-vertex
+            # copy was piecewise constant, so the fat's cut edge was serrated and lay beside the skin's.
+            sd, s, w = transfer_from_skin(pos, sd, s, w, skin_fields, inc["fat_reach_mm"])
+            # The fat's deep face is a voxel iso-surface (1 mm slices): its normals keep the terraces, which the raised
+            # flap turns toward the viewer as streaks. On the flap the normals are taken from the lumped surface and
+            # smoothed over the mesh (shading only; the positions are unchanged); elsewhere they are left as they were.
+            smooth = trimesh.Trimesh(pos, F, process=False).vertex_normals.astype(np.float64)
+            smooth = np.stack([diffuse(smooth[:, k], F, inc["fat_normal_passes"]) for k in range(3)], 1)
+            mag = np.linalg.norm(smooth, axis=1, keepdims=True)
+            smooth /= np.maximum(mag, 1e-9)
+            # near a rim of the slab the deep and outer faces' normals cancel: keep the original normal there
+            on = np.clip(w / 0.05, 0, 1)[:, None] * np.clip((mag - 0.4) / 0.3, 0, 1)
+            blend = (1 - on) * d["normals"] + on * smooth
+            d["normals"] = (blend / np.maximum(np.linalg.norm(blend, axis=1, keepdims=True), 1e-9)).astype(np.float32)
         d["cut"] = np.clip(sd / CUT_SCALE, -1, 1).astype(np.float32)
         d["cut_s"] = s.astype(np.float32)
         d["flap_w"] = w.astype(np.float32)

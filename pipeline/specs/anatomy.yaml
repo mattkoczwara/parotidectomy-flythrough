@@ -176,6 +176,7 @@ checks:
 layers:
   skin_mm: 2.0
   smas_depth_mm: 7.0
+  fat_min_mm: 2.0           # the fat continues over the superficial gland as a sheet at least this thick (no hole)
   smas_thickness_mm: 1.3
   field_box: { x_min: 20, y: [-15, 170], z: [150, 318] }   # right face and upper neck (mm); reaches above the incision's upper end so the raised flap carries its fat
   thick_open_iter: 5          # layer bands only where the head is thicker than about 8 mm (excludes the auricle)
@@ -237,6 +238,7 @@ incision:
   end_cap_mm: 12            # skin past each end of the incision stays attached (a gentle stretch, not a tear)
   fat_reach_mm: 20          # fat takes its flap membership from skin within this distance
   smooth_passes: 60         # diffusion of the lateral/auricle factors over the mesh (no torn triangles)
+  fat_normal_passes: 20     # smoothing of the raised flap fat's normals (removes voxel terraces from the shading)
   # Fullness over the tumour (plate 1): the adenoma's lateral surface lies about 4-5 mm under the skin. Authored
   # for teaching, like the tumour itself; not measured.
   lump: { amplitude_mm: 2.2, radius_mm: 13 }

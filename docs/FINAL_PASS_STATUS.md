@@ -4,9 +4,11 @@ _Pre-pass backup: git tag `pre-final-pass`; built site in `.backup/pre-final-pas
 ADR-0005. Benchmarks: `docs/benchmarks/` (`node tools/capture/benchmarks.mjs`, `--approve <id>`). Clinical-review
 manifest of every geometry change: `docs/qc/final-pass-clinical-manifest.md`._
 
+**Contents:** Completed phase · Current phase · Acceptance pass (2026-10-05) · Remaining release blockers · Approved visual benchmarks · Performance (RTX 3070, Chrome) · Validation (final state, after the audit fix) · Next concrete action
+
 ## Completed phase
 All phases (1 baseline → 10 release validation), then the acceptance pass (2026-10-05): clinical change audit,
-performance clarification and the final visual defect review. The visual production is frozen.
+performance clarification and the final visual defect review.
 
 ## Current phase
 None. Next project work is clinical review (`docs/STATUS.md`).
@@ -18,13 +20,14 @@ None. Next project work is clinical review (`docs/STATUS.md`).
   capped. The outer skin is unchanged. The `nerve-operative` benchmark was re-approved for that reason; the others
   differ by ≤ 0.3% of pixels.
 - **Visual defects** (A = P1, fix; B = acceptable P2; C = anatomically driven, keep):
-  - Idealised, smooth skin at close range: **B** (no pore or ageing map by design; the atlas does not linger on the
+  - Idealised, smooth skin at close range: **B** (the atlas does not linger on the
     skin).
   - Crisp hairline at close range: **B** (shell hair; reads correctly at every authored framing).
-  - Brownish underside of the raised flap: **B**, partly **C** (the underside is fat, as in a real skin-fat flap; the
-    brown is its shadowed tone under the camera-relative fill).
-  - Small cream flecks along the flap edge: **B** (the fat's cut face along the torn edge). The flap's front notch,
-    a sliver where the fat band ends, was present before the pass too: **B**.
+  - Brownish underside of the raised flap, a dark patch in it, serrated edges, a sheared corner: **fixed** in the flap
+    pass (2026-10-05, QC log): a hole in the fat over the gland, a nearest-vertex field transfer to the fat, the
+    lateral factor's normal test under the lobule, terraced fat normals, and the skin inner shell's reversed normal.
+  - Remaining: a few cream flecks along the flap's upper edge (the fat's cut face) and the flap's small front notch:
+    **B**. The fold is a curl, rigid beyond its 20 mm ramp: **B**.
   - Heavy neck and shoulders: **C** above the scene cut (the upper neck is fitted to the donor's CT, a heavy-set
     man); **B** below it (generic shoulders).
   - No A items. Nothing was changed for these.
