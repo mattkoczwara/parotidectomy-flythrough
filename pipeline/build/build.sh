@@ -15,6 +15,7 @@ $PY pipeline/anatomy/extras.py
 $PY pipeline/anatomy/props.py
 (cd pipeline/anatomy && "../../$PY" layers.py && "../../$PY" flap.py)
 $PY pipeline/anatomy/barriers.py
+$PY pipeline/anatomy/exterior.py
 # Nothing is exported while an anatomy check is failing.
 $PY pipeline/build/check_all.py
 $PY pipeline/build/export_gltf.py

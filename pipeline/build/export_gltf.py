@@ -24,7 +24,7 @@ SPECS = ROOT / "pipeline/specs"
 
 # Structures in the M1 slice, in nesting/render order (outer tissue first).
 SCENE = [
-    "skin", "eyes", "subcutaneous_fat", "smas", "parotid_fascia",
+    "skin", "eyes", "exterior_body", "hair", "subcutaneous_fat", "smas", "parotid_fascia",
     # the superficial and deep lobes are groups of ESGS-level pieces (pieces.py); the tumour travels with level II
     "parotid_level_1", "parotid_level_2", "parotid_ecd_cuff", "pleomorphic_adenoma", "pleomorphic_adenoma_deep", "pleomorphic_adenoma_tail", "pleomorphic_adenoma_accessory", "parotid_level_3", "parotid_level_4", "parotid_accessory_lobe",
     "facial_nerve_trunk", "facial_nerve_temporofacial", "facial_nerve_cervicofacial", "facial_nerve_temporal",
@@ -38,7 +38,35 @@ SCENE = [
     "masseter_r", "temporalis_r", "sternocleidomastoid_main", "scm_flap", "digastric_posterior_belly", "stimulator_probe", "smas_flap", "barrier_graft", "sialocele_pocket", "recurrence_nodules", "needle", "us_probe", "us_plane", "ct_tumour_outline", "drain_tube", "submandibular_gland_r",
     "internal_jugular_vein_r", "mandible", "skull", "styloid_process", "nerve_plane",
 ]
-ATTRS = {"peel_order": "_PEEL", "cut": "_CUT", "cut_s": "_CUTS", "flap_w": "_FLAPW", "cutface": "_CUTFACE", "ink": "_INK", "mob": "_MOB", "cut2": "_CUT2", "cut_s2": "_CUTS2", "foldw": "_FOLDW"}
+ATTRS = {"peel_order": "_PEEL", "cut": "_CUT", "cut_s": "_CUTS", "flap_w": "_FLAPW", "cutface": "_CUTFACE", "ink": "_INK", "mob": "_MOB", "cut2": "_CUT2", "cut_s2": "_CUTS2", "foldw": "_FOLDW", "tint": "_TINT", "hair_h": "_HAIRH", "flow": "_FLOW", "hair_kind": "_HAIRK", "axis": "_AXIS", "foot": "_FOOT"}
+
+
+# Muscles whose fibre direction the stage draws (fascicles): the principal axis of the belly, or a fan converging on
+# the lowest point (temporalis: fibres converge on the coronoid process).
+FIBRES = {"masseter_r": "pca", "sternocleidomastoid_main": "pca", "scm_flap": "pca", "digastric_posterior_belly": "pca", "temporalis_r": "fan"}
+
+
+def fibre_axis(sid: str, d) -> np.ndarray | None:
+    """Per-vertex fibre direction (CT RAS, unit) for the material's directional structure: tubes follow their
+    centreline tangent (nerves, vessels, duct); listed muscles follow FIBRES. Presentation only."""
+    p = d["positions"].astype(np.float64)
+    if "centre" in d.files and len(d["centre"]) > 2:
+        from scipy.spatial import cKDTree
+
+        c = d["centre"].astype(np.float64)
+        t = np.gradient(c, axis=0)
+        t /= np.maximum(np.linalg.norm(t, axis=1, keepdims=True), 1e-9)
+        return t[cKDTree(c).query(p)[1]]
+    mode = FIBRES.get(sid)
+    if mode == "pca":
+        q = p - p.mean(0)
+        a = np.linalg.svd(q, full_matrices=False)[2][0]
+        return np.tile(a, (len(p), 1))
+    if mode == "fan":
+        apex = p[np.argmin(p[:, 2])]
+        a = p - apex
+        return a / np.maximum(np.linalg.norm(a, axis=1, keepdims=True), 1e-9)
+    return None
 
 
 def to_gltf(p: np.ndarray, origin: np.ndarray) -> np.ndarray:
@@ -83,12 +111,19 @@ def main() -> None:
         pos = to_gltf(d["positions"].astype(np.float64), origin).astype(np.float32)
         nrm = d["normals"].astype(np.float32)
         nrm = np.c_[-nrm[:, 0], nrm[:, 2], nrm[:, 1]].astype(np.float32)
+        extra = {}
+        if "flow" in d.files:  # a direction, mapped to the glTF frame like the normals
+            f = d["flow"]
+            extra["flow"] = np.c_[-f[:, 0], f[:, 2], f[:, 1]].astype(np.float32)
+        axis = fibre_axis(sid, d)
+        if axis is not None:
+            extra["axis"] = np.c_[-axis[:, 0], axis[:, 2], axis[:, 1]].astype(np.float32)
         idx = d["indices"].astype(np.uint32)
         attrs = {"POSITION": add_accessor(pos, "VEC3", g.ARRAY_BUFFER, True), "NORMAL": add_accessor(nrm, "VEC3", g.ARRAY_BUFFER)}
         for key, name in ATTRS.items():
-            if key in d.files:
-                a = d[key].astype(np.float32)
-                attrs[name] = add_accessor(a, "VEC3" if a.ndim == 2 else "SCALAR", g.ARRAY_BUFFER)
+            if key in d.files or key in extra:
+                a = (extra[key] if key in extra else d[key]).astype(np.float32)
+                attrs[name] = add_accessor(a, {3: "VEC3", 4: "VEC4"}[a.shape[1]] if a.ndim == 2 else "SCALAR", g.ARRAY_BUFFER)
         prim = g.Primitive(attributes=g.Attributes(**attrs), indices=add_accessor(idx, "SCALAR", g.ELEMENT_ARRAY_BUFFER), material=0)
         gltf.meshes.append(g.Mesh(name=sid, primitives=[prim]))
         gltf.nodes.append(g.Node(name=sid, mesh=len(gltf.meshes) - 1))
@@ -195,7 +230,7 @@ def main() -> None:
         pos = to_gltf(np.load(MESHES / f"{sid}.npz")["positions"].astype(np.float64), origin)
         bounds[sid] = {"min": pos.min(0).round(5).tolist(), "max": pos.max(0).round(5).tolist()}
     # Named boxes for camera framing (structure records without a mesh): RAS mm corners (x lateral, y anterior, z up).
-    for rid, (lo, hi) in {"incision_field": ([38, 30, 168], [105, 125, 298])}.items():
+    for rid, (lo, hi) in {"incision_field": ([38, 30, 168], [105, 125, 298]), "portrait_field": ([-60, -45, 75], [95, 200, 400])}.items():
         corners = np.array([[x, y, z] for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])], float)
         gp = to_gltf(corners, origin)
         bounds[rid] = {"min": gp.min(0).round(5).tolist(), "max": gp.max(0).round(5).tolist()}
@@ -232,6 +267,9 @@ def main() -> None:
         # attributes are stored as signed mm / cut_scale_mm.
         "flap": {"axis_point": to_gltf(np.array([flap["axis_point"]]), origin)[0].round(6).tolist(), "axis_dir": [0.0, flap["axis_dir"][2], flap["axis_dir"][1]], "max_angle": flap["max_angle_rad"], "cut_scale_mm": flap["cut_scale_mm"]},
         "bounds": bounds,
+        # The one horizontal cut shared by the skin and the anatomy (anatomy.yaml face.scene_cut_z), glTF Y in metres:
+        # the stage fades the anatomy into the field just above it (presentation).
+        "scene_cut_y": round((yaml.safe_load((SPECS / "anatomy.yaml").read_text(encoding="utf-8"))["face"]["scene_cut_z"] - origin[2]) * 0.001, 6),
         "groups": groups,
         "zones": zones,
         "pieces": {k: {"volume_ml": p["volume_ml"], "share": p["share"]} for k, p in json.loads((MESHES / "pieces.json").read_text())["pieces"].items()} | {"total_gland_ml": json.loads((MESHES / "pieces.json").read_text())["total_gland_ml"]},

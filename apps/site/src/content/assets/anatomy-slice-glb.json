@@ -16,8 +16,8 @@
       "MPFB/MakeHuman assets are CC0 (no obligation; credited as courtesy)"
     ]
   },
-  "attribution": "Anatomy derived from the Visible Human Project male CT, courtesy of the U.S. National Library of Medicine; segmentations by TotalSegmentator; generic face from MakeHuman/MPFB (CC0); nerves, small vessels, deep-lobe completion and tumour authored to cited anatomy (pipeline/specs).",
-  "sha256": "c59b3140d3f41e8790841dacf8b0e84b3b8c128bcfcec8a6f3a35fdcdfed9563",
+  "attribution": "Anatomy derived from the Visible Human Project male CT, courtesy of the U.S. National Library of Medicine; segmentations by TotalSegmentator; generic face, neck, shoulders and hair from the MakeHuman/MPFB base mesh and targets (CC0); nerves, small vessels, deep-lobe completion and tumour authored to cited anatomy (pipeline/specs).",
+  "sha256": "5a5583703215352f2b9c01d95c3ca420a96f63241cbdff887a82e7a6603def1e",
   "derivedFrom": [
     "vhp-male-normal-ct-head",
     "totalsegmentator-head-neck",
@@ -31,7 +31,8 @@
     "authored retromandibular deep-lobe region; nerve-plane lobe split; baked peel field",
     "gland cut into the ESGS levels and the extracapsular cuff (pieces.py), with baked cut-face, ink and mobilisation fields",
     "schematic and illustrative meshes authored to specification: accessory lobe and duct, alternate tumour positions, auriculotemporal nerve and Frey regrowth, instruments (probe, needle, stimulator, drain), SMAS flap, neck-muscle strip, graft sheet, saliva collection, recurrence nodules, imaging planes",
-    "MPFB base head fitted (per-axis scale, envelope and local conform) over the dissection field",
+    "MPFB base mesh with MakeHuman's macro modifiers for a generic adult male (CC0 targets, ancestry mixed equally), fitted (per-axis scale, envelope and local conform) over the dissection field; the skin also covers the authored superficial nerves and veins",
+    "presentation only (no anatomy, no claims): exterior body (neck, shoulders, upper chest) cut from the same fitted MPFB surface below the scene cut; short hair and eyebrows as a root surface for shell rendering; a regional skin tint from MakeHuman target vertex sets; the superficial lobe's lateral footprint for the opening's localisation contour; per-vertex fibre directions for tissue structure (pipeline/anatomy/exterior.py, pipeline/build/export_gltf.py)",
     "scene cut at z=150 mm; glTF export; meshopt compression and quantisation"
   ],
   "specClaims": [

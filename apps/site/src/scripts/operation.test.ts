@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { SceneState } from '@atlas/timeline';
 import { applyOperation, type OperationControls } from './operation.ts';
 
-const base = (): SceneState => ({ camera: { azimuth: 0, elevation: 0, zoom: 1, frames: [] }, structures: {}, gauge: 0, op: {}, variants: {}, variantMix: {}, labels: [], light: { preset: 'studio', exposure: 1 } });
+const base = (): SceneState => ({ camera: { azimuth: 0, elevation: 0, zoom: 1, frames: [] }, structures: {}, gauge: 0, op: {}, variants: {}, variantMix: {}, labels: [], light: { preset: 'studio', exposure: 1, mix: { studio: 1 } } });
 const controls = (over: Partial<OperationControls> = {}): OperationControls => ({ active: true, resection: 'superficial', incision: 'blair', barrier: 'none', progress: 0, ...over });
 const at = (progress: number, over: Partial<OperationControls> = {}) => applyOperation(base(), controls({ progress, ...over })).op;
 

@@ -35,3 +35,4 @@ spikes/*/output/
 # python
 __pycache__/
 pipeline/build/out/
+.backup/

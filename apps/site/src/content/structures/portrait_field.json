@@ -1,0 +1,18 @@
+{
+  "id": "portrait_field",
+  "names": {
+    "plain": "The head, neck and shoulders",
+    "anatomical": "Head, neck and upper shoulders seen from the right"
+  },
+  "gloss": "A framing region for the opening portrait: the whole head with the neck and the line of the shoulders below it.",
+  "tissue": "skin",
+  "depth": "skin",
+  "anchors": [],
+  "assetIds": [
+    "anatomy-slice-glb"
+  ],
+  "claims": [],
+  "members": [],
+  "schematic": false,
+  "hidden": true
+}

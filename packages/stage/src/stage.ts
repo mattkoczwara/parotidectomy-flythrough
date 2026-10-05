@@ -1,14 +1,13 @@
 import * as THREE from 'three/webgpu';
-import { builtinAOContext, float, mix, mrt, normalView, packNormalToRGB, pass, renderOutput, sample, screenUV, uniform, unpackRGBToNormal, vec3, vec4, velocity } from 'three/tsl';
+import { Fn, builtinAOContext, dot, exp, float, fract, mix, mrt, normalView, packNormalToRGB, pass, renderOutput, sample, screenCoordinate, screenUV, sin, smoothstep, uniform, unpackRGBToNormal, vec2, vec3, vec4, velocity } from 'three/tsl';
 import { ao } from 'three/addons/tsl/display/GTAONode.js';
 import { traa } from 'three/addons/tsl/display/TRAANode.js';
 import { fxaa } from 'three/addons/tsl/display/FXAANode.js';
 import { outline } from 'three/addons/tsl/display/OutlineNode.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { SceneState } from '@atlas/timeline';
-import { ZONE_SLOTS, cpuFold, cpuInFlap, cpuPeel, cpuWindowCut, FLAP_OPEN, hatch, OCHRE, setOpacity, tissue, U, zoneCentre, zoneRadii, zoneWeight, type FlapFrame, type HatchMaterial, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
+import { ZONE_SLOTS, hairGeometry, hairShells, type HairMaterial, cpuFold, cpuInFlap, cpuPeel, cpuWindowCut, FLAP_OPEN, hatch, OCHRE, setOpacity, tissue, U, zoneCentre, zoneRadii, zoneWeight, type FlapFrame, type HatchMaterial, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
 import { REMOVABLE, RESECTIONS, memberWeight, poseMatrix, resectionWeights, type Mechanic } from './resection.ts';
 
 export type Tier = 'high' | 'mid';
@@ -53,6 +52,8 @@ interface Frame {
   /** Closure barriers: the SMAS flap's hinge (x, z) and the sternocleidomastoid strip's pivot, glTF metres. */
   barriers?: { smas_hinge: [number, number]; scm_pivot: [number, number, number] };
   /** The registered axial CT slice (pipeline/anatomy/props.py): RAS extents in mm, the image, and the volume origin the glTF frame is centred on. */
+  /** The scene cut shared by skin and anatomy (glTF Y, metres). */
+  scene_cut_y?: number;
   imaging?: { z_mm: number; x_mm: [number, number]; y_mm: [number, number]; image: string; origin_ras_mm: [number, number, number] };
 }
 
@@ -87,19 +88,75 @@ const EXTRA_DIM: Readonly<Record<string, number>> = { skull: 0.22 };
 const COMPLICATION: ReadonlySet<string> = new Set(['sialocele_pocket', 'frey_regrowth', 'recurrence_nodules']);
 /** Schematic planes that lie inside tissue and are drawn on top of it. */
 const OVERLAY: ReadonlySet<string> = new Set(['us_plane']);
+/**
+ * Presentation-only meshes (exterior.py): no content record and no claim. Each follows the authored state of the
+ * structure named here, so the exterior body continues the skin below the neck cut and the hair goes with it.
+ */
+const COSMETIC: Readonly<Record<string, string>> = { exterior_body: 'skin', hair: 'skin' };
+/** The whole subject: never drawn with the focus contour (a contour around the person reads as a selection). */
+const NO_CONTOUR: ReadonlySet<string> = new Set(['skin', 'exterior_body']);
 /** Layers that sink with the contour change after resection. */
 const HOLLOWED = new Set(['skin', 'subcutaneous_fat', 'smas']);
 /** Layers cut by the incision and raised as the flap (skin and subcutaneous fat; plan §8). */
 const FLAPPED = new Set(['skin', 'subcutaneous_fat']);
 
-type Occluder = { mesh: THREE.Mesh; id: string; role: 'rest' | 'flap' };
-type Part = { mesh: THREE.Mesh; twin: THREE.Mesh; mat: TissueMaterial; hatch?: HatchMaterial; tissue: TissueFamily; schematic: boolean };
+type Occluder = { mesh: THREE.Mesh; id: string; role: 'rest' | 'flap'; as: string };
+type Part = { mesh: THREE.Mesh; twin: THREE.Mesh; mat: TissueMaterial; hatch?: HatchMaterial; tissue: TissueFamily; schematic: boolean; follows?: string };
 
 /** The state of a removable piece as last applied: its dissection progress and specimen pose (CPU mirror of the shader). */
 interface PieceState {
   peel: number;
   pose: THREE.Matrix4;
   moved: boolean;
+}
+
+/**
+ * Lighting looks (ADR-0005), blended by weight so a change of shot never cuts the light. Directions are in the glTF
+ * frame (-X = the patient's right side, toward the default camera; +Y up; +Z anterior). `portrait` is not authored: it
+ * is the studio look while the intact exterior is showing (skin present, opaque, uncut), so it is derived from state.
+ */
+interface Look {
+  key: number;
+  keyColour: number;
+  keyDir: readonly [number, number, number];
+  fill: number;
+  rim: number;
+  env: number;
+  hemi: number;
+}
+type LookName = 'portrait' | 'studio' | 'operative' | 'specimen';
+const LOOKS: Readonly<Record<LookName, Look>> = {
+  // Soft portrait light: a broad key high in front of the face sculpts ear, jaw, cheek and neck; a cool rim separates
+  // the occiput and shoulders from the field.
+  portrait: { key: 2.9, keyColour: 0xfff3ea, keyDir: [-0.5, 0.7, 0.6], fill: 0.14, rim: 2.1, env: 0.2, hemi: 0.05 },
+  // Superficial anatomy: information first, more fill and a little more environment so no structure falls into shadow.
+  studio: { key: 2.0, keyColour: 0xfff5ec, keyDir: [-0.75, 0.6, 0.45], fill: 0.62, rim: 0.85, env: 0.58, hemi: 0.28 },
+  // Deep operative views: a higher, slightly cooler and more directional key for depth and plane separation.
+  operative: { key: 2.55, keyColour: 0xf3f5ff, keyDir: [-0.6, 0.85, 0.3], fill: 0.58, rim: 0.6, env: 0.5, hemi: 0.26 },
+  // The specimen on its own: even.
+  specimen: { key: 1.7, keyColour: 0xfff6ee, keyDir: [-0.8, 0.5, 0.4], fill: 0.8, rim: 0.7, env: 0.66, hemi: 0.32 },
+};
+const FILL_DIR = [-0.85, -0.15, -0.3] as const;
+const RIM_DIR = [0.35, 0.45, -0.85] as const;
+
+/**
+ * The studio the environment reflections come from: a dark seamless sphere with a large soft key box, a cool fill, a
+ * narrow rim strip behind and a dim overhead panel. Skin and wet tissue reflect broad soft shapes, never a room.
+ */
+function studioEnvironment(): THREE.Scene {
+  const s = new THREE.Scene();
+  s.add(new THREE.Mesh(new THREE.SphereGeometry(10, 32, 16), new THREE.MeshBasicMaterial({ color: 0x0a0b0d, side: THREE.BackSide })));
+  const panel = (w: number, h: number, colour: number, intensity: number, dir: readonly number[]) => {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(colour).multiplyScalar(intensity), side: THREE.DoubleSide }));
+    m.position.set(dir[0]!, dir[1]!, dir[2]!).normalize().multiplyScalar(6);
+    m.lookAt(0, 0, 0);
+    s.add(m);
+  };
+  panel(5.5, 4.5, 0xfff2e6, 3.2, LOOKS.portrait.keyDir);
+  panel(4, 3, 0xe6edf7, 0.7, FILL_DIR);
+  panel(1.1, 6, 0xeef3ff, 1.6, RIM_DIR);
+  panel(7, 2.2, 0xfaf7f2, 0.55, [0, 1, 0.1]);
+  return s;
 }
 
 /** Pale line colour of the schematic (hatch) grammar. */
@@ -123,6 +180,22 @@ function normaliseGeometry(mesh: THREE.Mesh) {
       g.setAttribute(name, new THREE.BufferAttribute(out, attr.itemSize));
     }
   }
+  // WebGPU allows 8 vertex buffers: past 7 attributes, the custom ones share one interleaved buffer (names unchanged,
+  // so shaders and the CPU mirrors read them as before). The skin carries the incision, flap, tint and footprint fields.
+  const custom = Object.keys(g.attributes).filter((n) => n.startsWith('_'));
+  if (Object.keys(g.attributes).length > 7 && custom.length > 1) {
+    const count = g.getAttribute('position').count;
+    const stride = custom.reduce((s, n) => s + g.getAttribute(n).itemSize, 0);
+    const data = new Float32Array(count * stride);
+    const ib = new THREE.InterleavedBuffer(data, stride);
+    let offset = 0;
+    for (const name of custom) {
+      const a = g.getAttribute(name) as THREE.BufferAttribute;
+      for (let i = 0; i < count; i++) for (let c = 0; c < a.itemSize; c++) data[i * stride + offset + c] = a.array[i * a.itemSize + c]!;
+      g.setAttribute(name, new THREE.InterleavedBufferAttribute(ib, a.itemSize, offset));
+      offset += a.itemSize;
+    }
+  }
   mesh.updateMatrix();
   g.applyMatrix4(mesh.matrix);
   mesh.position.set(0, 0, 0);
@@ -139,6 +212,23 @@ function field(css: string): THREE.Color {
   const m = Math.min(target.r, target.g, target.b);
   const x = Math.sqrt(m / 6.25);
   return new THREE.Color(target.r + x - m, target.g + x - m, target.b + x - m);
+}
+
+/** Centres of the two eyes of the generic face: the vertices split at their mean X (the midline), averaged. */
+function eyeCentres(g: THREE.BufferGeometry): [THREE.Vector3, THREE.Vector3] {
+  const pos = g.getAttribute('position');
+  let mid = 0;
+  for (let i = 0; i < pos.count; i++) mid += pos.getX(i) / pos.count;
+  const a = new THREE.Vector3();
+  const b = new THREE.Vector3();
+  let na = 0;
+  let nb = 0;
+  for (let i = 0; i < pos.count; i++) {
+    const v = new THREE.Vector3().fromBufferAttribute(pos, i);
+    if (v.x < mid) (a.add(v), na++);
+    else (b.add(v), nb++);
+  }
+  return [a.divideScalar(Math.max(na, 1)), b.divideScalar(Math.max(nb, 1))];
 }
 
 /** 0..1 presence factor for meshes that exist only under some variants (1 for every other mesh). */
@@ -160,6 +250,8 @@ export class Stage {
   private focus = uniform(0);
   private outlineObjects: THREE.Object3D[] = [];
   private meshes = new Map<string, Part>();
+  /** The hair shells (presentation only), following the skin. */
+  private hair: { mesh: THREE.Mesh; mat: HairMaterial } | null = null;
   /** The raised flap of each FLAPPED layer: same geometry, folded; shown once the incision opens. */
   private flaps = new Map<string, Part>();
   private anchors = new Map<string, THREE.Vector3>();
@@ -169,7 +261,11 @@ export class Stage {
   private frame!: Frame;
   private raycaster = new THREE.Raycaster();
   private key = new THREE.DirectionalLight(0xfff4e8, 2.1);
+  private fill = new THREE.DirectionalLight(0xe8eef6, 0.4);
   private rim = new THREE.DirectionalLight(0xdfe8ff, 1.0);
+  private hemi = new THREE.HemisphereLight(0xf3efe9, 0x322c28, 0.4);
+  /** Cyclorama: the field colour at the edges, a soft lift behind the subject that follows the framing (screen UV). */
+  private bg = { edge: uniform(new THREE.Color()), lift: uniform(new THREE.Color()), centre: uniform(new THREE.Vector2(0.6, 0.45)), aspect: uniform(1.6) };
   private pieceState = new Map<string, PieceState>();
   /** The donor's CT slice drawn on the clip plane (imaging plates), and where the clip sweep starts and ends (glTF Y). */
   private ctPlane: { mesh: THREE.Mesh; top: number; plane: number } | null = null;
@@ -194,8 +290,29 @@ export class Stage {
   constructor(private readonly opts: StageOptions) {
     this.renderer = new THREE.WebGPURenderer({ canvas: opts.canvas, antialias: false, forceWebGL: opts.forceWebGL ?? false });
     this.renderer.toneMapping = THREE.NeutralToneMapping;
-    this.scene.background = field(opts.field);
+    this.setField(opts.field);
     for (const [, l] of Object.entries(WINDOW_LAYERS)) this.windowOpen[l.key] = uniform(0);
+  }
+
+  /** The page's field colour (CSS): the cyclorama's edge, with a slightly lighter, cooler lift behind the subject. */
+  setField(css: string) {
+    const edge = field(css);
+    const liftCss = new THREE.Color().setStyle(css, THREE.SRGBColorSpace);
+    liftCss.offsetHSL(0, 0.004, 0.045);
+    (this.bg.edge.value as THREE.Color).copy(edge);
+    (U.field.value as THREE.Color).copy(edge);
+    (this.bg.lift.value as THREE.Color).copy(field(`#${liftCss.getHexString(THREE.SRGBColorSpace)}`));
+    const { edge: e, lift, centre, aspect } = this.bg;
+    this.scene.backgroundNode = Fn(() => {
+      const d = screenUV.sub(centre).mul(vec2(aspect, 1));
+      const glow = exp(dot(d, d).mul(-1 / (2 * 0.5 * 0.5)));
+      // A slightly deeper lower edge, like the floor falloff of a cyclorama.
+      const floor = smoothstep(0.55, 1.0, screenUV.y).mul(0.12);
+      const c = mix(e, lift, glow).mul(float(1).sub(floor));
+      // Fixed per-pixel dither (about one 8-bit step at this level) so the broad gradient never bands.
+      const n = fract(sin(dot(screenCoordinate.xy, vec2(12.9898, 78.233))).mul(43758.5453)).sub(0.5).mul(0.0016);
+      return vec4(c.add(n), 1);
+    })();
   }
 
   get backend(): 'webgpu' | 'webgl2' {
@@ -216,6 +333,7 @@ export class Stage {
     (U.flapAxis.value as THREE.Vector3).fromArray(this.frame.flap.axis_dir).normalize();
     U.flapMax.value = this.frame.flap.max_angle;
     U.cutScale.value = this.frame.flap.cut_scale_mm;
+    U.cutY.value = this.frame.scene_cut_y ?? -10;
 
     for (const [k, z] of (this.frame.zones ?? []).entries()) {
       if (k >= ZONE_SLOTS) break;
@@ -240,17 +358,29 @@ export class Stage {
       }
       if (!(node instanceof THREE.Mesh)) continue;
       normaliseGeometry(node);
-      const s = info.get(node.name);
+      const follows = COSMETIC[node.name];
+      if (node.name === 'hair') {
+        this.hair = { mesh: new THREE.Mesh(hairGeometry(node.geometry), undefined), mat: hairShells() };
+        this.hair.mesh.material = this.hair.mat.material;
+        this.hair.mesh.name = 'hair';
+        this.hair.mesh.renderOrder = order.length - order.indexOf('skin') + 0.25;
+        this.hair.mesh.visible = false;
+        node.visible = false;
+        node.parent!.add(this.hair.mesh);
+        continue;
+      }
+      const s = info.get(node.name) ?? (follows && info.get(follows) ? { id: node.name, tissue: info.get(follows)!.tissue } : undefined);
       if (!s) continue; // assets may carry structures the content does not yet describe
       const w = WINDOW_LAYERS[node.name];
       const window = w ? { window: { open: this.windowOpen[w.key]!, inset: w.inset } } : {};
       const flapped = FLAPPED.has(node.name);
-      const mat = tissue({ family: s.tissue, ...window, piece: REMOVABLE.has(node.name), mobilise: MOBILISED.test(node.name), hollow: HOLLOWED.has(node.name), zones: node.name === 'skin', ...(node.name === 'smas_flap' ? { turn: 'smas' as const } : node.name === 'scm_flap' ? { turn: 'scm' as const } : {}), ...(flapped ? { flap: 'rest' as const, ink: node.name === 'skin' } : {}) });
+      const eyes = node.name === 'eyes' ? eyeCentres(node.geometry) : undefined;
+      const mat = tissue({ family: s.tissue, ...window, ...(eyes ? { eyes } : {}), tint: node.name === 'skin' || node.name === 'exterior_body', fadeBelow: node.name === 'exterior_body', fadeCut: node.name !== 'skin' && node.name !== 'exterior_body' && node.name !== 'eyes', locate: node.name === 'skin' && !!node.geometry.getAttribute('_foot'), axis: !!node.geometry.getAttribute('_axis'), piece: REMOVABLE.has(node.name), mobilise: MOBILISED.test(node.name), hollow: HOLLOWED.has(node.name), zones: node.name === 'skin', ...(node.name === 'smas_flap' ? { turn: 'smas' as const } : node.name === 'scm_flap' ? { turn: 'scm' as const } : {}), ...(flapped ? { flap: 'rest' as const, ink: node.name === 'skin' } : {}) });
       node.material = mat.material;
       node.renderOrder = order.length - order.indexOf(node.name);
-      this.meshes.set(node.name, { mesh: node, twin: this.twinOf(node, mat), mat, tissue: s.tissue, schematic: !!s.schematic });
+      this.meshes.set(node.name, { mesh: node, twin: this.twinOf(node, mat), mat, tissue: s.tissue, schematic: !!('schematic' in s && s.schematic), ...(follows ? { follows } : {}) });
       if (flapped) {
-        const fmat = tissue({ family: s.tissue, ...window, flap: 'flap', ink: node.name === 'skin' });
+        const fmat = tissue({ family: s.tissue, ...window, tint: node.name === 'skin', undersideFat: node.name === 'skin', flap: 'flap', ink: node.name === 'skin' });
         const copy = new THREE.Mesh(node.geometry, fmat.material);
         copy.name = `${node.name}__flap`;
         copy.renderOrder = node.renderOrder;
@@ -264,11 +394,12 @@ export class Stage {
     await this.buildCtPlane();
 
     const pmrem = new THREE.PMREMGenerator(this.renderer);
-    this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    this.scene.environmentIntensity = 0.35;
-    this.key.position.set(-1, 1.2, 0.8);
-    this.rim.position.set(0.8, 0.4, -1);
-    this.scene.add(this.key, this.rim, new THREE.HemisphereLight(0xf3efe9, 0x322c28, 0.4));
+    this.scene.environment = pmrem.fromScene(studioEnvironment(), 0.03).texture;
+    this.scene.environmentIntensity = 0.45;
+    this.key.position.set(...LOOKS.studio.keyDir);
+    this.fill.position.set(...FILL_DIR);
+    this.rim.position.set(...RIM_DIR);
+    this.scene.add(this.key, this.fill, this.rim, this.hemi);
     this.tierNow = this.opts.tier;
     this.buildPipeline();
   }
@@ -457,12 +588,17 @@ export class Stage {
     const deepP = state.op['deep'] ?? 0;
     for (const [id, part] of this.meshes) {
       const { mesh, twin, mat } = part;
-      const s = state.structures[id];
+      const s = state.structures[part.follows ?? id];
       const dial = this.dial[part.tissue] ?? 1;
       const presence = (s?.presence ?? 0) * (dial > 0 ? 1 : 0) * variantFactor(id, state.variantMix);
       mesh.visible = presence > 0.01;
       const wantsHatch = part.schematic || s?.mode === 'hatch';
-      const ghostOpacity = s?.mode === 'ghost' || s?.mode === 'hatch' ? (s.opacity ?? 1) : 1;
+      let ghostOpacity = s?.mode === 'ghost' || s?.mode === 'hatch' ? (s.opacity ?? 1) : 1;
+      // The eyes sit in the skin: when the skin is ghosted they ghost with it (never a solid globe in a faded face).
+      if (id === 'eyes') {
+        const sk = state.structures['skin'];
+        if (sk?.mode === 'ghost') ghostOpacity = Math.min(ghostOpacity, sk.opacity ?? 1);
+      }
       const opacity = presence * Math.min(ghostOpacity, dial);
       if (wantsHatch) {
         if (!part.hatch) {
@@ -481,15 +617,24 @@ export class Stage {
         setOpacity(mesh, twin, Math.min(opacity, 1));
       }
       mat.dim.value = Math.min(1, (s?.emphasis === 'dim' ? 0.75 : s?.emphasis === 'context' ? 0.18 : 0) + (EXTRA_DIM[id] ?? 0));
-      if (mesh.visible && s?.emphasis === 'focus') focus.push(mesh);
+      if (mesh.visible && s?.emphasis === 'focus' && !NO_CONTOUR.has(id)) focus.push(mesh);
       if (mat.piece) this.applyPiece(id, part, state, weights, peelP, outP, deepP);
       const flap = this.flaps.get(id);
       if (flap) {
         flap.mesh.visible = mesh.visible && (state.op['flap'] ?? 0) > FLAP_OPEN;
         setOpacity(flap.mesh, flap.twin, Math.min(opacity, 1));
         flap.mat.dim.value = mat.dim.value;
-        if (flap.mesh.visible && s?.emphasis === 'focus') focus.push(flap.mesh);
+        if (flap.mesh.visible && s?.emphasis === 'focus' && !NO_CONTOUR.has(id)) focus.push(flap.mesh);
       }
+    }
+    if (this.hair) {
+      // The hair goes with an opaque skin and dissolves before the skin is ghosted (a translucent haircut reads as a wig).
+      const sk = this.meshes.get('skin');
+      const ss = state.structures['skin'];
+      const skinOpacity = sk?.mesh.visible ? ((sk.mesh.material as THREE.Material).opacity ?? 1) : 0;
+      const fade = Math.min(1, Math.max(0, (skinOpacity - 0.6) / 0.35)) * (ss?.mode === 'hatch' ? 0 : 1);
+      this.hair.mat.fade.value = fade;
+      this.hair.mesh.visible = fade > 0.01;
     }
     const picked = this.selected ? this.meshes.get(this.selected) : undefined;
     if (picked?.mesh.visible && !focus.includes(picked.mesh)) focus.push(picked.mesh);
@@ -504,6 +649,7 @@ export class Stage {
     U.inkCranial.value = state.op['ink_cranial'] ?? 0;
     U.inkCuff.value = state.op['ink_cuff'] ?? 0;
     U.mobilise.value = state.op['mobilise'] ?? 0;
+    U.locate.value = state.op['locate'] ?? 0;
     U.suture.value = state.op['suture'] ?? 0;
     if (this.ctPlane) {
       // The head is cut at the slice's level as ct_clip rises 0 → 1 (the clip descends from the top of the head to the plane).
@@ -518,14 +664,40 @@ export class Stage {
     U.scar.value = state.op['scar'] ?? 0;
     U.hollow.value = state.op['hollow'] ?? 0;
     for (const [k, z] of (this.frame.zones ?? []).entries()) if (k < ZONE_SLOTS) zoneWeight[k]!.value = state.op[`zone_${z.weight}`] ?? 0;
-    // Light presets: studio (anatomy), operative (a cooler key with tighter falloff), specimen (even).
-    const preset = state.light.preset;
-    this.key.color.set(preset === 'operative' ? 0xf1f4ff : 0xfff4e8);
-    this.key.intensity = preset === 'operative' ? 2.5 : preset === 'specimen' ? 1.6 : 2.1;
-    this.rim.intensity = preset === 'operative' ? 0.6 : 1.0;
-    this.renderer.toneMappingExposure = state.light.exposure;
+    this.applyLight(state);
     this.placeCamera(state.camera);
     this.placeSection(state);
+  }
+
+  /** Blend the lighting looks by the timeline's light mix; the portrait look takes over the studio share while the
+   *  intact exterior is showing. */
+  private applyLight(state: SceneState) {
+    const skin = state.structures['skin'];
+    const opened = Math.max(state.op['cut_skin'] ?? 0, state.op['flap'] ?? 0, state.op['ct_clip'] ?? 0);
+    const intact = Math.min(1, skin?.presence ?? 0) * (skin?.mode === 'solid' || !skin?.mode ? 1 : 0) * Math.min(1, skin?.opacity ?? 1) * (1 - Math.min(1, opened * 4));
+    const mix = state.light.mix ?? { [state.light.preset]: 1 };
+    const w: Record<LookName, number> = { portrait: (mix.studio ?? 0) * intact, studio: (mix.studio ?? 0) * (1 - intact), operative: mix.operative ?? 0, specimen: mix.specimen ?? 0 };
+    const total = Object.values(w).reduce((a, b) => a + b, 0) || 1;
+    const sum = { key: 0, fill: 0, rim: 0, env: 0, hemi: 0 };
+    const dir = new THREE.Vector3();
+    const colour = new THREE.Color(0, 0, 0);
+    const c = new THREE.Color();
+    for (const [name, wt] of Object.entries(w) as [LookName, number][]) {
+      if (!wt) continue;
+      const l = LOOKS[name];
+      const k = wt / total;
+      for (const f of ['key', 'fill', 'rim', 'env', 'hemi'] as const) sum[f] += l[f] * k;
+      dir.addScaledVector(new THREE.Vector3(...l.keyDir).normalize(), k);
+      colour.add(c.set(l.keyColour).multiplyScalar(k));
+    }
+    this.key.position.copy(dir.normalize());
+    this.key.color.copy(colour);
+    this.key.intensity = sum.key;
+    this.fill.intensity = sum.fill;
+    this.rim.intensity = sum.rim;
+    this.hemi.intensity = sum.hemi;
+    this.scene.environmentIntensity = sum.env;
+    this.renderer.toneMappingExposure = state.light.exposure;
   }
 
   private applyPiece(id: string, part: Part, state: SceneState, weights: Record<string, number>, peelP: number, outP: number, deepP: number) {
@@ -628,6 +800,10 @@ export class Stage {
     this.camera.near = Math.max(0.005, dist - radius * 3);
     this.camera.far = dist + radius * 6;
     this.camera.updateProjectionMatrix();
+    this.camera.updateMatrixWorld();
+    const ndc = center.clone().project(this.camera);
+    (this.bg.centre.value as THREE.Vector2).set(ndc.x * 0.5 + 0.5, 0.42);
+    this.bg.aspect.value = this.camera.aspect;
   }
 
   resize(width: number, height: number, pixelRatio = Math.min(devicePixelRatio, 2)) {
@@ -691,9 +867,9 @@ export class Stage {
       // The turned barriers move in the vertex stage and have no CPU mirror: a raised flap does not occlude labels.
       if ((id === 'smas_flap' && (U.smas.value as number) > 0.01) || (id === 'scm_flap' && (U.scmTurn.value as number) > 0.01)) continue;
       const st = this.pieceState.get(id);
-      occluders.push({ mesh: st?.moved ? this.deformed(m.mesh, id) : m.mesh, id, role: 'rest' });
+      occluders.push({ mesh: st?.moved ? this.deformed(m.mesh, id) : m.mesh, id, role: 'rest', as: m.follows ?? id });
       const f = this.flaps.get(id);
-      if (f?.mesh.visible && opaque) occluders.push({ mesh: this.deformedFlap(f.mesh), id, role: 'flap' });
+      if (f?.mesh.visible && opaque) occluders.push({ mesh: this.deformedFlap(f.mesh), id, role: 'flap', as: id });
     }
     return occluders;
   }
@@ -738,7 +914,7 @@ export class Stage {
       this.raycaster.far = dist - 0.004; // hits within 4 mm of the anchor are the structure's own surface
       let blocked = false;
       for (const o of occluders) {
-        if (owns(id, o.id)) continue;
+        if (owns(id, o.as)) continue;
         if (this.raycaster.intersectObject(o.mesh, false).some((hit) => !discarded(o, hit))) {
           blocked = true;
           break;
@@ -781,7 +957,7 @@ export class Stage {
       let best: { id: string; distance: number } | null = null;
       for (const o of this.collectOccluders(opaque)) {
         const hit = this.raycaster.intersectObject(o.mesh, false).find((h) => !this.hitDiscarded(o, h));
-        if (hit && (!best || hit.distance < best.distance)) best = { id: o.id, distance: hit.distance };
+        if (hit && (!best || hit.distance < best.distance)) best = { id: o.as, distance: hit.distance };
       }
       if (best) return best.id;
     }

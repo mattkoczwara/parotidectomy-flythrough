@@ -51,6 +51,10 @@ def place(spec, name, gland, parts, aff, inv, nerve, vessel, authored, skin_tree
     rejected = dict.fromkeys(('nerve', 'vessel', 'bone_muscle', 'skin_cover', 'authored', 'part'), 0)
     steps = np.arange(-spec["search_mm"], spec["search_mm"] + 0.1, 1.5)
     cands = sorted(((np.linalg.norm([dx, dy, dz]), dx, dy, dz) for dx in steps for dy in steps for dz in steps))
+    if spec.get("keep"):
+        # A validated placement is kept while it stays feasible: an unrelated change (the exterior face) must not move it.
+        k = np.asarray(spec["keep"], float) - target
+        cands.insert(0, (0.0, *k))
     for dist, dx, dy, dz in cands:
         c = target + [dx, dy, dz]
         m = lobulated(c, radii, spec["seed"], subdiv=3)

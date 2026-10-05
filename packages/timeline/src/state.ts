@@ -51,7 +51,9 @@ export interface SceneState {
    */
   variantMix: Readonly<Record<string, Readonly<Record<string, number>>>>;
   labels: readonly LabelState[];
-  light: { preset: LightPreset; exposure: number };
+  /** `preset` switches at the camera window's midpoint; `mix` is the same choice as continuous weights (one-hot on a
+   *  plateau, cross-faded with the camera inside a transition), so a renderer can blend lighting without a pop. */
+  light: { preset: LightPreset; exposure: number; mix: Readonly<Partial<Record<LightPreset, number>>> };
 }
 
 /** What a plate author writes: only the fields that change relative to the previous plate. */

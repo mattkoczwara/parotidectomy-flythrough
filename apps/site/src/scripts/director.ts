@@ -67,7 +67,7 @@ export function start(): void {
     variants: {},
     variantMix: {},
     labels: [],
-    light: { preset: 'studio', exposure: 1 },
+    light: { preset: 'studio', exposure: 1, mix: { studio: 1 } },
   };
   let track = compile(data.plates, initialState, { groups });
 
@@ -264,7 +264,7 @@ export function start(): void {
         canvas,
         tier: choice === 'mid' ? 'mid' : 'high',
         forceWebGL: query.get('backend') === 'webgl' || !hasGPU,
-        field: getComputedStyle(document.body).getPropertyValue('--field').trim() || '#252a28',
+        field: getComputedStyle(document.body).getPropertyValue('--field').trim() || '#1d1f22',
         structures: data.structures.filter((s) => !groups[s.id]).map((s) => ({ id: s.id, tissue: s.tissue as never, schematic: !!s.schematic })),
         groups,
       });

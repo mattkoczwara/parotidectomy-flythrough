@@ -2,7 +2,8 @@
 
     pipeline/segment/.venv/Scripts/python pipeline/anatomy/face.py      (after surfaces.py)
 
-1. Extract the MPFB base mesh head and neck (body group) and the eye helpers; convert to the CT RAS frame (mm).
+1. Extract the MPFB base mesh (body group) down to the upper chest and the eye helpers, with MakeHuman's macro
+   modifiers for a generic adult; convert to the CT RAS frame (mm).
 2. Similarity ICP (trimmed) of the MPFB head to the CT skin.
 3. Conform only where surgical anatomy lies beneath (right preauricular, parotid, cheek and upper neck), using a
    smooth displacement field fitted to MPFB-to-CT offsets and blended by a weight that falls to zero over the
@@ -30,6 +31,32 @@ from common import ROOT, WORK, body_mask, load_ct
 OUT = WORK / "meshes"
 QC = ROOT / "docs/qc/m1-anatomy"
 ARCHIVE = ROOT / "pipeline/sources/raw/mpfb/add-on-mpfb-v2.0.17.zip"
+
+
+def read_target(name):
+    """A MakeHuman target (CC0) as per-vertex offsets in the same RAS mm frame as read_base()."""
+    import gzip
+
+    d = np.zeros((19158, 3))
+    for line in gzip.decompress(zipfile.ZipFile(ARCHIVE).read(f"data/targets/{name}.target.gz")).decode().splitlines():
+        t = line.split()
+        if len(t) == 4 and not line.startswith("#"):
+            d[int(t[0])] = [-float(t[1]), float(t[3]), float(t[2])]
+    return d * 100.0
+
+
+def macro(v, spec):
+    """MakeHuman's macro modifiers for a generic adult: the raw base mesh is an androgynous neutral that MakeHuman
+    itself never shows unmodified. Gender and age weights as MakeHuman applies them; the three ancestry targets
+    are mixed equally (its default), so the face stays generic. Exterior presentation only: the surgical region
+    is conformed to the CT afterwards."""
+    old = spec["age_old_weight"]
+    g = spec["gender"]
+    out = v.copy()
+    for eth in ("caucasian", "african", "asian"):
+        out += (1 - old) / 3 * read_target(f"macrodetails/{eth}-{g}-young") + old / 3 * read_target(f"macrodetails/{eth}-{g}-old")
+    out += (1 - old) * read_target(f"macrodetails/universal-{g}-young-averagemuscle-averageweight") + old * read_target(f"macrodetails/universal-{g}-old-averagemuscle-averageweight")
+    return out
 
 
 def read_base():
@@ -115,8 +142,12 @@ def main() -> None:
     skin_tree = cKDTree(skin_pts)
 
     v, groups = read_base()
-    head_keep = v[:, 2] > spec["mpfb_neck_cut_dm"] * 100
+    v = macro(v, spec["mpfb_macro"])
+    # The surface is kept down to the upper chest: above the scene cut it is the skin, below it the exterior body
+    # (neck, shoulders, upper chest), a presentation surface with no anatomy beneath it.
+    head_keep = v[:, 2] > spec["mpfb_body_cut_dm"] * 100
     head = submesh(v, groups["body"], head_keep)
+    kept_index = np.unique(groups["body"][head_keep[groups["body"]].all(1)])  # original MPFB index of each head vertex
     eyes = trimesh.util.concatenate([submesh(v, groups[g], head_keep) for g in ("helper-l-eye", "helper-r-eye")])
 
     # 2) alignment by craniofacial measurements taken the same way on both surfaces (no rotation: both are in
@@ -150,6 +181,9 @@ def main() -> None:
     target = np.where(outward[gi, None], off[gi], 0.0)
     envelope = RBFInterpolator(aligned[gi], target, kernel="thin_plate_spline", smoothing=spec["envelope_smoothing"], degree=1)
     face_w = 1 - np.clip((aligned[:, 1] - (fx["y_min"] - 25)) / 25, 0, 1) * in_face_soft(aligned, fx)
+    # Below the scene cut the envelope fades out over the lower neck: the thin-plate spline was fitted above it and
+    # would extrapolate into the shoulders. Above the cut the factor is 1.
+    face_w = face_w * smoothstep(spec["scene_cut_z"] - spec["body_fade_mm"], spec["scene_cut_z"], aligned[:, 2])
     aligned = aligned + face_w[:, None] * envelope(aligned)
     eyes_aligned = eyes_aligned + envelope(eyes_aligned) * 0  # eyes stay with the (unchanged) face
 
@@ -203,6 +237,12 @@ def main() -> None:
     anat = np.zeros(body.shape, bool)
     for rel in spec["coverage_masks"]:
         anat |= np.asarray(nib.load(str(WORK / "seg" / f"{rel}.nii.gz")).dataobj) > 0
+    # Authored superficial structures (nerves and veins drawn from the literature, not segmented) count too.
+    for sid in spec.get("coverage_meshes", []):
+        p = np.load(OUT / f"{sid}.npz")["positions"]
+        ijk_m = np.round(nib.affines.apply_affine(inv_aff, p)).astype(int)
+        ok_m = np.all((ijk_m >= 0) & (ijk_m < np.array(body.shape)), axis=1)
+        anat[tuple(ijk_m[ok_m].T)] = True
     sdf_anat = ndimage.distance_transform_edt(~anat, sampling=zooms)
     cov = trimesh.Trimesh(fitted, head.faces, process=False)
     cov.fix_normals()
@@ -214,11 +254,19 @@ def main() -> None:
         cov.vertices = cov.vertices + push[:, None] * cov.vertex_normals
     fitted = np.asarray(cov.vertices)
 
-    outer = trimesh.Trimesh(fitted, head.faces, process=False)
-    outer = outer.subdivide_loop(iterations=1)
+    full = trimesh.Trimesh(fitted, head.faces, process=False)
+    full = full.subdivide_loop(iterations=1)
     # a clean horizontal neck cut shared with the anatomy (surfaces.py crops at the same plane)
-    outer = outer.slice_plane([0, 0, spec["scene_cut_z"]], [0, 0, 1], cap=False)
+    outer = full.slice_plane([0, 0, spec["scene_cut_z"]], [0, 0, 1], cap=False)
     outer.remove_unreferenced_vertices()
+    # The exterior body below the same cut, so its top loop is the skin's bottom loop vertex for vertex
+    # (exterior.py welds the normals across the seam).
+    body_below = full.slice_plane([0, 0, spec["scene_cut_z"]], [0, 0, -1], cap=False)
+    body_below.remove_unreferenced_vertices()
+    np.savez_compressed(OUT / "exterior_body.npz", positions=body_below.vertices.astype(np.float32), normals=body_below.vertex_normals.astype(np.float32), indices=body_below.faces.astype(np.uint32).ravel(), kind="surface")
+    # The fitted MPFB vertices with their original indices: exterior.py locates regions (lips, ears, brows) by the
+    # vertex sets of MakeHuman's own targets.
+    np.savez_compressed(WORK / "face_basis.npz", fitted=fitted.astype(np.float32), index=kept_index.astype(np.int32), eyes=eyes_aligned.astype(np.float32))
     # recompute weights on the subdivided mesh for the residual report
     wv = (1 - smoothstep(spec["conform_full_mm"], spec["conform_zero_mm"], np.linalg.norm(outer.vertices - c, axis=1))) * smoothstep(spec["midline_x"][0], spec["midline_x"][1], outer.vertices[:, 0]) * (1 - in_face_soft(outer.vertices, fx))
     resid = skin_tree.query(outer.vertices)[0]
@@ -254,7 +302,7 @@ def main() -> None:
                 walls += [[b, a, a + n_out], [b, a + n_out, b + n_out]]
     F.append(np.array(walls))
     shell = trimesh.Trimesh(V, np.vstack(F), process=False)
-    np.savez_compressed(OUT / "skin.npz", positions=shell.vertices.astype(np.float32), normals=shell.vertex_normals.astype(np.float32), indices=shell.faces.astype(np.uint32).ravel(), kind="surface")
+    np.savez_compressed(OUT / "skin.npz", positions=shell.vertices.astype(np.float32), normals=shell.vertex_normals.astype(np.float32), indices=shell.faces.astype(np.uint32).ravel(), kind="surface", n_outer=np.int64(n_out))  # outer surface = the first n_outer vertices (flap.py appends refined ones)
     eyes_m = trimesh.Trimesh(eyes_aligned, eyes.faces, process=False)
     np.savez_compressed(OUT / "eyes.npz", positions=eyes_m.vertices.astype(np.float32), normals=eyes_m.vertex_normals.astype(np.float32), indices=eyes_m.faces.astype(np.uint32).ravel(), kind="surface")
 
@@ -276,7 +324,7 @@ def main() -> None:
     depth_in = ndimage.distance_transform_edt(head_mask, sampling=zooms) - ndimage.distance_transform_edt(~head_mask, sampling=zooms)
     sd = {}
     # Instruments and schematic overlays are not anatomy: a probe leaves the wound, regrowth fibres lie a hand's breadth under the skin.
-    skip = {"skin", "eyes", "subcutaneous_fat", "smas", "nerve_plane", *spec.get("depth_check_exclude", [])}
+    skip = {"skin", "eyes", "subcutaneous_fat", "smas", "nerve_plane", "exterior_body", "hair", *spec.get("depth_check_exclude", [])}
     probes = [p.stem for p in OUT.glob("*.npz") if p.stem not in skip]
     for n in probes:
         path = OUT / f"{n}.npz"

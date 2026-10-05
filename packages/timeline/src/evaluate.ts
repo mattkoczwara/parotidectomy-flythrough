@@ -1,5 +1,5 @@
 import type { Track } from './compile.ts';
-import { defaultStructure, type LabelState, type SceneState, type StructureState } from './state.ts';
+import { defaultStructure, type LabelState, type LightPreset, type SceneState, type StructureState } from './state.ts';
 
 const clamp01 = (x: number) => Math.min(Math.max(x, 0), 1);
 const smooth = (x: number) => x * x * (3 - 2 * x);
@@ -76,6 +76,11 @@ export function evaluate(track: Track, t: number): SceneState {
     variantMix[key] = mix;
   }
 
+  // Lighting cross-fades with the camera (one look per shot, blended while the shot changes).
+  const lightMix: Partial<Record<LightPreset, number>> = {};
+  for (const [name, w] of Object.entries(a.light.mix) as [LightPreset, number][]) lightMix[name] = (lightMix[name] ?? 0) + w * (1 - wc);
+  for (const [name, w] of Object.entries(b.light.mix) as [LightPreset, number][]) lightMix[name] = (lightMix[name] ?? 0) + w * wc;
+
   const labels: LabelState[] = [];
   const inB = new Map(b.labels.map((l) => [l.structureId, l]));
   const inA = new Map(a.labels.map((l) => [l.structureId, l]));
@@ -95,7 +100,7 @@ export function evaluate(track: Track, t: number): SceneState {
     variants: wv < 0.5 ? a.variants : b.variants,
     variantMix,
     labels: labels.filter((l) => l.weight > 0),
-    light: { preset: wc < 0.5 ? a.light.preset : b.light.preset, exposure: lerp(a.light.exposure, b.light.exposure, wc) },
+    light: { preset: wc < 0.5 ? a.light.preset : b.light.preset, exposure: lerp(a.light.exposure, b.light.exposure, wc), mix: lightMix },
   };
 }
 

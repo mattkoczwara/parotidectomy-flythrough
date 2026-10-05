@@ -4,7 +4,7 @@
  * single contact sheet. Usage:
  *
  *   node tools/capture/snap.mjs <plate-id>... [--url http://localhost:4321] [--out dir] [--w 1280] [--h 800]
- *        [--sheet name.png] [--cols 2] [--clean] [--eval "js run in the page after convergence"] [--wait ms]
+ *        [--sheet name.png] [--cols 2] [--clean] [--page] [--ui] [--eval "js run in the page after convergence"] [--wait ms]
  *        [--patch '{"op":{"peel":1},"variantMix":{"resection":{"ecd":1}},"camera":{"azimuth":-20},"structures":{"skin":{"presence":0}}}']
  *
  * --patch (dev server only) merges the JSON into the plate's resolved state, applies it and settles: a look at a
@@ -23,6 +23,8 @@ const opt = (name, def) => {
   return i >= 0 ? args[i + 1] : def;
 };
 const clean = args.includes('--clean');
+const ui = args.includes('--ui'); // the live page: text, chrome and the off-centre framing (implies --page)
+const whole = ui || args.includes('--page'); // the viewport (page and stage), not the stage element alone
 const flagValues = new Set(['--patch', '--url', '--out', '--w', '--h', '--sheet', '--cols', '--eval', '--wait', '--tier', '--backend']);
 const ids = args.filter((a, i) => !a.startsWith('--') && !flagValues.has(args[i - 1] ?? ''));
 const url = opt('url', 'http://localhost:4321');
@@ -40,7 +42,7 @@ page.on('pageerror', (e) => console.log('[pageerror]', String(e).slice(0, 300)))
 
 const files = [];
 for (const id of ids) {
-  const q = new URLSearchParams({ capture: '1', snap: String(Date.now()) });
+  const q = new URLSearchParams(ui ? { snap: String(Date.now()) } : { capture: '1', snap: String(Date.now()) });
   if (opt('tier')) q.set('tier', opt('tier'));
   if (opt('backend')) q.set('backend', opt('backend'));
   await page.goto(`${url}/?${q}#${id}`);
@@ -78,7 +80,7 @@ for (const id of ids) {
       await page.waitForTimeout(Number(opt('wait', 1500)));
     }
     const file = join(out, patches.length > 1 ? `${id}.${pi}.png` : `${id}.png`);
-    await page.locator('.stage').screenshot({ path: file });
+    await (whole ? page.screenshot({ path: file }) : page.locator('.stage').screenshot({ path: file }));
     files.push(file);
     console.log(file);
   }

@@ -40,7 +40,7 @@ const emptyState: SceneState = {
   variants: {},
   variantMix: {},
   labels: [],
-  light: { preset: 'studio', exposure: 1 },
+  light: { preset: 'studio', exposure: 1, mix: { studio: 1 } },
 };
 
 export interface CompileOptions {
@@ -101,7 +101,10 @@ export function compile(specs: readonly PlateSpec[], initial: SceneState = empty
       variants,
       variantMix: mixOf(variants),
       labels: delta.labels ? delta.labels.map((l, i) => ({ structureId: l.structureId, priority: l.priority ?? i, weight: 1 })) : prev.labels,
-      light: { ...prev.light, ...defined(delta.light ?? {}) },
+      light: (() => {
+        const l = { ...prev.light, ...defined(delta.light ?? {}) };
+        return { ...l, mix: { [l.preset]: 1 } };
+      })(),
     };
     plates.push(next);
     prev = next;

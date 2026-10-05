@@ -5,6 +5,8 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
   integrations: [mdx()],
+  // The dev toolbar sits over the stage in look-development screenshots; production never has it.
+  devToolbar: { enabled: false },
   // Typefaces (SIL OFL 1.1), fetched at build time and self-hosted: Newsreader for narrative and Latin terms,
   // Atkinson Hyperlegible Next for labels, UI and figures (plan §5).
   fonts: [

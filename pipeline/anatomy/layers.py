@@ -32,7 +32,9 @@ def main() -> None:
     roi = (w[..., 0] > b["x_min"]) & (w[..., 1] > b["y"][0]) & (w[..., 1] < b["y"][1]) & (w[..., 2] > b["z"][0]) & (w[..., 2] < b["z"][1])
     # the auricle is thin and voxelises poorly: keep layer shells out of the ear zone
     eac = np.array(json.loads((ROOT / "pipeline/specs/landmarks.vhp-male.json").read_text(encoding="utf-8"))["landmarks"]["eac_lateral"]["xyz"])
-    roi &= np.linalg.norm(w - eac, axis=-1) > L["ear_exclusion_mm"]
+    # (only lateral to the canal entrance, where the auricle projects: the preauricular band is kept, so the raised
+    # flap has no hole in its fat)
+    roi &= (np.linalg.norm(w - eac, axis=-1) > L["ear_exclusion_mm"]) | (w[..., 0] < eac[0] - L["ear_exclusion_medial_mm"])
     del w, idx
     fat = roi & head & (depth >= L["skin_mm"]) & (depth < L["smas_depth_mm"]) & ~gland
     smas = roi & head & (depth >= L["smas_depth_mm"]) & (depth < L["smas_depth_mm"] + L["smas_thickness_mm"]) & ~gland
