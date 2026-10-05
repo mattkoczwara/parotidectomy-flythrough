@@ -1,5 +1,7 @@
 # Plate capture
 
+**Contents:** `npm run figures` / `npm run capture` › Static fallback figures; Determinism; Focus and announcements; Reduced motion; Static tier (`?static`); Instrument; Reference pages and print; Accessibility (axe-core, WCAG 2.2 A/AA); Labels · `npm run perf` · `node tools/capture/firefox.mjs` · `node tools/capture/compare.mjs` · `node tools/capture/snap.mjs`
+
 A Playwright harness run against the production build (real Chrome with the GPU, WebGPU).
 
 - `npm run figures` builds the site and captures one static figure per plate into `apps/site/public/plates`; `npm run capture` runs that first, rebuilds so the figures are linked, then runs `tests/plates.spec.ts`, `labels.spec.ts`, `instrument.spec.ts` and `a11y.spec.ts`:

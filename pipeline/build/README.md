@@ -1,5 +1,7 @@
 # Asset build
 
+**Contents:** `landmarks.py` · `author.py` · `surfaces.py` · `face.py` · `layers.py` · `export_gltf.py` · `gltf-transform meshopt` · Not part of the build: `cryo.py`
+
 `bash pipeline/build/build.sh` rebuilds the M1 anatomy asset end to end:
 
 1. `pipeline/anatomy/landmarks.py`: CT-frame landmarks (automatic, plus visual picks in `pipeline/specs/landmarks.picked.json`).

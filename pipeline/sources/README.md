@@ -1,5 +1,7 @@
 # Source manifests
 
+**Contents:** Candidates (plan §7)
+
 One manifest per third-party dataset: URL, version, sha256, licence, attribution text, date retrieved. Raw downloads go in `raw/` (gitignored), and each needs user approval before downloading.
 
 Candidates (plan §7):

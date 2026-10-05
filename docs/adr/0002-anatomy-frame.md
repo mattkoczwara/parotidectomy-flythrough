@@ -4,6 +4,8 @@
 - **Date:** 2026-09-28
 - **Context:** M0 registration spike (plan §0, §7, §13 risk 1)
 
+**Contents:** Question · What was measured · Decision · Consequences · Amendment (2026-09-28, M1): the M0 CT grid cropped the face · Amendment (2026-09-28, M1): cryosection levels and local registration
+
 ## Question
 Do the candidate open sources share one coordinate frame closely enough to combine them directly? The sources are:
 - the Human Reference Atlas (HRA) Visible Human male meshes;

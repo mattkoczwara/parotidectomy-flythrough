@@ -1,5 +1,7 @@
 # Performance and browser reports
 
+**Contents:** File table · M5 baseline (54 plates) · M1 record (10 plates, 2026-09-29) · Final presentation pass (2026-10-05) · Render headroom above the refresh rate (acceptance, 2026-10-05) · Plate-transition hitches (runtime fix, 2026-10-05)
+
 Measurements are kept so that a later run can be compared with an earlier one.
 
 | File | What it is |

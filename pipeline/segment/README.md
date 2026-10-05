@@ -1,5 +1,7 @@
 # Segmentation and registration
 
+**Contents:** venv setup · Steps › `build_ct_volume.py`; `segment.py`; `register.py`
+
 Everything here runs in an isolated Python 3.12 venv. The system Python is 3.14, and PyTorch wheels lag behind it.
 
 ```bash

@@ -5,6 +5,8 @@ that altered anatomical or operative geometry, not appearance alone. Checks refe
 (27 checks, all passing, gate the export). Nothing here is clinically reviewed; every item stays `clinicalReview:
 pending` until a clinician signs it off._
 
+**Contents:** 1. Generic face base changed (adult male macro modifiers) · 2. Skin coverage includes authored superficial structures · 3. Fat and SMAS bands extended over the whole operative field · 4. Flap membership and the fat following the skin · 5. Alternate tail tumour pinned to its validated centre · 6. Generic mouth lining trimmed (defect found and fixed in this audit) · 7. Other geometry with anatomical meaning · Summary for the reviewer
+
 Pure presentation (materials, light, field, UI, hair, regional tint, poster, camera framings) is out of scope and
 listed in ADR-0005. The donor-fitted surgical region, the authored nerves, vessels, gland, levels and the
 representative tumour did not move.
@@ -12,7 +14,7 @@ representative tumour did not move.
 ## 1. Generic face base changed (adult male macro modifiers)
 
 - **What:** the MakeHuman base mesh that supplies the generic face, auricle and scalp now carries MakeHuman's own
-  macro modifiers (male, about 40 years). The fit to the donor CT is unchanged in method (`face.py`).
+  macro modifiers (adult male). The fit to the donor CT is unchanged in method (`face.py`).
 - **Why:** the raw base mesh is an androgynous neutral, and the donor is male.
 - **Could affect:** skin depth over every structure; the auricle's shape and position (the flap and incision exclude
   it); which structures the skin covers behind the ear.

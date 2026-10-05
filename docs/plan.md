@@ -1,5 +1,7 @@
 # Interactive Parotid Surgery Atlas: Integrated Plan
 
+**Contents:** Context › Research findings that shaped the plan · 0. Execution gates › Bootstrap gate: the first execution after approval does ONLY this, then stops; M0 renderer feasibility spike: must pass before the stack is locked · 1. Product interpretation · 2. Design direction · 3. Information architecture · 4. Experience model · 5. Visual system · 6. Medical content model · 7. Anatomy and asset strategy · 8. Technical architecture · 9. Performance and accessibility · 10. Evidence architecture · 11. Milestones · 12. First vertical slice (M1) · 13. Principal risks and early tests · 14. Acceptance criteria (M1) · Verification (how the implementation is checked end to end)
+
 ## Context
 
 The repository is empty. It holds only the brief (`docs/planning_prompt.md`) and a starting bibliography (`docs/parotid_surgery_atlas_research_references.md`). The goal is a public educational website. It explains parotid tumours and parotidectomy through a high-fidelity, scroll-controlled 3D dissection. Pleomorphic adenoma (PA) is the teaching pathway. The site should work for patients, medical students and clinicians.
@@ -220,21 +222,21 @@ The spike uses a crude but representative parotid-and-nerve proxy: a lobulated c
 
 - **Composition:**
   - Cameras are specified by **framing, not pose**: target structures, a view direction in the anatomical frame, and a *safe rect* per layout class. A solver sets distance and offset. View direction stays constant across aspect ratios, so orientation survives device changes.
-  - **Landscape:** the scene takes the full viewport. The narrative column is narrow (a measure of about 34–40 em) in the negative space the camera leaves. Margin labels sit on the opposite side.
+  - **Landscape:** the scene takes the full viewport. The narrative column is narrow in the negative space the camera leaves. Margin labels sit on the opposite side.
   - **Portrait:** the scene is sticky in the top ~58svh, with a label band of at most 4 labels beneath it and a single text lane below that. Margin notes become inline expanders.
   - Chrome should be under 10% of the viewport with the scene removed.
   - Chapters may change composition (a close dissection, a specimen inset, imaging-plane side-by-side) but keep the same grid logic.
 - **Colour:**
-  - **Field:** a near-neutral, very low-chroma drape tone (OKLCH L≈0.24–0.28, C≤0.02). It must not be black, cream or teal-glow.
+  - **Field:** a near-neutral, very low-chroma tone (C≤0.02). It must not be cream or teal-glow.
   - In M1, A/B test it against neutral graphite using real tissue, and record the decision in an ADR.
   - **Tissue:** naturalistic, with restrained illustrator conventions: artery red, vein blue-grey, nerve ivory-yellow, gland lobulated salmon-tan, tumour grey-white.
   - **Attention:** comes from *context dimming* (context structures lose exposure and saturation) plus a thin non-emissive contour on the focus. Never neon recolouring.
   - **Gentian violet** is used only as matte ink on tissue: incision plan, resection margins, ESGS levels.
-  - **UI chrome has no accent hue.** It relies on weight and luminance. Warnings and complications use a single desaturated ochre, shown only in the Complications chapter and the evidence drawer.
+  - Warnings and complications use a single desaturated ochre, shown only in the Complications chapter and the evidence drawer.
 - **Typography** (all SIL Open Font License, self-hosted through Astro's Fonts API):
   - **Newsreader** (optical sizes): narrative text, and the Latin anatomical terms in italic.
   - **Atkinson Hyperlegible Next**: labels, UI, numbers. Its distinct letterforms help on mid-tone tissue. Tabular figures for measurements (verify `tnum`; if missing, use Source Sans 3 for numbers).
-  - No monospace, no decorative eyebrows.
+  - No monospace.
   - Labels are set at 500–600 weight, 12px or larger, on a soft scrim rather than a stroke.
 - **Materials and lighting:**
   - Custom TSL node materials on a physical base:

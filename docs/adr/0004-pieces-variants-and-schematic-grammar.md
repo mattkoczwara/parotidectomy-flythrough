@@ -2,6 +2,8 @@
 
 _Status: accepted 2026-10-04 (M2–M5 implementation). Supersedes nothing; extends ADR-0001 (the peel) and ADR-0003 (ink colour)._
 
+**Contents:** Context · Decisions · Alternatives rejected · Consequences
+
 ## Context
 
 The M1 slice showed one operation on one gland: a single peel field folded the whole superficial lobe off the nerve. The approved plan (§3, §6, §8) needs the same gland to be shown four ways (extracapsular dissection, partial superficial, superficial and total parotidectomy), with variants of the incision, the nerve's branching pattern and the closure layer drawn on the same model, and a visible difference between modelled anatomy and a simplification. Scrubbing between two variants has to be continuous and deterministic (a pure function of the timeline position), and the semantic and static path has to remain complete.

@@ -1,7 +1,9 @@
 # ADR-0003: Field colour and look-development baseline
 
-- **Status:** accepted (M1, 2026-09-28)
+- **Status:** accepted (M1, 2026-09-28); field superseded by ADR-0005
 - **Context:** plan §5 asks for a near-neutral, very low-chroma field (OKLCH L ≈ 0.24–0.28, C ≤ 0.02), not black, cream or teal, A/B tested in M1 against neutral graphite on real tissue. The M1 stylesheet had `#2d3330` (OKLCH L 0.314, C 0.010), lighter than that range.
+
+**Contents:** Candidates · Decision · Look-development baseline recorded with this decision · Consequences
 
 ## Candidates
 

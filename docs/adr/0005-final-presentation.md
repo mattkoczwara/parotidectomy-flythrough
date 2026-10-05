@@ -7,12 +7,14 @@
   the final pass asks for idealised clinical realism: a dignified human exterior, biologically convincing tissue,
   authored light that blends between shots, and a dark seamless cyclorama. Anatomy stays frozen.
 
+**Contents:** Decisions › Exterior (presentation only, no claims); Tissue materials; Light; Field · Consequences
+
 ## Decisions
 
 ### Exterior (presentation only, no claims)
 
-- The generic face is the MakeHuman base mesh with MakeHuman's own **macro modifiers** for an adult male of about 40,
-  with the three ancestry targets mixed equally (CC0, the same archive as before). The raw base mesh is the
+- The generic face is the MakeHuman base mesh with MakeHuman's own **macro modifiers** for an adult male
+  (CC0, the same archive as before). The raw base mesh is the
   androgynous neutral that MakeHuman never shows unmodified. The donor is male. The fit to the CT is unchanged in
   method. The conform-region residual is unchanged (median 0.66 mm), and every depth check still passes. The
   superficial great auricular nerve, external jugular vein, superficial temporal artery, auriculotemporal nerve and
@@ -77,8 +79,7 @@ dimming moves toward a warm grey, because a neutral grey turned dimmed fat khaki
 
 ### Field
 
-The field changes from the drape (`#252a28`, ADR-0003) to a cool charcoal cyclorama: `#1d1f22` at the edges (OKLCH L
-0.236, C 0.006, h 255). The canvas lifts it softly behind the subject (about +4.5% lightness), and the lift follows
+The field changes from the drape (`#252a28`, ADR-0003) to a cool charcoal cyclorama. The canvas lifts it softly behind the subject, and the lift follows
 the framing. A slightly deeper lower edge reads as a cyclorama's floor falloff, and a fixed per-pixel dither prevents
 banding. The page reads the same `--field`. The capture suite's rule, focus structures at least 15 L* above the
 field, still applies.

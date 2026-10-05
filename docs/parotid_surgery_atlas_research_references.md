@@ -1,5 +1,7 @@
 # Research References — Interactive Parotid Surgery Atlas
 
+**Contents:** 1. Claude Opus 5.5 / Claude Code prompting and agent design · 2. Core parotidectomy references · 3. Pleomorphic adenoma pathology and management · 4. Facial-nerve monitoring · 5. Frey syndrome and reconstruction/barrier techniques · 6. Fine-needle aspiration / cytopathology · 7. Anatomical / 3D source datasets · 8. Source-use rules for this project
+
 > **Revision 2026-09-28 (planning review):**
 > - The §2 "Rea et al." entry's PMID and DOI actually identify Kochhar et al. 2016. It is re-attributed, and the real Rea 2010 paper is added.
 > - The §4 Barrameda 2026 paper is marked **retracted**.

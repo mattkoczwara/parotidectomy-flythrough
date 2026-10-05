@@ -1,5 +1,7 @@
 # M2–M5 implementation plan (working document)
 
+**Contents:** Design decisions made for the remaining work · Plate script · Geometry and renderer work by chapter · Evidence rules for this work · Progress checklist
+
 Owner authorisation (2026-10-04): proceed past M1 despite its documented exceptions, to an implementation-complete private-use application. This does **not** resolve M1's exceptions, answer the owner's comprehension questions or constitute clinical sign-off. Clinical review remains after implementation; public launch stays blocked on it.
 
 This file is the working script for the remaining chapters. `docs/plan.md` stays the approved product plan; `docs/STATUS.md` is the current state. Progress is tracked in the checklist at the end; work not yet through the final verification pass is labelled **unverified** there.

@@ -1,5 +1,7 @@
 # Approved visual benchmarks
 
+**Contents:** Benchmark table: `opening` · `localisation` · `nerve-operative` · `explore` · Re-approvals
+
 The final presentation pass keeps a picture of each approved hero state. A later change must not degrade one merely
 to improve another scene; reopen a benchmark only for a concrete defect, an anatomical correction, performance, or
 a side-by-side improvement.

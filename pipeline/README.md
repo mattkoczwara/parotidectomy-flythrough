@@ -1,5 +1,7 @@
 # Anatomy pipeline
 
+**Contents:** `specs/` · `sources/` · `segment/` · `blender/` · `build/`
+
 "Anatomy as code": every shipped mesh is rebuilt from source data plus cited specs by scripts in this directory. See docs/plan.md §7.
 
 - `specs/` authored anatomy (nerves, vessels, layers, landmarks) as data; every dimension carries claim ids.

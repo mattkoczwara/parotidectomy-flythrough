@@ -1,5 +1,7 @@
 # Planning Directive — Interactive Parotid Surgery Atlas
 
+**Contents:** `<role>` · `<mission>` · `<first_principles>` · `<design_thesis>` · `<desired_character>` · `<avoid_default_opus_design>` · `<visual_hierarchy>` · `<information_architecture>` · `<composition>` · `<typography>` · `<color>` · `<depth_and_lighting>` · `<motion>` · `<spatial_continuity>` · `<medical_storytelling>` · `<multi_level_explanation>` · `<evidence_design>` · `<medical_integrity>` · `<research>` · `<asset_and_geometry_strategy>` · `<technical_strategy>` · `<performance>` · `<accessibility>` · `<planning_method>` · `<design_exploration>` · `<validation_philosophy>` · `<early_proof>` · `<planning_output>` · `<decision_authority>` · `<completion_condition>`
+
 <role>
 Act as the product architect, creative director, scientific-visualization designer, interaction designer, medical-information architect, and lead technical planner for this project.
 

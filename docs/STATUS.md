@@ -2,6 +2,8 @@
 
 _Last updated: 2026-10-05 (final presentation pass and acceptance pass; see `docs/FINAL_PASS_STATUS.md`, ADR-0005 and `docs/qc/final-pass-clinical-manifest.md`)_
 
+**Contents:** Current phase · Next, in order · Where things are · Verification results (2026-10-04, commit `6be1cf9`) › Defects the verification found and fixed · Known limits (to carry into the final report) · Release status (acceptance pass, 2026-10-05) · Open questions · History
+
 ## Current phase
 
 **M2–M5 implementation complete; final presentation pass complete (`docs/FINAL_PASS_STATUS.md`, ADR-0005).** Final validation: capture suite 25/25, Firefox 157 54/54 plates without errors, two clean anatomy builds byte-identical, perf within tolerance. The owner authorised progression beyond M1 (2026-10-04) to an implementation-complete private-use application. That authorisation does not resolve M1's exceptions, answer the owner's comprehension questions or constitute clinical sign-off. **Clinical review remains after implementation; public launch is blocked on it.**
@@ -72,7 +74,7 @@ Hardware not tested: Safari, real phones and mid-class laptops (a CPU-throttled 
 
 | Area | Status |
 |---|---|
-| Visual production | Frozen. Four approved benchmarks; no P0/P1 defects; P2 limits in `docs/FINAL_PASS_STATUS.md`. |
+| Visual production | Four approved benchmarks; no P0/P1 defects; P2 limits in `docs/FINAL_PASS_STATUS.md`. |
 | Anatomical validation | 27/27 automated checks; two clean builds byte-identical; QC limits in `docs/qc/QC_LOG.md`; final-pass geometry changes in the manifest. Fat/SMAS extent, flap fields, the skin outline and fibre directions have no automated check of their anatomical correctness. |
 | Clinical review | **Not started.** 68 claims `clinicalReview: pending`; the manifest lists the geometry to review. |
 | Safari | **Untested** (no Safari or Apple hardware here). |

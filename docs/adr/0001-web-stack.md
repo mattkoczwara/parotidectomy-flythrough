@@ -3,6 +3,8 @@
 - **Status:** Accepted. **Renderer locked 2026-09-28** after the M0 spike passed (results below).
 - **Date:** 2026-09-28
 
+**Contents:** Context · Decision · Lock condition · Consequences · M0 renderer spike results (2026-09-28)
+
 ## Context
 The atlas is a scroll-controlled, deterministic 3D dissection. Every plate's text must be server-rendered and work without WebGL. The scene needs all of the following at once:
 - custom tissue materials;
