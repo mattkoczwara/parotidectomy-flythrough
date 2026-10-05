@@ -8,6 +8,7 @@ Measurements are kept so that a later run can be compared with an earlier one.
 | `m5-report.json` | The latest `npm run perf` run, including a `vs_baseline` section (each watched measure, its change, and a flag when it got worse by more than its tolerance). |
 | `history/` | A copy of every run, named by its date. Never edited. |
 | `firefox-m5.json` | The Firefox pass over all 54 plates (`node tools/capture/firefox.mjs`). |
+| `firefox-final.json` | The Firefox pass over all 54 plates after the final presentation pass (Firefox 157, WebGPU): every plate converges with no console errors. |
 | `capture-m5.json` | What the capture suite measured on the same build: determinism, label legibility, accessibility, and which tests passed. |
 | `m1-report.json`, `firefox-m1.json` | The M1 slice (10 plates), kept for the record. |
 
@@ -51,3 +52,12 @@ Safari and real mobile hardware are not available here.
 ## M1 record (10 plates, 2026-09-29)
 
 High 59.9 fps with p95 16.8 ms at 1600×1000 and at 2560×1440; Mid WebGL2 with 4× CPU throttle 59.9 fps with p95 16.8 ms; cold load 4.1 MB, scene interactive in 1.25 s, first plate converged in 3.2 s; Firefox 156.0.1 ran all 10 plates on WebGPU at High.
+
+## Final presentation pass (2026-10-05)
+
+Same machine and display. `npm run perf` against the M5 baseline (kept as the reference; every measure within
+tolerance): High 59.9 fps, p95 16.8 ms at 1600×1000 and at 1440p; Mid (WebGL2, CPU 4×) p95 33.4 ms (unchanged);
+cold load 5.57 MB (+7.7%), scene interactive 2.0 s, first plate converged 9.35 s (+10.7%). The history holds the
+intermediate run with procedural shader noise (1440p p95 33.4 ms, first plate 19.7 s) that led to the baked noise
+volume (ADR-0005). `node tools/capture/coldload.mjs` separates main-thread stalls from GPU shader compilation on a
+cold load.

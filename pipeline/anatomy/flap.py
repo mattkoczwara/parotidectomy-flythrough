@@ -356,12 +356,25 @@ def build():
         if mid == "skin":
             keep = lateral_factor(pos, d["normals"]) * (~aur)
             keep = diffuse(keep, F, inc["smooth_passes"])
-            skin_lat = (cKDTree(pos), keep)
+            # The fat takes its membership from skin that is not the auricle: the fat at the ear root lies nearer the
+            # auricle's skin than the preauricular skin above it, and would otherwise stay behind as a hole in the flap.
+            skin_lat = (cKDTree(pos[~aur]), keep[~aur])
         else:  # the fat lies under the skin: take the factor of the nearest skin (its inner surface faces inward)
             dist, j = skin_lat[0].query(pos)
             keep = skin_lat[1][j] * (dist < inc["fat_reach_mm"])
             keep = diffuse(keep, F, inc["smooth_passes"])
         w = flap_weight(pos[:, 1:3], path, inc) * right * keep
+        if mid == "skin":
+            skin_fields = (cKDTree(pos), sd, s, w)
+        else:
+            # The fat follows the skin directly above it: its own lateral projection would put the deep face of this
+            # thick, curved slab across the fold and the incision at other places than the face under the skin, and
+            # open windows in the raised flap. Within reach it takes the nearest skin's cut distance and flap weight.
+            dist_s, js = skin_fields[0].query(pos)
+            near = dist_s < inc["fat_reach_mm"]
+            sd = np.where(near, skin_fields[1][js], sd)
+            s = np.where(near, skin_fields[2][js], s)
+            w = np.where(near, skin_fields[3][js], w)
         d["cut"] = np.clip(sd / CUT_SCALE, -1, 1).astype(np.float32)
         d["cut_s"] = s.astype(np.float32)
         d["flap_w"] = w.astype(np.float32)

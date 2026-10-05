@@ -336,6 +336,9 @@ export class Stage {
     U.flapMax.value = this.frame.flap.max_angle;
     U.cutScale.value = this.frame.flap.cut_scale_mm;
     U.cutY.value = this.frame.scene_cut_y ?? -10;
+    U.bodyBottom.value = this.frame.bounds['exterior_body']?.min[1] ?? -10;
+    const hb = this.frame.bounds['skin'];
+    if (hb) (U.headCentre.value as THREE.Vector3).set((hb.min[0] + hb.max[0]) / 2, (hb.min[1] + hb.max[1]) / 2, (hb.min[2] + hb.max[2]) / 2);
 
     for (const [k, z] of (this.frame.zones ?? []).entries()) {
       if (k >= ZONE_SLOTS) break;
@@ -596,7 +599,9 @@ export class Stage {
       mesh.visible = presence > 0.01;
       const wantsHatch = part.schematic || s?.mode === 'hatch';
       let ghostOpacity = s?.mode === 'ghost' || s?.mode === 'hatch' ? (s.opacity ?? 1) : 1;
-      // The eyes sit in the skin: when the skin is ghosted they ghost with it (never a solid globe in a faded face).
+      // The eyes sit in the skin: when the skin is ghosted they ghost with it (never a solid globe in a faded face). A
+      // raised flap folds forward over the cheek and the eye; the globe would show through it, so it is hidden then.
+      if (id === 'eyes' && (state.op['flap'] ?? 0) > FLAP_OPEN) ghostOpacity = 0;
       if (id === 'eyes') {
         const sk = state.structures['skin'];
         // (gone by the time the skin is half faded: a faint globe still catches a specular point)

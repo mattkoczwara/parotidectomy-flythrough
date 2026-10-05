@@ -104,6 +104,10 @@ export const U = {
   /** The scene cut (glTF Y, m) and the field colour (linear): anatomy fades into the field just above the cut, so
    *  the model ends softly instead of being sawn off. */
   cutY: uniform(-10),
+  /** The lowest point of the exterior body (glTF Y, m): it falls into the field toward its lower edge. */
+  bodyBottom: uniform(-10),
+  /** Centre of the head (glTF metres): a rest normal pointing toward it marks the skin shell's inner surface. */
+  headCentre: uniform(new THREE.Vector3()),
   field: uniform(new THREE.Color(0, 0, 0)),
   /** Nerve mobilisation (total parotidectomy), 0..1: the facial-nerve branches are lifted off the deep lobe. */
   mobilise: uniform(0),
@@ -144,6 +148,9 @@ interface Detail {
   roughness: THREE.Node<'float'>;
   height: THREE.Node<'float'>;
 }
+
+/** The skin shell's inner surface: its rest normal points toward the head's centre (geometry, no baked label). */
+const innerShell = () => dot(attribute('normal', 'vec3'), attribute('position', 'vec3').sub(U.headCentre)).lessThan(0);
 
 /** Rest position in mm (the glTF frame is in metres and baked into the geometry). */
 const restMM = () => attribute('position', 'vec3').mul(1000);
@@ -316,11 +323,11 @@ const inFlap = () => cutMM().greaterThan(0).and(flapW().greaterThan(FLAP_ATTACHE
  * Negative about the axis (which runs from the incision's upper end toward its lower end) swings the flap
  * laterally and forward.
  */
-function fold() {
+function fold(base: THREE.Node<'vec3'> = positionLocal) {
   const angle = U.flap.mul(U.flapMax).mul(flapW()).negate();
   const k = U.flapAxis;
   const rot = (v: THREE.Node<'vec3'>) => v.mul(cos(angle)).add(cross(k, v).mul(sin(angle))).add(k.mul(dot(k, v)).mul(float(1).sub(cos(angle))));
-  return { position: rot(positionLocal.sub(U.flapPivot)).add(U.flapPivot), normal: rot(normalLocal) };
+  return { position: rot(base.sub(U.flapPivot)).add(U.flapPivot), normal: rot(normalLocal) };
 }
 
 /** Uniforms of a piece that can be removed: its own dissection progress and the pose that carries it out of the field. */
@@ -436,7 +443,7 @@ export function tissue(o: TissueOptions): TissueMaterial {
     }
     if (o.undersideFat) {
       // The skin shell's inner surface faces the viewer once the flap is folded over: it is the flap's underside.
-      const inner = attribute('_foot', 'float').lessThan(-75);
+      const inner = innerShell();
       base = inner.select(rgb(PRESETS.fat.cut).mul(0.92), base);
     }
     const foot = o.locate ? attribute('_foot', 'float') : null;
@@ -454,7 +461,7 @@ export function tissue(o: TissueOptions): TissueMaterial {
     if (!piece) cutColour = tone(cutColour);
     /** Front faces take the tissue's relief; back faces seen through a cut face the viewer (flat cut surface). */
     // (The raised flap's underside is tissue, not a cut: its back faces are shaded with the reversed normal.)
-    const flapInner = o.undersideFat ? attribute('_foot', 'float').lessThan(-75) : null;
+    const flapInner = o.undersideFat ? innerShell() : null;
     const shade = (n: THREE.Node<'vec3'>) => {
       const front = d ? bump(n.normalize(), d.height) : n;
       if (!o.undersideFat) return frontFacing.select(front, vec3(0, 0, 1));
@@ -534,6 +541,11 @@ export function tissue(o: TissueOptions): TissueMaterial {
       const f = float(1).sub(smoothstep(U.cutY.add(0.002), U.cutY.add(0.024), positionWorld.y));
       m.outputNode = vec4(mix(output.rgb, U.field, f), output.a);
     }
+    if (o.fadeBelow) {
+      // Like a studio bust, the body falls into the field before its lower edge (seen only in tall framings).
+      const f = float(1).sub(smoothstep(U.bodyBottom.add(0.004), U.bodyBottom.add(0.075), positionWorld.y));
+      m.outputNode = vec4(mix(output.rgb, U.field, f), output.a);
+    }
     if (piece) {
       const f = peel(piece.peel);
       m.positionNode = piece.pose.mul(vec4(f.position, 1)).xyz;
@@ -557,7 +569,10 @@ export function tissue(o: TissueOptions): TissueMaterial {
       m.positionNode = positionLocal.add(U.mobiliseBy.mul(attribute('_mob', 'float').mul(U.mobilise)));
       m.normalNode = shade(transformNormalToView(normalLocal));
     } else if (o.peel || o.flap === 'flap') {
-      const f = o.peel ? peel(U.peel) : fold();
+      // The skin shell's inner surface lies exactly where the fat band begins (2 mm): on the raised flap the two would
+      // fight, so the inner shell is drawn 1.5 mm back toward the outer skin (its normal points into the head).
+      const lift = o.undersideFat ? positionLocal.sub(normalLocal.mul(innerShell().select(float(0.0015), float(0)))) : positionLocal;
+      const f = o.peel ? peel(U.peel) : fold(lift);
       m.positionNode = f.position;
       m.normalNode = shade(transformNormalToView(f.normal));
     } else {

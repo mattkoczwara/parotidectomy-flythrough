@@ -281,7 +281,7 @@
       "parotid_superficial_lobe": 3.42,
       "pleomorphic_adenoma": 3.72,
       "pleomorphic_adenoma_deep": 22.15,
-      "pleomorphic_adenoma_tail": 5.47,
+      "pleomorphic_adenoma_tail": 5.87,
       "retromandibular_vein": 17.15,
       "retromandibular_vein_anterior": 17.1,
       "retromandibular_vein_posterior": 4.02,
@@ -310,7 +310,7 @@
         "max_diameter_mm": 12.0,
         "nerve_clearance_mm": 6.29,
         "vessel_clearance_mm": 1.34,
-        "skin_cover_mm": 10.37,
+        "skin_cover_mm": 10.28,
         "fraction_in": {
           "gland": 0.84,
           "deep": 0.79,
@@ -326,7 +326,7 @@
         "max_diameter_mm": 15.9,
         "nerve_clearance_mm": 1.43,
         "vessel_clearance_mm": 5.83,
-        "skin_cover_mm": 2.94,
+        "skin_cover_mm": 2.62,
         "fraction_in": {
           "gland": 0.93,
           "deep": 0.0,
@@ -342,7 +342,7 @@
         "max_diameter_mm": 10.9,
         "nerve_clearance_mm": 5.13,
         "vessel_clearance_mm": 28.81,
-        "skin_cover_mm": 0.05,
+        "skin_cover_mm": 0.13,
         "fraction_in": {
           "gland": 0.0,
           "deep": 0.0,
@@ -350,7 +350,7 @@
         }
       }
     },
-    "summary": "alternate placements of the adenoma, clear of nerve, vessels, bone and muscle: deep 12 mm, nerve 6.3 mm, skin cover 10.4 mm; tail 16 mm, nerve 1.4 mm, skin cover 2.9 mm; accessory 11 mm, nerve 5.1 mm, skin cover 0.1 mm"
+    "summary": "alternate placements of the adenoma, clear of nerve, vessels, bone and muscle: deep 12 mm, nerve 6.3 mm, skin cover 10.3 mm; tail 16 mm, nerve 1.4 mm, skin cover 2.6 mm; accessory 11 mm, nerve 5.1 mm, skin cover 0.1 mm"
   },
   "frey_regrowth": {
     "pass": true,
@@ -361,12 +361,12 @@
     "pass": true,
     "incision_length_mm": 162.3,
     "skin": {
-      "flap_vertices": 22996,
-      "auricle_vertices_excluded": 2889
+      "flap_vertices": 22863,
+      "auricle_vertices_excluded": 3573
     },
     "subcutaneous_fat": {
-      "flap_vertices": 23483,
-      "auricle_vertices_excluded": 1403
+      "flap_vertices": 22560,
+      "auricle_vertices_excluded": 1833
     },
     "summary": "modified Blair incision 162 mm (projected); flap fields baked on skin and subcutaneous fat; auricle excluded"
   },

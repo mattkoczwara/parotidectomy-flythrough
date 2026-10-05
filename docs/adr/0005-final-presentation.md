@@ -47,6 +47,13 @@ noise.ts`): smooth noise, worley F1/F2 and a second independent noise. First con
 appear wherever a material reads an attribute its geometry lacks. Optional fields are switched on per geometry
 (`pieceFields`, `axis`, `locate`).
 
+**The raised flap carries its fat.** The fat and SMAS bands (constant-depth layers, `layers.py`) had a 22 mm sphere
+cut out around the ear canal and were limited to a field box (y ≥ 30 mm, z 160–300 mm) smaller than the raised flap, which reaches higher and, along the neck limb of the incision, further back. The raised flap therefore
+showed holes through which the skin's inner shell appeared. The auricle is now excluded by thickness instead (a
+morphological opening of the head mask removes tissue thinner than about 8 mm). The field box is y −15–170 mm and z 150–318 mm. The
+fat follows the skin directly above it: it takes the nearest skin's cut distance and flap weight, not its own lateral projection, which put the deep face of the curved slab across the fold at other places and opened windows in the raised flap. It inherits only from non-auricular skin. A raised flap also hides the eyes, because it folds forward over them. Fat 107 → 207 mL and SMAS 26 → 52 mL within the field;
+all anatomy checks pass. These are the same constant-depth bands as before, now complete over the operative field.
+
 **Kept placements.** The alternate tail tumour's search could move when the exterior skin changes, because skin
 cover is one of its constraints. It now keeps its validated centre while that centre stays feasible (`keep` in
 `anatomy.yaml`).

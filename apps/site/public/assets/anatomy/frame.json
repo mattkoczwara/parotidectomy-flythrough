@@ -12,7 +12,7 @@
   },
   "flap": {
     "axis_point": [
-      -0.001952,
+      0.000111,
       0.004913,
       0.043926
     ],
@@ -75,26 +75,26 @@
     },
     "subcutaneous_fat": {
       "min": [
-        -0.01885,
-        -0.07202,
-        -0.05159
+        -0.01898,
+        -0.08201,
+        -0.09658
       ],
       "max": [
         0.04839,
-        0.06702,
-        0.08793
+        0.08503,
+        0.08794
       ]
     },
     "smas": {
       "min": [
-        -0.01158,
-        -0.07187,
-        -0.05141
+        -0.01154,
+        -0.078,
+        -0.09656
       ],
       "max": [
-        0.04824,
-        0.06679,
-        0.08643
+        0.04825,
+        0.08483,
+        0.08645
       ]
     },
     "parotid_fascia": {
@@ -399,14 +399,14 @@
     },
     "frey_regrowth": {
       "min": [
-        -0.01652,
-        -0.00827,
-        -0.01538
+        -0.01553,
+        -0.00734,
+        -0.01641
       ],
       "max": [
         0.00411,
         0.04445,
-        0.00288
+        0.00499
       ]
     },
     "great_auricular_nerve": {
@@ -1130,11 +1130,11 @@
       "triangles": 21288
     },
     "subcutaneous_fat": {
-      "vertices": 57885,
-      "triangles": 115770
+      "vertices": 60100,
+      "triangles": 120200
     },
     "smas": {
-      "vertices": 14946,
+      "vertices": 14876,
       "triangles": 30000
     },
     "parotid_fascia": {
@@ -1238,8 +1238,8 @@
       "triangles": 1296
     },
     "frey_regrowth": {
-      "vertices": 9204,
-      "triangles": 18336
+      "vertices": 8430,
+      "triangles": 16788
     },
     "great_auricular_nerve": {
       "vertices": 938,
@@ -1370,5 +1370,5 @@
       "triangles": 3822
     }
   },
-  "triangles_total": 662893
+  "triangles_total": 665775
 }
