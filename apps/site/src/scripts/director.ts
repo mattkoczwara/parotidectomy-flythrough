@@ -217,6 +217,8 @@ export function start(): void {
   let stillSince = 0;
   let pendingFocus: number | null = null;
   let converging = false;
+  /** The tier warm-up renders every animation frame for two seconds; a settle waits until it is over so no frame is rendered twice (the TRAA jitter would advance twice). */
+  let warmingUp = false;
   /** The settle in progress (one animation frame per accumulation step); cancelled when the scene changes again. */
   let settleToken: { cancelled: boolean } | null = null;
   let dirty = true;
@@ -291,7 +293,12 @@ export function start(): void {
       canvas.dataset.ready = '1';
       performance.mark('atlas:ready'); // the scene is interactive (performance harness)
       canvas.dispatchEvent(new Event('atlas:ready'));
-      await tm.warmUp();
+      warmingUp = true;
+      try {
+        await tm.warmUp();
+      } finally {
+        warmingUp = false;
+      }
     } catch (err) {
       console.error('3D scene unavailable; continuing with the text and static figures.', err);
       stage = null;
@@ -551,7 +558,7 @@ export function start(): void {
       document.body.dataset.t = current.toFixed(4); // the rendered position (reduced-motion check)
       dirty = false;
       converging = settledPlate >= 0;
-    } else if (stage && converging && performance.now() >= fadeUntil) {
+    } else if (stage && converging && !warmingUp && performance.now() >= fadeUntil) {
       converging = false;
       // Accumulates over about a hundred animation frames, so it runs beside the loop and gives way to any change.
       const token = { cancelled: false };
