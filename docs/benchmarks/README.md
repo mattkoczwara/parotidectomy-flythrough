@@ -13,13 +13,13 @@ a side-by-side improvement.
 | `nerve-operative` | `bed` | The facial-nerve fan on the deep lobe in the whole wound, the raised flap at the edge of the field. |
 | `explore` | `explore` | The finished plate handed over: gland, nerve, tumour, muscle and bone under a neutral studio light. |
 
-**Goal reference for the starting view.** [`docs/references/Parotid Atlas - Goal Reference.png`](../references/Parotid%20Atlas%20-%20Goal%20Reference.png)
-is the owner's target for the `face` plate as first seen: a finished adult in right-facing profile, head, neck and
+**Goal reference for the starting view.** `docs/references/Parotid Atlas - Goal Reference.png` (kept locally and
+not published: its origin is not recorded) is the owner's target for the `face` plate as first seen: a finished adult in right-facing profile, head, neck and
 shoulders, on a dark field with a warm key and rim light; the parotid footprint as a fine contour in front of the ear;
 the subject to the right of the plate text, with the masthead controls, chapter rail and depth gauge around it. It is
 an aspiration for the look and composition that `opening` is judged toward. Comparisons still run against the
 approved `opening.webp`. It is not anatomical evidence, and its text is not plate content. It was supplied by the
-owner, its origin is not recorded, and it is not shipped with the site.
+owner and is not shipped with the site.
 
 Pictures are capture-mode renders at 1600×1000 (deterministic settled frame, centred subject, no overlays), WebP.
 

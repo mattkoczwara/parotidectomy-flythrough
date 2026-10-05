@@ -36,3 +36,6 @@ spikes/*/output/
 __pycache__/
 pipeline/build/out/
 .backup/
+
+# owner reference images of unrecorded origin: kept locally, not published
+docs/references/
