@@ -649,9 +649,9 @@ export class Stage {
    * Resolves true when the picture is settled, false when `token.cancelled` ended it early (the scene changed again).
    */
   async settle(token: { cancelled: boolean } = { cancelled: false }): Promise<boolean> {
-    // Every visible material's pipeline must exist before the history is reseeded: on a cold load a variant still
-    // compiling would be missing from the seed frame and a trace of its absence would survive accumulation.
-    await (this.renderer as unknown as { compileAsync?: (s: THREE.Object3D, c: THREE.Camera) => Promise<void> }).compileAsync?.(this.scene, this.camera);
+    // No compileAsync pre-warm: it builds the shaders for the canvas context while the passes render into their own
+    // targets, so the same graphs are built again at the first real frame (about 3 s of extra main-thread work on a
+    // cold load, measured); a pipeline missing from a frame is created synchronously by that frame, never skipped.
     const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
     const step = async () => {
       await nextFrame();
