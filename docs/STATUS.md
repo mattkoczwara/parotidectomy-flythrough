@@ -4,17 +4,15 @@ _Last updated: 2026-10-05 (final presentation pass; see `docs/FINAL_PASS_STATUS.
 
 ## Current phase
 
-**M2–M5 implementation complete; final presentation pass in progress (`docs/FINAL_PASS_STATUS.md`).** The Firefox tumour defect is fixed (five plates checked; the full pass is part of the final validation). The owner authorised progression beyond M1 (2026-10-04) to an implementation-complete private-use application. That authorisation does not resolve M1's exceptions, answer the owner's comprehension questions or constitute clinical sign-off. **Clinical review remains after implementation; public launch is blocked on it.**
+**M2–M5 implementation complete; final presentation pass complete (`docs/FINAL_PASS_STATUS.md`, ADR-0005).** Final validation: capture suite 25/25, Firefox 157 54/54 plates without errors, two clean anatomy builds byte-identical, perf within tolerance. The owner authorised progression beyond M1 (2026-10-04) to an implementation-complete private-use application. That authorisation does not resolve M1's exceptions, answer the owner's comprehension questions or constitute clinical sign-off. **Clinical review remains after implementation; public launch is blocked on it.**
 
 All 54 plates in 11 chapters are authored, rendered and reviewed as one sequence (contact sheets of the committed static figures, and the live site under the capture suite).
 
 ## Next, in order
 
-1. **Final presentation pass** (owner brief, 2026-10-04): an adult exterior (head, neck, shoulders, hair), tissue
-   mesostructure, authored light, a cyclorama field, editorial UI. Anatomy frozen; decisions in ADR-0005; approved
-   benchmarks in `docs/benchmarks/`. The Firefox tumour shader (Naga rejected `smoothstep()` of constants where the
-   tumour pieces lack ink fields) is fixed. Remaining: the full capture suite, the 54-plate Firefox pass and the
-   forced-WebGL2 pass on the new build.
+1. **Final presentation pass: done** (2026-10-05). Adult exterior, tissue mesostructure, authored light, cyclorama
+   field, editorial UI, the loading poster, the Firefox tumour fix; anatomy frozen (27/27 checks). Deferred P2 items
+   are listed in `docs/FINAL_PASS_STATUS.md`.
 2. **Clinical review** of the 68 claims, the anatomy QC log and the review packet (`docs/review/index.html`, regenerated). Deferred by owner decision until implementation was complete.
 3. **Evidence items to verify before any public use** (see Open questions).
 

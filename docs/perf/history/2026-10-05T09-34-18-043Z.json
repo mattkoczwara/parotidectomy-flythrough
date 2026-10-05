@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-05T09:45:52.633Z",
+  "date": "2026-10-05T09:34:18.043Z",
   "commit": "d00b7a4",
   "note": "M5 baseline: 54 plates, 630k triangles, GLB 4.58 MB; one RTX 3070, 60 Hz display; Chrome via Playwright. Later runs are compared with this file (npm run perf).",
   "gpu": "NVIDIA GeForce RTX 3070 (driver 617.14)",
@@ -7,34 +7,34 @@
   "high_1600x1000": {
     "tier": "high",
     "backend": "webgpu",
-    "frames": 7461,
-    "medianMs": 17.7,
+    "frames": 7467,
+    "medianMs": 17.8,
     "p95Ms": 18.1,
-    "medianFps": 56.5
+    "medianFps": 56.2
   },
   "high_2560x1440_device_px": {
     "tier": "high",
     "backend": "webgpu",
-    "frames": 7238,
-    "medianMs": 17.9,
+    "frames": 7228,
+    "medianMs": 18,
     "p95Ms": 18.1,
-    "medianFps": 55.9,
+    "medianFps": 55.6,
     "canvas": "2538x1440"
   },
   "mid_webgl2_cpu4x_1600x1000": {
     "tier": "mid",
     "backend": "webgl2",
-    "frames": 6355,
+    "frames": 6195,
     "medianMs": 18,
-    "p95Ms": 36.1,
+    "p95Ms": 36,
     "medianFps": 55.6
   },
   "cold_load_50mbps": {
-    "bytesTransferred": 5606769,
+    "bytesTransferred": 5606834,
     "megabytes": 5.61,
-    "sceneInteractiveMs": 1939,
-    "firstPlateConvergedMs": 9300,
-    "textReadableMs": 184
+    "sceneInteractiveMs": 2138,
+    "firstPlateConvergedMs": 9591,
+    "textReadableMs": 279
   },
   "vs_baseline": {
     "baselineDate": "2026-10-05T02:42:35.709Z",
@@ -56,8 +56,8 @@
     "high_2560x1440_device_px": {
       "medianFps": {
         "baseline": 59.9,
-        "now": 55.6,
-        "change": "-7.2%",
+        "now": 55.9,
+        "change": "-6.7%",
         "flag": false
       },
       "p95Ms": {
@@ -90,14 +90,14 @@
       },
       "sceneInteractiveMs": {
         "baseline": 1631,
-        "now": 2138,
-        "change": "+31.1%",
-        "flag": true
+        "now": 1991,
+        "change": "+22.1%",
+        "flag": false
       },
       "firstPlateConvergedMs": {
         "baseline": 8447,
-        "now": 9591,
-        "change": "+13.5%",
+        "now": 9843,
+        "change": "+16.5%",
         "flag": false
       }
     }

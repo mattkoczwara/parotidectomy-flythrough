@@ -61,3 +61,11 @@ cold load 5.57 MB (+7.7%), scene interactive 2.0 s, first plate converged 9.35 s
 intermediate run with procedural shader noise (1440p p95 33.4 ms, first plate 19.7 s) that led to the baked noise
 volume (ADR-0005). `node tools/capture/coldload.mjs` separates main-thread stalls from GPU shader compilation on a
 cold load.
+
+**Display pacing caveat (2026-10-05, later runs).** The last runs measured a median of 56 fps and p95 of 18.1 ms in
+every configuration. A blank page in the same browser measured the same 18 ms frame interval, so the display or
+compositor was pacing at about 56 Hz rather than 60 Hz. The scene still met every vsync. Bisecting (the previous
+asset, the stage code of the earlier run, no loading poster) gave identical numbers. Compare runs only at the same
+refresh rate; check a blank page's rAF interval first.
+History entries 2026-10-05T09-57, 10-01 and 10-04 are single-test bisect runs (the previous asset, no poster, the
+earlier stage code); `m5-report.json` is the last full run on the final code (2026-10-05T09-45).

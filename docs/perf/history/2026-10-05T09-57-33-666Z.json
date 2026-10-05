@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-05T09:45:52.633Z",
+  "date": "2026-10-05T09:57:33.666Z",
   "commit": "d00b7a4",
   "note": "M5 baseline: 54 plates, 630k triangles, GLB 4.58 MB; one RTX 3070, 60 Hz display; Chrome via Playwright. Later runs are compared with this file (npm run perf).",
   "gpu": "NVIDIA GeForce RTX 3070 (driver 617.14)",
@@ -8,9 +8,9 @@
     "tier": "high",
     "backend": "webgpu",
     "frames": 7461,
-    "medianMs": 17.7,
+    "medianMs": 17.8,
     "p95Ms": 18.1,
-    "medianFps": 56.5
+    "medianFps": 56.2
   },
   "high_2560x1440_device_px": {
     "tier": "high",
@@ -42,8 +42,8 @@
     "high_1600x1000": {
       "medianFps": {
         "baseline": 59.9,
-        "now": 56.2,
-        "change": "-6.2%",
+        "now": 56.5,
+        "change": "-5.7%",
         "flag": false
       },
       "p95Ms": {
@@ -56,8 +56,8 @@
     "high_2560x1440_device_px": {
       "medianFps": {
         "baseline": 59.9,
-        "now": 55.6,
-        "change": "-7.2%",
+        "now": 55.9,
+        "change": "-6.7%",
         "flag": false
       },
       "p95Ms": {
@@ -76,8 +76,8 @@
       },
       "p95Ms": {
         "baseline": 33.4,
-        "now": 36,
-        "change": "+7.8%",
+        "now": 36.1,
+        "change": "+8.1%",
         "flag": false
       }
     },
@@ -90,14 +90,14 @@
       },
       "sceneInteractiveMs": {
         "baseline": 1631,
-        "now": 2138,
-        "change": "+31.1%",
-        "flag": true
+        "now": 1939,
+        "change": "+18.9%",
+        "flag": false
       },
       "firstPlateConvergedMs": {
         "baseline": 8447,
-        "now": 9591,
-        "change": "+13.5%",
+        "now": 9300,
+        "change": "+10.1%",
         "flag": false
       }
     }
