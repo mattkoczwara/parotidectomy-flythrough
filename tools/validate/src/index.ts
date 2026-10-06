@@ -82,9 +82,9 @@ if (existsSync(glbPath) && existsSync(framePath)) {
     for (const a of s.anchors) if (!anchors.has(a)) errors.push(`structures/${s.id}: anchor "${a}" is not in the glTF scene`);
     for (const m of s.members) if (!structureIds.has(m)) errors.push(`structures/${s.id}: unknown member "${m}"`);
   }
-  // Presentation-only meshes (ADR-0005): the exterior body below the neck cut and the hair carry no anatomy and no
+  // Presentation-only meshes (ADR-0005): the exterior body below the neck cut, the hair and the portrait hair carry no anatomy and no
   // claim; the stage draws them with the skin's authored state.
-  const presentation = new Set(['exterior_body', 'hair']);
+  const presentation = new Set(['exterior_body', 'hair', 'portrait_scalp', 'portrait_hair']);
   for (const m of meshes) if (!structureIds.has(m) && !presentation.has(m)) errors.push(`glTF mesh "${m}" has no structure record`);
 }
 

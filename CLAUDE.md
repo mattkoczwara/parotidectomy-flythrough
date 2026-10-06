@@ -29,7 +29,7 @@ Private educational atlas of parotid tumours and parotidectomy, with pleomorphic
 - Ground substantive medical and anatomical claims in traceable evidence. Preserve source status, uncertainty, disagreement and the population behind numerical claims. Distinguish a representative operation from universal practice; do not invent anatomy, clinical claims or patient imaging.
 - Record each external asset's source, actual license or legal basis and obligations, attribution, checksum and transformations. Do not infer that all usable sources share the same license terms.
 - Every paragraph of a plate carries a `<Claim>` or is a `<Model>` statement about how the atlas draws things (the validator enforces it). A claim is `verification: checked` only after its wording and numbers were compared with the fetched source text; that is not clinical review, and every claim stays `clinicalReview: pending` until a clinician approves it.
-- Schematic content is drawn in the line/hatch grammar; ochre is for the Complications chapter only; violet is ink only. See ADR-0004.
+- Schematic content is drawn in the line/hatch grammar; within schematic content, ochre belongs to the Complications chapter and violet is ink only (ADR-0004). The interface chrome uses a gilt accent for state and emphasis, never for anatomy (ADR-0005).
 - Preserve a meaningful semantic/static experience and reduced-motion path. Passive scrolling must not move keyboard focus; announce settled authored plates rather than every scrub frame.
 
 ## Milestone gates

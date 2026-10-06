@@ -16,6 +16,9 @@ $PY pipeline/anatomy/props.py
 (cd pipeline/anatomy && "../../$PY" layers.py && "../../$PY" flap.py)
 $PY pipeline/anatomy/barriers.py
 $PY pipeline/anatomy/exterior.py
+(cd pipeline/anatomy && "../../$PY" portrait.py)
+# the opening's hero portrait (Blender; its framing box is read by export_gltf.py)
+bash pipeline/build/hero_only.sh
 # Nothing is exported while an anatomy check is failing.
 $PY pipeline/build/check_all.py
 $PY pipeline/build/export_gltf.py

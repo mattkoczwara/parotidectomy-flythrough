@@ -4,8 +4,8 @@ chapter: orientation
 order: 2
 title: Where the gland lies
 delta:
-  camera: { zoom: 1.45, frame: [parotid_superficial_lobe, parotid_deep_lobe] }
-  op: { locate: 0 }
+  camera: { azimuth: 8, elevation: 2, zoom: 1.45, frame: [parotid_superficial_lobe, parotid_deep_lobe] }
+  op: { locate: 0, portrait: 0, groom: 0 }
   structures:
       skin: { mode: ghost, opacity: 0.16, emphasis: context }
       eyes: { presence: 0 }
@@ -19,7 +19,7 @@ delta:
       - { structureId: masseter_r }
       - { structureId: mandible }
       - { structureId: sternocleidomastoid_r }
-transition: { camera: [0, 0.55], structures: [0.45, 1], opKeys: { locate: [0.5, 0.9] } }
+transition: { camera: [0, 0.55], structures: [0.45, 1], opKeys: { locate: [0.5, 0.9], portrait: [0, 0.35], groom: [0.8, 1] } }
 sceneDescription: "The skin is faded to a faint outline. The parotid gland is shown in front of and below the ear canal, lying over the back of the jaw and the chewing muscle (masseter), with the neck muscle (sternocleidomastoid) behind and below it."
 claims: [parotid-location, parotid-size]
 ---

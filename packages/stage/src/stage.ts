@@ -8,7 +8,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import type { SceneState } from '@atlas/timeline';
 import { anyHit } from './occlusion.ts';
-import { ZONE_SLOTS, hairGeometry, hairShells, type HairMaterial, cpuFold, cpuInFlap, cpuPeel, cpuWindowCut, FLAP_OPEN, hatch, OCHRE, setOpacity, tissue, U, zoneCentre, zoneRadii, zoneWeight, type FlapFrame, type HatchMaterial, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
+import { H, handoff, heroEyes, heroHair, heroSkin, loadHeroMaps, type HeroMaps, type HeroPart } from './hero.ts';
+import { RELIEF_SLOTS, ZONE_SLOTS, groomCards, reliefA, reliefB, reliefEar, groomGeometry, hairGeometry, hairShells, type HairMaterial, cpuFold, cpuInFlap, cpuPeel, cpuWindowCut, FLAP_OPEN, hatch, OCHRE, setOpacity, tissue, U, zoneCentre, zoneRadii, zoneWeight, type FlapFrame, type HatchMaterial, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
 import { REMOVABLE, RESECTIONS, memberWeight, poseMatrix, resectionWeights, type Mechanic } from './resection.ts';
 
 export type Tier = 'high' | 'mid';
@@ -56,6 +57,10 @@ interface Frame {
   /** The scene cut shared by skin and anatomy (glTF Y, metres). */
   scene_cut_y?: number;
   imaging?: { z_mm: number; x_mm: [number, number]; y_mm: [number, number]; image: string; origin_ras_mm: [number, number, number] };
+  /** The opening portrait's neck and shoulder relief: capsules [ax, ay, az, bx, by, bz, height, width], glTF metres. */
+  portrait?: { relief?: number[][]; ear?: [number, number, number] };
+  /** Direction of the travelling cue per structure (anatomy.yaml `flows`): +1 along the baked `_arc`, -1 against it. */
+  flow?: Record<string, number>;
 }
 
 /** Layers opened by the cutaway, outermost first, each inset a little further (terraced dissection). */
@@ -71,6 +76,10 @@ const SETTLE_FRAMES = 64;
 const EXPLODE_GAIN = 0.5;
 const EXPLODE_OUTER = 0.016;
 const EXPLODE_DEEP = 0.006;
+/** Larger exposed nerves (about 0.8 mm radius and up): a fine epineurial vessel is drawn on them, not on small branches. */
+const THREAD: ReadonlySet<string> = new Set(['facial_nerve_trunk', 'facial_nerve_temporofacial', 'facial_nerve_cervicofacial', 'great_auricular_nerve']);
+/** Seconds for the directional cue to fade in or out when a structure starts or stops being taught. */
+const FLOW_EASE = 0.6;
 /** Facial-nerve branches that carry the baked mobilisation weight (author.py). */
 const MOBILISED = /^facial_nerve_(temporofacial|cervicofacial|temporal|zygomatic|buccal|marginal_mandibular|cervical)$/;
 /** Meshes that exist only under some variants of a choice: key → variant → mesh ids. Their presence follows the variant weights. */
@@ -94,6 +103,8 @@ const OVERLAY: ReadonlySet<string> = new Set(['us_plane']);
  * structure named here, so the exterior body continues the skin below the neck cut and the hair goes with it.
  */
 const COSMETIC: Readonly<Record<string, string>> = { exterior_body: 'skin', hair: 'skin' };
+/** The exterior surfaces (the only meshes drawn while the opening's portrait shows). */
+const EXTERIOR: ReadonlySet<string> = new Set(['skin', 'exterior_body', 'eyes']);
 /** The whole subject: never drawn with the focus contour (a contour around the person reads as a selection). */
 const NO_CONTOUR: ReadonlySet<string> = new Set(['skin', 'exterior_body']);
 /** Layers that sink with the contour change after resection. */
@@ -124,9 +135,17 @@ interface Look {
   rim: number;
   env: number;
   hemi: number;
+  rimColour?: number;
+  rimDir?: readonly [number, number, number];
 }
-type LookName = 'portrait' | 'studio' | 'operative' | 'specimen';
+type LookName = 'hero' | 'portrait' | 'studio' | 'operative' | 'specimen';
 const LOOKS: Readonly<Record<LookName, Look>> = {
+  // The opening portrait (weighted by the portrait morph, so it settles into `portrait`): a warm key from in front of
+  // the face and a little above, almost no fill, and a strong warm rim from behind that draws the nape, the shoulder
+  // and the hair's edge against a dark field (the owner's goal reference).
+  // (with the hero asset: the key further in front of the face models it, and the rim behind the camera-side
+  // silhouette draws the nape, the trapezius and the shoulder)
+  hero: { key: 3.4, keyColour: 0xfff4ec, keyDir: [-0.2, 0.5, 0.84], fill: 0.05, rim: 3.6, env: 0.1, hemi: 0.02, rimColour: 0xffe6cc, rimDir: [-0.45, 0.38, -0.81] },
   // Soft portrait light: a broad key high in front of the face sculpts ear, jaw, cheek and neck; a cool rim separates
   // the occiput and shoulders from the field.
   portrait: { key: 3.0, keyColour: 0xfff3ea, keyDir: [-0.38, 0.72, 0.78], fill: 0.12, rim: 2.3, env: 0.2, hemi: 0.05 },
@@ -139,6 +158,7 @@ const LOOKS: Readonly<Record<LookName, Look>> = {
 };
 const FILL_DIR = [-0.85, -0.15, -0.3] as const;
 const RIM_DIR = [0.35, 0.45, -0.85] as const;
+const RIM_COLOUR = 0xdfe8ff;
 
 /**
  * The studio the environment reflections come from: a dark seamless sphere with a large soft key box, a cool fill, a
@@ -253,6 +273,10 @@ export class Stage {
   private meshes = new Map<string, Part>();
   /** The hair shells (presentation only), following the skin. */
   private hair: { mesh: THREE.Mesh; mat: HairMaterial } | null = null;
+  /** The opening portrait's hair (portrait.py, groom.py): a shell under-layer and the groom's cards. */
+  private portraitHair: { mesh: THREE.Mesh; mat: HairMaterial }[] = [];
+  /** The opening's hero portrait (hero.glb, hero.ts): drawn instead of the fitted exterior while the opening shows. */
+  private hero: { group: THREE.Group; parts: HeroPart[] } | null = null;
   /** The raised flap of each FLAPPED layer: same geometry, folded; shown once the incision opens. */
   private flaps = new Map<string, Part>();
   private anchors = new Map<string, THREE.Vector3>();
@@ -265,7 +289,7 @@ export class Stage {
   private fill = new THREE.DirectionalLight(0xe8eef6, 0.4);
   /** The framing centre of the last placed camera: the fill light is aimed along the view toward it. */
   private fillTarget = new THREE.Vector3();
-  private rim = new THREE.DirectionalLight(0xdfe8ff, 1.0);
+  private rim = new THREE.DirectionalLight(RIM_COLOUR, 1.0);
   private hemi = new THREE.HemisphereLight(0xf3efe9, 0x322c28, 0.4);
   /** Cyclorama: the field colour at the edges, a soft lift behind the subject that follows the framing (screen UV). */
   private bg = { edge: uniform(new THREE.Color()), lift: uniform(new THREE.Color()), centre: uniform(new THREE.Vector2(0.6, 0.45)), aspect: uniform(1.6) };
@@ -286,6 +310,13 @@ export class Stage {
   readonly dial: Partial<Record<TissueFamily, number>> = {};
   /** A structure the viewer picked (instrument mode): drawn with the focus contour whatever the plate says. */
   selected: string | null = null;
+  /**
+   * The directional cue (blood flow, nerve impulse) may run. The site turns it off for reduced motion and for capture
+   * mode, so settled pictures stay deterministic. Off by default.
+   */
+  motion = false;
+  /** Target strength of each structure's cue from the last applied state (taught: focused, labelled or picked). */
+  private flowTarget = new Map<string, number>();
   /** Horizontal framing offset as a fraction of the half-width (positive moves the anatomy right), so the
    *  subject sits in the space the text column leaves free. Pans the camera; TRAA owns setViewOffset. */
   frameOffsetX = 0;
@@ -306,12 +337,18 @@ export class Stage {
     (U.field.value as THREE.Color).copy(edge);
     (this.bg.lift.value as THREE.Color).copy(field(`#${liftCss.getHexString(THREE.SRGBColorSpace)}`));
     const { edge: e, lift, centre, aspect } = this.bg;
+    // The opening portrait's field (weighted by the morph): a deeper blue-black edge and a cooler slate glow behind
+    // the head, so the warm rim separates the figure (the owner's goal reference).
+    const pe = uniform(field('#101216'));
+    const pl = uniform(field('#2c323b'));
     this.scene.backgroundNode = Fn(() => {
-      const d = screenUV.sub(centre).mul(vec2(aspect, 1));
-      const glow = exp(dot(d, d).mul(-1 / (2 * 0.5 * 0.5)));
+      const pw = U.portrait;
+      const d = screenUV.sub(centre.add(vec2(0, pw.mul(-0.06)))).mul(vec2(aspect, 1));
+      const sigma = mix(float(0.5), float(0.36), pw);
+      const glow = exp(dot(d, d).div(sigma.mul(sigma).mul(-2)));
       // A slightly deeper lower edge, like the floor falloff of a cyclorama.
       const floor = smoothstep(0.55, 1.0, screenUV.y).mul(0.12);
-      const c = mix(e, lift, glow).mul(float(1).sub(floor));
+      const c = mix(mix(e, pe, pw), mix(lift, pl, pw), glow).mul(float(1).sub(floor));
       // Fixed per-pixel dither (about one 8-bit step at this level) so the broad gradient never bands.
       const n = fract(sin(dot(screenCoordinate.xy, vec2(12.9898, 78.233))).mul(43758.5453)).sub(0.5).mul(0.0016);
       return vec4(c.add(n), 1);
@@ -322,7 +359,7 @@ export class Stage {
     return (this.renderer.backend as { isWebGPUBackend?: boolean }).isWebGPUBackend ? 'webgpu' : 'webgl2';
   }
 
-  async load(glbUrl: string, frameUrl: string): Promise<void> {
+  async load(glbUrl: string, frameUrl: string, heroUrl?: string): Promise<void> {
     await this.renderer.init();
     this.frame = (await (await fetch(frameUrl)).json()) as Frame;
     U.hingeX.value = this.frame.peel.hinge_x;
@@ -341,6 +378,12 @@ export class Stage {
     const hb = this.frame.bounds['skin'];
     if (hb) (U.headCentre.value as THREE.Vector3).set((hb.min[0] + hb.max[0]) / 2, (hb.min[1] + hb.max[1]) / 2, (hb.min[2] + hb.max[2]) / 2);
 
+    if (this.frame.portrait?.ear) (reliefEar.value as THREE.Vector3).fromArray(this.frame.portrait.ear);
+    for (const [k, c] of (this.frame.portrait?.relief ?? []).entries()) {
+      if (k >= RELIEF_SLOTS) break;
+      (reliefA[k]!.value as THREE.Vector4).set(c[0]!, c[1]!, c[2]!, c[6]!);
+      (reliefB[k]!.value as THREE.Vector4).set(c[3]!, c[4]!, c[5]!, c[7]!);
+    }
     for (const [k, z] of (this.frame.zones ?? []).entries()) {
       if (k >= ZONE_SLOTS) break;
       (zoneCentre[k]!.value as THREE.Vector3).fromArray(z.centre);
@@ -353,7 +396,13 @@ export class Stage {
     }
 
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    const gltf = await loader.loadAsync(glbUrl);
+    // (the hero is optional: without it the opening shows the fitted exterior's own portrait morph)
+    const heroDir = heroUrl?.replace(/[^/]*$/, '') ?? '';
+    const [gltf, heroGltf, heroMaps] = await Promise.all([
+      loader.loadAsync(glbUrl),
+      heroUrl ? loader.loadAsync(heroUrl).catch(() => null) : Promise.resolve(null),
+      heroUrl ? loadHeroMaps(heroDir, this.renderer.getMaxAnisotropy()) : Promise.resolve(null),
+    ]);
     const info = new Map(this.opts.structures.map((s) => [s.id, s]));
     const order = gltf.scene.children.map((c) => c.name);
     gltf.scene.updateMatrixWorld(true);
@@ -365,8 +414,20 @@ export class Stage {
       if (!(node instanceof THREE.Mesh)) continue;
       normaliseGeometry(node);
       const follows = COSMETIC[node.name];
+      if (node.name === 'portrait_scalp' || node.name === 'portrait_hair') {
+        const shells = node.name === 'portrait_scalp';
+        const mat = shells ? hairShells({ morph: true, portrait: true }) : groomCards();
+        const mesh = new THREE.Mesh(shells ? hairGeometry(node.geometry) : groomGeometry(node.geometry), mat.material);
+        mesh.name = node.name;
+        mesh.renderOrder = order.length - order.indexOf('skin') + (shells ? 0.25 : 0.3);
+        mesh.visible = false;
+        node.visible = false;
+        node.parent!.add(mesh);
+        this.portraitHair.push({ mesh, mat });
+        continue;
+      }
       if (node.name === 'hair') {
-        this.hair = { mesh: new THREE.Mesh(hairGeometry(node.geometry), undefined), mat: hairShells() };
+        this.hair = { mesh: new THREE.Mesh(hairGeometry(node.geometry), undefined), mat: hairShells({ morph: !!node.geometry.getAttribute('_pdisp') }) };
         this.hair.mesh.material = this.hair.mat.material;
         this.hair.mesh.name = 'hair';
         this.hair.mesh.renderOrder = order.length - order.indexOf('skin') + 0.25;
@@ -381,8 +442,9 @@ export class Stage {
       const window = w ? { window: { open: this.windowOpen[w.key]!, inset: w.inset } } : {};
       const flapped = FLAPPED.has(node.name);
       const eyes = node.name === 'eyes' ? eyeCentres(node.geometry) : undefined;
-      const mat = tissue({ family: s.tissue, ...window, ...(eyes ? { eyes } : {}), tint: node.name === 'skin' || node.name === 'exterior_body', fadeBelow: node.name === 'exterior_body', fadeCut: node.name !== 'skin' && node.name !== 'exterior_body' && node.name !== 'eyes', locate: node.name === 'skin' && !!node.geometry.getAttribute('_foot'), axis: !!node.geometry.getAttribute('_axis'), pieceFields: !!node.geometry.getAttribute('_ink') && !!node.geometry.getAttribute('_cutface'), piece: REMOVABLE.has(node.name), mobilise: MOBILISED.test(node.name), hollow: HOLLOWED.has(node.name), zones: node.name === 'skin', ...(node.name === 'smas_flap' ? { turn: 'smas' as const } : node.name === 'scm_flap' ? { turn: 'scm' as const } : {}), ...(flapped ? { flap: 'rest' as const, ink: node.name === 'skin' } : {}) });
+      const mat = tissue({ family: s.tissue, ...window, ...(eyes ? { eyes } : {}), tint: node.name === 'skin' || node.name === 'exterior_body', fadeBelow: node.name === 'exterior_body', fadeCut: node.name !== 'skin' && node.name !== 'exterior_body' && node.name !== 'eyes', locate: node.name === 'skin' && !!node.geometry.getAttribute('_foot'), axis: !!node.geometry.getAttribute('_axis'), arc: !!node.geometry.getAttribute('_arc'), thread: THREAD.has(node.name), pieceFields: !!node.geometry.getAttribute('_ink') && !!node.geometry.getAttribute('_cutface'), piece: REMOVABLE.has(node.name), mobilise: MOBILISED.test(node.name), hollow: HOLLOWED.has(node.name), zones: node.name === 'skin', portrait: !!node.geometry.getAttribute('_pdisp'), portraitSkin: !!node.geometry.getAttribute('_port'), ...(node.name === 'smas_flap' ? { turn: 'smas' as const } : node.name === 'scm_flap' ? { turn: 'scm' as const } : {}), ...(flapped ? { flap: 'rest' as const, ink: node.name === 'skin' } : {}) });
       node.material = mat.material;
+      if (node.geometry.getAttribute('_arc')) mat.flowDir.value = this.frame.flow?.[node.name] ?? 0;
       node.renderOrder = order.length - order.indexOf(node.name);
       this.meshes.set(node.name, { mesh: node, twin: this.twinOf(node, mat), mat, tissue: s.tissue, schematic: !!('schematic' in s && s.schematic), ...(follows ? { follows } : {}) });
       if (flapped) {
@@ -396,6 +458,7 @@ export class Stage {
       }
     }
     this.scene.add(gltf.scene);
+    if (heroGltf) this.addHero(heroGltf.scene, heroMaps);
     this.prepareResections();
     await this.buildCtPlane();
 
@@ -408,6 +471,38 @@ export class Stage {
     this.scene.add(this.key, this.fill, this.rim, this.hemi);
     this.tierNow = this.opts.tier;
     this.buildPipeline();
+  }
+
+  private addHero(root: THREE.Group, maps: HeroMaps | null) {
+    const parts: HeroPart[] = [];
+    // The hero alone casts and receives the key's shadow (the jaw on the neck, the hair on the scalp); nothing else
+    // in the atlas does, so the shadow pass is empty once the hero has handed off.
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.key.castShadow = true;
+    const sc = this.key.shadow.camera as THREE.OrthographicCamera;
+    sc.left = sc.bottom = -0.32;
+    sc.right = sc.top = 0.32;
+    sc.near = 0.2;
+    sc.far = 1.8;
+    this.key.shadow.mapSize.set(2048, 2048);
+    this.key.shadow.bias = -0.0004;
+    this.key.shadow.normalBias = 0.0015;
+    this.key.shadow.radius = 3;
+    root.traverse((node) => {
+      if (!(node instanceof THREE.Mesh)) return;
+      node.castShadow = node.name !== 'hero_eyes';
+      node.receiveShadow = true;
+      normaliseGeometry(node);
+      const material = node.name === 'hero_eyes' ? heroEyes(node.geometry) : node.name === 'hero_hair' ? heroHair(node.geometry) : heroSkin(node.geometry, maps);
+      // (the hair's ribbons are expanded in the vertex stage: their bounds are the strands' own, never culled wrongly)
+      if (node.name === 'hero_hair') node.frustumCulled = false;
+      node.material = material;
+      parts.push({ mesh: node, material });
+    });
+    root.visible = false;
+    this.scene.add(root);
+    this.hero = { group: root, parts };
   }
 
   /** The registered CT slice as a textured quad in the axial plane at the tumour level (glTF: X = -(x - ox), Y = z - oz, Z = y - oy). */
@@ -599,11 +694,28 @@ export class Stage {
     const peelP = state.op['peel'] ?? 0;
     const outP = state.op['out'] ?? 0;
     const deepP = state.op['deep'] ?? 0;
+    // The portrait holds only while the exterior is intact and opaque; it has settled into the fitted shape before
+    // the skin is ghosted or opened (the plates' transitions finish it first). The leaner portrait does not contain
+    // the donor's anatomy, so nothing beneath the exterior is drawn while it shows (the opaque fitted skin hides it
+    // anyway once the morph is complete).
+    U.portrait.value = THREE.MathUtils.smootherstep(state.op['portrait'] ?? 0, 0, 1) * this.intactness(state);
+    const portrait = (U.portrait.value as number) > 0;
+    // With a hero asset the fitted exterior keeps its own shape and waits beneath the hero's handoff (hero.ts).
+    U.morph.value = this.hero ? 0 : (U.portrait.value as number);
+    const hand = handoff(U.portrait.value as number);
+    if (this.hero) {
+      H.morph.value = hand.morph;
+      H.skin.value = hand.skin;
+      H.hair.value = hand.hair;
+      this.hero.group.visible = portrait;
+    }
+    // the fitted exterior is drawn only once the hero has begun to dissolve over it
+    const covered = !!this.hero && portrait && hand.skin >= 1;
     for (const [id, part] of this.meshes) {
       const { mesh, twin, mat } = part;
       const s = state.structures[part.follows ?? id];
       const dial = this.dial[part.tissue] ?? 1;
-      const presence = (s?.presence ?? 0) * (dial > 0 ? 1 : 0) * variantFactor(id, state.variantMix);
+      const presence = (s?.presence ?? 0) * (dial > 0 ? 1 : 0) * variantFactor(id, state.variantMix) * (portrait && !EXTERIOR.has(id) ? 0 : 1) * (covered && EXTERIOR.has(id) ? 0 : 1);
       mesh.visible = presence > 0.01;
       const wantsHatch = part.schematic || s?.mode === 'hatch';
       let ghostOpacity = s?.mode === 'ghost' || s?.mode === 'hatch' ? (s.opacity ?? 1) : 1;
@@ -646,13 +758,24 @@ export class Stage {
       // The hair goes with an opaque skin and dissolves before the skin is ghosted (a translucent haircut reads as a wig).
       const sk = this.meshes.get('skin');
       const ss = state.structures['skin'];
-      const skinOpacity = sk?.mesh.visible ? ((sk.mesh.material as THREE.Material).opacity ?? 1) : 0;
+      // (while the hero covers the fitted skin, the skin is opaque but not drawn: its hair still comes in)
+      const skinOpacity = sk?.mesh.visible ? ((sk.mesh.material as THREE.Material).opacity ?? 1) : covered ? 1 : 0;
       const fade = Math.min(1, Math.max(0, (skinOpacity - 0.6) / 0.35)) * (ss?.mode === 'hatch' ? 0 : 1);
-      this.hair.mat.fade.value = fade;
-      this.hair.mesh.visible = fade > 0.01;
+      // The opening portrait wears its own haircut (`groom` op, held until the skin has faded past the hair's fade):
+      // it rides the scalp through the morph and dissolves as the fitted hair would; the fitted hair waits.
+      const groom = !this.hero && (state.op['groom'] ?? 0) > 0 && this.portraitHair.length > 0;
+      // (under the hero, the fitted hair comes in as the hero's hair dissolves)
+      const fitted = fade * (this.hero && portrait ? 1 - hand.hair : 1);
+      this.hair.mat.fade.value = groom ? 0 : fitted;
+      this.hair.mesh.visible = !groom && fitted > 0.01;
+      for (const h of this.portraitHair) {
+        h.mat.fade.value = groom ? fade : 0;
+        h.mesh.visible = groom && fade > 0.01;
+      }
     }
     const picked = this.selected ? this.meshes.get(this.selected) : undefined;
     if (picked?.mesh.visible && !focus.includes(picked.mesh)) focus.push(picked.mesh);
+    this.applyFlow(state);
     this.outlineObjects.length = 0;
     this.outlineObjects.push(...focus);
     this.focus.value = focus.length ? 1 : 0;
@@ -684,18 +807,71 @@ export class Stage {
     this.placeSection(state);
   }
 
+  /**
+   * Which directional cues are wanted: only on a structure being taught (focused by the plate or labelled, and then
+   * undimmed; or picked in instrument mode, whatever its emphasis), shown solid, and only where the anatomy gives it a
+   * direction (`flowDir`).
+   */
+  private applyFlow(state: SceneState) {
+    const taught = new Set<string>();
+    const picked = new Set<string>();
+    const add = (into: Set<string>, id: string, seen = new Set<string>()) => {
+      if (seen.has(id)) return;
+      seen.add(id);
+      into.add(id);
+      for (const m of this.opts.groups?.[id] ?? []) add(into, m, seen);
+    };
+    for (const [id, st] of Object.entries(state.structures)) if (st?.emphasis === 'focus') add(taught, id);
+    for (const l of state.labels) if (l.weight > 0.5) add(taught, l.structureId);
+    if (this.selected) add(picked, this.selected);
+    for (const [id, part] of this.meshes) {
+      if (!part.mat.flowDir.value) continue;
+      const s = state.structures[id];
+      const solid = part.mesh.visible && part.mesh.material === part.mat.material && (s?.presence ?? 0) > 0.99;
+      const wanted = picked.has(id) || (taught.has(id) && (part.mat.dim.value as number) < 0.05);
+      this.flowTarget.set(id, solid && wanted ? 1 : 0);
+    }
+  }
+
+  /**
+   * Advance the directional cue by `dt` seconds: each structure's strength eases toward its target and the cue's clock
+   * runs while any is shown. Returns true while a cue is visible or fading (the caller keeps rendering).
+   */
+  tick(dt: number): boolean {
+    let active = false;
+    const step = Math.min(dt, 0.1) / FLOW_EASE;
+    for (const [id, target] of this.flowTarget) {
+      const u = this.meshes.get(id)!.mat.flow;
+      const want = this.motion ? target : 0;
+      const v = u.value as number;
+      const next = want > v ? Math.min(want, v + step) : Math.max(want, v - step);
+      u.value = this.motion ? next : 0;
+      if ((u.value as number) > 0 || want > 0) active = true;
+    }
+    if (active) U.flowTime.value = ((U.flowTime.value as number) + Math.min(dt, 0.1)) % 3192; // a common period of the artery (2 s), vein (4 s) and nerve (2.8 s) cues
+    return active;
+  }
+
   /** Blend the lighting looks by the timeline's light mix; the portrait look takes over the studio share while the
    *  intact exterior is showing. */
-  private applyLight(state: SceneState) {
+  /** 1 while the exterior is showing intact (skin present, opaque, solid, uncut), falling to 0 as it is ghosted or opened. */
+  private intactness(state: SceneState): number {
     const skin = state.structures['skin'];
     const opened = Math.max(state.op['cut_skin'] ?? 0, state.op['flap'] ?? 0, state.op['ct_clip'] ?? 0);
-    const intact = Math.min(1, skin?.presence ?? 0) * (skin?.mode === 'solid' || !skin?.mode ? 1 : 0) * Math.min(1, skin?.opacity ?? 1) * (1 - Math.min(1, opened * 4));
+    return Math.min(1, skin?.presence ?? 0) * (skin?.mode === 'solid' || !skin?.mode ? 1 : 0) * Math.min(1, skin?.opacity ?? 1) * (1 - Math.min(1, opened * 4));
+  }
+
+  private applyLight(state: SceneState) {
+    const intact = this.intactness(state);
     const mix = state.light.mix ?? { [state.light.preset]: 1 };
-    const w: Record<LookName, number> = { portrait: (mix.studio ?? 0) * intact, studio: (mix.studio ?? 0) * (1 - intact), operative: mix.operative ?? 0, specimen: mix.specimen ?? 0 };
+    const hero = U.portrait.value as number;
+    const w: Record<LookName, number> = { hero: (mix.studio ?? 0) * intact * hero, portrait: (mix.studio ?? 0) * intact * (1 - hero), studio: (mix.studio ?? 0) * (1 - intact), operative: mix.operative ?? 0, specimen: mix.specimen ?? 0 };
     const total = Object.values(w).reduce((a, b) => a + b, 0) || 1;
     const sum = { key: 0, fill: 0, rim: 0, env: 0, hemi: 0 };
     const dir = new THREE.Vector3();
+    const rimDir = new THREE.Vector3();
     const colour = new THREE.Color(0, 0, 0);
+    const rimColour = new THREE.Color(0, 0, 0);
     const c = new THREE.Color();
     for (const [name, wt] of Object.entries(w) as [LookName, number][]) {
       if (!wt) continue;
@@ -703,9 +879,13 @@ export class Stage {
       const k = wt / total;
       for (const f of ['key', 'fill', 'rim', 'env', 'hemi'] as const) sum[f] += l[f] * k;
       dir.addScaledVector(new THREE.Vector3(...l.keyDir).normalize(), k);
+      rimDir.addScaledVector(new THREE.Vector3(...(l.rimDir ?? RIM_DIR)).normalize(), k);
       colour.add(c.set(l.keyColour).multiplyScalar(k));
+      rimColour.add(c.set(l.rimColour ?? RIM_COLOUR).multiplyScalar(k));
     }
     this.key.position.copy(dir.normalize());
+    this.rim.position.copy(rimDir.normalize());
+    this.rim.color.copy(rimColour);
     // The fill comes from the viewer, a little below the eye line, like an operating light along the surgeon's view:
     // surfaces turned toward the viewer (the raised flap's underside, the depth of the wound) are never black.
     const toCamera = this.camera.position.clone().sub(this.fillTarget).normalize();
@@ -834,6 +1014,9 @@ export class Stage {
   }
 
   render() {
+    H.frame.value = this.traaNode?._jitterIndex ?? 0;
+    const buf = this.renderer.getDrawingBufferSize(new THREE.Vector2());
+    H.pixel.value = (2 * Math.tan(THREE.MathUtils.degToRad(this.camera.fov) / 2)) / Math.max(1, buf.y);
     this.pipeline.render();
   }
 

@@ -8,6 +8,8 @@ _Last updated: 2026-10-05 (final presentation pass and acceptance pass; see `doc
 
 **M2–M5 implementation complete; final presentation pass complete (`docs/FINAL_PASS_STATUS.md`, ADR-0005).** Final validation: capture suite 25/25, Firefox 157 54/54 plates without errors, two clean anatomy builds byte-identical, perf within tolerance. The owner authorised progression beyond M1 (2026-10-04) to an implementation-complete private-use application. That authorisation does not resolve M1's exceptions, answer the owner's comprehension questions or constitute clinical sign-off. **Clinical review remains after implementation; public launch is blocked on it.**
 
+**Opening hero asset (2026-10-06):** the opening shows a separate, presentation-only figure built from Blender Studio's Human Base Meshes (CC0) with a strand groom and baked skin maps; it hands off to the fitted exterior before any anatomy shows (ADR-0005 amendment; QC log). The old morph portrait is dormant until the owner approves the hero; then it is removed. Its static figure (`plates/face.webp`) is regenerated; the full capture, perf and Firefox runs are left for the next validation pass.
+
 All 54 plates in 11 chapters are authored, rendered and reviewed as one sequence (contact sheets of the committed static figures, and the live site under the capture suite).
 
 ## Next, in order

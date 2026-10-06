@@ -10,6 +10,7 @@ Outputs:
 """
 import json
 import sys
+import zlib
 from pathlib import Path
 
 import matplotlib
@@ -28,7 +29,7 @@ SEG = WORK / "seg"
 SPECS = ROOT / "pipeline/specs"
 OUT = WORK / "meshes"
 QC = ROOT / "docs/qc/m1-anatomy"
-RING = {"nerve": 12, "vein": 16, "artery": 16, "muscle": 20, "bone": 12, "duct": 14, "instrument": 10}
+RING = {"nerve": 16, "vein": 24, "artery": 24, "muscle": 20, "bone": 12, "duct": 14, "instrument": 10}
 
 
 # ── Signed distance fields ────────────────────────────────────────────────────────────────
@@ -96,11 +97,13 @@ def catmull_rom(points: np.ndarray, step: float = 0.8) -> np.ndarray:
     return np.array(out)
 
 
-def tube(centre: np.ndarray, r0: float, r1: float, sides: int):
-    """Tapered tube with rounded caps, parallel-transport frames. Returns positions, normals, indices, radii."""
+def tube(centre: np.ndarray, r0: float, r1: float, sides: int, radii: np.ndarray | None = None):
+    """Tapered tube with rounded caps, parallel-transport frames. Returns positions, normals, indices, radii.
+    `radii` (one per centre sample) overrides the linear taper from r0 to r1."""
     seg = np.diff(centre, axis=0)
     arc = np.concatenate([[0], np.cumsum(np.linalg.norm(seg, axis=1))])
-    radii = r0 + (r1 - r0) * arc / arc[-1]
+    if radii is None:
+        radii = r0 + (r1 - r0) * arc / arc[-1]
     tang = np.gradient(centre, axis=0)
     tang /= np.linalg.norm(tang, axis=1, keepdims=True)
     ref = np.array([0, 0, 1.0]) if abs(tang[0] @ [0, 0, 1]) < 0.9 else np.array([1.0, 0, 0])
@@ -141,18 +144,80 @@ def tube(centre: np.ndarray, r0: float, r1: float, sides: int):
     pos = np.vstack([pos, tip0, tip1])
     nor = np.vstack([nor, -tang[0], tang[-1]])
     nr = len(start_rings)
+    # counter-clockwise seen from outside, so each face's geometric normal agrees with the outward vertex normals
     idx = []
     for i in range(nr - 1):
         for j in range(sides):
             a, b_ = i * sides + j, i * sides + (j + 1) % sides
             c, d = a + sides, b_ + sides
-            idx += [a, c, b_, b_, c, d]
+            idx += [a, b_, c, b_, d, c]
     i0, i1 = nr * sides, nr * sides + 1
     for j in range(sides):
-        idx += [i0, j, (j + 1) % sides]
+        idx += [i0, (j + 1) % sides, j]
         last = (nr - 1) * sides
-        idx += [i1, last + (j + 1) % sides, last + j]
+        idx += [i1, last + j, last + (j + 1) % sides]
     return pos.astype(np.float32), nor.astype(np.float32), np.array(idx, dtype=np.uint32), radii
+
+
+def cumarc(c: np.ndarray) -> np.ndarray:
+    return np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(c, axis=0), axis=1))])
+
+
+def arc_on(c: np.ndarray, p: np.ndarray) -> tuple[float, float]:
+    """Arc length (mm) along polyline `c` at the projection of `p` onto it (closest point on the closest polyline
+    segment, interpolated), and the distance from `p` to that point."""
+    a, b = c[:-1], c[1:]
+    ab = b - a
+    t = np.clip(((p - a) * ab).sum(1) / np.maximum((ab * ab).sum(1), 1e-12), 0, 1)
+    q = a + ab * t[:, None]
+    d = np.linalg.norm(q - p, axis=1)
+    i = int(np.argmin(d))
+    return float(cumarc(c)[i] + t[i] * np.linalg.norm(ab[i])), float(d[i])
+
+
+# Presentation-only shaping of the authored tubes (final pass): the authored radius stays the authority.
+ROOT_SWELL = 0.08      # a child's root swells by at most 8 % of its own radius, over about one radius (junction)
+TIP_TAPER = {"nerve": (0.55, 2.5)}   # free nerve ends thin to this share over this many mm (branches enter muscle)
+WAVE = {"nerve": 0.03, "vein": 0.04, "artery": 0.02}   # slow radius undulation (share of the radius)
+# Kept round: the measured trunk (claim fn-trunk-diameter) and the divisions where they cross the vein (relation check).
+NO_WAVE = {"facial_nerve_trunk", "facial_nerve_temporofacial", "facial_nerve_cervicofacial"}
+# Vessels undulate inward only, so no vessel surface comes closer to the nerve or another vessel than authored.
+INWARD = {"vein", "artery"}
+
+
+def shaped_radii(s, centre: np.ndarray, rooted: bool, free_end: bool, funnel: float | None = None) -> np.ndarray:
+    """Authored linear taper with a bounded root swell, a terminal taper on free nerve ends and a slow undulation
+    (mean-preserving on nerve branches, inward-only on vessels; seeded by the id, so the build is reproducible).
+    `funnel`: a parent that ends where thinner branches leave narrows over its last 1.5 radii to this radius, so the
+    branches leave a funnel instead of a collar at its end cap (the branches keep their authored calibre)."""
+    arc = cumarc(centre)
+    r0, r1 = s["radius"]
+    base = r0 + (r1 - r0) * arc / arc[-1]
+    shape = np.ones_like(arc)
+    amp = 0.0 if s["id"] in NO_WAVE else WAVE.get(s["kind"], 0.0)
+    if amp:
+        rng = np.random.default_rng(zlib.crc32(s["id"].encode()))
+        w = sum(np.sin(2 * np.pi * arc / lam + rng.uniform(0, 2 * np.pi)) for lam in (11.0, 17.0)) / 2
+        w = w - w.mean()
+        w = w / max(np.abs(w).max(), 1e-9)
+        shape = shape + (amp * (w - 1) / 2 if s["kind"] in INWARD else amp * w)
+    if rooted:
+        shape = shape + ROOT_SWELL * np.exp(-((arc / max(r0, 0.3)) ** 2))
+    if free_end and s["kind"] in TIP_TAPER:
+        share, span = TIP_TAPER[s["kind"]]
+        u = np.clip((arc[-1] - arc) / span, 0, 1)
+        shape = shape * (share + (1 - share) * (u * u * (3 - 2 * u)))
+    r = base * shape
+    if funnel is not None and funnel < 0.95 * r1:
+        u = np.clip(1 - (arc[-1] - arc) / (1.5 * r1), 0, 1)
+        u = u * u * (3 - 2 * u)
+        r = r * (1 - u) + funnel * u
+    return r
+
+
+def vertex_arc(arc: np.ndarray, sides: int) -> np.ndarray:
+    """Per-vertex arc for tube(): 3 start-cap rings, the rings, 3 end-cap rings, then the two tips."""
+    return np.concatenate([np.full(3 * sides, arc[0]), np.repeat(arc, sides), np.full(3 * sides, arc[-1]), [arc[0], arc[-1]]]).astype(np.float32)
 
 
 # ── Build ─────────────────────────────────────────────────────────────────────────────────
@@ -176,10 +241,38 @@ def main() -> int:
     nodes = resolve_nodes(spec, landmarks)
     OUT.mkdir(parents=True, exist_ok=True)
     built = {}
+    tubular = {"nerve", "vein", "artery"}
+    flows = spec.get("flows", {})
+    directed = set(flows.get("forward", [])) | set(flows.get("reverse", []))
+    def joined(sid, node):
+        """True when another segment's path also contains `node` (a branch point, not a free end)."""
+        return any(node in o["path"] for o in spec["segments"] if o["id"] != sid)
+    arc_root, junctions = {}, {}
     for s in spec["segments"]:
         centre = catmull_rom(np.array([nodes[n] for n in s["path"]]))
-        pos, nor, idx, radii = tube(centre, s["radius"][0], s["radius"][1], RING[s["kind"]])
+        # the segment this one branches from: an earlier tube whose path contains its first node
+        parent = next((b for b in built if s["path"][0] in built[b]["path"] and built[b]["kind"] in tubular), None) if s["kind"] in tubular else None
+        sides = RING[s["kind"]]
+        if s["kind"] in tubular:
+            # only a thinner child swells at its root (a continuation of the same calibre, the EJV, does not)
+            rooted = parent is not None and s["radius"][0] < 0.95 * float(built[parent]["radii"][cKDTree(built[parent]["centre"]).query(centre[0])[1]])
+            kids = [o["radius"][0] for o in spec["segments"] if o["path"][0] == s["path"][-1] and o["kind"] in tubular and o["id"] != s["id"]]
+            funnel = max(kids) * (1 + ROOT_SWELL) if kids else None
+            radii = shaped_radii(s, centre, rooted=rooted, free_end=not joined(s["id"], s["path"][-1]), funnel=funnel)
+            pos, nor, idx, radii = tube(centre, 0, 0, sides, radii=radii)
+        else:
+            pos, nor, idx, radii = tube(centre, s["radius"][0], s["radius"][1], sides)
         extra = {}
+        if s["id"] in directed:
+            # Unsigned tree distance (mm) from the root of the directed tree: a child starts at its parent's arc at the
+            # projection of the shared node, so a travelling cue crosses every branch point without a step.
+            off = 0.0
+            if parent in arc_root:
+                off, gap = arc_on(built[parent]["centre"], centre[0])
+                off += arc_root[parent]
+                junctions[s["id"]] = {"parent": parent, "node_offset_mm": round(gap, 4)}
+            arc_root[s["id"]] = off
+            extra["arc"] = vertex_arc(off + cumarc(centre), sides)
         if s["id"].startswith("facial_nerve") and s["id"] not in ("facial_nerve_trunk", "facial_nerve_posterior_auricular", "facial_nerve_digastric_branch"):
             # Nerve mobilisation (total parotidectomy): the branches are lifted off the deep lobe and retracted while it is
             # delivered from beneath. The weight is 0 at the first division and 1 from `mob_full_mm` out along the branches,
@@ -191,6 +284,8 @@ def main() -> int:
         built[s["id"]] = {"centre": centre, "radii": radii, "kind": s["kind"], "path": s["path"]}
 
     results = run_checks(spec, nodes, built, landmarks)
+    worst = max((j["node_offset_mm"] for j in junctions.values()), default=0.0)
+    results["flow_arc_continuity"] = {"pass": worst < 0.05, "junctions": junctions, "summary": f"{len(junctions)} branch roots; largest distance from the parent centreline {worst:.3f} mm (presentation field)"}
     QC.mkdir(parents=True, exist_ok=True)
     (QC / "checks.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
     (SPECS / "nodes.resolved.json").write_text(json.dumps({k: [round(float(v), 2) for v in p] for k, p in nodes.items()}, indent=1) + "\n", encoding="utf-8")

@@ -1,6 +1,6 @@
 import * as THREE from 'three/webgpu';
 import { fractal, noise, worley } from './noise.ts';
-import { Fn, abs, attribute, materialOpacity, output, cos, exp, cross, dFdx, dFdy, dot, float, fract, frontFacing, length, max, mix, normalLocal, normalView, positionLocal, positionView, positionWorld, sign, sin, smoothstep, transformNormalToView, uniform, vec2, vec3, vec4 } from 'three/tsl';
+import { Fn, abs, atan, attribute, materialOpacity, output, cos, exp, cross, dFdx, dFdy, dot, float, fract, frontFacing, length, max, mix, normalLocal, normalView, positionLocal, positionView, positionWorld, sign, sin, smoothstep, transformNormalToView, uniform, vec2, vec3, vec4, vertexStage } from 'three/tsl';
 
 /**
  * Tissue materials. The techniques were proven in the M0 renderer spike (ADR-0001): back faces seen through a
@@ -34,8 +34,10 @@ const PRESETS: Record<TissueFamily, Preset> = {
   bone: { base: 0xdbcfb5, cut: 0xe9dfc8, roughness: 0.8 },
   cartilage: { base: 0xdadfd3, cut: 0xe8eadf, roughness: 0.4, clearcoat: 0.3 },
   nerve: { base: 0xecdfbb, cut: 0xecdfbb, roughness: 0.42, clearcoat: 0.2, sheen: 0.5 },
-  artery: { base: 0xa64846, cut: 0xa64846, roughness: 0.38, clearcoat: 0.4 },
-  vein: { base: 0x515979, cut: 0x515979, roughness: 0.36, clearcoat: 0.45 },
+  // (vessels: a moderate clearcoat; at 0.4+ the walls read as wet plastic. The vein is a desaturated slate-violet,
+  // the colour of blood seen through a thin wall, not a textbook navy.)
+  artery: { base: 0xa04a46, cut: 0xa04a46, roughness: 0.42, clearcoat: 0.24 },
+  vein: { base: 0x58566e, cut: 0x58566e, roughness: 0.38, clearcoat: 0.3 },
   'lymph-node': { base: 0xcdb7a4, cut: 0xd8c6b5, roughness: 0.5 },
   tumour: { base: 0xd9d3c6, cut: 0xcdc8ba, roughness: 0.36, clearcoat: 0.4 },
   // Manufactured objects: cool grey, not a tissue colour, so a probe or drain is never mistaken for anatomy.
@@ -113,6 +115,15 @@ export const U = {
   mobilise: uniform(0),
   /** Displacement of a fully mobilised branch (glTF metres): lateral, a little up and forward. */
   mobiliseBy: uniform(new THREE.Vector3(-0.011, 0.007, 0.009)),
+  /** The opening's portrait (portrait.py, presentation only), 0..1: the exterior morphs from the fitted shape (0) to
+   *  the idealised portrait (1) along its baked `_pdisp`/`_pnrm`, and the portrait's skin detail fades in with it. */
+  portrait: uniform(0),
+  /** The fitted surfaces' share of that portrait morph (`_pdisp`, the portrait skin field and haircut): the portrait
+   *  weight when the opening has no hero asset, 0 when it has (the hero is drawn instead, and the fitted exterior keeps
+   *  its own shape for the handoff). */
+  morph: uniform(0),
+  /** Clock of the directional cue (seconds; the stage advances it only while a cue is shown). */
+  flowTime: uniform(0),
 };
 
 /** Risk territories drawn on the skin (complications chapter): up to six ellipsoids, each tied to a weight 0..1. */
@@ -164,10 +175,12 @@ function across(p: THREE.Node<'vec3'>, axis: THREE.Node<'vec3'>) {
   return p.sub(axis.mul(dot(p, axis)));
 }
 
-function detail(family: TissueFamily, p: Preset, axis: boolean): Detail | null {
+function detail(family: TissueFamily, p: Preset, axis: boolean, arc: boolean, thread: boolean): Detail | null {
   const P = restMM();
   const ax = axis ? attribute('_axis', 'vec3').normalize() : vec3(0, 1, 0);
   const R = float(p.roughness);
+  /** Distance along the course (mm): the baked tree arc where present (author.py), else the local projection. */
+  const s = arc ? attribute('_arc', 'float') : dot(P, ax);
   switch (family) {
     case 'skin': {
       // Pigment mottling (two scales), faint vascular reddening, and a restrained pore and micro-relief field.
@@ -206,14 +219,33 @@ function detail(family: TissueFamily, p: Preset, axis: boolean): Detail | null {
       };
     }
     case 'nerve': {
-      // Fascicles along the nerve under a thin epineurium, and the faint transverse banding of a relaxed nerve.
+      // Fascicles along the nerve under a thin epineurium, the faint transverse banding of a relaxed nerve, and a slow
+      // warm/cool drift along the course (an exposed nerve is never one flat ivory).
       const q = across(P, ax);
       const fasc = n3(q.mul(1 / 0.32));
+      const coarse = n3(q.mul(1 / 0.9).add(vec3(4.1, 0.6, 2.2)));
       const band = sin(dot(P, ax).mul(Math.PI * 2 / 0.55)).mul(0.5).add(0.5);
+      const drift = n3(vec3(s.mul(1 / 9), 1.7, 5.3));
+      // Larger exposed nerves only: a fine epineurial vessel (vasa nervorum) wandering along the surface, low contrast.
+      // One line along the nerve at an angle about its axis that wanders slowly with the course (angle from the rest
+      // normal in a frame built from the axis and the lateral direction, which no nerve here runs along).
+      let vessel: THREE.Node<'float'> | null = null;
+      if (thread) {
+        const nrm = attribute('normal', 'vec3');
+        const t1 = cross(ax, vec3(1, 0, 0)).normalize();
+        const t2 = cross(ax, t1);
+        const ang = atan(dot(nrm, t2), dot(nrm, t1));
+        const target = n3(vec3(s.mul(1 / 11), 3.1, 7.4)).mul(1.4).add(0.6);
+        const off = abs(fract(ang.sub(target).div(Math.PI * 2).add(0.5)).sub(0.5)).mul(Math.PI * 2);
+        vessel = float(1).sub(smoothstep(0.03, 0.2, off));
+      }
       return {
-        tone: (c) => c.mul(float(0.97).add(fasc.mul(0.045)).add(band.mul(0.02))),
-        roughness: R.add(fasc.mul(0.04)),
-        height: fasc.mul(0.000016).add(band.mul(0.000004)),
+        tone: (c) => {
+          const t = mix(c, c.mul(vec3(1.02, 0.97, 0.9)), drift.mul(0.5).add(0.5).mul(0.5)).mul(float(0.96).add(fasc.mul(0.06)).add(coarse.mul(0.03)).add(band.mul(0.02)));
+          return vessel ? mix(t, rgb(0xc08a78), vessel.mul(0.16)) : t;
+        },
+        roughness: R.add(fasc.mul(0.05)),
+        height: fasc.mul(0.00002).add(coarse.mul(0.00001)).add(band.mul(0.000004)),
       };
     }
     case 'muscle': {
@@ -228,8 +260,30 @@ function detail(family: TissueFamily, p: Preset, axis: boolean): Detail | null {
         height: fasc.mul(0.00006).add(fibre.mul(0.00001)),
       };
     }
-    case 'artery':
-    case 'vein':
+    case 'artery': {
+      // The adventitia: a paler, pinkish fibrous coat over the red wall, in soft patches; a little rougher where it is thicker.
+      const q = across(P, ax);
+      const wall = n3(q.mul(1 / 0.7));
+      const advent = smoothstep(-0.1, 0.7, fractal(P.mul(1 / 3.2).add(vec3(5.5, 1.2, 8.8))));
+      const along = n3(vec3(s.mul(1 / 6), 2.3, 9.1));
+      return {
+        tone: (c) => mix(c, rgb(0xc08a7e), advent.mul(0.2)).mul(float(1).add(along.mul(0.05)).add(wall.mul(0.025))),
+        roughness: R.add(advent.mul(0.06)).add(wall.mul(0.03)),
+        height: wall.mul(0.000012).add(advent.mul(0.000008)),
+      };
+    }
+    case 'vein': {
+      // A thin wall over dark blood: deeper where the wall is thinnest, paler and greyer where it is thicker.
+      const q = across(P, ax);
+      const wall = n3(q.mul(1 / 0.8));
+      const thin = smoothstep(-0.2, 0.6, fractal(P.mul(1 / 4.5).add(vec3(1.4, 7.2, 3.3))));
+      const along = n3(vec3(s.mul(1 / 7), 4.4, 0.8));
+      return {
+        tone: (c) => mix(c.mul(vec3(1.06, 1.04, 1.0)), c.mul(vec3(0.8, 0.74, 0.86)), thin.mul(0.55)).mul(float(1).add(along.mul(0.05)).add(wall.mul(0.02))),
+        roughness: R.add(wall.mul(0.03)).sub(thin.mul(0.03)),
+        height: wall.mul(0.00001),
+      };
+    }
     case 'duct': {
       // Vessel and duct walls: faint longitudinal structure and slow variation along the course.
       const q = across(P, ax);
@@ -316,8 +370,15 @@ function peel(amount: THREE.Node<'float'>) {
 }
 
 /** Signed distance to the incision (mm, positive on the flap side) and the flap weight. */
-const cutMM = () => attribute('_cut', 'float').mul(U.cutScale);
-const flapW = () => attribute('_flapw', 'float');
+// The skin's fragment stage is at WebGPU's 16 inputs: its scalar fields travel packed, one varying per group (the
+// nodes are built once and shared, so every read in a material is the same varying). Read in the vertex stage, a
+// packed node is the attributes themselves.
+/** Incision and flap weight (skin and fat). */
+const INCISION = vertexStage(vec2(attribute('_cut', 'float'), attribute('_flapw', 'float')));
+/** The skin's ink and localisation fields: arc parameter, facelift distance and arc, footprint. */
+const SKIN_FIELDS = vertexStage(vec4(attribute('_cuts', 'float'), attribute('_cut2', 'float'), attribute('_cuts2', 'float'), attribute('_foot', 'float')));
+const cutMM = () => INCISION.x.mul(U.cutScale);
+const flapW = () => INCISION.y;
 const inFlap = () => cutMM().greaterThan(0).and(flapW().greaterThan(FLAP_ATTACHED));
 
 /**
@@ -326,7 +387,7 @@ const inFlap = () => cutMM().greaterThan(0).and(flapW().greaterThan(FLAP_ATTACHE
  * laterally and forward.
  */
 function fold(base: THREE.Node<'vec3'> = positionLocal) {
-  const angle = U.flap.mul(U.flapMax).mul(flapW()).negate();
+  const angle = U.flap.mul(U.flapMax).mul(attribute('_flapw', 'float')).negate(); // vertex stage: the attribute itself
   const k = U.flapAxis;
   const rot = (v: THREE.Node<'vec3'>) => v.mul(cos(angle)).add(cross(k, v).mul(sin(angle))).add(k.mul(dot(k, v)).mul(float(1).sub(cos(angle))));
   return { position: rot(base.sub(U.flapPivot)).add(U.flapPivot), normal: rot(normalLocal) };
@@ -348,6 +409,9 @@ export interface TissueMaterial {
   ghost: THREE.MeshPhysicalNodeMaterial;
   twin: THREE.MeshPhysicalNodeMaterial;
   dim: THREE.UniformNode<'float', number>;
+  /** Directional cue (arteries, veins, nerves with `_arc`): strength 0..1 and direction (+1 along the arc, -1 against, 0 none). */
+  flow: THREE.UniformNode<'float', number>;
+  flowDir: THREE.UniformNode<'float', number>;
   piece?: PieceUniforms;
 }
 
@@ -375,6 +439,10 @@ export interface TissueOptions {
   tint?: boolean;
   /** The geometry carries a fibre direction (`_axis`) for directional structure (nerve, muscle, vessel, duct). */
   axis?: boolean;
+  /** The geometry carries the tree arc (`_arc`, mm; author.py): along-course variation and the directional cue. */
+  arc?: boolean;
+  /** A larger exposed nerve: draws a fine epineurial vessel on its surface. */
+  thread?: boolean;
   /** The underside of a raised flap is subcutaneous fat: back faces take the fat's cut colour. */
   undersideFat?: boolean;
   /** The exterior body: when ghosted it fades out downward from the neck (orientation, not a translucent slab). */
@@ -387,11 +455,82 @@ export interface TissueOptions {
   locate?: boolean;
   /** The eyes of the generic face (presentation only): centres of the two globes, glTF metres. */
   eyes?: readonly [THREE.Vector3, THREE.Vector3];
+  /** The geometry carries the portrait morph (`_pdisp`, `_pnrm`; portrait.py). */
+  portrait?: boolean;
+  /** The geometry carries the portrait's skin field (`_port`: stubble, ear thinness, T-zone, scalp under the hair). */
+  portraitSkin?: boolean;
+}
+
+/** Rest position and normal of a surface with the portrait morph applied by `U.morph` (or plain when it has none). */
+function morphed(on: boolean | undefined) {
+  if (!on) return { position: positionLocal, normal: normalLocal };
+  return {
+    position: positionLocal.add(attribute('_pdisp', 'vec3').mul(U.morph)),
+    // blended in the vertex stage, so the fragment reads one normal (the skin is at WebGPU's 16 fragment inputs)
+    normal: vertexStage(mix(normalLocal, attribute('_pnrm', 'vec3'), U.morph)).normalize(),
+    /** The same normal for use in the vertex stage itself. */
+    vertexNormal: mix(normalLocal, attribute('_pnrm', 'vec3'), U.morph).normalize(),
+  };
+}
+
+/**
+ * The opening portrait's neck and shoulder relief (portrait.py relief(), frame.json `portrait.relief`): capsules with a
+ * height and a width, h(p) = sum height * exp(-d^2 / width^2), in one space: the portrait's object space (the glTF
+ * frame, rest position plus the morph). The vertex stage lifts the surface by h along the normal; the fragment stage
+ * tilts the normal by h's analytic gradient, so the forms shade smoothly on the coarse shoulder mesh.
+ */
+/** Muscles, each a polyline of RELIEF_SEGMENTS capsules (padded); the height follows the distance to the polyline. */
+export const RELIEF_MUSCLES = 8;
+export const RELIEF_SEGMENTS = 4;
+export const RELIEF_SLOTS = RELIEF_MUSCLES * RELIEF_SEGMENTS;
+export const reliefA = Array.from({ length: RELIEF_SLOTS }, () => uniform(new THREE.Vector4(0, 0, 0, 0)));
+export const reliefB = Array.from({ length: RELIEF_SLOTS }, () => uniform(new THREE.Vector4(0, 0, 0, 1)));
+/** The portrait's ear canal (glTF metres): the relief fades out around the auricle, which it would otherwise push through. */
+export const reliefEar = uniform(new THREE.Vector3(0, 0, 0));
+function relief(p: THREE.Node<'vec3'>) {
+  let h: THREE.Node<'float'> = float(0);
+  let g: THREE.Node<'vec3'> = vec3(0, 0, 0);
+  for (let m = 0; m < RELIEF_MUSCLES; m++) {
+    // the offset to the nearest point of this muscle's polyline
+    let best: THREE.Node<'vec3'> = vec3(1, 1, 1);
+    for (let s = 0; s < RELIEF_SEGMENTS; s++) {
+      const a = reliefA[m * RELIEF_SEGMENTS + s]!;
+      const b = reliefB[m * RELIEF_SEGMENTS + s]!;
+      const ab = b.xyz.sub(a.xyz);
+      const t = dot(p.sub(a.xyz), ab).div(dot(ab, ab).add(1e-10)).clamp(0, 1);
+      const d = p.sub(a.xyz.add(ab.mul(t)));
+      best = dot(d, d).lessThan(dot(best, best)).select(d, best);
+    }
+    const first = reliefA[m * RELIEF_SEGMENTS]!;
+    const inv = float(1).div(reliefB[m * RELIEF_SEGMENTS]!.w.pow(2));
+    const e = first.w.mul(exp(dot(best, best).mul(inv).negate()));
+    h = h.add(e);
+    g = g.add(best.mul(e.mul(inv).mul(-2)));
+  }
+  const ear = smoothstep(0.03, 0.05, length(p.sub(reliefEar)));
+  return { h: h.mul(ear), g: g.mul(ear) };
+}
+/** Surface position and normal of the portrait with its relief (the vertex stage) and the relief-tilted normal (the fragment). */
+function withRelief(mo: ReturnType<typeof morphed>, lift = 1) {
+  // (the coarse shoulder mesh is only shaded: lifting its few vertices by narrow forms folded its triangles; the skin's
+  // lift fades out toward the neck cut, so the skin still meets the unlifted body there)
+  const seam = smoothstep(U.cutY.add(0.004), U.cutY.add(0.03), attribute('position', 'vec3').y);
+  // the skin shell's inner face has inward normals: it moves with the outer face (a hollow would otherwise cross them)
+  const out = innerShell().select(float(-1), float(1));
+  const lifted = lift ? mo.position.add(mo.vertexNormal!.mul(relief(mo.position).h.mul(U.morph).mul(seam).mul(out).mul(lift))) : mo.position;
+  const at = vertexStage(mo.position);
+  // the tilt is capped: where several forms meet near the shoulder their summed gradient read as a crease
+  const g0 = relief(at).g.mul(U.morph);
+  const g = g0.mul(float(0.38).div(max(length(g0), 0.38)));
+  const n = mo.normal;
+  return { position: lifted, normal: n.sub(g.sub(n.mul(dot(n, g)))).normalize() };
 }
 
 export function tissue(o: TissueOptions): TissueMaterial {
   const p = PRESETS[o.family];
   const dim = uniform(0);
+  const flow = uniform(0);
+  const flowDir = uniform(0);
   const piece: PieceUniforms | undefined = o.piece ? { peel: uniform(0), pose: uniform(new THREE.Matrix4()), section: uniform(0) } : undefined;
   const flapFat = o.flap === 'flap' && o.family === 'fat';
   const make = () => {
@@ -406,29 +545,81 @@ export function tissue(o: TissueOptions): TissueMaterial {
       m.sheenRoughness = 0.6;
       m.sheenColor = new THREE.Color(p.base).lerp(new THREE.Color(1, 1, 1), 0.5);
     }
+    const port = o.portraitSkin ? attribute('_port', 'vec4') : null;
     if (p.sss && m instanceof THREE.MeshSSSNodeMaterial) {
       m.thicknessColorNode = rgb(p.sss);
       m.thicknessDistortionNode = uniform(0.15);
-      m.thicknessAmbientNode = uniform(0.25);
+      // (the wrap term's ambient lights every surface alike: under the portrait's strong key and rim it flattened the
+      // modelling, so the portrait keeps only a trace of it)
+      m.thicknessAmbientNode = port ? mix(float(0.25), float(0.03), U.morph) : uniform(0.25);
       m.thicknessAttenuationNode = uniform(0.6);
       m.thicknessPowerNode = uniform(3.0);
-      m.thicknessScaleNode = uniform(p.sssScale ?? 3.0);
+      // the portrait's thin auricle glows warm against the rim light
+      // (none under the portrait's hair: the scalp glowed orange between the strands)
+      m.thicknessScaleNode = port ? float(p.sssScale ?? 3.0).mul(float(1).sub(U.morph.mul(0.7))).mul(float(1).sub(port.w.mul(U.morph))) : uniform(p.sssScale ?? 3.0);
     }
     // Context dimming lowers value and saturation rather than recolouring.
     // Toward a warm grey and only part of the way: a neutral grey turned dimmed fat khaki.
     const tone = (c: THREE.Node<'vec3'>) => mix(c, vec3(dot(c, vec3(0.299, 0.587, 0.114))).mul(vec3(1.04, 0.99, 0.93)), dim.mul(0.4)).mul(float(1).sub(dim.mul(0.45)));
-    const d = detail(o.family, p, !!o.axis);
+    const d = detail(o.family, p, !!o.axis, !!o.arc, !!o.thread);
     let base: THREE.Node<'vec3'> = d ? d.tone(rgb(p.base)) : rgb(p.base);
     let roughness: THREE.Node<'float'> = d ? d.roughness : float(p.roughness);
     if (o.tint) {
       // Regional pigment (exterior.py): flushed ears, nose and cheeks; lips; brow skin and the upper lash line; the
       // scalp under the hair.
       const t = attribute('_tint', 'vec4');
-      base = mix(base, base.mul(vec3(1.07, 0.84, 0.82)), t.x.mul(0.6));
+      // (the portrait is less flushed: under its warm rim the fitted flush read orange on the ear)
+      const flush = port ? t.x.mul(float(1).sub(U.morph.mul(0.35))) : t.x;
+      base = mix(base, base.mul(vec3(1.07, 0.84, 0.82)), flush.mul(0.6));
       base = mix(base, rgb(0xa8645c), t.y.mul(0.7));
       base = base.mul(float(1).sub(t.z.mul(0.5)));
       base = mix(base, rgb(0x6e5a50), t.w.mul(0.6));
       roughness = roughness.sub(t.y.mul(0.14));
+    }
+    let relief = d?.height;
+    if (port) {
+      // The opening portrait's skin (portrait.py), fading with the morph: a warmer tone, the beard shadow and the
+      // scalp under the short fade as dots well under a millimetre (they resolve to a shadow at portrait distance),
+      // an oilier T-zone, and pores in the relief.
+      const pw = U.morph;
+      const P = restMM();
+      const dots = smoothstep(0.34, 0.08, worley(P.mul(1 / 0.55)).x);
+      // a coarser grain (about a millimetre) that survives at portrait distance: the stubble's and pores' texture
+      const grain2 = n3(P.mul(1 / 1.1).add(vec3(6.6, 0.7, 2.2))).mul(0.5).add(0.5);
+      // tone: warmer and a little deeper, with broad uneven tanning (less pink in the ears' and cheeks' flush)
+      const tan = fractal(P.mul(1 / 30).add(vec3(3.3, 8.1, 1.2))).mul(0.5).add(0.5);
+      base = mix(base, base.mul(vec3(1.0, 0.89, 0.8)).mul(float(0.92).add(tan.mul(0.16))), pw.mul(0.6));
+      // visible-scale colour breakup: patches of redness (about a centimetre) and of paler and deeper tone
+      const red = smoothstep(0.1, 0.7, fractal(P.mul(1 / 12).add(vec3(4.4, 0.3, 9.9))));
+      base = mix(base, base.mul(vec3(1.04, 0.9, 0.88)), red.mul(pw).mul(0.35));
+      const st = port.x.mul(pw);
+      base = mix(base, base.mul(vec3(0.66, 0.65, 0.71)), st.mul(0.7));
+      base = mix(base, rgb(0x2b231f), st.mul(max(dots, grain2.mul(0.6))).mul(0.45));
+      // (at portrait distance a pixel is about 0.4 mm: the stubble reads as a speckle of millimetre dots, not a tone)
+      const speck = smoothstep(0.42, 0.18, worley(P.mul(1 / 1.3).add(vec3(2.4, 6.1, 0.9))).x);
+      base = mix(base, rgb(0x2a221e), st.mul(speck).mul(0.55));
+      // creases in their own shade (cavity), and the hero key's baked shadow (portrait.py packs half the cavity or the
+      // shadow, whichever is darker): the jaw's shadow on the neck
+      const cav = port.y.mul(pw);
+      base = base.mul(float(1).sub(cav.mul(0.64)));
+      // lips a deeper rose-brown, the upper lash line darker
+      base = mix(base, rgb(0x8a5149), attribute('_tint', 'vec4').y.mul(pw).mul(0.45));
+      base = base.mul(float(1).sub(attribute('_tint', 'vec4').z.mul(pw).mul(0.3)));
+      base = base.mul(float(1).sub(grain2.mul(0.05).mul(pw)));
+      // the key's falloff away from the head (a portrait light, not a flood): the shoulder and the back fall into shade
+      // below and behind the neck (rest mm from the parotid centroid: +y up, +z anterior)
+      // (and a little less saturated: dark warm albedos saturate under the tone curve's toe)
+      const away = smoothstep(60, 220, P.y.negate().sub(P.z.mul(0.4))).mul(pw);
+      base = mix(base, vec3(dot(base, vec3(0.299, 0.587, 0.114))).mul(vec3(1.06, 0.98, 0.92)), away.mul(0.3)).mul(float(1).sub(away.mul(0.62)));
+      const sc = port.w.mul(pw);
+      base = mix(base, rgb(0x2c2d33), sc.mul(mix(float(0.9), float(1.0), dots)));
+      // broad patches of oilier and drier skin break the specular sheen into the uneven highlights of real skin
+      const patch = fractal(P.mul(1 / 7).add(vec3(9.2, 1.4, 3.8)));
+      roughness = roughness.sub(pw.mul(0.08)).sub(port.z.mul(pw).mul(0.1)).add(sc.mul(0.25)).add(st.mul(0.1)).add(patch.mul(pw).mul(0.2)).add(cav.mul(0.24)).add(away.mul(0.12));
+      // pores, and a finer, irregular relief that breaks up the specular sheen on the neck and shoulders
+      const pores = smoothstep(0.0, 0.3, worley(P.mul(1 / 0.6).add(vec3(5.1, 2.7, 8.3))).x).sub(1);
+      const grain = n3(P.mul(1 / 0.9).add(vec3(1.9, 4.4, 7.7)));
+      if (relief) relief = relief.add(pores.mul(0.000022).add(grain.mul(0.00002)).mul(pw).mul(port.z.mul(0.5).add(0.6)));
     }
     if (o.eyes) {
       // Sclera, iris and pupil from the direction to the globe's centre (the generic eyes look straight ahead, +Z).
@@ -460,10 +651,43 @@ export function tissue(o: TissueOptions): TissueMaterial {
       const inner = innerShell();
       base = inner.select(rgb(PRESETS.fat.cut).mul(0.92), base);
     }
-    const foot = o.locate ? attribute('_foot', 'float') : null;
+    const foot = o.locate ? (o.ink ? SKIN_FIELDS.w : attribute('_foot', 'float')) : null;
     // The inner shell seen through an opening (the ear canal, the lip seam) falls into shadow.
     if (foot) base = mix(base, base.mul(0.12), foot.lessThan(-75).select(attribute('_tint', 'vec4').z, float(0)));
     if (foot) base = mix(base, base.mul(vec3(1.05, 0.9, 0.84)), smoothstep(-1.5, 3, foot).mul(U.locate).mul(0.3));
+    if (o.arc && o.axis && (o.family === 'artery' || o.family === 'vein' || o.family === 'nerve')) {
+      // The directional cue: a travelling change of the surface itself, never a light source (no emissive). Direction
+      // follows the function (anatomy.yaml `flows`); speeds and spacings are deliberately slow and stylised for
+      // reading, not physiological (blood moves tens of cm/s, a motor impulse tens of m/s). The temporal AA keeps 95% of
+      // its history each frame, so a narrow or fast band is averaged away: the bands are broad and slow (about 10 mm/s).
+      const s = attribute('_arc', 'float');
+      const w = flow.mul(abs(flowDir));
+      if (o.family === 'artery') {
+        // pulsatile: one soft crest every 2 s
+        const x = fract(s.mul(flowDir).sub(U.flowTime.mul(10)).div(20));
+        const crest = cos(x.mul(Math.PI * 2)).mul(0.5).add(0.5).pow(6).mul(w);
+        base = base.mul(float(1).add(crest.mul(0.22)));
+        roughness = roughness.sub(crest.mul(0.06));
+      } else if (o.family === 'vein') {
+        // steady, non-pulsatile: a slow, smooth swell of tone (no crest) with a faint streaming texture, drifting along
+        // the course at 6 mm/s; slower and softer than the arterial crests
+        const q = across(restMM(), attribute('_axis', 'vec3').normalize());
+        const phase = s.mul(flowDir).sub(U.flowTime.mul(6));
+        const wave = cos(phase.div(24).mul(Math.PI * 2)).mul(0.5).add(0.5);
+        const drift = n3(q.mul(1 / 2.2).add(vec3(0, phase.div(8), 0)));
+        base = base.mul(float(1).add(wave.mul(0.16).add(drift.mul(0.05)).mul(w)));
+        roughness = roughness.sub(wave.mul(0.04).mul(w));
+      } else {
+        // a nerve impulse, not a fluid: a band travelling in the conducted direction every 2.8 s
+        const x = fract(s.mul(flowDir).sub(U.flowTime.mul(10)).div(28));
+        const dmm = x.min(float(1).sub(x)).mul(28);
+        const imp = exp(dmm.div(2.6).pow(2).negate()).mul(w);
+        // (a warmer, deeper cream, not a brightening: ivory sits on the tone curve's shoulder, where lifting it shows
+        // almost nothing, while a shift of hue survives)
+        base = mix(base, base.mul(vec3(1.02, 0.88, 0.64)), imp.mul(0.75));
+        roughness = roughness.sub(imp.mul(0.16));
+      }
+    }
     m.roughnessNode = roughness;
     if (o.fadeBelow) m.opacityNode = materialOpacity.mul(smoothstep(U.cutY.sub(0.05), U.cutY.add(0.015), positionWorld.y));
     let surface: THREE.Node<'vec3'> = tone(base);
@@ -477,7 +701,7 @@ export function tissue(o: TissueOptions): TissueMaterial {
     // (The raised flap's underside is tissue, not a cut: its back faces are shaded with the reversed normal.)
     const flapInner = o.undersideFat ? innerShell() : null;
     const shade = (n: THREE.Node<'vec3'>) => {
-      const front = d ? bump(n.normalize(), flapFat ? d.height.mul(0.5) : d.height) : n;
+      const front = d && relief ? bump(n.normalize(), flapFat ? relief.mul(0.5) : relief) : n;
       if (!o.undersideFat) return frontFacing.select(front, vec3(0, 0, 1));
       // The inner shell's normals face into the head; on the folded flap they must face out of the underside.
       return flapInner!.select(n.normalize(), frontFacing.select(front, n.normalize().negate()));
@@ -501,17 +725,17 @@ export function tissue(o: TissueOptions): TissueMaterial {
       // drawn from the preauricular start (cut_s 0) toward the neck end (1) as U.ink rises
       // Beyond either end the signed distance changes sign across the end tangent's extension; its interpolated
       // zero there is not the incision, so ink only where the nearest path point is interior (cut_s in (0, 1)).
-      const s = attribute('_cuts', 'float');
+      const s = SKIN_FIELDS.x;
       const interior = smoothstep(0, 0.003, s).mul(float(1).sub(smoothstep(0.997, 1, s)));
       const drawn = float(1).sub(smoothstep(U.ink.sub(0.004), U.ink, s)).mul(interior);
       const line = float(1).sub(smoothstep(INK_HALF_MM[0], INK_HALF_MM[1], abs(cutMM())));
       surface = mix(surface, rgb(INK), line.mul(drawn).mul(0.88));
       // The facelift-type alternative: a dashed line, drawn from the preauricular start as U.ink2 rises.
-      const s2 = attribute('_cuts2', 'float');
+      const s2 = SKIN_FIELDS.z;
       const interior2 = smoothstep(0, 0.003, s2).mul(float(1).sub(smoothstep(0.997, 1, s2)));
       const drawn2 = float(1).sub(smoothstep(U.ink2.sub(0.004), U.ink2, s2)).mul(interior2);
       const dash = float(1).sub(smoothstep(0.58, 0.66, fract(s2.mul(40))));
-      const line2 = float(1).sub(smoothstep(0.7, 1.05, abs(attribute('_cut2', 'float').mul(U.cutScale))));
+      const line2 = float(1).sub(smoothstep(0.7, 1.05, abs(SKIN_FIELDS.y.mul(U.cutScale))));
       surface = mix(surface, rgb(INK), line2.mul(drawn2).mul(dash).mul(0.88));
       // The closed wound: dark suture ticks across the line, and the scar line beneath them, red when fresh and pale
       // once mature. Both follow the Blair path (the same arc parameter and signed distance as the ink).
@@ -577,18 +801,27 @@ export function tissue(o: TissueOptions): TissueMaterial {
       m.normalNode = shade(transformNormalToView(rot(normalLocal)));
     } else if (o.hollow) {
       const d = length(vec2(positionLocal.z, positionLocal.y).sub(U.hollowCentre)).div(U.hollowRadius);
-      m.positionNode = positionLocal.add(vec3(U.hollowDepth.mul(U.hollow).mul(exp(d.mul(d).negate())), 0, 0));
-      m.normalNode = shade(transformNormalToView(normalLocal));
+      const mo = morphed(o.portrait);
+      const r = o.portraitSkin ? withRelief(mo) : mo;
+      m.positionNode = r.position.add(vec3(U.hollowDepth.mul(U.hollow).mul(exp(d.mul(d).negate())), 0, 0));
+      m.normalNode = shade(transformNormalToView(r.normal));
     } else if (o.mobilise) {
       m.positionNode = positionLocal.add(U.mobiliseBy.mul(attribute('_mob', 'float').mul(U.mobilise)));
       m.normalNode = shade(transformNormalToView(normalLocal));
     } else if (o.peel || o.flap === 'flap') {
       // The skin shell's inner surface lies exactly where the fat band begins (2 mm): on the raised flap the two would
-      // fight, so the inner shell is drawn 1.5 mm back toward the outer skin (its normal points into the head).
-      const lift = o.undersideFat ? positionLocal.sub(normalLocal.mul(innerShell().select(float(0.0015), float(0)))) : positionLocal;
+      // fight, so the inner shell is drawn 1 mm back toward the outer skin (its normal points into the head): midway, so
+      // it is 1 mm from both (at 1.5 mm it lay 0.5 mm under the outer shell: the two striped, and along the raised
+      // flap's cut edge they showed as cream flecks).
+      const lift = o.undersideFat ? positionLocal.sub(normalLocal.mul(innerShell().select(float(0.001), float(0)))) : positionLocal;
       const f = o.peel ? peel(U.peel) : fold(lift);
       m.positionNode = f.position;
       m.normalNode = shade(transformNormalToView(f.normal));
+    } else if (o.portrait) {
+      const mo = morphed(true);
+      const r = o.portraitSkin ? withRelief(mo, o.fadeBelow ? 0 : 1) : mo;
+      m.positionNode = r.position;
+      m.normalNode = shade(transformNormalToView(r.normal));
     } else {
       m.normalNode = shade(transformNormalToView(normalLocal));
     }
@@ -602,8 +835,11 @@ export function tissue(o: TissueOptions): TissueMaterial {
   twin.colorWrite = false;
   twin.transparent = true;
   twin.depthWrite = true;
-  return { material, ghost, twin, dim, ...(piece ? { piece } : {}) };
+  return { material, ghost, twin, dim, flow, flowDir, ...(piece ? { piece } : {}) };
 }
+
+/** The portrait hair's normals are bent toward the hero key by this much (glTF frame; groomCards, hairShells). */
+const HAIR_WRAP = vec3(-0.55, 0.55, 0.63).mul(0.15);
 
 /** Shell layers of the hair (exterior.py root surface): enough for a soft silhouette at portrait distance. */
 export const HAIR_LAYERS = 14;
@@ -619,17 +855,21 @@ export interface HairMaterial {
  * root surface carries `_layer` (0 at the root, 1 at the tips); strands run along the baked comb direction, so the
  * noise is taken across it. Inner layers are darker (self-shadowing), which gives the cut its volume.
  */
-export function hairShells(): HairMaterial {
+export function hairShells(o: { morph?: boolean; portrait?: boolean } = {}): HairMaterial {
+  // `morph`: the root surface rides the portrait morph (`_pdisp`); `portrait`: the opening portrait's own cut and colour
+  const portrait = !!o.portrait;
   const fade = uniform(1);
   const m = new THREE.MeshPhysicalNodeMaterial();
   m.side = THREE.DoubleSide;
   const t = attribute('_layer', 'float');
-  const hmm = attribute('_hairh', 'float');
+  const hmm = portrait ? attribute('_hairh', 'float').mul(64) : attribute('_hairh', 'float'); // (the portrait's is stored as mm / 64)
   const flow = attribute('_flow', 'vec3').normalize();
   const kind = attribute('_hairk', 'float');
   const h = hmm.mul(0.001);
   // Lifted along the scalp normal, leaning along the comb direction (combed hair lies nearly flat).
-  m.positionNode = positionLocal.add(normalLocal.mul(h.mul(t).mul(0.75).add(0.00025))).add(flow.mul(h.mul(t).mul(t).mul(1.3)));
+  const root = o.morph ? positionLocal.add(attribute('_pdisp', 'vec3').mul(U.morph)) : positionLocal;
+  m.positionNode = root.add(normalLocal.mul(h.mul(t).mul(0.75).add(0.00025))).add(flow.mul(h.mul(t).mul(t).mul(1.3)));
+  if (portrait) m.normalNode = transformNormalToView(normalLocal.add(HAIR_WRAP).normalize());
   const P = restMM();
   const q = across(P, flow);
   const pitch = mix(float(1 / 0.2), float(1 / 0.14), kind);
@@ -643,12 +883,14 @@ export function hairShells(): HairMaterial {
   // fades over several millimetres); brows use their own short range.
   const edge = mix(smoothstep(0.2, 6.0, ragged), smoothstep(0.1, 1.5, ragged), kind);
   // Brows are sparser than the scalp (skin shows between the hairs).
-  const threshold = t.mul(0.5).add(0.22).add(edge.oneMinus().mul(0.55)).add(kind.mul(0.2)).add(fade.oneMinus().mul(1.2));
-  const grey = smoothstep(0.9, 0.93, n3(q.mul(pitch.mul(0.5)).add(vec3(3, 9, 1))).mul(0.5).add(0.5)).mul(kind.oneMinus());
+  const threshold = t.mul(0.5).add(0.22).add(edge.oneMinus().mul(0.55)).add(kind.mul(portrait ? 0.24 : 0.2)).add(fade.oneMinus().mul(1.2));
+  // (the portrait's younger cut has no grey, and matches the groom's colour)
+  const grey = portrait ? float(0) : smoothstep(0.9, 0.93, n3(q.mul(pitch.mul(0.5)).add(vec3(3, 9, 1))).mul(0.5).add(0.5)).mul(kind.oneMinus());
   const shade = n3(q.mul(pitch.mul(0.35)).add(vec3(1.7, 5.1, 2.9))).mul(0.5).add(0.5);
-  const colour = mix(mix(mix(rgb(0x30251e), rgb(0x56443a), clump), rgb(0x76604f), shade.mul(0.45)), rgb(0x9a928a), grey.mul(0.5));
-  const brow = rgb(0x6a5442);
-  m.colorNode = mix(colour, brow, kind).mul(mix(mix(float(0.28), float(0.62), kind), float(1), t.pow(0.55)));
+  const [c0, c1, c2] = portrait ? [0x31333a, 0x3b3b42, 0x504d52] : [0x30251e, 0x56443a, 0x76604f];
+  const colour = mix(mix(mix(rgb(c0), rgb(c1), clump), rgb(c2), shade.mul(0.45)), rgb(0x9a928a), grey.mul(0.5));
+  const brow = rgb(portrait ? 0x5a514c : 0x6a5442);
+  m.colorNode = mix(colour, brow, kind).mul(mix(mix(float(portrait ? 0.6 : 0.28), float(0.62), kind), float(1), t.pow(0.55)));
   // A soft sheen stretched along the strands (the comb direction is the tangent, hairGeometry): the band of light
   // that reads as hair rather than felt.
   m.roughness = 0.5;
@@ -656,9 +898,85 @@ export function hairShells(): HairMaterial {
   m.specularIntensity = 0.5;
   m.sheen = 0.2;
   m.sheenRoughness = 0.55;
-  m.sheenColor = new THREE.Color(0x8a7462);
+  m.sheenColor = new THREE.Color(portrait ? 0x4d443d : 0x8a7462);
   m.maskNode = v.greaterThan(threshold).and(ragged.greaterThan(0.06)).and(positionWorld.y.greaterThan(U.clipY).not());
   return { material: m, fade };
+}
+
+/**
+ * The opening portrait's groom (groom.py, presentation only): baked ribbon cards, each a lock of several strands drawn
+ * by an alpha test across the card (`_groom` = t root→tip, across 0..1, card random, layer). The cards ride the scalp
+ * through the morph (`_pdisp`) and dissolve strand by strand with `fade`. Darker toward the roots and in the inner
+ * layers (self-shadowing), lighter and warmer toward the tips; a sheen stretched along the strand tangent.
+ */
+export function groomCards(): HairMaterial {
+  const fade = uniform(1);
+  const m = new THREE.MeshPhysicalNodeMaterial();
+  m.side = THREE.DoubleSide;
+  const g = attribute('_groom', 'vec4');
+  const t = g.x;
+  const across = g.y;
+  const rnd = g.z;
+  const layer = g.w;
+  m.positionNode = positionLocal.add(attribute('_pdisp', 'vec3').mul(U.morph));
+  // The back of the head faces away from both the key and the rim and went black: normals bent toward the hero key
+  // (stage.ts LOOKS.hero) keep it in the hair's mid-tones, as a broad soft key would.
+  m.normalNode = transformNormalToView(normalLocal.add(HAIR_WRAP).normalize());
+  // Strands across the card: each has its own offset, width and length (the lock frays toward its tip).
+  const strands = 9;
+  const u = across.mul(strands).add(rnd.mul(17.0));
+  const id = u.floor();
+  const h1 = fract(sin(id.mul(12.9898).add(rnd.mul(78.233))).mul(43758.5453));
+  const h2 = fract(sin(id.mul(39.3468).add(rnd.mul(11.135))).mul(24634.6345));
+  const local = fract(u).sub(0.5).abs();
+  const half = mix(float(0.42), float(0.2), t).mul(float(0.7).add(h1.mul(0.5)));
+  // a few cards are flyaways (groom.py): one fine strand down the middle of the card
+  const fly = rnd.lessThan(0.03);
+  const core = fly.select(across.sub(0.5).abs().lessThan(mix(float(0.14), float(0.07), t)), local.lessThan(half));
+  const reach = float(1).sub(h2.mul(0.35)); // strand length as a share of the card
+  // Dissolve: whole strands go, in a fixed order.
+  const kept = fract(h1.add(h2.mul(0.618))).lessThan(fade);
+  m.maskNode = core.and(t.lessThan(reach)).and(kept).and(positionWorld.y.greaterThan(U.clipY).not());
+  const P = restMM();
+  const clump = n3(P.mul(1 / 5.0).add(vec3(2.1, 7.3, 4.4))).mul(0.5).add(0.5);
+  // Lighter, nearly neutral albedos: the Neutral tone mapping's toe subtracts about the smallest channel from dark
+  // colours (ADR-0001), so hair rendered dark brown came out a saturated orange; it reaches the reference's dark
+  // brown from a mid grey-brown.
+  const root = mix(rgb(0x30323a), rgb(0x3a3a41), clump);
+  const tip = mix(rgb(0x5a5a62), rgb(0x6a676c), h1);
+  const col = mix(root, tip, smoothstep(0.15, 1.0, t).mul(0.75));
+  // inner layers and the roots are in the hair's own shadow; each lock is darker at its edges (round, not flat), and
+  // locks differ in brightness
+  const round = mix(float(0.72), float(1), float(1).sub(across.sub(0.5).abs().mul(2).pow(2)));
+  const lock = float(0.5).add(n3(P.mul(1 / 6).add(vec3(8.8, 2.2, 6.1))).mul(0.5).add(0.5).mul(1.0));
+  m.colorNode = col.mul(mix(float(0.4), float(1), layer.mul(0.6).add(t.mul(0.4)).pow(0.8))).mul(float(0.9).add(h2.mul(0.2))).mul(round).mul(lock);
+  m.roughness = 0.48;
+  m.anisotropy = 0.8;
+  m.specularIntensity = 0.45;
+  m.sheen = 0.22;
+  m.sheenRoughness = 0.5;
+  m.sheenColor = new THREE.Color(0x4d443d);
+  return { material: m, fade };
+}
+
+/** The groom's strand tangent as the anisotropy frame (from `_flow`), made orthogonal to the normal: a lifted strand
+ *  runs partly along the scalp normal, and a frame with the two nearly parallel lit single pixels white. */
+export function groomGeometry(g: THREE.BufferGeometry): THREE.BufferGeometry {
+  const flow = g.getAttribute('_flow');
+  const normal = g.getAttribute('normal');
+  const tangent = new Float32Array(flow.count * 4);
+  const t = new THREE.Vector3();
+  const n = new THREE.Vector3();
+  for (let i = 0; i < flow.count; i++) {
+    t.fromBufferAttribute(flow, i);
+    n.fromBufferAttribute(normal, i).normalize();
+    t.addScaledVector(n, -t.dot(n));
+    if (t.lengthSq() < 0.04) t.set(0, 1, 0).addScaledVector(n, -n.y);
+    t.normalize();
+    tangent.set([t.x, t.y, t.z, 1], i * 4);
+  }
+  g.setAttribute('tangent', new THREE.BufferAttribute(tangent, 4));
+  return g;
 }
 
 /** The hair root surface repeated once per shell layer, with `_layer` 0..1 (one draw call). */

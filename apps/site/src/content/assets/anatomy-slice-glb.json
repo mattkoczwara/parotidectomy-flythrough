@@ -16,8 +16,8 @@
       "MPFB/MakeHuman assets are CC0 (no obligation; credited as courtesy)"
     ]
   },
-  "attribution": "Anatomy derived from the Visible Human Project male CT, courtesy of the U.S. National Library of Medicine; segmentations by TotalSegmentator; generic face, neck, shoulders and hair from the MakeHuman/MPFB base mesh and targets (CC0); nerves, small vessels, deep-lobe completion and tumour authored to cited anatomy (pipeline/specs).",
-  "sha256": "6d2e769b2a8d5f58d633c2df31f4f2e75e38af63aba7970b2996da051024640f",
+  "attribution": "Anatomy derived from the Visible Human Project male CT, courtesy of the U.S. National Library of Medicine; segmentations by TotalSegmentator; generic face, neck, shoulders and hair (and the opening's idealised portrait of them) from the MakeHuman/MPFB base mesh and targets (CC0); nerves, small vessels, deep-lobe completion and tumour authored to cited anatomy (pipeline/specs).",
+  "sha256": "c04801a30354e7101f6fd5da62e1ea37074dbbb042b834b95c0229d797861ba9",
   "derivedFrom": [
     "vhp-male-normal-ct-head",
     "totalsegmentator-head-neck",
@@ -33,6 +33,7 @@
     "schematic and illustrative meshes authored to specification: accessory lobe and duct, alternate tumour positions, auriculotemporal nerve and Frey regrowth, instruments (probe, needle, stimulator, drain), SMAS flap, neck-muscle strip, graft sheet, saliva collection, recurrence nodules, imaging planes",
     "MPFB base mesh with MakeHuman's macro modifiers for a generic adult male (CC0 targets, ancestry mixed equally), fitted (per-axis scale, envelope and local conform) over the dissection field; the skin also covers the authored superficial nerves and veins",
     "presentation only (no anatomy, no claims): exterior body (neck, shoulders, upper chest) cut from the same fitted MPFB surface below the scene cut; short hair and eyebrows as a root surface for shell rendering; a regional skin tint from MakeHuman target vertex sets; the superficial lobe's lateral footprint for the opening's localisation contour; per-vertex fibre directions for tissue structure (pipeline/anatomy/exterior.py, pipeline/build/export_gltf.py)",
+    "presentation only (no anatomy, no claims): the opening's portrait, a leaner and more muscular version of the same MPFB exterior (MakeHuman macro and feature targets, a torso turned and lowered under the profile head), stored as a per-vertex morph of the fitted skin, exterior body, eyes and hair root surface that settles into the fitted shape before any anatomy shows; its skin field (beard shadow, auricle, T-zone, scalp) and its haircut as a shell under-layer and an offline, seeded groom of ribbon cards (pipeline/anatomy/portrait.py, pipeline/anatomy/groom.py)",
     "scene cut at z=150 mm; glTF export; meshopt compression and quantisation"
   ],
   "specClaims": [

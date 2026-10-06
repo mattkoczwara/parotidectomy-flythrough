@@ -1,0 +1,26 @@
+{
+  "id": "anatomy-hero-normal",
+  "kind": "texture",
+  "source": {
+    "name": "Parotid Atlas opening portrait skin map (pipeline/blender/skin.py): hero_normal.webp, tangent-space normal",
+    "url": "https://www.blender.org/download/demo-files/",
+    "retrieved": "2026-10-06"
+  },
+  "licence": {
+    "id": "CC0-1.0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "obligations": []
+  },
+  "attribution": "Presentation only: authored skin maps baked in Blender Cycles onto the opening's figure; nothing photographic.",
+  "sha256": "a61d3487be2c9d3f7b3590682458b8c6c521c2530bea1cd7341e6fd89d4e536b",
+  "file": "apps/site/public/assets/anatomy/hero_normal.webp",
+  "derivedFrom": [
+    "human-base-meshes-1-4-1"
+  ],
+  "transformations": [
+    "albedo: authored base tone, broad pigment, regional redness, beard shadow and stubble, lips, lids, lash line, nostrils, the scalp under the hair, freckles (procedural, seeded)",
+    "normal: the multires surface one level above the realtime mesh, with every shape edit, plus authored pores, fine skin texture, a millimetre-scale grain, forehead lines and stubble relief",
+    "ORM: baked ambient occlusion, authored regional roughness (T-zone, lips, beard, scalp) with pores and broad patches, thickness for the subsurface term (ears, nostrils, lids)"
+  ],
+  "specClaims": []
+}

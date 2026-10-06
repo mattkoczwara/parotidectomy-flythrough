@@ -34,6 +34,7 @@ body.doc-page {
 .doc-header a {
   color: var(--ink-soft);
   text-decoration: none;
+  transition: color var(--t) var(--ease);
 }
 .doc-header a[aria-current='page'] {
   color: var(--ink);

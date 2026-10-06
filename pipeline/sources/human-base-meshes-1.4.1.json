@@ -1,0 +1,16 @@
+{
+  "id": "human-base-meshes-1.4.1",
+  "name": "Blender Studio Human Base Meshes bundle v1.4.1 (the realistic male body and its eyes are used)",
+  "licence": "CC0-1.0",
+  "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "attribution": "Human Base Meshes by Blender Studio and community contributions (CC0)",
+  "landing": "https://www.blender.org/download/demo-files/",
+  "notes": "Owner-authorised download 2026-10-06 (chosen in place of a scanned real person, so that no likeness or model release is involved: docs/qc/hero-likeness-gate.md). The demo-files page lists the bundle as CC0, by Blender Studio and community contributions. Synthetic sculpts, not scans of a person. Used for the opening's hero portrait only (pipeline/blender/hero.py).",
+  "files": [
+    {
+      "url": "https://mirror.blender.org/demo/asset-bundles/human-base-meshes/human-base-meshes-bundle-v1.4.1.zip",
+      "path": "human-base-meshes/human-base-meshes-bundle-v1.4.1.zip",
+      "sha256": "811f43accbb31a88266d932f8f5563b2d13586fca0ba2693aad1f5fe582b3515"
+    }
+  ]
+}

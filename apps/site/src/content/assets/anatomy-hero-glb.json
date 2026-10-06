@@ -1,0 +1,30 @@
+{
+  "id": "anatomy-hero-glb",
+  "kind": "derived-mesh",
+  "source": {
+    "name": "Parotid Atlas opening portrait (pipeline/blender/hero.py): hero.glb",
+    "url": "https://www.blender.org/download/demo-files/",
+    "retrieved": "2026-10-06"
+  },
+  "licence": {
+    "id": "CC0-1.0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "obligations": []
+  },
+  "attribution": "Presentation only (no anatomy, no claims): the opening's figure, authored from Blender Studio's Human Base Meshes (CC0) with an authored groom; it hands off to the donor-fitted exterior before any anatomy shows.",
+  "sha256": "97601fe5c27c5081506bfb7d04877203c3dab1ca050098d6370759cfc6f332c7",
+  "file": "apps/site/public/assets/anatomy/hero.glb",
+  "derivedFrom": [
+    "human-base-meshes-1-4-1"
+  ],
+  "transformations": [
+    "the realistic male figure's multires sculpt evaluated at two levels (a realtime mesh and the surface its detail is baked from)",
+    "placed on the fitted head's eyes; turned a few degrees toward the opening's camera",
+    "authored shape edits toward the opening's art direction (not a likeness): an upright neck over the shoulders, a longer skull, larger ears, Gaussian sculpt of the chin, nose, lips, brow, cheekbones and jaw, a broad athletic neck, muscle and bone relief (sternocleidomastoids, trapezius, clavicles) along the surface normal (anatomy.yaml `hero.edits`)",
+    "cropped to a bust; the base mesh's own UV islands repacked into one tile",
+    "an offline, seeded strand groom (scalp, brows, lashes) exported as ribbons the stage turns toward the camera (pipeline/blender/groom.py)",
+    "per-vertex morph onto the fitted exterior (landmark thin-plate warp, closest point, smoothing) and the fitted skin's localisation outline carried to the hero (pipeline/blender/handoff.py)",
+    "glTF export; meshopt compression and quantisation"
+  ],
+  "specClaims": []
+}

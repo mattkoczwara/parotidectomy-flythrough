@@ -109,6 +109,11 @@ representative tumour did not move.
   fibre direction of the masseter and the SCM.
 - **Exterior body** (neck below the scene cut, shoulders) has no anatomy beneath it and is excluded from the depth
   checks; the upper neck above the cut is the donor fit.
+- **Opening portrait** (portrait pass, 2026-10-05; presentation only): the first plate shows an idealised, leaner
+  figure. It is a morph of the fitted exterior that settles into the donor-fitted shape before anything beneath the
+  skin is drawn. It is not the donor and carries no anatomy. The parotid outline is drawn where the fitted skin's
+  outline maps under the morph, and the lump is kept. No fitted position changed. **Human review:** does the outline
+  on the portrait still read as the gland's surface marking, given the leaner jaw?
 
 ## Summary for the reviewer
 

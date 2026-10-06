@@ -15,24 +15,24 @@
   },
   "nerve_lateral_to_rmv": {
     "pass": true,
-    "pairs": 316,
+    "pairs": 313,
     "violations": 0,
-    "min_gap_mm": 0.33,
-    "summary": "316 level-matched pairs, 0 violations, min clearance 0.3 mm"
+    "min_gap_mm": 0.36,
+    "summary": "313 level-matched pairs, 0 violations, min clearance 0.4 mm"
   },
   "eca_deep_to_rmv": {
     "pass": true,
     "pairs": 516,
     "violations": 0,
-    "min_gap_mm": 0.13,
-    "summary": "516 pairs, 0 violations, min clearance 0.1 mm"
+    "min_gap_mm": 0.62,
+    "summary": "516 pairs, 0 violations, min clearance 0.6 mm"
   },
   "eca_deep_to_digastric": {
     "pass": true,
-    "pairs": 367,
+    "pairs": 364,
     "violations": 0,
-    "min_gap_mm": 0.47,
-    "summary": "367 pairs, 0 violations, min clearance 0.5 mm"
+    "min_gap_mm": 0.5,
+    "summary": "364 pairs, 0 violations, min clearance 0.5 mm"
   },
   "branch_order_superior_to_inferior": {
     "pass": true,
@@ -117,6 +117,76 @@
     "pass": true,
     "orphans": [],
     "summary": "13 facial-nerve segments, all descend from the foramen"
+  },
+  "flow_arc_continuity": {
+    "pass": true,
+    "junctions": {
+      "facial_nerve_temporofacial": {
+        "parent": "facial_nerve_trunk",
+        "node_offset_mm": 0.0
+      },
+      "facial_nerve_cervicofacial": {
+        "parent": "facial_nerve_trunk",
+        "node_offset_mm": 0.0
+      },
+      "facial_nerve_temporal": {
+        "parent": "facial_nerve_temporofacial",
+        "node_offset_mm": 0.0
+      },
+      "facial_nerve_zygomatic": {
+        "parent": "facial_nerve_temporofacial",
+        "node_offset_mm": 0.0
+      },
+      "facial_nerve_buccal": {
+        "parent": "facial_nerve_cervicofacial",
+        "node_offset_mm": 0.0
+      },
+      "facial_nerve_marginal_mandibular": {
+        "parent": "facial_nerve_cervicofacial",
+        "node_offset_mm": 0.0
+      },
+      "facial_nerve_cervical": {
+        "parent": "facial_nerve_cervicofacial",
+        "node_offset_mm": 0.0
+      },
+      "facial_nerve_posterior_auricular": {
+        "parent": "facial_nerve_trunk",
+        "node_offset_mm": 0.0
+      },
+      "facial_nerve_digastric_branch": {
+        "parent": "facial_nerve_trunk",
+        "node_offset_mm": 0.0
+      },
+      "great_auricular_nerve_anterior": {
+        "parent": "great_auricular_nerve",
+        "node_offset_mm": 0.0
+      },
+      "great_auricular_nerve_posterior": {
+        "parent": "great_auricular_nerve",
+        "node_offset_mm": 0.0
+      },
+      "retromandibular_vein_anterior": {
+        "parent": "retromandibular_vein",
+        "node_offset_mm": 0.0
+      },
+      "retromandibular_vein_posterior": {
+        "parent": "retromandibular_vein",
+        "node_offset_mm": 0.0
+      },
+      "external_jugular_vein": {
+        "parent": "retromandibular_vein_posterior",
+        "node_offset_mm": 0.0
+      },
+      "maxillary_artery": {
+        "parent": "external_carotid_artery",
+        "node_offset_mm": 0.0
+      },
+      "superficial_temporal_artery": {
+        "parent": "external_carotid_artery",
+        "node_offset_mm": 0.0
+      }
+    },
+    "summary": "16 branch roots; largest distance from the parent centreline 0.000 mm (presentation field)"
   },
   "deep_lobe_completion": {
     "pass": true,
@@ -243,61 +313,61 @@
     ],
     "high_residual_count": 6,
     "conformed_count": 583,
-    "mouth_lining_vertices_trimmed": 1279,
+    "mouth_lining_vertices_trimmed": 1277,
     "min_depth_below_skin_mm": {
-      "auriculotemporal_nerve": 10.49,
+      "auriculotemporal_nerve": 10.65,
       "digastric_posterior_belly": 23.86,
-      "external_carotid_artery": 17.05,
-      "external_jugular_vein": 2.88,
-      "facial_nerve_buccal": 11.77,
-      "facial_nerve_cervical": 10.85,
-      "facial_nerve_cervicofacial": 17.84,
-      "facial_nerve_digastric_branch": 26.39,
+      "external_carotid_artery": 17.08,
+      "external_jugular_vein": 2.9,
+      "facial_nerve_buccal": 11.75,
+      "facial_nerve_cervical": 10.94,
+      "facial_nerve_cervicofacial": 17.99,
+      "facial_nerve_digastric_branch": 26.43,
       "facial_nerve_ic_buccal_a": 13.68,
-      "facial_nerve_ic_buccal_b": 10.63,
-      "facial_nerve_ic_divisions": 14.35,
+      "facial_nerve_ic_buccal_b": 10.67,
+      "facial_nerve_ic_divisions": 14.36,
       "facial_nerve_marginal_mandibular": 16.22,
-      "facial_nerve_posterior_auricular": 13.21,
+      "facial_nerve_posterior_auricular": 13.34,
       "facial_nerve_temporal": 10.66,
-      "facial_nerve_temporofacial": 13.77,
-      "facial_nerve_trunk": 19.45,
-      "facial_nerve_zygomatic": 9.07,
+      "facial_nerve_temporofacial": 13.93,
+      "facial_nerve_trunk": 19.59,
+      "facial_nerve_zygomatic": 9.22,
       "great_auricular_nerve": 5.05,
-      "great_auricular_nerve_anterior": 3.5,
-      "great_auricular_nerve_posterior": 2.9,
+      "great_auricular_nerve_anterior": 3.66,
+      "great_auricular_nerve_posterior": 3.06,
       "internal_jugular_vein_r": 5.02,
-      "mandible": 9.16,
-      "masseter_r": 7.98,
-      "maxillary_artery": 28.43,
-      "parotid_accessory_lobe": 4.58,
+      "mandible": 9.22,
+      "masseter_r": 7.95,
+      "maxillary_artery": 28.32,
+      "parotid_accessory_lobe": 4.44,
       "parotid_deep_lobe": 13.15,
-      "parotid_duct": 5.94,
+      "parotid_duct": 5.98,
       "parotid_ecd_cuff": 2.93,
-      "parotid_fascia": 2.48,
-      "parotid_gland_r_complete": 3.46,
+      "parotid_fascia": 2.44,
+      "parotid_gland_r_complete": 3.42,
       "parotid_level_1": 5.79,
-      "parotid_level_2": 3.32,
+      "parotid_level_2": 3.29,
       "parotid_level_3": 13.01,
-      "parotid_level_4": 14.14,
-      "parotid_superficial_lobe": 3.46,
+      "parotid_level_4": 14.2,
+      "parotid_superficial_lobe": 3.42,
       "pleomorphic_adenoma": 3.73,
       "pleomorphic_adenoma_deep": 22.15,
       "pleomorphic_adenoma_tail": 5.89,
-      "retromandibular_vein": 17.15,
-      "retromandibular_vein_anterior": 17.28,
-      "retromandibular_vein_posterior": 4.02,
+      "retromandibular_vein": 17.53,
+      "retromandibular_vein_anterior": 17.38,
+      "retromandibular_vein_posterior": 4.13,
       "scm_flap": 7.11,
       "skull": 2.26,
       "sternocleidomastoid_main": 5.0,
       "sternocleidomastoid_r": 5.02,
-      "styloid_process": 34.76,
+      "styloid_process": 34.85,
       "submandibular_gland_r": 3.73,
-      "superficial_temporal_artery": 6.87,
+      "superficial_temporal_artery": 6.88,
       "temporalis_r": 2.97
     },
-    "min_depth_soft_tissue_mm": 2.48,
+    "min_depth_soft_tissue_mm": 2.44,
     "min_depth_bone_mm": 2.26,
-    "summary": "conform-region residual median 0.66 mm (p95 2.1); shallowest soft tissue 2.48 mm and bone 2.26 mm below the skin; 14% of head vertices conformed"
+    "summary": "conform-region residual median 0.66 mm (p95 2.1); shallowest soft tissue 2.44 mm and bone 2.26 mm below the skin; 14% of head vertices conformed"
   },
   "tumour_alternates": {
     "pass": true,
@@ -310,8 +380,8 @@
         ],
         "max_diameter_mm": 12.0,
         "nerve_clearance_mm": 6.29,
-        "vessel_clearance_mm": 1.34,
-        "skin_cover_mm": 18.91,
+        "vessel_clearance_mm": 1.43,
+        "skin_cover_mm": 18.89,
         "fraction_in": {
           "gland": 0.84,
           "deep": 0.79,
@@ -326,8 +396,8 @@
         ],
         "max_diameter_mm": 15.9,
         "nerve_clearance_mm": 1.43,
-        "vessel_clearance_mm": 5.83,
-        "skin_cover_mm": 2.63,
+        "vessel_clearance_mm": 5.94,
+        "skin_cover_mm": 2.65,
         "fraction_in": {
           "gland": 0.93,
           "deep": 0.0,
@@ -341,9 +411,9 @@
           243.0
         ],
         "max_diameter_mm": 10.9,
-        "nerve_clearance_mm": 5.13,
-        "vessel_clearance_mm": 28.81,
-        "skin_cover_mm": 0.1,
+        "nerve_clearance_mm": 5.14,
+        "vessel_clearance_mm": 28.87,
+        "skin_cover_mm": 0.03,
         "fraction_in": {
           "gland": 0.0,
           "deep": 0.0,
@@ -351,7 +421,7 @@
         }
       }
     },
-    "summary": "alternate placements of the adenoma, clear of nerve, vessels, bone and muscle: deep 12 mm, nerve 6.3 mm, skin cover 18.9 mm; tail 16 mm, nerve 1.4 mm, skin cover 2.6 mm; accessory 11 mm, nerve 5.1 mm, skin cover 0.1 mm"
+    "summary": "alternate placements of the adenoma, clear of nerve, vessels, bone and muscle: deep 12 mm, nerve 6.3 mm, skin cover 18.9 mm; tail 16 mm, nerve 1.4 mm, skin cover 2.6 mm; accessory 11 mm, nerve 5.1 mm, skin cover 0.0 mm"
   },
   "frey_regrowth": {
     "pass": true,
@@ -362,12 +432,12 @@
     "pass": true,
     "incision_length_mm": 162.3,
     "skin": {
-      "flap_vertices": 18429,
-      "auricle_vertices_excluded": 3594
+      "flap_vertices": 18432,
+      "auricle_vertices_excluded": 3555
     },
     "subcutaneous_fat": {
-      "flap_vertices": 22563,
-      "auricle_vertices_excluded": 1921
+      "flap_vertices": 22407,
+      "auricle_vertices_excluded": 1851
     },
     "summary": "modified Blair incision 162 mm (projected); flap fields baked on skin and subcutaneous fat; auricle excluded"
   },
@@ -397,5 +467,25 @@
     "hair_min_ear_clearance_mm": 5.6,
     "body_vertices": 3695,
     "summary": "presentation only: seam welded at 406 vertices; hair clear of the parotid region (max 0.0) and at least 5.6 mm from the ear"
+  },
+  "portrait": {
+    "pass": true,
+    "axis_scales_xyz": [
+      1.0377,
+      1.0213,
+      0.9602
+    ],
+    "eye_transform_residual_mm": 2e-05,
+    "skin_max_displacement_mm": 38.9,
+    "exterior_body_max_displacement_mm": 85.2,
+    "seam_pairs": 203,
+    "seam_gap_mm": 0.0,
+    "portrait_hair_max_in_parotid_zone": 0.0,
+    "groom_cards": 5825,
+    "groom_clumps": 750,
+    "portrait_scalp_vertices": 7283,
+    "portrait_hair_min_ear_clearance_mm": 5.5,
+    "relief_capsules": 32,
+    "summary": "presentation only: portrait morph of the exterior (seam gap 0.0 mm over 203 vertices; largest displacement 38.9 mm on the skin, 85.2 mm on the body)"
   }
 }

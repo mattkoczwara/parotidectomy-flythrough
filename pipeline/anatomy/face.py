@@ -383,7 +383,7 @@ def main() -> None:
     depth_in = ndimage.distance_transform_edt(head_mask, sampling=zooms) - ndimage.distance_transform_edt(~head_mask, sampling=zooms)
     sd = {}
     # Instruments and schematic overlays are not anatomy: a probe leaves the wound, regrowth fibres lie a hand's breadth under the skin.
-    skip = {"skin", "eyes", "subcutaneous_fat", "smas", "nerve_plane", "exterior_body", "hair", *spec.get("depth_check_exclude", [])}
+    skip = {"skin", "eyes", "subcutaneous_fat", "smas", "nerve_plane", "exterior_body", "hair", "portrait_scalp", "portrait_hair", *spec.get("depth_check_exclude", [])}
     probes = [p.stem for p in OUT.glob("*.npz") if p.stem not in skip]
     for n in probes:
         path = OUT / f"{n}.npz"

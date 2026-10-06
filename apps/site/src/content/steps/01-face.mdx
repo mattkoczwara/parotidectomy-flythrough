@@ -4,10 +4,10 @@ chapter: orientation
 order: 1
 title: A lump in front of the ear
 delta:
-  camera: { azimuth: 8, elevation: 2, zoom: 1.04, frame: [portrait_field] }
+  camera: { azimuth: 2, elevation: 0, zoom: 0.92, frame: [portrait_bust] }
   gauge: 0
   light: { preset: studio, exposure: 1.0 }
-  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, ink: 0, ink_facelift: 0, flap: 0, peel: 0, out: 0, deep: 0, mobilise: 0, explode: 0, section: 0, ink_plane: 0, ink_cranial: 0, ink_cuff: 0, suture: 0, scar: 0, hollow: 0, locate: 1 }
+  op: { cut_skin: 0, cut_fat: 0, cut_smas: 0, cut_fascia: 0, ink: 0, ink_facelift: 0, flap: 0, peel: 0, out: 0, deep: 0, mobilise: 0, explode: 0, section: 0, ink_plane: 0, ink_cranial: 0, ink_cuff: 0, suture: 0, scar: 0, hollow: 0, locate: 1, portrait: 1, groom: 1 }
   variants: { resection: superficial, incision: blair, nervePattern: typical }
   structures:
       skin: { presence: 1, mode: solid, opacity: 1, emphasis: focus }
@@ -28,7 +28,7 @@ delta:
       us_plane: { presence: 0 }
       ct_tumour_outline: { presence: 0 }
       drain_tube: { presence: 0 }
-sceneDescription: "The right side of a generic adult head, neck and shoulders seen from the side, face to the right. The skin is intact; a slight fullness sits in front of and below the ear, and a fine pale outline on the skin marks where the gland lies beneath it."
+sceneDescription: "The right side of a generic adult man's head, neck and shoulder seen from the side, face to the right, against a dark background. He has short dark hair and an athletic build. The skin is intact; a slight fullness sits in front of and below the ear, and a fine pale outline on the skin marks where the gland lies beneath it."
 claims: [parotid-location, pa-most-common]
 ---
 import Claim from '../../components/Claim.astro';
@@ -38,6 +38,6 @@ import Framed from '../../components/Framed.astro';
 import Inset from '../../components/Inset.astro';
 import PseudocapsuleInset from '../../components/PseudocapsuleInset.astro';
 
-<Claim id="parotid-location">The parotid gland sits in front of and below the ear, wrapped around the back edge of the jaw.</Claim> <Claim id="pa-most-common">Most lumps that grow in it are benign, and the most common is a pleomorphic adenoma.</Claim>
+<Claim id="parotid-location">The parotid gland sits in front of and below the ear, wrapped around the back edge of the jaw.</Claim> <Claim id="pa-most-common">Most lumps that grow in it are benign, and the most common is a pleomorphic adenoma.</Claim> <Model>This atlas follows one such tumour, from the anatomy around it to the operation that removes it. The fine outline on the skin marks where the gland lies beneath it. The small head at the top right shows where you are looking from.</Model>
 
-<Model>This atlas follows one such tumour, from the anatomy around it to the operation that removes it. The fine outline on the skin marks where the gland lies beneath it. The small head at the top right shows where you are looking from. The model is built from one donated body, with some structures drawn to published anatomy where scans cannot show them, and a generic face, hair and shoulders.</Model>
+<Model>The model is built from one donated body, with some structures drawn to published anatomy where scans cannot show them, and a generic face, hair and shoulders. The figure on this first page is a sculpted, synthetic face and body, not a real person and leaner than the donor; it settles into the donor's shape before the anatomy appears.</Model>

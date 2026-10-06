@@ -106,7 +106,15 @@ export function start(): void {
   const motionBox = document.querySelector<HTMLInputElement>('#reduce-motion')!;
   motionBox.checked = store.get('atlas.reduceMotion') === '1' || motionQuery.matches;
   const reducedMotion = () => motionBox.checked;
-  motionBox.addEventListener('change', () => store.set('atlas.reduceMotion', motionBox.checked ? '1' : '0'));
+  // The directional cue (blood flow, nerve impulse) is motion: off for reduced motion, and in capture mode (determinism).
+  const cueMotion = () => !reducedMotion() && !query.has('capture');
+  // The chrome's entrances and transitions follow the same choice (atlas.css).
+  document.body.classList.toggle('reduce-motion', motionBox.checked);
+  motionBox.addEventListener('change', () => {
+    document.body.classList.toggle('reduce-motion', motionBox.checked);
+    store.set('atlas.reduceMotion', motionBox.checked ? '1' : '0');
+    if (stage) stage.motion = cueMotion();
+  });
   const setDepth = (d: Depth) => {
     depth = d;
     document.body.dataset.depth = d;
@@ -300,7 +308,7 @@ export function start(): void {
         structures: data.structures.filter((s) => !groups[s.id]).map((s) => ({ id: s.id, tissue: s.tissue as never, schematic: !!s.schematic })),
         groups,
       });
-      await s.load('/assets/anatomy/slice.glb', '/assets/anatomy/frame.json');
+      await s.load('/assets/anatomy/slice.glb', '/assets/anatomy/frame.json', '/assets/anatomy/hero.glb');
       // The tier and pipeline reported are read back from the stage: what it renders, not what was asked for.
       const publishTier = () => {
         const p = s.pipelineInfo;
@@ -324,6 +332,7 @@ export function start(): void {
           tm.choose(qualitySelect.value as TierChoice);
         });
       }
+      s.motion = cueMotion();
       stage = s; // publish only once loaded: the frame loop checks `stage`
       if (import.meta.env.DEV) Object.assign(window, { __atlas: { stage: s, get track() { return track; }, evaluate, layoutLabels, get settledPlate() { return settledPlate; }, get current() { return current; }, targetT, hold: (st: SceneState | null) => (held = st) } });
       document.body.classList.add('scene-active');
@@ -443,6 +452,7 @@ export function start(): void {
     li.dataset.structure = id;
     li.dataset.emphasis = emphasis; // read by the capture suite's contrast and luminance checks
     li.innerHTML = `${main}${latin ? `<span class="latin">${latin}</span>` : ''}`;
+    li.style.setProperty('--i', String(labelsEl.childElementCount)); // the entrance stagger, top to bottom
     labelsEl.append(li);
     return li;
   }
@@ -596,6 +606,8 @@ export function start(): void {
       onSettled(plate);
     }
 
+    // The directional cue's clock and fades run every frame (the settle's own frames see it move too).
+    const flowing = stage ? stage.tick(dt) : false;
     if (stage && (dirty || current !== lastApplied)) {
       if (settleToken) settleToken.cancelled = true;
       settleToken = null;
@@ -626,6 +638,10 @@ export function start(): void {
         if (!performance.getEntriesByName('atlas:converged').length) performance.mark('atlas:converged');
         firstConverged();
       });
+    } else if (stage && flowing && !settleToken && !warmingUp) {
+      // A still plate with a directional cue showing: frames of its own for the cue, never inside a settle. Every
+      // animation frame: the temporal AA converges per frame, and at half rate it smeared the travelling band.
+      stage.render();
     }
   };
 
@@ -640,7 +656,7 @@ export function start(): void {
       announcedPlate = i;
     }
     for (const a of railLinks) a.setAttribute('aria-current', String(a.dataset.chapter === p.chapter));
-    instrument.onPlate(p.chapter);
+    instrument.onPlate(p.chapter, i);
     if (pendingFocus === i) {
       headings[i]!.focus({ preventScroll: true });
       pendingFocus = null;

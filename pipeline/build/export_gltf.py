@@ -24,7 +24,7 @@ SPECS = ROOT / "pipeline/specs"
 
 # Structures in the M1 slice, in nesting/render order (outer tissue first).
 SCENE = [
-    "skin", "eyes", "exterior_body", "hair", "subcutaneous_fat", "smas", "parotid_fascia",
+    "skin", "eyes", "exterior_body", "hair", "portrait_scalp", "portrait_hair", "subcutaneous_fat", "smas", "parotid_fascia",
     # the superficial and deep lobes are groups of ESGS-level pieces (pieces.py); the tumour travels with level II
     "parotid_level_1", "parotid_level_2", "parotid_ecd_cuff", "pleomorphic_adenoma", "pleomorphic_adenoma_deep", "pleomorphic_adenoma_tail", "pleomorphic_adenoma_accessory", "parotid_level_3", "parotid_level_4", "parotid_accessory_lobe",
     "facial_nerve_trunk", "facial_nerve_temporofacial", "facial_nerve_cervicofacial", "facial_nerve_temporal",
@@ -38,7 +38,7 @@ SCENE = [
     "masseter_r", "temporalis_r", "sternocleidomastoid_main", "scm_flap", "digastric_posterior_belly", "stimulator_probe", "smas_flap", "barrier_graft", "sialocele_pocket", "recurrence_nodules", "needle", "us_probe", "us_plane", "ct_tumour_outline", "drain_tube", "submandibular_gland_r",
     "internal_jugular_vein_r", "mandible", "skull", "styloid_process", "nerve_plane",
 ]
-ATTRS = {"peel_order": "_PEEL", "cut": "_CUT", "cut_s": "_CUTS", "flap_w": "_FLAPW", "cutface": "_CUTFACE", "ink": "_INK", "mob": "_MOB", "cut2": "_CUT2", "cut_s2": "_CUTS2", "foldw": "_FOLDW", "tint": "_TINT", "hair_h": "_HAIRH", "flow": "_FLOW", "hair_kind": "_HAIRK", "axis": "_AXIS", "foot": "_FOOT"}
+ATTRS = {"peel_order": "_PEEL", "cut": "_CUT", "cut_s": "_CUTS", "flap_w": "_FLAPW", "cutface": "_CUTFACE", "ink": "_INK", "mob": "_MOB", "cut2": "_CUT2", "cut_s2": "_CUTS2", "foldw": "_FOLDW", "tint": "_TINT", "hair_h": "_HAIRH", "flow": "_FLOW", "hair_kind": "_HAIRK", "axis": "_AXIS", "foot": "_FOOT", "pdisp": "_PDISP", "pnrm": "_PNRM", "port": "_PORT", "groom": "_GROOM", "arc": "_ARC"}
 
 
 # Muscles whose fibre direction the stage draws (fascicles): the principal axis of the belly, or a fan converging on
@@ -112,9 +112,10 @@ def main() -> None:
         nrm = d["normals"].astype(np.float32)
         nrm = np.c_[-nrm[:, 0], nrm[:, 2], nrm[:, 1]].astype(np.float32)
         extra = {}
-        if "flow" in d.files:  # a direction, mapped to the glTF frame like the normals
-            f = d["flow"]
-            extra["flow"] = np.c_[-f[:, 0], f[:, 2], f[:, 1]].astype(np.float32)
+        for key, scale in (("flow", 1.0), ("pnrm", 1.0), ("pdisp", 0.001)):  # directions and offsets (mm -> m), mapped like the normals
+            if key in d.files:
+                f = d[key]
+                extra[key] = (np.c_[-f[:, 0], f[:, 2], f[:, 1]] * scale).astype(np.float32)
         axis = fibre_axis(sid, d)
         if axis is not None:
             extra["axis"] = np.c_[-axis[:, 0], axis[:, 2], axis[:, 1]].astype(np.float32)
@@ -234,6 +235,23 @@ def main() -> None:
         corners = np.array([[x, y, z] for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])], float)
         gp = to_gltf(corners, origin)
         bounds[rid] = {"min": gp.min(0).round(5).tolist(), "max": gp.max(0).round(5).tolist()}
+    # The opening's portrait framing (portrait.py, presentation only): the portrait head front to back and side to side,
+    # from the crown down to the upper chest, so the head sits high in the frame with the shoulder below it.
+    sk, bd = np.load(MESHES / "skin.npz"), np.load(MESHES / "exterior_body.npz")
+    if "pdisp" in sk.files:
+        pp = np.vstack([sk["positions"] + sk["pdisp"], bd["positions"] + bd["pdisp"]]).astype(float)
+        # the hair's height above the scalp is a fixed allowance, so grooming the hair never moves the camera
+        top = pp[:, 2].max() + 13.0
+        head = pp[pp[:, 2] > top - 260]
+        lo = np.array([head[:, 0].min(), head[:, 1].min(), top - 305])
+        hi = np.array([head[:, 0].max(), head[:, 1].max(), top])
+        corners = np.array([[x, y, z] for x in (lo[0], hi[0]) for y in (lo[1], hi[1]) for z in (lo[2], hi[2])], float)
+        gp = to_gltf(corners, origin)
+        bounds["portrait_bust"] = {"min": gp.min(0).round(5).tolist(), "max": gp.max(0).round(5).tolist()}
+    # With the hero portrait (pipeline/blender/hero.py), the opening frames the hero instead.
+    hero_report = ROOT / "pipeline/segment/work/hero/report.json"
+    if hero_report.exists():
+        bounds["portrait_bust"] = json.loads(hero_report.read_text(encoding="utf-8"))["portrait_bust"]
     # Groups (structure records with `members`) stand for several meshes: bounds are the union of the members'.
     groups = {}
     for f in sorted((ROOT / "apps/site/src/content/structures").glob("*.json")):
@@ -277,6 +295,11 @@ def main() -> None:
         "imaging": {**json.loads((ROOT / "pipeline/segment/work/imaging.json").read_text()), "origin_ras_mm": origin.tolist()},
         "imaging": {**json.loads((ROOT / "pipeline/segment/work/imaging.json").read_text()), "origin_ras_mm": origin.tolist()},
 
+        # The opening portrait's neck and shoulder relief (portrait.py): capsules in glTF metres, [ax, ay, az, bx, by, bz,
+        # height, width] (presentation only).
+        "portrait": {"ear": to_gltf(np.array([json.loads((ROOT / "pipeline/segment/work/portrait.relief.json").read_text())["landmarks_ras_mm"]["E"]]), origin)[0].round(6).tolist(), "relief_group": json.loads((ROOT / "pipeline/segment/work/portrait.relief.json").read_text())["segments_per_muscle"], "relief": [[*to_gltf(np.array([c[:3]]), origin)[0].round(6).tolist(), *to_gltf(np.array([c[3:6]]), origin)[0].round(6).tolist(), round(c[6] * 0.001, 6), round(c[7] * 0.001, 6)] for c in json.loads((ROOT / "pipeline/segment/work/portrait.relief.json").read_text())["capsules_ras_mm"]]} if (ROOT / "pipeline/segment/work/portrait.relief.json").exists() else {},
+        # Direction of the travelling cue per structure (anatomy.yaml `flows`; +1 along `_ARC`, -1 against it). Presentation only.
+        "flow": (lambda f: {k: 1 for k in f.get("forward", [])} | {k: -1 for k in f.get("reverse", [])})(yaml.safe_load((SPECS / "anatomy.yaml").read_text(encoding="utf-8")).get("flows", {})),
         "structures": summary,
         "triangles_total": int(sum(v["triangles"] for v in summary.values())),
     }

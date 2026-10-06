@@ -7,8 +7,8 @@
     ],
     "max_diameter_mm": 12.0,
     "nerve_clearance_mm": 6.29,
-    "vessel_clearance_mm": 1.34,
-    "skin_cover_mm": 18.91,
+    "vessel_clearance_mm": 1.43,
+    "skin_cover_mm": 18.89,
     "fraction_in": {
       "gland": 0.84,
       "deep": 0.79,
@@ -23,8 +23,8 @@
     ],
     "max_diameter_mm": 15.9,
     "nerve_clearance_mm": 1.43,
-    "vessel_clearance_mm": 5.83,
-    "skin_cover_mm": 2.63,
+    "vessel_clearance_mm": 5.94,
+    "skin_cover_mm": 2.65,
     "fraction_in": {
       "gland": 0.93,
       "deep": 0.0,
@@ -38,9 +38,9 @@
       243.0
     ],
     "max_diameter_mm": 10.9,
-    "nerve_clearance_mm": 5.13,
-    "vessel_clearance_mm": 28.81,
-    "skin_cover_mm": 0.1,
+    "nerve_clearance_mm": 5.14,
+    "vessel_clearance_mm": 28.87,
+    "skin_cover_mm": 0.03,
     "fraction_in": {
       "gland": 0.0,
       "deep": 0.0,

@@ -148,6 +148,23 @@ segments:
   - { id: digastric_posterior_belly, kind: muscle, path: [dig_origin, dig_1, dig_2, dig_3, dig_tendon], radius: [5.0, 2.0], claims: [landmark-posterior-belly-digastric] }
   - { id: styloid_process, kind: bone, path: [sty_base, sty_tip], radius: [2.4, 0.7], claims: [landmark-styloid] }
 
+# Functional direction of the directional cue (presentation only: the stage's travelling pulse, materials.ts). The
+# geometry carries an unsigned tree distance from each tree's root (`arc`, mm); `forward` = the cue travels in path
+# order, `reverse` = against it. Segments not listed carry no direction and no cue. Speeds are illustrative.
+flows:
+  root_why:
+    facial_nerve_trunk: "motor (efferent): impulses travel from the stylomastoid foramen out to the facial muscles"
+    great_auricular_nerve: "cutaneous sensory (afferent): impulses travel from the ear lobe and parotid skin toward the cervical plexus"
+    external_carotid_artery: "arterial: from the carotid bifurcation toward the terminal branches"
+    retromandibular_vein: "venous drainage: down from the union of the superficial temporal and maxillary veins"
+  forward: [facial_nerve_trunk, facial_nerve_temporofacial, facial_nerve_cervicofacial, facial_nerve_temporal, facial_nerve_zygomatic,
+    facial_nerve_buccal, facial_nerve_marginal_mandibular, facial_nerve_cervical, facial_nerve_posterior_auricular, facial_nerve_digastric_branch,
+    external_carotid_artery, maxillary_artery, superficial_temporal_artery,
+    retromandibular_vein, retromandibular_vein_anterior, retromandibular_vein_posterior, external_jugular_vein]
+  reverse: [great_auricular_nerve, great_auricular_nerve_anterior, great_auricular_nerve_posterior]
+  # Not listed, deliberately: the interconnecting twigs (no defensible direction between two motor branches) and the
+  # auriculotemporal nerve (mixed: sensory afferents and secretomotor efferents in one trunk).
+
 checks:
   trunk_length_mm: { segment: facial_nerve_trunk, claim: fn-trunk-length, range: [8.6, 22.8] }
   pes_inside_parotid: { node: pes, mask: head_glands_cavities/parotid_gland_right, max_outside_mm: 2 }
@@ -316,6 +333,289 @@ exterior:
   part_spread: 0.25           # combed back, falling a little away from the midline
   comb_down: 0.35
   side_down: 0.9
+
+# The opening's portrait (portrait.py): presentation only, no anatomy and no claims. A leaner, athletic version of
+# the same generic exterior (the owner's goal reference), stored as a morph that settles into the fitted exterior
+# before any anatomy shows. MakeHuman macro values 0..1 (0.5 = average), the same CC0 archive.
+portrait:
+  mpfb_macro:
+    gender: male
+    age_old_weight: 0.12      # early thirties (young 25 → old 90)
+    muscle: 1.0
+    weight: 0.4
+    proportions: 1.0          # MakeHuman's "ideal" proportions
+    ancestry: { caucasian: 0.7, african: 0.15, asian: 0.15 }   # weighted toward the owner's goal reference
+    targets:
+      neck/neck-double-decr: 1.0
+      torso/torso-vshape-incr: 0.4
+      chin/chin-prominent-incr: 0.35
+      chin/chin-bones-incr: 0.25
+      cheek/r-cheek-bones-incr: 0.2
+      cheek/l-cheek-bones-incr: 0.2
+      chin/chin-jaw-drop-incr: 0.25
+      head/head-fat-decr: 0.5
+      head/head-square: 0.1
+      nose/nose-scale-depth-incr: 0.35
+      nose/nose-scale-vert-incr: 0.25
+      nose/nose-point-width-decr: 0.3
+      chin/chin-height-incr: 0.4
+      mouth/mouth-lowerlip-volume-incr: 0.25
+      forehead/forehead-trans-backward: 0.3
+      eyes/r-eye-height2-incr: 0.8
+      eyes/l-eye-height2-incr: 0.8
+      eyes/r-eye-scale-incr: 0.25
+      eyes/l-eye-scale-incr: 0.25
+      eyebrows/eyebrows-trans-forward: 0.6
+      cheek/r-cheek-inner-decr: 0.4
+      cheek/l-cheek-inner-decr: 0.4
+      mouth/mouth-cupidsbow-incr: 0.4
+      mouth/mouth-laugh-lines-in: 0.3
+      nose/nose-hump-incr: 0.15
+      ears/r-ear-scale-incr: 0.15
+      ears/l-ear-scale-incr: 0.15
+      neck/measure-neck-circ-incr: 1.0
+      neck/measure-neck-height-decr: 0.6
+      neck/neck-scale-depth-incr: 0.5
+      neck/neck-back-scale-depth-incr: 0.5
+  normal_smoothing_iters: 2   # the portrait normals, smoothed over the surface (shading only)
+  # Muscle and bone relief of the neck and shoulder (portrait.py relief(); drawn by the stage): polylines between
+  # landmark offsets (mm, RAS: +x the patient's right, +y anterior, +z up), with height (mm, negative = a hollow)
+  # and width. M mastoid, S sternal notch, A acromion, L laryngeal prominence, N nape, E ear canal.
+  relief:
+    mastoid_offset_mm: [-6, -16, -36]
+    acromion_x_mm: 175
+    segments_per_muscle: 4      # the stage takes the distance to each muscle's whole polyline (blocks of this size)
+    notch_above_acromion_mm: -14
+    larynx_at: 0.5
+    nape_below_ear_mm: 55
+    muscles:
+      - { name: scm_sternal, amp_mm: 2.4, sigma_mm: 11, path: [[M, [0, 0, 0]], [S, [12, 6, 30]], [S, [7, 0, 6]]] }
+      - { name: scm_clavicular, amp_mm: 1.2, sigma_mm: 10, path: [[M, [0, -4, -18]], [S, [32, -6, 22]], [S, [30, -10, 0]]] }
+      - { name: scm_groove, amp_mm: -0.8, sigma_mm: 9, path: [[M, [0, 20, -22]], [S, [8, 14, 40]]] }
+      - { name: clavicle, amp_mm: 1.8, sigma_mm: 6, path: [[S, [14, -2, 0]], [A, [-45, 4, -2]], [A, [-22, -2, -4]]] }
+      - { name: supraclavicular, amp_mm: -1.8, sigma_mm: 12, path: [[S, [40, -24, 18]], [A, [-38, -22, 10]]] }
+      - { name: trapezius, amp_mm: 4.2, sigma_mm: 16, path: [[N, [18, 4, -10]], [A, [-55, -38, 26]], [A, [-14, -24, 6]]] }
+      - { name: larynx, amp_mm: 3.0, sigma_mm: 6, path: [[L, [0, 0, 6]], [L, [0, 0, -6]]] }
+      - { name: deltoid, amp_mm: 2.4, sigma_mm: 22, path: [[A, [4, 6, -28]], [A, [4, 6, -30]]] }
+  cavity: { samples: 160000, neighbours: 64, radius_mm: 5.0, from_mm: 0.15, to_mm: 1.2 }   # creases: depth below the local mean surface
+  # The hero key light's shadow, baked (portrait.py; the stage has no shadow maps): its direction is stage.ts LOOKS.hero
+  # keyDir in RAS (glTF x, y, z = -RAS x, RAS z, RAS y). Packed with the cavity: half the cavity or the shadow.
+  key_shadow: { dir_ras: [0.55, 0.63, 0.55], cell_mm: 2.0, bias_mm: 3.0, soft_mm: 12.0, smooth_iters: 12, strength: 0.85 }
+  # Torso turned toward the viewer under a profile head, and the shoulders lowered from the rest pose (mm, RAS).
+  pose: { neck_z: 150, twist_deg: 4, twist_full_z: 70, twist_zero_z: 140, shoulder_drop_mm: 30, drop_from_mm: [40, 130], torso_back_mm: 40, head_pitch_deg: 7, head_pitch_pivot_dz: 70, head_pitch_ramp_mm: 60, head_drop_mm: 12 }
+  # Beard shadow (stubble): below a line given by height above the eye centre against mm in front of the ear canal
+  # (the sideburn's foot, the cheek, the mouth corner), down to the neck line; the front of the neck under the jaw.
+  stubble:
+    line_y: [-5, 10, 30, 55, 75, 95]
+    line_dz: [-22, -28, -38, -48, -52, -46]
+    soft_mm: 14
+    front_from_mm: -2
+    neck_dz: -150
+  # The portrait's haircut (groom.py): short and textured, longer and lifted on top, tapered to a fade over the ears
+  # and at the nape. Hairline heights in mm relative to the eye centre ("eye") or the ear canal ("ear") against mm in
+  # front of the ear canal; the ear and the parotid region are kept clear as for the fitted haircut.
+  hair:
+    hairline:
+      y:   [-130, -100, -70, -45, -25, -8, 6, 14, 24, 34, 42, 47, 52, 58, 68, 140]
+      ref: [ear, ear, ear, ear, ear, ear, ear, ear, ear, ear, ear, ear, eye, eye, eye, eye]
+      dz:  [-72, -70, -62, -44, 6, 26, 22, 4, -1, -3, -5, 18, 40, 52, 62, 70]
+      front_dz: 70
+      side_from_mm: [30, 50]
+    hairline_soft_mm: 10
+    ear_clear_mm: [5, 9]
+    top_mm: 34               # the front of the top
+    crown_mm: 16
+    side_mm: [5, 15]          # from the faded nape and temples to the upper sides
+    top_from_dz: [38, 80]    # height above the ear canal over which the sides become the top
+    brow_mm: 2.8
+    brow: { medial_mm: 20, lateral_mm: 26, height_mm: 12, arch_mm: 3, tail_drop_mm: 3, half_medial_mm: 6.5, half_tail_mm: 3.6 }
+    part_spread: 0.3
+    comb_down: 0.2
+    side_down: 0.85
+    front_lift: 1.0
+    shell_fraction: 0.45     # the shell under-layer's length as a share of the hair's (capped)
+    shell_max_mm: 3.5
+    whorl: { behind_ear_mm: [-75, -40], radius_mm: 38, strength: 0.7 }   # the crown whorl (mm from the ear canal, front-back)
+    shell_min_mm: 3.5
+    groom:
+      seed: 20261005
+      envelope: { azimuth_deg: [2, 8], elevation_deg: [0, 2], min_facing: -0.35 }   # plate 1 and the transition to plate 2
+      min_len_mm: 5.0
+      clumps: 750
+      cards: 6500
+      points: 5
+      rise_t: 0.45
+      settle: 0.35
+      root_lift_mm: 0.4
+      inertia: 0.7
+      lift_top: 0.35          # height above the scalp as a share of the length
+      lift_side: 0.3
+      clump_converge: 0.88
+      clump_radius_mm: 6.0
+      tuft_fraction: 0.08
+      tuft_length: 1.3
+      tuft_lift: 1.5
+      flyaway_fraction: 0.015
+      flyaway_length: 1.2
+      flyaway_lift_mm: 2.5
+      layer_mm: 3.0
+      wave_mm: 0.7
+      turn_deg: 22            # locks turned off the comb direction (more on top: texture)
+      wave_cycles: 0.8
+      width_mm: 2.0
+      taper: 0.6
+
+# The opening's hero portrait (hero_prep.py, then pipeline/blender/hero.py; presentation only, no claims): a separate
+# asset authored from Blender Studio's Human Base Meshes (CC0, pipeline/sources/human-base-meshes-1.4.1.json), which
+# hands off to the fitted exterior before any anatomy shows. The goal reference is art direction, not a likeness.
+hero:
+  source:
+    blend: pipeline/sources/raw/human-base-meshes/extracted/human-base-meshes-bundle-v1.4.1/human_base_meshes_bundle.blend
+    object: GEO-body_male_realistic
+    eyes: [GEO-body_male_realistic.eye.L, GEO-body_male_realistic.eye.R]
+  web_level: 2              # multires level of the realtime mesh
+  high_level: 3             # multires level the detail is baked from
+  place:                    # on the fitted eyes: scale from their distance (times `scale`), then pitch and offset
+    scale: 1.0
+    pitch_deg: 0.0          # positive tips the face up
+    yaw_deg: 7.0            # the finished figure turned toward the viewer (the goal reference's three-quarter hint)
+    offset_mm: [0, 0, 0]    # Blender frame: +x left, -y anterior, +z up
+  # Authored shape edits, applied alike to the realtime and the bake meshes (hero.py `edit`). Positions are mm from
+  # the eyes' midpoint: lat (toward the patient's left), ant (anterior), up. Weights ramp with smoothstep between
+  # the listed heights.
+  edits:
+    # an upright neck over the shoulders (the figure carries its head forward): the torso turns forward about the
+    # neck's base
+    torso_pitch: { deg: 16, pivot: [-110, -170], full_below: -190, none_above: -115 }
+    # a longer skull behind the ears
+    occiput: { mm: 8, from_ant: -70, full_ant: -150, from_up: -75, full_up: -25 }
+    # larger ears, a little higher and further back (about the helix's centroid; blended out over the radius)
+    ears: { scale: 1.13, raise_mm: 4, back_mm: 4, radius_mm: 42, tilt_deg: 9 }   # tilt: the top forward
+    # Local sculpt toward the reference's art direction (not a likeness): Gaussian moves at [lat, ant, up] with a
+    # radius (mm) by [lat, ant, up] mm; `sym` mirrors one about the midline (lat flips sign for both).
+    blobs:
+      - { at: [0, 19, -95], r: 15, by: [0, 4.5, -2.0] }      # chin: forward, a little longer
+      - { at: [0, 20, -107], r: 12, by: [0, 2.0, -1.5] }     # its underside, squared
+      - { at: [0, 29, -67], r: 11, by: [0, -2.2, 0] }        # lips back
+      - { at: [0, 37, -33], r: 9, by: [0, 2.0, -2.5] }       # nasal tip: longer, a touch down
+      - { at: [0, 24, -12], r: 9, by: [0, 1.5, 0] }          # nasal dorsum raised
+      - { at: [0, 20, 16], r: 12, by: [0, 1.5, 0] }          # glabella
+      - { at: [22, 17, 17], r: 13, by: [0, 2.5, 0.5], sym: true }     # brow ridges
+      - { at: [44, 2, -18], r: 15, by: [2.0, 1.0, 0.5], sym: true }   # cheekbones
+      - { at: [58, -52, -82], r: 17, by: [3.0, -1.5, -3.0], sym: true }  # jaw angles: wider, lower, sharper
+      - { at: [0, -12, -118], r: 20, by: [0, 0, 3.0] }       # under the chin: lean
+      # a broad athletic neck: the throat and the sternocleidomastoids forward, the nape and the trapezius back and up
+      - { at: [0, -35, -150], r: 32, by: [0, 20, 0] }
+      - { at: [40, -40, -145], r: 30, by: [6, 12, 0], sym: true }
+      - { at: [0, -160, -125], r: 28, by: [0, -12, 0] }
+      - { at: [55, -160, -150], r: 42, by: [5, -11, 3], sym: true }
+      - { at: [0, -150, -100], r: 24, by: [0, -6, 0] }
+      - { at: [30, 13, 8], r: 8, by: [0, 1.0, -1.2], sym: true }     # upper lids: a fuller fold over the globe
+      - { at: [30, 16, 14], r: 9, by: [0, 1.6, -0.6], sym: true }    # the brow's overhang above it
+    # the globes set deeper under the brow (mm back)
+    eyes_back_mm: 1.6
+    # Muscle and bone relief along the surface normal: segments [lat, ant, up] -> [lat, ant, up] (mirrored), height
+    # and Gaussian half-width (mm); a negative height is a groove.
+    ridges:
+      - { a: [60, -92, -62], b: [16, -36, -188], h: 7.0, w: 13 }     # sternocleidomastoid, sternal head
+      - { a: [64, -112, -82], b: [50, -100, -172], h: -2.8, w: 11 }  # the posterior triangle behind it
+      - { a: [58, -96, -70], b: [38, -48, -192], h: 3.2, w: 10 }     # its clavicular head
+      - { a: [44, -60, -150], b: [30, -40, -175], h: -2.4, w: 6 }   # the groove between the heads
+      - { a: [22, -40, -198], b: [140, -95, -192], h: 2.4, w: 7 }   # clavicle
+      - { a: [17, 17, -30], b: [20, 13, -41], h: -1.4, w: 2.2 }      # alar groove
+      - { a: [20, 13, -41], b: [13, 17, -48], h: -1.4, w: 2.2 }
+      - { a: [14, 22, 2], b: [40, 4, 4], h: -1.2, w: 2.5 }          # upper lid crease
+      - { a: [26, -152, -92], b: [130, -120, -178], h: 3.0, w: 16 }  # upper trapezius border
+  # The groom (pipeline/blender/groom.py): a short textured cut, longer and lifted on top, tapered sides and nape.
+  # Angles (theta) run around the head's vertical axis (`axis_ant` mm in front of the eyes... behind, when negative):
+  # 0 in front, 90 over the ear, 180 the nape. Heights are mm above the eyes.
+  hair:
+    seed: 20261006
+    strands: 70000
+    points: 8
+    width_mm: [0.14, 0.035]       # root and tip (the stage keeps every strand at least about a pixel wide)
+    axis_ant: -72
+    hairline:
+      theta: [0, 20, 30, 38, 46, 54, 62, 70, 77, 81, 84, 87, 92, 108, 113, 117, 125, 140, 160, 180]
+      up: [66, 64, 58, 52, 46, 34, 27, 23, 20, 13, 10, 22, 27, 28, 18, -10, -30, -48, -58, -62]
+      soft_mm: 7
+      wobble_mm: 3.5
+    ear_clear_mm: [24, 32]        # from the ear's root centre: no hair inside the first, full density past the second
+    length_mm:
+      edge: 3
+      side: 10
+      side_rise_mm: 22
+      back: 8
+      back_rise_mm: 40
+      top_theta: [0, 60, 120, 180]
+      top: [32, 28, 21, 14]
+      top_from_up: 38
+      top_full_up: 62
+      hairline_mm: 6
+    lift: { theta: [0, 30, 90, 150, 180], deg: [44, 34, 24, 12, 8], side_deg: 3 }
+    comb: { crown_theta: [130, 165], front_up_theta: [10, 60] }   # up and back at the front, back over the top
+    shape: { settle: 0.5, bend: 0.34, root_lift_mm: 0.2, frizz_mm: 0.9, frizz_cycles: 2.0, min_above_mm: 0.3 }
+    clump: { per_clump: 30, converge: 0.7, power: 2.0, per_clump_brow: 4, converge_brow: 0.3 }
+    flyaway: { fraction: 0.006, length: 1.15, lift_mm: 2 }
+    locks: { length_sigma: 0.15, lift_sigma: 0.22, turn_deg: 16 }   # per clump
+    brows:
+      strands: 1800
+      lat: [10, 22, 34, 46]
+      up: [11, 13, 12, 8]
+      half_mm: [4, 3.5, 2.8, 1.6]
+      density: [0.9, 0.9, 0.75, 0.4]
+      length_mm: 5
+      lift_deg: 2
+      width_mm: 0.06
+    lashes:
+      strands: 260
+      length_mm: 6
+      lift_deg: 62
+      width_mm: 0.05
+  # Skin maps (pipeline/blender/skin.py): colours are linear RGB; lengths mm.
+  skin:
+    texture_px: 4096
+    head_density: 1.6         # texel density of the head's UV islands relative to the body's
+    cage_mm: 3
+    ray_mm: 6
+    base: [0.62, 0.34, 0.24]
+    broad: 0.18               # centimetre-scale uneven pigment (+-)
+    mottle: 0.08
+    red_tint: [1.08, 0.82, 0.82]
+    red: 0.45
+    beard_tint: [0.74, 0.74, 0.8]
+    beard: 0.75
+    stubble_mm: 1.0
+    stubble_colour: [0.05, 0.043, 0.04]
+    stubble: 0.85
+    stubble_relief: 0.4
+    lips: [0.42, 0.18, 0.14]
+    lid_tint: [0.85, 0.75, 0.78]
+    freckle_below_mm: 170
+    scalp_colour: [0.05, 0.042, 0.038]
+    scalp: 0.85
+    pore_mm: 0.65
+    roughness: 0.5
+    tz_gloss: 0.16
+    lines: 0.15
+    relief_mm: 0.3
+    grain_mm: 1.1
+    grain: 0.45
+  # The handoff (pipeline/blender/handoff.py): landmark warp, closest point on the fitted exterior, smoothing.
+  handoff:
+    smooth_iters: 12
+    canal_from_root_mm: [4, 18]   # ant, up: the ear canal from the helix's root centre (hero.py ear_roots)
+  crop:
+    below_eye_mm: 430
+    half_width_mm: 420
+  # The opening's framing (frame.json `portrait_bust`, a box the camera fits as a sphere: 01-face.mdx frames it at
+  # zoom 0.92 with a 28 degree vertical field): from the goal reference's composition, the head (crown to chin) fills
+  # about half the frame's height, the frame's centre lies this far below the crown and behind the head's middle.
+  frame:
+    crown_allowance_mm: 14   # the hair above the scalp
+    centre_below_crown_mm: 142
+    centre_behind_mm: 12
+    radius_mm: 197
 
 # Pieces (pieces.py): the completed gland is cut into closed pieces so that resections can lift exactly the tissue
 # each operation removes (plan §8). ESGS levels (Quer 2016): I lateral superior, II lateral inferior, III deep

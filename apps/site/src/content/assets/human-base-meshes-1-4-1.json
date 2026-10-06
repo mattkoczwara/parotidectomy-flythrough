@@ -1,0 +1,19 @@
+{
+  "id": "human-base-meshes-1-4-1",
+  "kind": "source-data",
+  "source": {
+    "name": "Blender Studio Human Base Meshes v1.4.1 (realistic male body and eyes)",
+    "url": "https://www.blender.org/download/demo-files/",
+    "version": "1.4.1",
+    "retrieved": "2026-10-06"
+  },
+  "licence": {
+    "id": "CC0-1.0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "obligations": []
+  },
+  "attribution": "Human Base Meshes by Blender Studio and community contributions (CC0 1.0); a synthetic sculpt, not a scan of a person",
+  "sha256": "811f43accbb31a88266d932f8f5563b2d13586fca0ba2693aad1f5fe582b3515",
+  "transformations": [],
+  "specClaims": []
+}

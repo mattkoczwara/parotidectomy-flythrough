@@ -26,17 +26,34 @@ None. Next project work is clinical review (`docs/STATUS.md`).
   - Brownish underside of the raised flap, a dark patch in it, serrated edges, a sheared corner: **fixed** in the flap
     pass (2026-10-05, QC log): a hole in the fat over the gland, a nearest-vertex field transfer to the fat, the
     lateral factor's normal test under the lobule, terraced fat normals, and the skin inner shell's reversed normal.
-  - Remaining: a few cream flecks along the flap's upper edge (the fat's cut face) and the flap's small front notch:
-    **B**. The fold is a curl, rigid beyond its 20 mm ramp: **B**.
+  - Cream flecks along the flap's edge: **fixed** (the skin's inner shell lay 0.5 mm under the outer shell on the
+    raised flap; now 1 mm from both it and the fat). Remaining, **B**: the small tooth at the flap's front corner
+    (the end cap's weight ramp folds the fat's faces up to ~14° apart there; removing it changes the incision end)
+    and the curl, rigid beyond its 20 mm ramp (a distributed bend moved the flap a median 36 mm: not kept).
   - Heavy neck and shoulders: **C** above the scene cut (the upper neck is fitted to the donor's CT, a heavy-set
-    man); **B** below it (generic shoulders).
+    man); **B** below it (generic shoulders). The opening now shows a leaner portrait that morphs into this fitted
+    exterior before any anatomy appears (ADR-0005 amendment, portrait pass 2026-10-05). The fitted surface is unchanged.
   - No A items. Nothing was changed for these.
+
+## Opening hero asset (2026-10-06)
+
+The opening's morph portrait is replaced by a separate hero asset: `hero.glb` and its WebP skin maps, built by `pipeline/build/hero_only.sh`, which `build.sh` and `exterior_only.sh` now also run. It is drawn by `packages/stage/src/hero.ts` and hands off to the fitted exterior at p 1 → 0. See ADR-0005 (opening hero asset) and the QC log. Not yet done:
+- the full capture suite, perf and Firefox runs;
+- the owner's approval, after which the dormant morph portrait (`portrait.py`, `groom.py` and the `_pdisp`/`_pnrm`/`_port` paths) is removed;
+- asset size optimisation (hair about 1.1 M ribbon vertices; the 4K normal and ORM maps are near-lossless).
 
 ## Remaining release blockers
 None in production (P0/P1). Public release is blocked by clinical review, and Safari and real mobile hardware are
 untested (see the release report in `docs/STATUS.md`). Deferred P2: the items above, the loading poster's framing
 offset of a few per cent (crossfaded), Mid tier p95 about 36 ms under 4× CPU throttle, and first convergence
 ~9.3 s on a cold load (the poster covers it).
+
+## Nerves and vessels (2026-10-05)
+The authored tubes were wound inside out, so they rendered flat; they now shade properly, with tapered nerve ends,
+funnelled branch points and restrained vessel and nerve materials. A directional cue (blood flow distal in arteries,
+toward drainage in veins, efferent in the facial nerve, afferent in the great auricular nerve; none on the twigs or the
+auriculotemporal nerve) runs only on taught structures, never in capture mode or with reduced motion. Speeds are
+stylised. Details in QC_LOG.md.
 
 ## Approved visual benchmarks
 `opening` (face), `localisation` (where-parotid), `nerve-operative` (bed; re-approved 2026-10-05), `explore`.
