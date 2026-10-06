@@ -7,9 +7,9 @@ import { attribute, cameraPosition, cross, dot, float, fract, max, mix, normalLo
  * the opening shows, which hands off to the fitted exterior before any anatomy appears (ADR-0005, opening hero).
  *
  * The handoff, driven by the portrait weight p (U.portrait, 1 on the opening, 0 once the exterior is the donor's):
- * the hero morphs onto the fitted surface along its baked `_hdisp` (p 1 → 0.35), its hair dissolves strand by strand
- * while the fitted hair comes in (p 0.5 → 0.3), and its skin dissolves pixel by pixel over the fitted skin, which it
- * now coincides with (p 0.3 → 0). The dissolve's pattern changes with the TRAA jitter, so a settled frame resolves it.
+ * the hero morphs onto the fitted surface along its baked `_hdisp` (p 1 → 0.35) and its skin dissolves pixel by pixel
+ * over the fitted skin, which it now coincides with (p 0.3 → 0). Its hair rides the scalp throughout and stays as the
+ * opening's haircut until the skin is ghosted. The dissolve's pattern changes with the TRAA jitter, so a settled frame resolves it.
  */
 export const H = {
   /** hero → fitted shape, 0..1 */
@@ -24,10 +24,11 @@ export const H = {
   pixel: uniform(0.001),
 };
 
-/** The handoff's weights from the portrait weight p (see above). */
+/** The handoff's weights from the portrait weight p (see above). The hair is not among them: the hero's groom stays
+ *  on through the handoff and dissolves with the skin's ghosting, as the fitted haircut would (stage.ts). */
 export function handoff(p: number) {
   const s = THREE.MathUtils.smoothstep;
-  return { morph: 1 - s(p, 0.35, 1), hair: s(p, 0.3, 0.5), skin: s(p, 0, 0.3) };
+  return { morph: 1 - s(p, 0.35, 1), skin: s(p, 0, 0.3) };
 }
 
 /** A per-pixel threshold that moves with the frame phase (interleaved gradient noise, Jimenez 2014). */
@@ -58,6 +59,8 @@ export interface HeroPart {
  *  B thickness for the subsurface term). */
 export interface HeroMaps {
   albedo: THREE.Texture;
+  /** the same skin in the fitted exterior's tone, without the beard: what the hero settles into */
+  albedoFit: THREE.Texture;
   normal: THREE.Texture;
   orm: THREE.Texture;
 }
@@ -65,39 +68,54 @@ export interface HeroMaps {
 export async function loadHeroMaps(dir: string, anisotropy: number): Promise<HeroMaps | null> {
   const loader = new THREE.TextureLoader();
   try {
-    const [albedo, normal, orm] = await Promise.all(['albedo', 'normal', 'orm'].map((k) => loader.loadAsync(`${dir}hero_${k}.webp`)));
-    for (const t of [albedo!, normal!, orm!]) {
+    const [albedo, albedoFit, normal, orm] = await Promise.all(['albedo', 'albedo_fit', 'normal', 'orm'].map((k) => loader.loadAsync(`${dir}hero_${k}.webp`)));
+    for (const t of [albedo!, albedoFit!, normal!, orm!]) {
       t.flipY = false; // glTF texture coordinates
       t.anisotropy = anisotropy;
       t.colorSpace = THREE.NoColorSpace;
     }
     albedo!.colorSpace = THREE.SRGBColorSpace;
-    return { albedo: albedo!, normal: normal!, orm: orm! };
+    albedoFit!.colorSpace = THREE.SRGBColorSpace;
+    return { albedo: albedo!, albedoFit: albedoFit!, normal: normal!, orm: orm! };
   } catch {
     return null;
   }
 }
 
-/** The hero's skin: the baked maps under a restrained subsurface term. */
-export function heroSkin(g: THREE.BufferGeometry, maps: HeroMaps | null): THREE.MeshPhysicalNodeMaterial {
+/** How much of the hero's skin is present: all of it with the portrait, then the scalp under the groom (it dissolves
+ *  with the haircut, not with the face). */
+const skinPresence = (g: THREE.BufferGeometry) =>
+  g.getAttribute('_scalp') ? max(H.skin, smoothstep(0.2, 0.6, attribute('_scalp', 'float')).mul(H.hair)) : H.skin;
+
+/**
+ * The hero's skin: the baked maps under a restrained subsurface term. `fade`: the dissolve's variant, a true
+ * crossfade over the fitted skin (drawn in the transparent pass over `heroDepth`'s depth, so only the hero's front
+ * surface blends); the opaque variant draws the opening itself, where the hero alone is in the depth pre-pass.
+ */
+export function heroSkin(g: THREE.BufferGeometry, maps: HeroMaps | null, fade = false): THREE.MeshPhysicalNodeMaterial {
   const m = new THREE.MeshSSSNodeMaterial();
   m.positionNode = rest(g);
   const orm = maps ? texture(maps.orm, uv()) : null;
   // a portrait light, not a flood: the body below the jaw falls into shade (glTF metres; the origin is the parotid's
   // centroid, about 4 cm below the eyes)
-  const away = smoothstep(-0.12, -0.36, positionLocal.y);
+  const away = smoothstep(-0.08, -0.3, positionLocal.y);
   if (maps && orm) {
-    m.colorNode = texture(maps.albedo, uv()).rgb.mul(float(1).sub(away.mul(0.55)));
-    m.normalNode = normalMap(texture(maps.normal, uv()));
-    m.roughnessNode = orm.g.add(away.mul(0.12));
-    m.aoNode = orm.r;
+    // (as the hero settles onto the fitted surface, its colour, micro-relief and occlusion ease toward the fitted
+    // skin's tone and smoother shading, so the dissolve shows no change of tone or texture)
+    const settle = H.morph.mul(H.morph);
+    const tone = mix(texture(maps.albedo, uv()).rgb, texture(maps.albedoFit, uv()).rgb, settle);
+    m.colorNode = tone.mul(float(1).sub(away.mul(0.68).mul(float(1).sub(settle))));
+    m.normalNode = normalMap(texture(maps.normal, uv()), vec2(float(1).sub(settle.mul(0.75))));
+    m.roughnessNode = mix(orm.g.add(away.mul(0.2)), float(0.5), settle.mul(0.6));
+    m.aoNode = mix(orm.r, float(1), settle.mul(0.6));
   } else {
     m.colorNode = srgb(0xc29a86);
     m.roughness = 0.5;
   }
   // a sharper second specular lobe over the broad one: the sheen of skin oil
-  m.clearcoat = 0.25;
-  m.clearcoatRoughness = 0.38;
+  // (on the face and neck only: across the shoulders it flooded the body with the key's reflection)
+  m.clearcoatNode = float(0.35).mul(float(1).sub(smoothstep(-0.05, -0.2, positionLocal.y)));
+  m.clearcoatRoughness = 0.3;
   // the opening's outline of the gland on the skin (the fitted skin's field, carried over by the handoff): a fine
   // warm-white line and a slight warm shift inside it, as the fitted skin draws it (materials.ts `locate`)
   if (g.getAttribute('_foot')) {
@@ -112,9 +130,28 @@ export function heroSkin(g: THREE.BufferGeometry, maps: HeroMaps | null): THREE.
   m.thicknessAttenuationNode = float(0.6);
   m.thicknessPowerNode = float(3.0);
   // (only the thin parts: a baseline let the strong rim behind the figure glow through the neck and shoulders)
-  m.thicknessScaleNode = orm ? orm.b.mul(0.7) : float(0.1);
-  m.maskNode = dither().lessThan(H.skin);
+  m.thicknessScaleNode = orm ? orm.b.mul(0.4) : float(0.1);
+  if (fade) {
+    m.transparent = true;
+    m.depthWrite = false;
+    m.opacityNode = skinPresence(g);
+  }
   // ahead of the fitted skin it coincides with at the end of the morph
+  m.polygonOffset = true;
+  m.polygonOffsetFactor = -1;
+  m.polygonOffsetUnits = -4;
+  return m;
+}
+
+/** Depth only, for the dissolve: the hero's nearest surface, written after the fitted skin (transparent pass, drawn
+ *  first), so the crossfade blends one layer of the hero over the fitted skin and never its own back folds. */
+export function heroDepth(g: THREE.BufferGeometry): THREE.MeshBasicNodeMaterial {
+  const m = new THREE.MeshBasicNodeMaterial();
+  m.positionNode = rest(g);
+  m.colorWrite = false;
+  m.transparent = true;
+  m.depthWrite = true;
+  m.maskNode = skinPresence(g).greaterThan(0.003);
   m.polygonOffset = true;
   m.polygonOffsetFactor = -1;
   m.polygonOffsetUnits = -4;
@@ -171,7 +208,9 @@ export function heroHair(g: THREE.BufferGeometry): THREE.MeshPhysicalNodeMateria
   const t = h.x;
   const side = h.y;
   const flow = normalize(attribute('_flow', 'vec3'));
-  const base = rest(g, false);
+  // (riding the scalp through the morph, the strands lift a little off it: the fitted head is fuller, and flat side
+  // hair sank under the moving surface)
+  const base = rest(g, false).add(attribute('_hairn', 'vec3').mul(H.morph.mul(0.0024)));
   const toCam = cameraPosition.sub(base);
   const dist = toCam.length();
   const view = toCam.div(dist);

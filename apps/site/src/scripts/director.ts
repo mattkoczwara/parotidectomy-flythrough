@@ -656,7 +656,7 @@ export function start(): void {
       announcedPlate = i;
     }
     for (const a of railLinks) a.setAttribute('aria-current', String(a.dataset.chapter === p.chapter));
-    instrument.onPlate(p.chapter, i);
+    instrument.onPlate(p.chapter);
     if (pendingFocus === i) {
       headings[i]!.focus({ preventScroll: true });
       pendingFocus = null;

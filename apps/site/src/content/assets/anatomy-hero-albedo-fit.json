@@ -1,0 +1,26 @@
+{
+  "id": "anatomy-hero-albedo-fit",
+  "kind": "texture",
+  "source": {
+    "name": "Parotid Atlas opening portrait skin map (pipeline/blender/skin.py): hero_albedo_fit.webp, the same skin in the fitted exterior's tone without the beard (the handoff blends into it)",
+    "url": "https://www.blender.org/download/demo-files/",
+    "retrieved": "2026-10-06"
+  },
+  "licence": {
+    "id": "CC0-1.0",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "obligations": []
+  },
+  "attribution": "Presentation only: authored skin maps baked in Blender Cycles onto the opening's figure; nothing photographic.",
+  "sha256": "05fd717e988e35ecd859c94898259fd595dbe7b60f1e64c07aff405b54b2b789",
+  "file": "apps/site/public/assets/anatomy/hero_albedo_fit.webp",
+  "derivedFrom": [
+    "human-base-meshes-1-4-1"
+  ],
+  "transformations": [
+    "albedo: authored base tone, broad pigment, regional redness, beard shadow and stubble, lips, lids, lash line, nostrils, the scalp under the hair, freckles (procedural, seeded)",
+    "normal: the multires surface one level above the realtime mesh, with every shape edit, plus authored pores, fine skin texture, a millimetre-scale grain, forehead lines and stubble relief",
+    "ORM: baked ambient occlusion, authored regional roughness (T-zone, lips, beard, scalp) with pores and broad patches, thickness for the subsurface term (ears, nostrils, lids)"
+  ],
+  "specClaims": []
+}

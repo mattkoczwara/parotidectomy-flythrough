@@ -41,9 +41,8 @@ test('the atlas page has no automated accessibility violations (scene running)',
 });
 
 test('with the instrument open', async ({ page }) => {
-  // The opening plate has no instrument button; the second plate is the first that offers it.
-  await page.goto('/#where-parotid');
-  await page.waitForFunction(() => document.body.dataset.converged === '1', undefined, { timeout: 90_000 });
+  await page.goto('/');
+  await page.waitForFunction(() => document.body.dataset.converged === '0', undefined, { timeout: 90_000 });
   await page.locator('.instrument-toggle').click();
   const v = await audit(page, 'instrument');
   expect(v.map((x) => `${x.id}: ${x.help} (${x.nodes.length})`), 'violations').toEqual([]);

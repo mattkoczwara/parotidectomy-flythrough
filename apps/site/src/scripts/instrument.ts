@@ -45,8 +45,8 @@ export interface Instrument {
   limits(): { az: number; el: number; zoomMin: number; zoomMax: number };
   /** The scene state after the viewer's operation controls (Explore only); the argument is not kept. */
   override(state: SceneState): SceneState;
-  /** A plate has settled: the dial and the operation go back to the authored scene; the toggle recedes on the opening. */
-  onPlate(chapter: string, index: number): void;
+  /** A plate has settled: the dial and the operation go back to the authored scene. */
+  onPlate(chapter: string): void;
   /** A click or tap on the canvas at (x, y) in CSS pixels of the stage. */
   pickAt(x: number, y: number, width: number, height: number): void;
   refreshCard(): void;
@@ -96,10 +96,10 @@ export function mountInstrument(ctx: InstrumentContext): Instrument {
   // ── DOM ───────────────────────────────────────────────────────────────────────────────
   const toggle = document.createElement('button');
   toggle.type = 'button';
-  toggle.className = 'instrument-toggle receded'; // shown from the first settled plate after the opening
+  toggle.className = 'instrument-toggle';
   toggle.setAttribute('aria-expanded', 'false');
   toggle.setAttribute('aria-controls', 'instrument');
-  toggle.textContent = 'Take the instrument';
+  toggle.textContent = 'Manipulate Model'; // one label in both states: aria-expanded carries open and closed
 
   const panel = document.createElement('aside');
   panel.id = 'instrument';
@@ -159,7 +159,6 @@ export function mountInstrument(ctx: InstrumentContext): Instrument {
   const setOpen = (open: boolean) => {
     panel.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.textContent = open ? 'Put the instrument down' : 'Take the instrument';
     ctx.stageEl.classList.toggle('instrument-open', open);
     ctx.onToggle(open);
   };
@@ -322,9 +321,7 @@ export function mountInstrument(ctx: InstrumentContext): Instrument {
     limits,
     override,
     changed,
-    onPlate(chapter: string, index: number) {
-      // The opening is a portrait, not a workbench: no instrument button there (an open panel keeps its own close).
-      toggle.classList.toggle('receded', index === 0);
+    onPlate(chapter: string) {
       const wasExploring = exploring;
       exploring = chapter === 'explore';
       opBox.hidden = !exploring;

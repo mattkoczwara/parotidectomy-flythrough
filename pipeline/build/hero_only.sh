@@ -13,6 +13,7 @@ export PYTHONIOENCODING=utf-8
 npx gltf-transform meshopt pipeline/build/out/hero.raw.glb apps/site/public/assets/anatomy/hero.glb --level medium
 # the skin maps (skin.py): colour lossy, the normal and ORM maps near-lossless
 magick pipeline/build/out/hero_albedo.png -quality 92 apps/site/public/assets/anatomy/hero_albedo.webp
+magick pipeline/build/out/hero_albedo_fit.png -quality 92 apps/site/public/assets/anatomy/hero_albedo_fit.webp
 magick pipeline/build/out/hero_normal.png -define webp:near-lossless=80 -quality 100 apps/site/public/assets/anatomy/hero_normal.webp
 magick pipeline/build/out/hero_orm.png -define webp:near-lossless=80 -quality 100 apps/site/public/assets/anatomy/hero_orm.webp
 $PY - <<'EOF'

@@ -12,7 +12,7 @@
     "obligations": []
   },
   "attribution": "Presentation only: authored skin maps baked in Blender Cycles onto the opening's figure; nothing photographic.",
-  "sha256": "b31deafcf2a7dd389005e1be915dab07591cb74b5b9a3180c16d5b5069079a57",
+  "sha256": "b29b631844f2c8510a99eeb1536fbb31bf48f39f5ff1b87f36d971faf0814ecd",
   "file": "apps/site/public/assets/anatomy/hero_orm.webp",
   "derivedFrom": [
     "human-base-meshes-1-4-1"

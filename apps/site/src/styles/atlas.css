@@ -42,6 +42,7 @@
   --t-fast: 140ms;
   --t: 220ms;
   --t-slow: 380ms;
+  --ease-breathe: cubic-bezier(0.45, 0, 0.55, 1); /* symmetric, for the one slow loop (the current chapter) */
   --rail: clamp(8.5rem, 10.9vw, 11.4rem);
   --reading-line: 0.4; /* fraction of viewport height where plate text rests */
   color-scheme: dark;
@@ -489,6 +490,27 @@ body {
   color: var(--ink);
   font-weight: 600;
 }
+/* The exposed plane breathes like the current chapter (atlas-breathe, rail), a third of a cycle out of step. */
+.gauge li {
+  isolation: isolate;
+}
+.gauge li::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: -1.3rem;
+  top: calc(0.24rem + 0.625em - 4.5px);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(201, 164, 108, 0.45);
+  box-shadow: 0 0 6px rgba(201, 164, 108, 0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+.gauge li.current::after {
+  animation: atlas-breathe 3.6s var(--ease-breathe) -1.2s infinite;
+}
 .gauge li.current::before {
   background: var(--gilt);
   border-color: var(--gilt);
@@ -576,6 +598,32 @@ body {
   background: var(--gilt);
   border-color: var(--gilt);
   box-shadow: inset 0 0 0 2px #15161a, var(--gilt-glow);
+}
+/* The current chapter breathes: a soft gilt halo swells from the station and fades, slow enough to calm, not call. */
+.rail a {
+  isolation: isolate;
+}
+.rail a::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: calc(-2.1rem - 5.5px);
+  top: calc(50% - 5.5px);
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(201, 164, 108, 0.45);
+  box-shadow: 0 0 6px rgba(201, 164, 108, 0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+.rail a[aria-current='true']::after {
+  animation: atlas-breathe 3.6s var(--ease-breathe) infinite;
+}
+@keyframes atlas-breathe {
+  0% { opacity: 0; transform: scale(1); }
+  35% { opacity: 0.55; transform: scale(1.7); }
+  100% { opacity: 0; transform: scale(2.1); }
 }
 .rail a:hover {
   color: var(--ink);
@@ -1068,6 +1116,8 @@ body.reduce-motion .poster {
 }
 
 /* ── Instrument (plan §4): depth dial, view buttons, structure card, operation controls ──── */
+/* "Manipulate Model": a quiet pill in the stage's top-right cluster, beside the view glyph. It steps back like the
+   control bar at rest; gilt appears only in its station dot, and only while the instrument is open. */
 .instrument-toggle {
   position: absolute;
   right: calc(var(--edge) + var(--tile-w) + var(--gap));
@@ -1075,35 +1125,68 @@ body.reduce-motion .poster {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font: 500 0.78rem var(--font-sans), system-ui, sans-serif;
-  color: #241c12;
-  background: linear-gradient(180deg, #d6bb90, #b39266);
-  border: 1px solid rgba(255, 236, 200, 0.3);
-  border-radius: var(--radius-control);
-  padding: 0.5rem 0.85rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 244, 222, 0.3);
+  font: 500 0.75rem var(--font-sans), system-ui, sans-serif;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: 999px;
+  padding: 0.36rem 0.8rem 0.36rem 0.65rem;
+  box-shadow: var(--panel-shadow-quiet);
+  opacity: 0.84;
   cursor: pointer;
-  /* Visibility waits for the fade on the way out, so the receded button leaves the tab order only once unseen. */
-  transition: filter var(--t) var(--ease), opacity var(--t) var(--ease), transform var(--t) var(--ease), visibility 0s linear 0s;
+  transition: opacity var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease), background-color var(--t) var(--ease);
 }
-/* The opening plate is a portrait, not a workbench: the instrument recedes there and returns on the next plate. */
-.instrument-toggle.receded {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-4px);
-  pointer-events: none;
-  transition: filter var(--t) var(--ease), opacity var(--t) var(--ease), transform var(--t) var(--ease), visibility 0s linear var(--t);
+.instrument-toggle::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 1px solid rgba(236, 230, 220, 0.45);
+  transition: background-color var(--t) var(--ease), border-color var(--t) var(--ease), box-shadow var(--t) var(--ease);
+}
+/* Its dot breathes too: in pale ink while closed (the model can be handled), in gilt while open. */
+.instrument-toggle {
+  isolation: isolate;
 }
 .instrument-toggle::after {
-  content: '→' / '';
-  font-size: 1.05em;
-  line-height: 1;
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 0.65rem;
+  top: calc(50% - 3px);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(236, 230, 220, 0.3);
+  box-shadow: 0 0 5px rgba(236, 230, 220, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  animation: atlas-breathe 3.6s var(--ease-breathe) -2.4s infinite;
 }
-.instrument-toggle:hover {
-  filter: brightness(1.07);
+.instrument-toggle[aria-expanded='true']::after {
+  background: rgba(201, 164, 108, 0.45);
+  box-shadow: 0 0 6px rgba(201, 164, 108, 0.5);
+}
+.instrument-toggle:hover,
+.instrument-toggle:focus-visible {
+  opacity: 1;
+  color: var(--ink);
+  border-color: rgba(236, 230, 220, 0.24);
 }
 .instrument-toggle[aria-expanded='true'] {
-  filter: brightness(0.86);
+  opacity: 1;
+  color: var(--display);
+  /* a lift over the panel tone, not in place of it: over pale skin the pill must stay dark */
+  background-image: linear-gradient(rgba(236, 230, 220, 0.07), rgba(236, 230, 220, 0.07));
+  border-color: var(--gilt-soft);
+}
+.instrument-toggle[aria-expanded='true']::before {
+  background: var(--gilt);
+  border-color: var(--gilt);
+  box-shadow: 0 0 5px rgba(201, 164, 108, 0.5);
 }
 .instrument-toggle:focus-visible {
   outline-color: var(--gilt);

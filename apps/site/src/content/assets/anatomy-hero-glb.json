@@ -12,7 +12,7 @@
     "obligations": []
   },
   "attribution": "Presentation only (no anatomy, no claims): the opening's figure, authored from Blender Studio's Human Base Meshes (CC0) with an authored groom; it hands off to the donor-fitted exterior before any anatomy shows.",
-  "sha256": "97601fe5c27c5081506bfb7d04877203c3dab1ca050098d6370759cfc6f332c7",
+  "sha256": "47c8aacd4d69b4daeba15ee0f6e236fd3bfe6a7981d13297fbd73d8c46470dee",
   "file": "apps/site/public/assets/anatomy/hero.glb",
   "derivedFrom": [
     "human-base-meshes-1-4-1"

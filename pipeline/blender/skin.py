@@ -127,7 +127,7 @@ def fields(q, cover, ears):
         ear = np.maximum(ear, 1 - smooth(18, 34, np.linalg.norm(q - np.asarray(c), axis=1)))
     qa = np.c_[a, ant, up]
     red = (0.75 * gauss(qa, [42, 10, -30], [20, 22, 20]) + 0.8 * gauss(q, [0, 36, -32], [9, 10, 9])
-           + 0.6 * gauss(qa, [15, 24, -42], [7, 8, 7]) + 0.7 * ear + 0.25 * gauss(q, [0, 18, -95], [16, 12, 12])
+           + 0.6 * gauss(qa, [15, 24, -42], [7, 8, 7]) + 0.45 * ear + 0.25 * gauss(q, [0, 18, -95], [16, 12, 12])
            + 0.15 * gauss(q, [0, 18, 45], [35, 20, 20]) + 0.25 * gauss(q, [0, -20, -175], [40, 30, 25]))
     lips = gauss(q, [0, 28, -66], [22, 14, 7.5]) * front
     lips = smooth(0.35, 0.7, lips)
@@ -307,6 +307,9 @@ def source_material(spec, eye_z_mm):
     bands.inputs["Detail"].default_value = 1.0
     L.new(P, bands.inputs["Vector"])
     h = math("ADD", h, math("MULTIPLY", math("MULTIPLY", bands.outputs["Fac"], s["lines"]), tz))
+    # the thin parts (the ears, the nostrils' rims) keep only a trace of the micro-relief: on the auricle's folds it
+    # read as a distracting grain
+    h = math("MULTIPLY", h, math("SUBTRACT", 1.0, math("MULTIPLY", thin, s["thin_relief_cut"])))
     bump = _n(nt, "ShaderNodeBump")
     bump.inputs["Strength"].default_value = 1.0
     bump.inputs["Distance"].default_value = s["relief_mm"] * 0.001
@@ -397,6 +400,13 @@ def bake(web_ob, high_ob, q_high, cover_high, ears, spec, out_dir, eye_z):
     run("NORMAL", "normal", 4)
     scene.world = scene.world or bpy.data.worlds.new("w")
     run("AO", "ao", 48, selected=False)  # (on the realtime mesh itself: the coincident bake mesh would occlude it)
+    # A second albedo in the fitted exterior's tone, without the beard: the hero blends into it as it settles onto
+    # the fitted surface, so the dissolve to the fitted skin shows no change of tone (stage hero.ts).
+    fit = {**spec, "skin": {**s, **s["fitted_tone"]}}
+    high_ob.data.materials.clear()
+    high_ob.data.materials.append(source_material(fit, eye_z * 1000))
+    imgs["albedo_fit"] = bpy.data.images.new("hero_albedo_fit", size, size, alpha=False)
+    run("EMIT", "albedo_fit", 4, None)
     web_ob.data.materials.clear()
     px = lambda k: np.array(imgs[k].pixels[:], dtype=np.float32).reshape(size, size, 4)
     orm = np.ones((size, size, 4), np.float32)
@@ -406,7 +416,7 @@ def bake(web_ob, high_ob, q_high, cover_high, ears, spec, out_dir, eye_z):
     o = bpy.data.images.new("hero_orm", size, size, alpha=False)
     o.colorspace_settings.name = "Non-Color"
     o.pixels.foreach_set(orm.ravel())
-    for key, img in (("albedo", imgs["albedo"]), ("normal", imgs["normal"]), ("orm", o)):
+    for key, img in (("albedo", imgs["albedo"]), ("albedo_fit", imgs["albedo_fit"]), ("normal", imgs["normal"]), ("orm", o)):
         img.filepath_raw = str(out_dir / f"hero_{key}.png")
         img.file_format = "PNG"
         if key == "normal":

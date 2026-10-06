@@ -8,7 +8,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import type { SceneState } from '@atlas/timeline';
 import { anyHit } from './occlusion.ts';
-import { H, handoff, heroEyes, heroHair, heroSkin, loadHeroMaps, type HeroMaps, type HeroPart } from './hero.ts';
+import { H, handoff, heroDepth, heroEyes, heroHair, heroSkin, loadHeroMaps, type HeroMaps, type HeroPart } from './hero.ts';
 import { RELIEF_SLOTS, ZONE_SLOTS, groomCards, reliefA, reliefB, reliefEar, groomGeometry, hairGeometry, hairShells, type HairMaterial, cpuFold, cpuInFlap, cpuPeel, cpuWindowCut, FLAP_OPEN, hatch, OCHRE, setOpacity, tissue, U, zoneCentre, zoneRadii, zoneWeight, type FlapFrame, type HatchMaterial, type PeelFrame, type TissueFamily, type TissueMaterial } from './materials.ts';
 import { REMOVABLE, RESECTIONS, memberWeight, poseMatrix, resectionWeights, type Mechanic } from './resection.ts';
 
@@ -145,7 +145,7 @@ const LOOKS: Readonly<Record<LookName, Look>> = {
   // and the hair's edge against a dark field (the owner's goal reference).
   // (with the hero asset: the key further in front of the face models it, and the rim behind the camera-side
   // silhouette draws the nape, the trapezius and the shoulder)
-  hero: { key: 3.4, keyColour: 0xfff4ec, keyDir: [-0.2, 0.5, 0.84], fill: 0.05, rim: 3.6, env: 0.1, hemi: 0.02, rimColour: 0xffe6cc, rimDir: [-0.45, 0.38, -0.81] },
+  hero: { key: 3.4, keyColour: 0xfff7f2, keyDir: [-0.14, 0.55, 0.82], fill: 0.025, rim: 5.2, env: 0.1, hemi: 0.01, rimColour: 0xfff0e2, rimDir: [-0.26, 0.26, -0.93] },
   // Soft portrait light: a broad key high in front of the face sculpts ear, jaw, cheek and neck; a cool rim separates
   // the occiput and shoulders from the field.
   portrait: { key: 3.0, keyColour: 0xfff3ea, keyDir: [-0.38, 0.72, 0.78], fill: 0.12, rim: 2.3, env: 0.2, hemi: 0.05 },
@@ -276,7 +276,7 @@ export class Stage {
   /** The opening portrait's hair (portrait.py, groom.py): a shell under-layer and the groom's cards. */
   private portraitHair: { mesh: THREE.Mesh; mat: HairMaterial }[] = [];
   /** The opening's hero portrait (hero.glb, hero.ts): drawn instead of the fitted exterior while the opening shows. */
-  private hero: { group: THREE.Group; parts: HeroPart[] } | null = null;
+  private hero: { group: THREE.Group; parts: HeroPart[]; fade: THREE.Mesh[] } | null = null;
   /** The raised flap of each FLAPPED layer: same geometry, folded; shown once the incision opens. */
   private flaps = new Map<string, Part>();
   private anchors = new Map<string, THREE.Vector3>();
@@ -339,12 +339,12 @@ export class Stage {
     const { edge: e, lift, centre, aspect } = this.bg;
     // The opening portrait's field (weighted by the morph): a deeper blue-black edge and a cooler slate glow behind
     // the head, so the warm rim separates the figure (the owner's goal reference).
-    const pe = uniform(field('#101216'));
-    const pl = uniform(field('#2c323b'));
+    const pe = uniform(field('#0c0e12'));
+    const pl = uniform(field('#313946'));
     this.scene.backgroundNode = Fn(() => {
       const pw = U.portrait;
       const d = screenUV.sub(centre.add(vec2(0, pw.mul(-0.06)))).mul(vec2(aspect, 1));
-      const sigma = mix(float(0.5), float(0.36), pw);
+      const sigma = mix(float(0.5), float(0.33), pw);
       const glow = exp(dot(d, d).div(sigma.mul(sigma).mul(-2)));
       // A slightly deeper lower edge, like the floor falloff of a cyclorama.
       const floor = smoothstep(0.55, 1.0, screenUV.y).mul(0.12);
@@ -475,6 +475,7 @@ export class Stage {
 
   private addHero(root: THREE.Group, maps: HeroMaps | null) {
     const parts: HeroPart[] = [];
+    const fade: THREE.Mesh[] = [];
     // The hero alone casts and receives the key's shadow (the jaw on the neck, the hair on the scalp); nothing else
     // in the atlas does, so the shadow pass is empty once the hero has handed off.
     this.renderer.shadowMap.enabled = true;
@@ -499,10 +500,24 @@ export class Stage {
       if (node.name === 'hero_hair') node.frustumCulled = false;
       node.material = material;
       parts.push({ mesh: node, material });
+      if (node.name === 'hero_skin') {
+        // the dissolve's pair (hero.ts): depth first, then the skin blended over the fitted skin
+        const depth = new THREE.Mesh(node.geometry, heroDepth(node.geometry));
+        depth.name = 'hero_skin__depth';
+        depth.renderOrder = 10;
+        const blend = new THREE.Mesh(node.geometry, heroSkin(node.geometry, maps, true));
+        blend.name = 'hero_skin__fade';
+        blend.renderOrder = 11;
+        for (const m of [depth, blend]) {
+          m.visible = false;
+          fade.push(m);
+        }
+      }
     });
     root.visible = false;
+    for (const m of fade) root.add(m);
     this.scene.add(root);
-    this.hero = { group: root, parts };
+    this.hero = { group: root, parts, fade };
   }
 
   /** The registered CT slice as a textured quad in the axial plane at the tumour level (glTF: X = -(x - ox), Y = z - oz, Z = y - oy). */
@@ -706,8 +721,11 @@ export class Stage {
     if (this.hero) {
       H.morph.value = hand.morph;
       H.skin.value = hand.skin;
-      H.hair.value = hand.hair;
-      this.hero.group.visible = portrait;
+      // the hero's cast shadows (the jaw on the neck) leave with the portrait's light: the fitted skin receives none,
+      // and a shadow ending at the dissolve read as a change of skin tone
+      this.key.shadow.intensity = THREE.MathUtils.smoothstep(U.portrait.value as number, 0.35, 0.85);
+      // (the hero's skin and eyes go with the portrait; its hair is set with the haircuts below)
+      for (const { mesh } of this.hero.parts) if (mesh.name !== 'hero_hair') mesh.visible = portrait;
     }
     // the fitted exterior is drawn only once the hero has begun to dissolve over it
     const covered = !!this.hero && portrait && hand.skin >= 1;
@@ -762,17 +780,33 @@ export class Stage {
       const skinOpacity = sk?.mesh.visible ? ((sk.mesh.material as THREE.Material).opacity ?? 1) : covered ? 1 : 0;
       const fade = Math.min(1, Math.max(0, (skinOpacity - 0.6) / 0.35)) * (ss?.mode === 'hatch' ? 0 : 1);
       // The opening portrait wears its own haircut (`groom` op, held until the skin has faded past the hair's fade):
-      // it rides the scalp through the morph and dissolves as the fitted hair would; the fitted hair waits.
+      // it rides the scalp through the morph and dissolves as the fitted hair would; the fitted hair waits. With the
+      // hero asset that haircut is the hero's groom: it stays on through the handoff (riding the scalp onto the fitted
+      // head), so the fitted short crop never shows in the opening's transition.
+      const heroGroom = !!this.hero && (state.op['groom'] ?? 0) > 0;
       const groom = !this.hero && (state.op['groom'] ?? 0) > 0 && this.portraitHair.length > 0;
-      // (under the hero, the fitted hair comes in as the hero's hair dissolves)
-      const fitted = fade * (this.hero && portrait ? 1 - hand.hair : 1);
+      const fitted = heroGroom ? 0 : fade;
       this.hair.mat.fade.value = groom ? 0 : fitted;
       this.hair.mesh.visible = !groom && fitted > 0.01;
       for (const h of this.portraitHair) {
         h.mat.fade.value = groom ? fade : 0;
         h.mesh.visible = groom && fade > 0.01;
       }
+      if (this.hero) {
+        H.hair.value = heroGroom ? fade : 0;
+        const on = heroGroom && fade > 0.01;
+        // the skin: opaque while it alone shows; while it dissolves over the fitted skin (and, after the portrait, its
+        // scalp patch under the hair) the crossfade pair draws it instead
+        const opaque = portrait && hand.skin >= 0.999;
+        const fading = !opaque && (portrait || on);
+        for (const { mesh } of this.hero.parts) {
+          if (mesh.name === 'hero_hair') mesh.visible = on;
+          if (mesh.name === 'hero_skin') mesh.visible = opaque;
+        }
+        for (const m of this.hero.fade) m.visible = fading;
+      }
     }
+    if (this.hero) this.hero.group.visible = this.hero.parts.some((x) => x.mesh.visible) || this.hero.fade.some((m) => m.visible);
     const picked = this.selected ? this.meshes.get(this.selected) : undefined;
     if (picked?.mesh.visible && !focus.includes(picked.mesh)) focus.push(picked.mesh);
     this.applyFlow(state);

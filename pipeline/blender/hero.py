@@ -262,6 +262,10 @@ def main():
     vec_attr(web, "_hdisp", to_gltf(disp))
     a = web.attributes.new("_foot", "FLOAT", "POINT")
     a.data.foreach_set("value", foot)
+    # the hair's coverage of the scalp: the stage keeps that patch of the hero's skin under the groom until the hair
+    # itself dissolves (the fitted scalp is paler, and showed between the strands after the handoff)
+    a = web.attributes.new("_scalp", "FLOAT", "POINT")
+    a.data.foreach_set("value", np.ascontiguousarray(cover, dtype=np.float32))
     vec_attr(eyes, "_hdisp", to_gltf(eye_disp))
     vec_attr(hair_ob.data, "_hdisp", to_gltf(hair_disp))
     report = {"handoff": hand_report, "hair": hair_report, "scale": round(float(s), 4), "web_vertices": len(web.vertices), "high_vertices": len(high.vertices), "portrait_bust": framing(spec, verts(web), eye_z)}

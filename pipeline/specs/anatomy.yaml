@@ -478,7 +478,7 @@ hero:
   place:                    # on the fitted eyes: scale from their distance (times `scale`), then pitch and offset
     scale: 1.0
     pitch_deg: 0.0          # positive tips the face up
-    yaw_deg: 7.0            # the finished figure turned toward the viewer (the goal reference's three-quarter hint)
+    yaw_deg: 8.5            # the finished figure turned toward the viewer (the goal reference's three-quarter hint)
     offset_mm: [0, 0, 0]    # Blender frame: +x left, -y anterior, +z up
   # Authored shape edits, applied alike to the realtime and the bake meshes (hero.py `edit`). Positions are mm from
   # the eyes' midpoint: lat (toward the patient's left), ant (anterior), up. Weights ramp with smoothstep between
@@ -578,7 +578,7 @@ hero:
     head_density: 1.6         # texel density of the head's UV islands relative to the body's
     cage_mm: 3
     ray_mm: 6
-    base: [0.62, 0.34, 0.24]
+    base: [0.6, 0.355, 0.265]
     broad: 0.18               # centimetre-scale uneven pigment (+-)
     mottle: 0.08
     red_tint: [1.08, 0.82, 0.82]
@@ -599,6 +599,9 @@ hero:
     tz_gloss: 0.16
     lines: 0.15
     relief_mm: 0.3
+    thin_relief_cut: 0.8      # share of the micro-relief removed on the thin parts (ears, nostrils)
+    # the second albedo, in the fitted exterior's tone (materials.ts skin preset 0xc8a796, its flush), no beard
+    fitted_tone: { base: [0.578, 0.386, 0.305], red: 0.25, beard: 0.0, stubble: 0.0, broad: 0.08, mottle: 0.04 }
     grain_mm: 1.1
     grain: 0.45
   # The handoff (pipeline/blender/handoff.py): landmark warp, closest point on the fitted exterior, smoothing.
@@ -613,9 +616,9 @@ hero:
   # about half the frame's height, the frame's centre lies this far below the crown and behind the head's middle.
   frame:
     crown_allowance_mm: 14   # the hair above the scalp
-    centre_below_crown_mm: 142
+    centre_below_crown_mm: 136
     centre_behind_mm: 12
-    radius_mm: 197
+    radius_mm: 181
 
 # Pieces (pieces.py): the completed gland is cut into closed pieces so that resections can lift exactly the tissue
 # each operation removes (plan §8). ESGS levels (Quer 2016): I lateral superior, II lateral inferior, III deep

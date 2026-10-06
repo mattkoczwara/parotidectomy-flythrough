@@ -185,10 +185,16 @@ art direction, not a likeness target.
 
   It also carries over the fitted skin's outline field (`foot`), so the opening's outline is the donor's, placed by
   that correspondence. As the portrait weight falls:
-  1. the hero morphs onto the fitted shape and turns back (p 1 → 0.35);
-  2. its hair dissolves strand by strand while the fitted hair comes in (p 0.5 → 0.3);
-  3. its skin dissolves per pixel over the fitted skin (p 0.3 → 0), lifted about 1 mm along the normal so the two
-     surfaces never z-fight.
+  1. the hero morphs onto the fitted shape and turns back (p 1 → 0.35), its colour, micro-relief and occlusion
+     easing into a second albedo baked in the fitted skin's tone without the beard, and its cast shadows fading;
+  2. its skin crossfades over the fitted skin (p 0.3 → 0) in the transparent pass over a depth-only twin, lifted
+     about 1 mm along the normal so the two surfaces never z-fight;
+  3. its groom stays on throughout, riding the scalp (with the scalp patch under it), and dissolves when the
+     skin is ghosted, as the fitted haircut would (`groom` op): the fitted short crop never shows in this transition.
+
+  Refinement (2026-10-06, second pass): figure 9% larger in frame and turned 8.5 degrees; the hero look's key and a
+  crisper rim behind the silhouette, specular sheen on the face and neck only, a deeper field; the ears' micro-relief
+  and subsurface glow reduced.
 
   Anatomy stays hidden until the portrait weight is 0, as before.
 - **The morph portrait** is not used while `hero.glb` loads: the fitted surfaces keep their own shape (`U.morph` = 0).
